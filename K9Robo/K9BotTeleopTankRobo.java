@@ -1,10 +1,10 @@
-package org.firstinspires.ftc.teamcode.K9Robo;
+package org.firstinspires.ftc.teamcode.team.K9Robo;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.util.Range;
 
-import org.firstinspires.ftc.teamcode.K9Robo.HardwareK9Robo;
+import org.firstinspires.ftc.teamcode.team.K9Robo.HardwareK9Robo;
 
 /**
  * This OpMode uses the common HardwareK9bot class to define the devices on the robot.

@@ -17,7 +17,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 import java.text.DecimalFormat;
 
 
-import org.firstinspires.ftc.teamcode.Merlin1.Merlin1Hardware;
+import org.firstinspires.ftc.teamcode.team.Merlin1.Merlin1Hardware;
 
 @TeleOp(name = "NavX Sensor", group = "Other")
 public class NavXSensor extends LinearOpMode {
@@ -73,6 +73,7 @@ public class NavXSensor extends LinearOpMode {
             telemetry.addData("NavX getWorldLinearAccelY", robot.navx_device.getWorldLinearAccelY());
             telemetry.addData("NavX getWorldLinearAccelZ", robot.navx_device.getWorldLinearAccelZ());
             telemetry.addData("NavX getYaw", robot.navx_device.getYaw());
+            telemetry.update();
 
             // Pause for metronome tick.  40 mS each cycle = update 25 times a second.
             robot.waitForTick(40);

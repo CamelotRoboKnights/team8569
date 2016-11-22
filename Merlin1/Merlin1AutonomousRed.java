@@ -37,7 +37,7 @@
 *
 *
  */
-package org.firstinspires.ftc.teamcode.Merlin1;
+package org.firstinspires.ftc.teamcode.team.Merlin1;
 
 
 import com.kauailabs.navx.ftc.navXPIDController;

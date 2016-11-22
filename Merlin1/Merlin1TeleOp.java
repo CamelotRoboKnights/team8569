@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.Merlin1;
+package org.firstinspires.ftc.teamcode.team.Merlin1;
 
 
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
@@ -8,7 +8,7 @@ import com.qualcomm.robotcore.hardware.CompassSensor;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Gamepad;
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
-import org.firstinspires.ftc.teamcode.Merlin1.Merlin1Hardware;
+import org.firstinspires.ftc.teamcode.team.Merlin1.Merlin1Hardware;
 
 @TeleOp(name = "TeleOp1", group = "Merlin1")//This is the name of the code and what will be seen on the robot phone
 //@Disabled //Uncomment this if it is not wanted on the phone
