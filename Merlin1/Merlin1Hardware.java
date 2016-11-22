@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.Merlin1;
+package org.firstinspires.ftc.teamcode.team.Merlin1;
 
 import com.kauailabs.navx.ftc.AHRS;
 import com.kauailabs.navx.ftc.navXPIDController;
@@ -89,7 +89,7 @@ public class Merlin1Hardware
         rangeSensor = hwMap.get(ModernRoboticsI2cRangeSensor.class, "range");//Finds the range sensor in the hardware map
         compas = hwMap.get(ModernRoboticsI2cCompassSensor.class, "compas");//Finds the compass sensor in the hardware map
 
-        navx_device = AHRS.getInstance(hwMap.deviceInterfaceModule.get("navx"),
+        navx_device = AHRS.getInstance(hwMap.deviceInterfaceModule.get("dim"),
                 NAVX_DIM_I2C_PORT, AHRS.DeviceDataType.kProcessedData, NAVX_DEVICE_UPDATE_RATE_HZ);
         yawPIDController = new navXPIDController( navx_device, navXPIDController.navXTimestampedDataSource.YAW);
 
