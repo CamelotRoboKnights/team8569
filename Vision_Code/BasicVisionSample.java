@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.team.Vision_Code.;
+package org.firstinspires.ftc.teamcode.team.Vision_Code;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 
