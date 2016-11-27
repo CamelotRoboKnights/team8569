@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.Other;
+package org.firstinspires.ftc.teamcode.team.Other;
 
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
@@ -6,7 +6,7 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.Range;
 
-import org.firstinspires.ftc.teamcode.Merlin1.Merlin1Hardware;
+import org.firstinspires.ftc.teamcode.team.Merlin1.Merlin1Hardware;
 
 @TeleOp(name = "Flipper Encoder", group = "Other")
 public class Merlin1FlipperEncoder extends LinearOpMode {

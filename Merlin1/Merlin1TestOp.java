@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.Merlin1;
+package org.firstinspires.ftc.teamcode.team.Merlin1;
 
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
@@ -7,7 +7,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.Range;
 
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
-import org.firstinspires.ftc.teamcode.Merlin1.Merlin1Hardware;
+import org.firstinspires.ftc.teamcode.team.Merlin1.Merlin1Hardware;
 
 @TeleOp(name = "TestOp1", group = "Merlin1")
 public class Merlin1TestOp extends LinearOpMode {

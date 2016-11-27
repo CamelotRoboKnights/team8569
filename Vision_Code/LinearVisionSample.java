@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.Vision_Code;
+package org.firstinspires.ftc.teamcode.team.Vision_Code;
 
 import org.lasarobotics.vision.android.Cameras;
 import org.lasarobotics.vision.ftc.resq.Beacon;
