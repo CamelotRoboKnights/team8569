@@ -42,23 +42,25 @@ public class FeildOrentedDrive extends LinearOpMode {
 
         // Wait for the game to start (driver presses PLAY)
         waitForStart();
-        JoyY = -gamepad1.left_stick_y;
-        JoyX = gamepad1.left_stick_x;
-        OrientationDegrees = robot.navx_device.getYaw();
-        OrientationRadians = OrientationDegrees * pi/180;
-        NewY = JoyY * Math.cos(OrientationRadians) + JoyX * Math.sin(OrientationRadians);
-        NewX = -JoyY * Math.sin(OrientationRadians) + JoyX * Math.cos(OrientationRadians);
-
-        robot.Motor1.setPower(NewY - NewX);//Sets the motor power for the front right motor
-        robot.Motor2.setPower(NewY + NewX);//sets the motor power for the front left motor
-        robot.Motor3.setPower(NewY - NewX);//Sets the motor power for the back left motor
-        robot.Motor4.setPower(NewY + NewX);//Sets the motor power for the back right motor
 
 
+        while (opModeIsActive()) {
+            JoyY = -gamepad1.left_stick_y;
+            JoyX = gamepad1.left_stick_x;
+            OrientationDegrees = robot.navx_device.getYaw();
+            OrientationRadians = OrientationDegrees * pi / 180;
+            NewY = JoyY * Math.cos(OrientationRadians) + JoyX * Math.sin(OrientationRadians);
+            NewX = -JoyY * Math.sin(OrientationRadians) + JoyX * Math.cos(OrientationRadians);
+
+            robot.Motor1.setPower(NewY - NewX);//Sets the motor power for the front right motor
+            robot.Motor2.setPower(NewY + NewX);//sets the motor power for the front left motor
+            robot.Motor3.setPower(NewY - NewX);//Sets the motor power for the back left motor
+            robot.Motor4.setPower(NewY + NewX);//Sets the motor power for the back right motor
 
 
             // Pause for metronome tick.  40 mS each cycle = update 25 times a second.
             robot.waitForTick(40);
+        }
         }
     }
 
