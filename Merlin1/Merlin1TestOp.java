@@ -109,7 +109,6 @@ public class Merlin1TestOp extends LinearOpMode {
 
 
 
-
             // Pause for metronome tick.  40 mS each cycle = update 25 times a second.
             robot.waitForTick(40);
         }
