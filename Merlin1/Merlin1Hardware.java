@@ -48,6 +48,7 @@ public class Merlin1Hardware
     public OpticalDistanceSensor RightLight;//The right Optical Distance Sensor
     public ModernRoboticsI2cRangeSensor rangeSensor;//The range sensor on the buton press side
     public ModernRoboticsI2cCompassSensor compas;//The compass Modern robotics sensor
+    public ModernRoboticsI2cRangeSensor rangeSensor2;
 
 
                         //The navX sensor
@@ -87,6 +88,7 @@ public class Merlin1Hardware
         RightLight = hwMap.opticalDistanceSensor.get("odrSensor");//Finds the Right Optical Distance sensor in the hardware map
         LeftLight = hwMap.opticalDistanceSensor.get("odlSensor");//Finds the Left Optical Distance sensor in the hardware map
         rangeSensor = hwMap.get(ModernRoboticsI2cRangeSensor.class, "range");//Finds the range sensor in the hardware map
+        rangeSensor = hwMap.get(ModernRoboticsI2cRangeSensor.class, "range");
         compas = hwMap.get(ModernRoboticsI2cCompassSensor.class, "compas");//Finds the compass sensor in the hardware map
 
         navx_device = AHRS.getInstance(hwMap.deviceInterfaceModule.get("dim"),
