@@ -78,20 +78,31 @@ public class WallSquareFunction extends LinearOpMode {
             RightRange = robot.rangeSensor.getDistance(DistanceUnit.CM);//left range sensor
             LeftRange = robot.rangeSensor2.getDistance(DistanceUnit.CM);//right range sensor
             RangeDifference = RightRange - LeftRange;
-            RangeDifferenceScaled = RangeDifference*.05;
 
-            RangeDifferenceScaled = Range.clip(RangeDifferenceScaled,1,-1);
 
-            Motor1WallSquarePower = RangeDifferenceScaled;
-            Motor2WallSquarePower = RangeDifferenceScaled;
-            Motor3WallSquarePower = RangeDifferenceScaled;
-            Motor4WallSquarePower = RangeDifferenceScaled;
+            if(RangeDifference == 0) {
 
-            robot.Motor1.setPower(-Motor1WallSquarePower);
-            robot.Motor2.setPower(Motor2WallSquarePower);
-            robot.Motor3.setPower(-Motor3WallSquarePower);
-            robot.Motor4.setPower(Motor4WallSquarePower);
+                RangeDifferenceScaled = RangeDifference * .05;
 
+                RangeDifferenceScaled = Range.clip(RangeDifferenceScaled, 1, -1);
+
+                Motor1WallSquarePower = RangeDifferenceScaled;
+                Motor2WallSquarePower = RangeDifferenceScaled;
+                Motor3WallSquarePower = RangeDifferenceScaled;
+                Motor4WallSquarePower = RangeDifferenceScaled;
+
+                robot.Motor1.setPower(-Motor1WallSquarePower);
+                robot.Motor2.setPower(-Motor2WallSquarePower);
+                robot.Motor3.setPower(Motor3WallSquarePower);
+                robot.Motor4.setPower(Motor4WallSquarePower);
+                telemetry.addData("Robot is", "Working");
+                telemetry.update();
+
+            }
+            else {
+                telemetry.addData("Robot is", "Square");
+                telemetry.update();
+            }
 
 
 
