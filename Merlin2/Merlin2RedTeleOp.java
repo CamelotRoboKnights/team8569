@@ -10,7 +10,7 @@ import com.qualcomm.robotcore.hardware.Gamepad;
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import org.firstinspires.ftc.teamcode.team.Merlin1.Merlin1Hardware; //More Import statements may be needed
 
-@TeleOp(name = "Template", group = "Other")//This NEEDS to be changed tp the name of the code
+@TeleOp(name = "Merlin2TeleRed", group = "Merlin2")//This NEEDS to be changed tp the name of the code
 @Disabled //Uncomment this if it is not wanted on the phone
 public class Merlin2RedTeleOp extends LinearOpMode { //The name after public class needs to be the same as the file name
 
