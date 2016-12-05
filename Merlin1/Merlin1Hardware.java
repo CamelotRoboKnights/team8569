@@ -61,12 +61,6 @@ public class Merlin1Hardware
                         //More NavX
     public final byte NAVX_DEVICE_UPDATE_RATE_HZ = 50;
 
-    public final double YAW_PID_P = 0.005;
-    public final double YAW_PID_I = 0.0;
-    public final double YAW_PID_D = 0.0;
-
-    public boolean calibration_complete = false;//Sets a boolean that says if the NavX sensor is complete or not
-
 
 
 
@@ -88,7 +82,7 @@ public class Merlin1Hardware
         RightLight = hwMap.opticalDistanceSensor.get("odrSensor");//Finds the Right Optical Distance sensor in the hardware map
         LeftLight = hwMap.opticalDistanceSensor.get("odlSensor");//Finds the Left Optical Distance sensor in the hardware map
         rangeSensor = hwMap.get(ModernRoboticsI2cRangeSensor.class, "range");//Finds the range sensor in the hardware map
-        rangeSensor = hwMap.get(ModernRoboticsI2cRangeSensor.class, "range");
+        rangeSensor2 = hwMap.get(ModernRoboticsI2cRangeSensor.class, "range2");
         compas = hwMap.get(ModernRoboticsI2cCompassSensor.class, "compas");//Finds the compass sensor in the hardware map
 
         navx_device = AHRS.getInstance(hwMap.deviceInterfaceModule.get("dim"),

@@ -82,6 +82,16 @@ public class WallSquareFunction extends LinearOpMode {
 
             if(RangeDifference == 0) {
 
+                robot.Motor1.setPower(0);
+                robot.Motor2.setPower(0);
+                robot.Motor3.setPower(0);
+                robot.Motor4.setPower(0);
+                telemetry.addData("Robot is", "Square");
+                telemetry.update();
+
+            }
+            else {
+
                 RangeDifferenceScaled = RangeDifference * .05;
 
                 RangeDifferenceScaled = Range.clip(RangeDifferenceScaled, 1, -1);
@@ -97,66 +107,11 @@ public class WallSquareFunction extends LinearOpMode {
                 robot.Motor4.setPower(Motor4WallSquarePower);
                 telemetry.addData("Robot is", "Working");
                 telemetry.update();
-
             }
-            else {
-                telemetry.addData("Robot is", "Square");
-                telemetry.update();
-            }
+            telemetry.addData("Right range", RightRange);
+            telemetry.addData("left range", LeftRange);
 
 
-
-
-
-
-
-            //LeftRange = robot.rangeSensor2.getDistance();
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-            /*
-            double forwrd = -gamepad1.left_stick_y; // Invert stick Y axis
-            double strafe = gamepad1.left_stick_x;
-
-            double pi = 3.1415926;
-
-            // Adjust Joystick X/Y inputs by navX MXP yaw angle
-
-            double gyro_degrees =1;// = ahrs->GetYaw();
-            double gyro_radians = gyro_degrees * pi/180;
-            double temp = forwrd * Math.cos(gyro_radians) + strafe * Math.sin(gyro_radians);
-            strafe = -forwrd * Math.sin(gyro_radians) + strafe * Math.cos(gyro_radians);
-            forwrd = temp;
-
-            // At this point, Joystick X/Y (strafe/forwrd) vectors have been
-            // rotated by the gyro angle, and can be sent to drive system
-            */
 
 
 
