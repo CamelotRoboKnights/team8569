@@ -3,12 +3,6 @@ package org.firstinspires.ftc.teamcode.team.Other;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.util.Range;
-import com.kauailabs.navx.ftc.AHRS;
-import com.qualcomm.robotcore.eventloop.opmode.OpMode;
-import com.qualcomm.robotcore.util.ElapsedTime;
-import java.text.DecimalFormat;
 import org.firstinspires.ftc.teamcode.team.Merlin1.Merlin1Hardware;
 
 @TeleOp(name = "Feild Orented", group = "Other")
@@ -61,6 +55,7 @@ public class FeildOrentedDrive extends LinearOpMode {
             // Pause for metronome tick.  40 mS each cycle = update 25 times a second.
             robot.waitForTick(40);
         }
-        }
     }
+}
+
 
