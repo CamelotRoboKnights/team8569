@@ -36,9 +36,12 @@ public class TeleTest extends LinearOpMode { //The name after public class needs
 
         while (opModeIsActive()) {
             double TargetEncoder = 0;
+            double LiftHeight = 0;
             feildOrentedDrive();
             collection();
             TargetEncoder = launchBall(TargetEncoder);
+            LiftHeight = lift();
+
 
             telemetry.addData("Left Light = ", robot.LeftLight.getLightDetected());
             telemetry.addData("Right Light = ", robot.RightLight.getLightDetected());
@@ -54,6 +57,19 @@ public class TeleTest extends LinearOpMode { //The name after public class needs
             // Pause for metronome tick.  40 mS each cycle = update 25 times a second.
             robot.waitForTick(40);
         }
+    }
+    public double lift(){
+        if(gamepad2.right_trigger > .02){
+            robot.Lift.setPower(gamepad2.right_trigger);
+        }
+        else if(gamepad2.left_trigger > .02){
+            robot.Lift.setPower(gamepad2.left_trigger);
+        }
+        else{
+            robot.Lift.setPower(0);
+        }
+        return robot.Lift.getCurrentPosition();
+
     }
     public double launchBall(double TargetEncoder) {
         double CurrentEncoder = robot.Flipper.getCurrentPosition();
