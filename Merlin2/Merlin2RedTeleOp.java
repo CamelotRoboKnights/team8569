@@ -11,7 +11,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import org.firstinspires.ftc.teamcode.team.Merlin1.Merlin1Hardware; //More Import statements may be needed
 
 @TeleOp(name = "Merlin2TeleRed", group = "Merlin2")//This NEEDS to be changed tp the name of the code
-@Disabled //Uncomment this if it is not wanted on the phone
+//@Disabled //Uncomment this if it is not wanted on the phone
 public class Merlin2RedTeleOp extends LinearOpMode { //The name after public class needs to be the same as the file name
 
 
@@ -28,19 +28,22 @@ public class Merlin2RedTeleOp extends LinearOpMode { //The name after public cla
         double TargetEncoder = 0;
         double CurrentHeight = 0;
 
+
         // Send telemetry message to signify robot waiting;
         telemetry.addData("Say", "Hello Driver");    //It is ready to run
         telemetry.update();//Updates and displays data on the screen.
         // run until the end of the match (driver presses STOP)
+        waitForStart();
+
         while (opModeIsActive()) {
 
             //Where you write the code that you want to run
             feildOrentedDrive();
-            TargetEncoder = launchBall(TargetEncoder);
+            //TargetEncoder = launchBall(TargetEncoder);
             collection();
-            if(gamepad1.a){
-                wallSquare();
-            }
+            //if(gamepad1.a){
+            //    wallSquare();
+            //}
             capBallLift(CurrentHeight);
 
 
@@ -55,6 +58,7 @@ public class Merlin2RedTeleOp extends LinearOpMode { //The name after public cla
     public String wallSquare(){
         return "-----";
     }
+
     public double capBallLift(double CurrentHeight) {
 
         return CurrentHeight;
@@ -95,14 +99,13 @@ public class Merlin2RedTeleOp extends LinearOpMode { //The name after public cla
         double JoyY;
         double NewX;
         double NewY;
-        double pi = 3.1415926;
         double OrientationDegrees;
         double OrientationRadians;
 
         JoyY = -gamepad1.left_stick_y;
         JoyX = gamepad1.left_stick_x;
         OrientationDegrees = robot.navx_device.getYaw();
-        OrientationRadians = OrientationDegrees * pi / 180;
+        OrientationRadians = OrientationDegrees * Math.PI / 180;
         NewY = JoyY * Math.cos(OrientationRadians) + JoyX * Math.sin(OrientationRadians);
         NewX = -JoyY * Math.sin(OrientationRadians) + JoyX * Math.cos(OrientationRadians);
 
@@ -124,7 +127,7 @@ public class Merlin2RedTeleOp extends LinearOpMode { //The name after public cla
             robot.Motor3.setPower(-gamepad1.left_trigger);
             robot.Motor4.setPower(gamepad1.left_trigger);
         }
-        else{//If none of these are true make the robot not move
+        else{//If none of these is true turn the power off to the motors to stop the robot
             robot.Motor1.setPower(0);
             robot.Motor2.setPower(0);
             robot.Motor3.setPower(0);
