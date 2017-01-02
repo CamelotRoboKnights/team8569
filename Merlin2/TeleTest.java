@@ -35,42 +35,10 @@ public class TeleTest extends LinearOpMode { //The name after public class needs
         waitForStart();
 
         while (opModeIsActive()) {
-
-            //Where you write the code that you want to run
-            if(gamepad1.x){
-                robot.Motor1.setPower(.5);
-            }
-            else if(gamepad1.y){
-                robot.Motor2.setPower(.5);
-            }
-            else if(gamepad1.b){
-                robot.Motor3.setPower(.5);
-            }
-            else if(gamepad1.a){
-                robot.Motor4.setPower(.5);
-            }
-            else if(gamepad1.right_bumper){
-                robot.Lift.setPower(.5);
-            }
-            else if(gamepad1.left_bumper){
-                robot.LiftCollector.setPower(.5);
-            }
-            else if(gamepad1.dpad_up){
-                robot.Flipper.setPower(.5);
-            }
-            else if(gamepad1.dpad_down){
-                robot.Lift.setPower(-.5);
-            }
-            else {
-                robot.Motor1.setPower(0);
-                robot.Motor2.setPower(0);
-                robot.Motor3.setPower(0);
-                robot.Motor4.setPower(0);
-                robot.Lift.setPower(0);
-                robot.LiftCollector.setPower(0);
-                robot.Flipper.setPower(0);
-            }
-
+            double TargetEncoder = 0;
+            feildOrentedDrive();
+            collection();
+            TargetEncoder = launchBall(TargetEncoder);
 
             telemetry.addData("Left Light = ", robot.LeftLight.getLightDetected());
             telemetry.addData("Right Light = ", robot.RightLight.getLightDetected());
@@ -86,6 +54,74 @@ public class TeleTest extends LinearOpMode { //The name after public class needs
             // Pause for metronome tick.  40 mS each cycle = update 25 times a second.
             robot.waitForTick(40);
         }
+    }
+    public double launchBall(double TargetEncoder) {
+        double CurrentEncoder = robot.Flipper.getCurrentPosition();
+        double OneRotation = 1650;
+
+        if(TargetEncoder - CurrentEncoder < 3){
+            robot.Flipper.setPower(0);
+            if(gamepad2.dpad_up){
+                TargetEncoder = TargetEncoder+OneRotation;
+            }
+        }
+        else{
+            robot.Flipper.setPower(.9);
+        }
+        return TargetEncoder;
+    }
+
+    public void feildOrentedDrive(){
+        double JoyX;
+        double JoyY;
+        double NewX;
+        double NewY;
+        double OrientationDegrees;
+        double OrientationRadians;
+
+        JoyY = -gamepad1.left_stick_y;
+        JoyX = gamepad1.left_stick_x;
+        OrientationDegrees = robot.navx_device.getYaw();
+        OrientationRadians = OrientationDegrees * Math.PI / 180;
+        NewY = JoyY * Math.cos(OrientationRadians) + JoyX * Math.sin(OrientationRadians);
+        NewX = -JoyY * Math.sin(OrientationRadians) + JoyX * Math.cos(OrientationRadians);
+
+        if(Math.abs(gamepad1.left_stick_y) >= 0.02 || Math.abs(gamepad1.left_stick_x) >= 0.02){
+            robot.Motor1.setPower(NewY - NewX);//Sets the motor power for the front right motor
+            robot.Motor2.setPower(NewY + NewX);//sets the motor power for the front left motor
+            robot.Motor3.setPower(NewY - NewX);//Sets the motor power for the back left motor
+            robot.Motor4.setPower(NewY + NewX);//Sets the motor power for the back right motor
+        }
+        else if(gamepad1.right_trigger >= .02){//This cancels out noise and sets the robot to turn right at the speed of the right trigger
+            robot.Motor1.setPower(-gamepad1.right_trigger);
+            robot.Motor2.setPower(gamepad1.right_trigger);
+            robot.Motor3.setPower(gamepad1.right_trigger);
+            robot.Motor4.setPower(-gamepad1.right_trigger);
+        }
+        else if(gamepad1.left_trigger >= .02){//This cancels out noise and sets the robot to turn left at the speed of the left trigger
+            robot.Motor1.setPower(gamepad1.left_trigger);
+            robot.Motor2.setPower(-gamepad1.left_trigger);
+            robot.Motor3.setPower(-gamepad1.left_trigger);
+            robot.Motor4.setPower(gamepad1.left_trigger);
+        }
+        else{//If none of these is true turn the power off to the motors to stop the robot
+            robot.Motor1.setPower(0);
+            robot.Motor2.setPower(0);
+            robot.Motor3.setPower(0);
+            robot.Motor4.setPower(0);
+        }
+    }
+    public void collection(){
+        if (gamepad2.x){//if X is pressed make the spinner set to dispose of balls
+            robot.LiftCollector.setPower(-.5);
+        }
+        else if(gamepad2.b){//If B os pressed make the spinner set to collect balls
+            robot.LiftCollector.setPower(.5);
+        }
+        else if(gamepad2.a){//If A is pressed make the spinner not spin
+            robot.LiftCollector.setPower(0);
+        }
+
     }
 
 }
