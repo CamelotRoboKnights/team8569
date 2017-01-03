@@ -41,7 +41,7 @@ public class TeleTest extends LinearOpMode { //The name after public class needs
             collection();
             TargetEncoder = launchBall(TargetEncoder);
             LiftHeight = lift();
-
+            telemetry.addData("LiftHeight", LiftHeight);
 
             telemetry.addData("Left Light = ", robot.LeftLight.getLightDetected());
             telemetry.addData("Right Light = ", robot.RightLight.getLightDetected());
@@ -63,7 +63,7 @@ public class TeleTest extends LinearOpMode { //The name after public class needs
             robot.Lift.setPower(gamepad2.right_trigger);
         }
         else if(gamepad2.left_trigger > .02){
-            robot.Lift.setPower(gamepad2.left_trigger);
+            robot.Lift.setPower(-gamepad2.left_trigger);
         }
         else{
             robot.Lift.setPower(0);
@@ -74,7 +74,8 @@ public class TeleTest extends LinearOpMode { //The name after public class needs
     public double launchBall(double TargetEncoder) {
         double CurrentEncoder = robot.Flipper.getCurrentPosition();
         double OneRotation = 1650;
-
+        //if (gamepad2.dpad_up) robot.Flipper.setPower(.9);
+        //else robot.Flipper.setPower(0);
         if(TargetEncoder - CurrentEncoder < 3){
             robot.Flipper.setPower(0);
             if(gamepad2.dpad_up){
@@ -129,10 +130,10 @@ public class TeleTest extends LinearOpMode { //The name after public class needs
     }
     public void collection(){
         if (gamepad2.x){//if X is pressed make the spinner set to dispose of balls
-            robot.LiftCollector.setPower(-.5);
+            robot.LiftCollector.setPower(.9);
         }
         else if(gamepad2.b){//If B os pressed make the spinner set to collect balls
-            robot.LiftCollector.setPower(.5);
+            robot.LiftCollector.setPower(-.9);
         }
         else if(gamepad2.a){//If A is pressed make the spinner not spin
             robot.LiftCollector.setPower(0);
