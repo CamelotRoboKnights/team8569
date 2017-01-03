@@ -87,8 +87,8 @@ public class Merlin2Hardware
         hwMap = ahwMap;//Seting a reference for the hardware map
 
 
-        RightLight = hwMap.opticalDistanceSensor.get("odrSensor");//Finds the Right Optical Distance sensor in the hardware map
-        LeftLight = hwMap.opticalDistanceSensor.get("odlSensor");//Finds the Left Optical Distance sensor in the hardware map
+        RightLight = hwMap.opticalDistanceSensor.get("odlSensor");//Finds the Right Optical Distance sensor in the hardware map
+        LeftLight = hwMap.opticalDistanceSensor.get("odrSensor");//Finds the Left Optical Distance sensor in the hardware map
 
         LeftRange = hwMap.get(ModernRoboticsI2cRangeSensor.class, "LeftRange");//Finds the range sensor in the hardware map
         RightRange = hwMap.get(ModernRoboticsI2cRangeSensor.class, "RightRange");
@@ -111,7 +111,7 @@ public class Merlin2Hardware
         Motor4.setDirection(DcMotorSimple.Direction.REVERSE);//Sets the motor power to reverse so forwards is positive
         LiftCollector.setDirection(DcMotorSimple.Direction.REVERSE);//Sets the motor power to reverse so collecting is positive
         Flipper.setDirection(DcMotorSimple.Direction.REVERSE);//Sets the Flipper to forward so launching is positive
-        Lift.setDirection(DcMotorSimple.Direction.FORWARD);
+        Lift.setDirection(DcMotorSimple.Direction.REVERSE);
 
         // Set all motors to zero power
         Motor1.setPower(0);//Sets the power to 0 so motors don't move
