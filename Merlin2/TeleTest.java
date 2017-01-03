@@ -7,7 +7,10 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.CompassSensor;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Gamepad;
+import com.qualcomm.robotcore.util.Range;
+
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
+import org.firstinspires.ftc.teamcode.R;
 import org.firstinspires.ftc.teamcode.team.Merlin1.Merlin1Hardware; //More Import statements may be needed
 import org.firstinspires.ftc.teamcode.team.Merlin2.Merlin2Hardware;
 
@@ -31,17 +34,19 @@ public class TeleTest extends LinearOpMode { //The name after public class needs
         telemetry.addData("Say", "Hello Driver");    //It is ready to run
         telemetry.update();//Updates and displays data on the screen.
         // run until the end of the match (driver presses STOP)
-
+        double TargetEncoder = 0;
+        double LiftHeight = 0;
         waitForStart();
 
         while (opModeIsActive()) {
-            double TargetEncoder = 0;
-            double LiftHeight = 0;
-            feildOrentedDrive();
+
+            feildOrentedDrive(LiftHeight);
             collection();
             TargetEncoder = launchBall(TargetEncoder);
             LiftHeight = lift();
             telemetry.addData("LiftHeight", LiftHeight);
+
+            telemetry.addData("Flip Encoder", TargetEncoder);
 
             telemetry.addData("Left Light = ", robot.LeftLight.getLightDetected());
             telemetry.addData("Right Light = ", robot.RightLight.getLightDetected());
@@ -50,9 +55,9 @@ public class TeleTest extends LinearOpMode { //The name after public class needs
             telemetry.addData("cm optical", "%.2f cm", robot.RightRange.cmOptical());
             telemetry.addData("cm", "%.2f cm", robot.RightRange.getDistance(DistanceUnit.CM));
             telemetry.addData("Left raw ultrasonic", robot.LeftRange.rawUltrasonic());
-            telemetry.addData("raw optical", robot.LeftRange.rawOptical());
-            telemetry.addData("cm optical", "%.2f cm", robot.LeftRange.cmOptical());
-            telemetry.addData("cm", "%.2f cm", robot.LeftRange.getDistance(DistanceUnit.CM));
+            telemetry.addData("L raw optical", robot.LeftRange.rawOptical());
+            telemetry.addData("L cm optical", "%.2f cm", robot.LeftRange.cmOptical());
+            telemetry.addData(" L cm", "%.2f cm", robot.LeftRange.getDistance(DistanceUnit.CM));
             telemetry.update();
             // Pause for metronome tick.  40 mS each cycle = update 25 times a second.
             robot.waitForTick(40);
@@ -88,13 +93,17 @@ public class TeleTest extends LinearOpMode { //The name after public class needs
         return TargetEncoder;
     }
 
-    public void feildOrentedDrive(){
+    public void feildOrentedDrive(double LiftHeight){
         double JoyX;
         double JoyY;
         double NewX;
         double NewY;
         double OrientationDegrees;
         double OrientationRadians;
+        double Motor1Power;
+        double Motor2Power;
+        double Motor3Power;
+        double Motor4Power;
 
         JoyY = -gamepad1.left_stick_y;
         JoyX = gamepad1.left_stick_x;
@@ -104,22 +113,68 @@ public class TeleTest extends LinearOpMode { //The name after public class needs
         NewX = -JoyY * Math.sin(OrientationRadians) + JoyX * Math.cos(OrientationRadians);
 
         if(Math.abs(gamepad1.left_stick_y) >= 0.02 || Math.abs(gamepad1.left_stick_x) >= 0.02){
-            robot.Motor1.setPower(NewY - NewX);//Sets the motor power for the front right motor
-            robot.Motor2.setPower(NewY + NewX);//sets the motor power for the front left motor
-            robot.Motor3.setPower(NewY - NewX);//Sets the motor power for the back left motor
-            robot.Motor4.setPower(NewY + NewX);//Sets the motor power for the back right motor
+
+            Motor1Power = NewY - NewX;
+            //if(Motor1Power > 0) Motor1Power = Motor1Power - Math.abs(LiftHeight)/35000;
+            //else if(Motor1Power < 0 ) Motor1Power = Motor1Power + Math.abs(LiftHeight)/35000;
+            //else Motor1Power = 0;
+
+            Motor2Power = NewY + NewX;
+            //if(Motor2Power > 0) Motor2Power = Motor2Power - Math.abs(LiftHeight)/35000;
+            //else if(Motor2Power < 0 ) Motor2Power = Motor2Power + Math.abs(LiftHeight)/35000;
+            //else Motor2Power = 0;
+
+            Motor3Power = NewY - NewX;
+            //if(Motor3Power > 0) Motor3Power = Motor3Power - Math.abs(LiftHeight)/35000;
+            //else if(Motor3Power < 0 ) Motor3Power = Motor3Power + Math.abs(LiftHeight)/35000;
+            //else Motor3Power = 0;
+
+            Motor4Power = NewY + NewX;
+            //if(Motor4Power > 0) Motor4Power = Motor4Power - Math.abs(LiftHeight)/35000;
+            //else if(Motor4Power < 0 ) Motor4Power = Motor4Power + Math.abs(LiftHeight)/35000;
+            //else Motor4Power = 0;
+
+            Motor1Power = Range.clip(Motor1Power, -1, 1);
+            Motor2Power = Range.clip(Motor2Power,-1,1);
+            Motor3Power = Range.clip(Motor3Power, -1, 1);
+            Motor4Power = Range.clip(Motor4Power, -1, 1);
+
+
+            robot.Motor1.setPower(Motor1Power);
+            robot.Motor2.setPower(Motor2Power);
+            robot.Motor3.setPower(Motor3Power);
+            robot.Motor4.setPower(Motor4Power);
+
         }
         else if(gamepad1.right_trigger >= .02){//This cancels out noise and sets the robot to turn right at the speed of the right trigger
-            robot.Motor1.setPower(-gamepad1.right_trigger);
-            robot.Motor2.setPower(gamepad1.right_trigger);
-            robot.Motor3.setPower(gamepad1.right_trigger);
-            robot.Motor4.setPower(-gamepad1.right_trigger);
+            Motor1Power = -gamepad1.right_trigger + Math.abs(LiftHeight)/35000;
+            Motor2Power = gamepad1.right_trigger - Math.abs(LiftHeight)/35000;
+            Motor3Power = gamepad1.right_trigger - Math.abs(LiftHeight)/35000;
+            Motor4Power = -gamepad1.right_trigger + Math.abs(LiftHeight)/35000;
+            Motor1Power = Range.clip(Motor1Power, -1, 0);
+            Motor2Power = Range.clip(Motor2Power, 0,1);
+            Motor3Power = Range.clip(Motor3Power, 0, 1);
+            Motor4Power = Range.clip(Motor4Power, -1, 0);
+
+            robot.Motor1.setPower(Motor1Power);
+            robot.Motor2.setPower(Motor2Power);
+            robot.Motor3.setPower(Motor3Power);
+            robot.Motor4.setPower(Motor4Power);
         }
         else if(gamepad1.left_trigger >= .02){//This cancels out noise and sets the robot to turn left at the speed of the left trigger
-            robot.Motor1.setPower(gamepad1.left_trigger);
-            robot.Motor2.setPower(-gamepad1.left_trigger);
-            robot.Motor3.setPower(-gamepad1.left_trigger);
-            robot.Motor4.setPower(gamepad1.left_trigger);
+            Motor1Power = gamepad1.left_trigger - Math.abs(LiftHeight)/35000;
+            Motor2Power = -gamepad1.left_trigger + Math.abs(LiftHeight)/35000;
+            Motor3Power = -gamepad1.left_trigger + Math.abs(LiftHeight)/35000;
+            Motor4Power = gamepad1.left_trigger - Math.abs(LiftHeight)/35000;
+            Motor1Power = Range.clip(Motor1Power, 0, 1);
+            Motor2Power = Range.clip(Motor2Power,-1, 0);
+            Motor3Power = Range.clip(Motor3Power, -1, 0);
+            Motor4Power = Range.clip(Motor4Power, 0, 1);
+
+            robot.Motor1.setPower(Motor1Power);
+            robot.Motor2.setPower(Motor2Power);
+            robot.Motor3.setPower(Motor3Power);
+            robot.Motor4.setPower(Motor4Power);
         }
         else{//If none of these is true turn the power off to the motors to stop the robot
             robot.Motor1.setPower(0);
@@ -128,12 +183,13 @@ public class TeleTest extends LinearOpMode { //The name after public class needs
             robot.Motor4.setPower(0);
         }
     }
+
     public void collection(){
         if (gamepad2.x){//if X is pressed make the spinner set to dispose of balls
-            robot.LiftCollector.setPower(.9);
+            robot.LiftCollector.setPower(.5);
         }
         else if(gamepad2.b){//If B os pressed make the spinner set to collect balls
-            robot.LiftCollector.setPower(-.9);
+            robot.LiftCollector.setPower(-.5);
         }
         else if(gamepad2.a){//If A is pressed make the spinner not spin
             robot.LiftCollector.setPower(0);
