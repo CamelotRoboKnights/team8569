@@ -83,7 +83,7 @@ import java.util.List;
  * is explained below.
  */
 
-@Autonomous(name="Concept: Vuforia Navigation New", group ="Concept")
+//@Autonomous(name="Concept: Vuforia Navigation New", group ="Concept")
 
 public class ConceptVuforiaNavigationRoboKnights extends LinearOpMode {
 

@@ -84,8 +84,8 @@ import java.util.List;
  * is explained below.
  */
 
-@Autonomous(name="Concept: Vuforia Navigation", group ="Concept")
-@Disabled
+//@Autonomous(name="Concept: Vuforia Navigation", group ="Concept")
+//@Disabled
 public class ConceptVuforiaNavigationRobo extends LinearOpMode {
 
     public static final String TAG = "Vuforia Sample";

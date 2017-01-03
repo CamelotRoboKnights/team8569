@@ -20,7 +20,7 @@ import org.opencv.core.Size;
  * even extend the VisionOpMode class! Be sure to extend it if writing your own OpMode structure.
  */
 
-@Autonomous(name = "Basic Vision", group = "vision")
+//@Autonomous(name = "Basic Vision", group = "vision")
 
 public class BasicVisionSample extends VisionOpMode {
 
