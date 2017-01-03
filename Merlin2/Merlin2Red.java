@@ -24,6 +24,11 @@ import java.sql.Time;
 public class Merlin2Red extends LinearOpMode { //The name after public class needs to be the same as the file name
     long StartTime = 0;
     long TargetTime = 0;
+    double LastWorldLinearAccelX;
+    double LastWorldLinearAccelY;
+    static double LeftLightValue = .1;
+    static double RightLightValue = 1.8;
+    boolean CheckForWhiteLine = false;
 
     /* Declare OpMode members. */
     Merlin2Hardware robot = new Merlin2Hardware();//The hardware map needs to be the hardware map of the robot we are using
@@ -45,16 +50,13 @@ public class Merlin2Red extends LinearOpMode { //The name after public class nee
             //Where you write the code that you want to run
 
 
-
-
-
             telemetry.update();
             // Pause for metronome tick.  40 mS each cycle = update 25 times a second.
             robot.waitForTick(40);
         }
     }
 
-    public String turnToGyroHeading(double TargetHeading){
+    public String turnToGyroHeading(double TargetHeading) {
         String ReturnValue = "----";
         double CurrentHeading = robot.navx_device.getCompassHeading();
         double HeadingDifference = TargetHeading - CurrentHeading;
@@ -65,45 +67,43 @@ public class Merlin2Red extends LinearOpMode { //The name after public class nee
         robot.Motor2.setPower(HeadingDiffernceScalled);
         robot.Motor3.setPower(HeadingDiffernceScalled);
         robot.Motor4.setPower(-HeadingDiffernceScalled);
-        if(1<= Math.abs(HeadingDifference)) {
+        if (1 <= Math.abs(HeadingDifference)) {
             ReturnValue = "Done";
-        }
-        else{
+        } else {
             ReturnValue = "----";
         }
         return ReturnValue;
     }
-    public String loadBall(){
+
+    public String loadBall() {
         String ReturnValue = "";
         double CurrentTime = System.currentTimeMillis();
-        if(StartTime == 0){
+        if (StartTime == 0) {
             StartTime = System.currentTimeMillis();
             TargetTime = StartTime + 1000;
         }
-        if(TargetTime - CurrentTime <= 10){
+        if (TargetTime - CurrentTime <= 10) {
             ReturnValue = "Done";
             robot.LiftCollector.setPower(0);
-        }
-        else{
+        } else {
             ReturnValue = "----";
             robot.LiftCollector.setPower(.5);
         }
         return "";
     }
 
-    public String driveUltilWhiteLine(String Direction, String Sensor){
+    public String driveUltilWhiteLine(String Direction, String Sensor) {
         double LeftLightLine = .0001;//Set these values to half on white and half on black
         double RightLightLine = .0001;
         double LightRead;
         String ReturnValue = "";
-        if(Sensor.equals("Left")){
+        if (Sensor.equals("Left")) {
             LightRead = robot.LeftLight.getRawLightDetected();
-            if(LightRead > LeftLightLine) ReturnValue = "Done";
+            if (LightRead > LeftLightLine) ReturnValue = "Done";
             else ReturnValue = "----";
-        }
-        else if(Sensor.equals("Right")){
+        } else if (Sensor.equals("Right")) {
             LightRead = robot.RightLight.getRawLightDetected();
-            if(LightRead > RightLightLine) ReturnValue = "Done";
+            if (LightRead > RightLightLine) ReturnValue = "Done";
             else ReturnValue = "----";
         }
         robot.Motor1.setPower(.5);
@@ -114,7 +114,8 @@ public class Merlin2Red extends LinearOpMode { //The name after public class nee
 
 
     }
-    public String collisionDetection(double LastWorldLinearAccelX, double LastWorldLinearAccelY){
+
+    public String collisionDetection() {
         double CurrWorldLinearAccelX;//My current acceleration
         double CurrWorldLinearAccelY;
         double CurrentJerkX;//My chang in Acceleration
@@ -125,13 +126,13 @@ public class Merlin2Red extends LinearOpMode { //The name after public class nee
         CurrWorldLinearAccelX = robot.navx_device.getRawAccelX();//Gives the current acceleration
         CurrWorldLinearAccelY = robot.navx_device.getRawAccelY();
         CurrentJerkX = CurrWorldLinearAccelX - LastWorldLinearAccelX;//Figures out the acceleration change
-        CurrentJerkY =  CurrWorldLinearAccelY - LastWorldLinearAccelY;
-        if(CollisionThesholdG < Math.abs(CurrentJerkX) || CollisionThesholdG < Math.abs(CurrentJerkY)) {//Detects if a collision has happened
+        CurrentJerkY = CurrWorldLinearAccelY - LastWorldLinearAccelY;
+        if (CollisionThesholdG < Math.abs(CurrentJerkX) || CollisionThesholdG < Math.abs(CurrentJerkY)) {//Detects if a collision has happened
             if (CurrentJerkX >= CollisionThesholdG) {
                 ReturnValue = "YFast";//The robot is going faster in the Y direction
             } //if
             else if (CurrentJerkX <= -CollisionThesholdG) {
-                ReturnValue =  "YStop";//The robot is going slower in the Y direction
+                ReturnValue = "YStop";//The robot is going slower in the Y direction
             } //else if
 
             if (CurrentJerkY >= CollisionThesholdG) {
@@ -141,7 +142,7 @@ public class Merlin2Red extends LinearOpMode { //The name after public class nee
                 ReturnValue = "XStop";//The robot is going slower in the X direction
             }//else if
         } //if
-        else{
+        else {
             ReturnValue = "";
         }//else
 
@@ -155,20 +156,19 @@ public class Merlin2Red extends LinearOpMode { //The name after public class nee
         double CurrentEncoder = robot.Flipper.getCurrentPosition();
         double OneRotation = 1650;
 
-        if(TargetEncoder - CurrentEncoder < 3){
+        if (TargetEncoder - CurrentEncoder < 3) {
             robot.Flipper.setPower(0);
-            if(gamepad2.dpad_up){
-                TargetEncoder = TargetEncoder+OneRotation;
+            if (gamepad2.dpad_up) {
+                TargetEncoder = TargetEncoder + OneRotation;
             }
-        }
-        else{
+        } else {
             robot.Flipper.setPower(.9);
         }
         return TargetEncoder;
     }
 
 
-    public void lineFollow(String SideOfRobot, String SideOfLine){// REMEMBER TO SET THE MOTOR DIRECTIONS BACK
+    public void lineFollow(String SideOfRobot, String SideOfLine) {// REMEMBER TO SET THE MOTOR DIRECTIONS BACK
         double LightError = 0;
         double LightInegral = 0;
         double LightDerivative = 0;
@@ -188,15 +188,13 @@ public class Merlin2Red extends LinearOpMode { //The name after public class nee
         double Motor3Power = 0;
         double Motor4Power = 0;
 
-        if(SideOfRobot.equals("left")){
+        if (SideOfRobot.equals("left")) {
             TargetLightValue = 0.0771358;//The left is 0.0771358 and the right is .02833764
             CurrentLightValue = robot.LeftLight.getLightDetected();
-        }
-        else if (SideOfRobot.equals("right")){
+        } else if (SideOfRobot.equals("right")) {
             TargetLightValue = 0.02833764;
             CurrentLightValue = robot.LeftLight.getLightDetected();
-        }
-        else{
+        } else {
             telemetry.addData("Break!!!!!!!!!!!!!!!!!!", "");
             telemetry.update();
         }
@@ -208,27 +206,25 @@ public class Merlin2Red extends LinearOpMode { //The name after public class nee
         LightInegralScaled = LightInegral * LightIntegralScaler;
         LightDerivativeScaled = LightDerivative * LightDerivativeScaler;
         MotorPowerMotoifier = LightErrorScaled + LightDerivativeScaled + LightInegralScaled;
-        if(SideOfLine.equals("left")){
+        if (SideOfLine.equals("left")) {
             Motor1Power = .2 - MotorPowerMotoifier;
             Motor2Power = -.2 + MotorPowerMotoifier;
             Motor3Power = .2 + MotorPowerMotoifier;
             Motor4Power = -.2 - MotorPowerMotoifier;
-        }
-        else if(SideOfLine.equals("right")){
+        } else if (SideOfLine.equals("right")) {
             Motor1Power = .2 + MotorPowerMotoifier;
             Motor2Power = -.2 - MotorPowerMotoifier;
             Motor3Power = .2 - MotorPowerMotoifier;
             Motor4Power = -.2 + MotorPowerMotoifier;
-        }
-        else{
+        } else {
             telemetry.addData("Break!!!!!!!!!!!!!!!!!!", "");
             telemetry.update();
         }
 
-        Motor1Power = Range.clip(Motor1Power, -1 , 1);
-        Motor2Power = Range.clip(Motor2Power, -1 , 1);
-        Motor3Power = Range.clip(Motor3Power, -1 , 1);
-        Motor4Power = Range.clip(Motor4Power, -1 , 1);
+        Motor1Power = Range.clip(Motor1Power, -1, 1);
+        Motor2Power = Range.clip(Motor2Power, -1, 1);
+        Motor3Power = Range.clip(Motor3Power, -1, 1);
+        Motor4Power = Range.clip(Motor4Power, -1, 1);
         robot.Motor1.setPower(Motor1Power);
         robot.Motor2.setPower(Motor2Power);
         robot.Motor3.setPower(Motor3Power);
@@ -245,6 +241,60 @@ public class Merlin2Red extends LinearOpMode { //The name after public class nee
         telemetry.addData("motor4", Motor4Power);
 
 
-
     }
+
+    public String DriveUntilHit() {
+        double CurrWorldLinearAccelX;//My current acceleration
+        double CurrWorldLinearAccelY;
+        double CurrentJerkX;//My chang in Acceleration
+        double CurrentJerkY;
+        final double CollisionThesholdG = 0.5;//The threshold that has to be crossed to trigger a colision
+        String ReturnedValue = collisionDetection();
+        CurrWorldLinearAccelX = robot.navx_device.getRawAccelX();//Gives the current acceleration
+        CurrWorldLinearAccelY = robot.navx_device.getRawAccelY();
+        CurrentJerkX = CurrWorldLinearAccelX - LastWorldLinearAccelX;//Figures out the acceleration change
+        CurrentJerkY = CurrWorldLinearAccelY - LastWorldLinearAccelY;
+
+        if (CollisionThesholdG <= Math.abs(CurrentJerkX) || CollisionThesholdG <= Math.abs(CurrentJerkY)) {
+
+            if (ReturnedValue == "YStop") {
+                robot.Motor1.setPower(0);
+                robot.Motor2.setPower(0);
+                robot.Motor3.setPower(0);
+                robot.Motor4.setPower(0);
+                return "done";
+            } else if (ReturnedValue == "XStop") {
+                robot.Motor1.setPower(0);
+                robot.Motor2.setPower(0);
+                robot.Motor3.setPower(0);
+                robot.Motor4.setPower(0);
+                return "done";
+            } else {
+                return "----";
+            }
+        } else {
+            return "----";
+        }
+    }
+    public String CrossLeftLight() {
+
+        double CurrentLightValue;
+        double TargetLightValue;
+
+        CurrentLightValue = robot.LeftLight.getLightDetected();
+
+        if(CurrentLightValue > LeftLightValue & CheckForWhiteLine == true){
+            return "done";
+        }
+        else if(CurrentLightValue > LeftLightValue){
+            CheckForWhiteLine = true;
+            return("----");
+        }
+        else{
+            telemetry.addData("----","");
+            telemetry.update();
+        }
+        return("----");
+    }
+
 }
