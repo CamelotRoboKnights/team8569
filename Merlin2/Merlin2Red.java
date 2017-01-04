@@ -297,4 +297,25 @@ public class Merlin2Red extends LinearOpMode { //The name after public class nee
         return("----");
     }
 
+
+    public String IdentifyColor(){ //this is for red side
+        //these variables need to be passed in from other vision code
+        String BeaconLeftSide;
+        String BeaconRightSide;
+        if (BeaconLeftSide == "red" & BeaconRightSide == "blue"){
+            return "go left";
+            telemetry.addData("go left", BeaconLeftSide);
+        }
+        else if(BeaconLeftSide == "blue" & BeaconRightSide == "red"){
+            return "go right";
+            telemetry.addData("go right", BeaconLeftSide)
+;        }
+        else{
+            return "bad!!!!!!";
+            telemetry.addData("no color detected", "");
+        }
+
+
+
+    }
 }
