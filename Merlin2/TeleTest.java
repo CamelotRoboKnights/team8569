@@ -44,6 +44,8 @@ public class TeleTest extends LinearOpMode { //The name after public class needs
             collection();
             TargetEncoder = launchBall(TargetEncoder);
             LiftHeight = lift();
+
+
             telemetry.addData("LiftHeight", LiftHeight);
 
             telemetry.addData("Flip Encoder", TargetEncoder);
@@ -92,6 +94,269 @@ public class TeleTest extends LinearOpMode { //The name after public class needs
         }
         return TargetEncoder;
     }
+    public void driveChoice (double LiftHeight){
+
+        if(2*Math.abs(gamepad1.right_stick_x)+.2 >= gamepad1.right_stick_y)forwardDrive(LiftHeight);
+
+    }
+    public void backDrive(double LiftHeight){
+
+        double JoyY = -gamepad1.left_stick_y;
+        double JoyX = gamepad1.left_stick_x;
+        double Motor1Power;
+        double Motor2Power;
+        double Motor3Power;
+        double Motor4Power;
+
+        if(Math.abs(gamepad1.left_stick_y) >= 0.02 || Math.abs(gamepad1.left_stick_x) >= 0.02){
+
+            Motor1Power = JoyY - JoyX;
+
+            if(Motor1Power > 0) Motor1Power = Motor1Power - Math.abs(LiftHeight)/35000;
+            else if(Motor1Power < 0 ) Motor1Power = Motor1Power + Math.abs(LiftHeight)/35000;
+            else Motor1Power = 0;
+
+            Motor2Power = JoyY + JoyX;
+
+            if(Motor2Power > 0) Motor2Power = Motor2Power - Math.abs(LiftHeight)/35000;
+            else if(Motor2Power < 0 ) Motor2Power = Motor2Power + Math.abs(LiftHeight)/35000;
+            else Motor2Power = 0;
+
+            Motor3Power = JoyY - JoyX;
+
+            if(Motor3Power > 0) Motor3Power = Motor3Power - Math.abs(LiftHeight)/35000;
+            else if(Motor3Power < 0 ) Motor3Power = Motor3Power + Math.abs(LiftHeight)/35000;
+            else Motor3Power = 0;
+
+            Motor4Power = JoyY + JoyX;
+
+            if(Motor4Power > 0) Motor4Power = Motor4Power - Math.abs(LiftHeight)/35000;
+            else if(Motor4Power < 0 ) Motor4Power = Motor4Power + Math.abs(LiftHeight)/35000;
+            else Motor4Power = 0;
+
+            Motor1Power = -Motor1Power;
+            Motor2Power = -Motor2Power;
+            Motor3Power = -Motor3Power;
+            Motor4Power = -Motor4Power;
+
+
+            moveMotorsPower(Motor1Power, Motor2Power, Motor3Power, Motor4Power);
+
+        }
+        else if(gamepad1.right_trigger >= .02){//This cancels out noise and sets the robot to turn right at the speed of the right trigger
+            Motor1Power = -gamepad1.right_trigger + Math.abs(LiftHeight)/35000;
+            Motor2Power = gamepad1.right_trigger - Math.abs(LiftHeight)/35000;
+            Motor3Power = gamepad1.right_trigger - Math.abs(LiftHeight)/35000;
+            Motor4Power = -gamepad1.right_trigger + Math.abs(LiftHeight)/35000;
+            moveMotorsPower(Motor1Power, Motor2Power, Motor3Power, Motor4Power);
+        }
+        else if(gamepad1.left_trigger >= .02){//This cancels out noise and sets the robot to turn left at the speed of the left trigger
+            Motor1Power = gamepad1.left_trigger - Math.abs(LiftHeight)/35000;
+            Motor2Power = -gamepad1.left_trigger + Math.abs(LiftHeight)/35000;
+            Motor3Power = -gamepad1.left_trigger + Math.abs(LiftHeight)/35000;
+            Motor4Power = gamepad1.left_trigger - Math.abs(LiftHeight)/35000;
+            moveMotorsPower(Motor1Power, Motor2Power, Motor3Power, Motor4Power);
+        }
+        else{//If none of these is true turn the power off to the motors to stop the robot
+            moveMotorsPower(0, 0, 0, 0);
+        }
+    }
+    public void forwardDrive(double LiftHeight){
+
+        double JoyY = -gamepad1.left_stick_y;
+        double JoyX = gamepad1.left_stick_x;
+        double Motor1Power;
+        double Motor2Power;
+        double Motor3Power;
+        double Motor4Power;
+
+        if(Math.abs(gamepad1.left_stick_y) >= 0.02 || Math.abs(gamepad1.left_stick_x) >= 0.02){
+
+                Motor1Power = JoyY - JoyX;
+
+            if(Motor1Power > 0) Motor1Power = Motor1Power - Math.abs(LiftHeight)/35000;
+            else if(Motor1Power < 0 ) Motor1Power = Motor1Power + Math.abs(LiftHeight)/35000;
+            else Motor1Power = 0;
+
+            Motor2Power = JoyY + JoyX;
+
+            if(Motor2Power > 0) Motor2Power = Motor2Power - Math.abs(LiftHeight)/35000;
+            else if(Motor2Power < 0 ) Motor2Power = Motor2Power + Math.abs(LiftHeight)/35000;
+            else Motor2Power = 0;
+
+            Motor3Power = JoyY - JoyX;
+
+            if(Motor3Power > 0) Motor3Power = Motor3Power - Math.abs(LiftHeight)/35000;
+            else if(Motor3Power < 0 ) Motor3Power = Motor3Power + Math.abs(LiftHeight)/35000;
+            else Motor3Power = 0;
+
+            Motor4Power = JoyY + JoyX;
+
+            if(Motor4Power > 0) Motor4Power = Motor4Power - Math.abs(LiftHeight)/35000;
+            else if(Motor4Power < 0 ) Motor4Power = Motor4Power + Math.abs(LiftHeight)/35000;
+            else Motor4Power = 0;
+
+            moveMotorsPower(Motor1Power, Motor2Power, Motor3Power, Motor4Power);
+
+        }
+        else if(gamepad1.right_trigger >= .02){//This cancels out noise and sets the robot to turn right at the speed of the right trigger
+            Motor1Power = -gamepad1.right_trigger + Math.abs(LiftHeight)/35000;
+            Motor2Power = gamepad1.right_trigger - Math.abs(LiftHeight)/35000;
+            Motor3Power = gamepad1.right_trigger - Math.abs(LiftHeight)/35000;
+            Motor4Power = -gamepad1.right_trigger + Math.abs(LiftHeight)/35000;
+            moveMotorsPower(Motor1Power, Motor2Power, Motor3Power, Motor4Power);
+        }
+        else if(gamepad1.left_trigger >= .02){//This cancels out noise and sets the robot to turn left at the speed of the left trigger
+            Motor1Power = gamepad1.left_trigger - Math.abs(LiftHeight)/35000;
+            Motor2Power = -gamepad1.left_trigger + Math.abs(LiftHeight)/35000;
+            Motor3Power = -gamepad1.left_trigger + Math.abs(LiftHeight)/35000;
+            Motor4Power = gamepad1.left_trigger - Math.abs(LiftHeight)/35000;
+            moveMotorsPower(Motor1Power, Motor2Power, Motor3Power, Motor4Power);
+        }
+        else{//If none of these is true turn the power off to the motors to stop the robot
+            robot.Motor1.setPower(0);
+            robot.Motor2.setPower(0);
+            robot.Motor3.setPower(0);
+            robot.Motor4.setPower(0);
+        }
+    }
+    public void rightDrive(double LiftHeight){
+
+        double JoyY = -gamepad1.left_stick_y;
+        double JoyX = gamepad1.left_stick_x;
+        double Motor1Power;
+        double Motor2Power;
+        double Motor3Power;
+        double Motor4Power;
+
+        if(Math.abs(gamepad1.left_stick_y) >= 0.02 || Math.abs(gamepad1.left_stick_x) >= 0.02){
+
+            Motor1Power = JoyY - JoyX;
+
+            if(Motor1Power > 0) Motor1Power = Motor1Power - Math.abs(LiftHeight)/35000;
+            else if(Motor1Power < 0 ) Motor1Power = Motor1Power + Math.abs(LiftHeight)/35000;
+            else Motor1Power = 0;
+
+            Motor2Power = JoyY + JoyX;
+
+            if(Motor2Power > 0) Motor2Power = Motor2Power - Math.abs(LiftHeight)/35000;
+            else if(Motor2Power < 0 ) Motor2Power = Motor2Power + Math.abs(LiftHeight)/35000;
+            else Motor2Power = 0;
+
+            Motor3Power = JoyY - JoyX;
+
+            if(Motor3Power > 0) Motor3Power = Motor3Power - Math.abs(LiftHeight)/35000;
+            else if(Motor3Power < 0 ) Motor3Power = Motor3Power + Math.abs(LiftHeight)/35000;
+            else Motor3Power = 0;
+
+            Motor4Power = JoyY + JoyX;
+
+            if(Motor4Power > 0) Motor4Power = Motor4Power - Math.abs(LiftHeight)/35000;
+            else if(Motor4Power < 0 ) Motor4Power = Motor4Power + Math.abs(LiftHeight)/35000;
+            else Motor4Power = 0;
+
+            Motor1Power = -Motor1Power;
+            Motor2Power = Motor2Power;
+            Motor3Power = -Motor3Power;
+            Motor4Power = Motor4Power;
+
+
+            moveMotorsPower(Motor1Power, Motor2Power, Motor3Power, Motor4Power);
+
+        }
+        else if(gamepad1.right_trigger >= .02){//This cancels out noise and sets the robot to turn right at the speed of the right trigger
+            Motor1Power = -gamepad1.right_trigger + Math.abs(LiftHeight)/35000;
+            Motor2Power = gamepad1.right_trigger - Math.abs(LiftHeight)/35000;
+            Motor3Power = gamepad1.right_trigger - Math.abs(LiftHeight)/35000;
+            Motor4Power = -gamepad1.right_trigger + Math.abs(LiftHeight)/35000;
+            moveMotorsPower(Motor1Power, Motor2Power, Motor3Power, Motor4Power);
+        }
+        else if(gamepad1.left_trigger >= .02){//This cancels out noise and sets the robot to turn left at the speed of the left trigger
+            Motor1Power = gamepad1.left_trigger - Math.abs(LiftHeight)/35000;
+            Motor2Power = -gamepad1.left_trigger + Math.abs(LiftHeight)/35000;
+            Motor3Power = -gamepad1.left_trigger + Math.abs(LiftHeight)/35000;
+            Motor4Power = gamepad1.left_trigger - Math.abs(LiftHeight)/35000;
+            moveMotorsPower(Motor1Power, Motor2Power, Motor3Power, Motor4Power);
+        }
+        else{//If none of these is true turn the power off to the motors to stop the robot
+            moveMotorsPower(0, 0, 0, 0);
+        }
+    }
+    public void leftDrive(double LiftHeight){
+
+        double JoyY = -gamepad1.left_stick_y;
+        double JoyX = gamepad1.left_stick_x;
+        double Motor1Power;
+        double Motor2Power;
+        double Motor3Power;
+        double Motor4Power;
+
+        if(Math.abs(gamepad1.left_stick_y) >= 0.02 || Math.abs(gamepad1.left_stick_x) >= 0.02){
+
+            Motor1Power = JoyY - JoyX;
+
+            if(Motor1Power > 0) Motor1Power = Motor1Power - Math.abs(LiftHeight)/35000;
+            else if(Motor1Power < 0 ) Motor1Power = Motor1Power + Math.abs(LiftHeight)/35000;
+            else Motor1Power = 0;
+
+            Motor2Power = JoyY + JoyX;
+
+            if(Motor2Power > 0) Motor2Power = Motor2Power - Math.abs(LiftHeight)/35000;
+            else if(Motor2Power < 0 ) Motor2Power = Motor2Power + Math.abs(LiftHeight)/35000;
+            else Motor2Power = 0;
+
+            Motor3Power = JoyY - JoyX;
+
+            if(Motor3Power > 0) Motor3Power = Motor3Power - Math.abs(LiftHeight)/35000;
+            else if(Motor3Power < 0 ) Motor3Power = Motor3Power + Math.abs(LiftHeight)/35000;
+            else Motor3Power = 0;
+
+            Motor4Power = JoyY + JoyX;
+
+            if(Motor4Power > 0) Motor4Power = Motor4Power - Math.abs(LiftHeight)/35000;
+            else if(Motor4Power < 0 ) Motor4Power = Motor4Power + Math.abs(LiftHeight)/35000;
+            else Motor4Power = 0;
+
+            Motor1Power = Motor1Power;
+            Motor2Power = -Motor2Power;
+            Motor3Power = Motor3Power;
+            Motor4Power = -Motor4Power;
+
+
+            moveMotorsPower(Motor1Power, Motor2Power, Motor3Power, Motor4Power);
+
+        }
+        else if(gamepad1.right_trigger >= .02){//This cancels out noise and sets the robot to turn right at the speed of the right trigger
+            Motor1Power = -gamepad1.right_trigger + Math.abs(LiftHeight)/35000;
+            Motor2Power = gamepad1.right_trigger - Math.abs(LiftHeight)/35000;
+            Motor3Power = gamepad1.right_trigger - Math.abs(LiftHeight)/35000;
+            Motor4Power = -gamepad1.right_trigger + Math.abs(LiftHeight)/35000;
+            moveMotorsPower(Motor1Power, Motor2Power, Motor3Power, Motor4Power);
+        }
+        else if(gamepad1.left_trigger >= .02){//This cancels out noise and sets the robot to turn left at the speed of the left trigger
+            Motor1Power = gamepad1.left_trigger - Math.abs(LiftHeight)/35000;
+            Motor2Power = -gamepad1.left_trigger + Math.abs(LiftHeight)/35000;
+            Motor3Power = -gamepad1.left_trigger + Math.abs(LiftHeight)/35000;
+            Motor4Power = gamepad1.left_trigger - Math.abs(LiftHeight)/35000;
+            moveMotorsPower(Motor1Power, Motor2Power, Motor3Power, Motor4Power);
+        }
+        else{//If none of these is true turn the power off to the motors to stop the robot
+            moveMotorsPower(0, 0, 0, 0);
+        }
+    }
+
+    public void moveMotorsPower (double Motor1Power, double Motor2Power, double Motor3Power, double Motor4Power){
+        Motor1Power = Range.clip(Motor1Power, -1, 1);
+        Motor2Power = Range.clip(Motor2Power,-1,1);
+        Motor3Power = Range.clip(Motor3Power, -1, 1);
+        Motor4Power = Range.clip(Motor4Power, -1, 1);
+
+
+        robot.Motor1.setPower(Motor1Power);
+        robot.Motor2.setPower(Motor2Power);
+        robot.Motor3.setPower(Motor3Power);
+        robot.Motor4.setPower(Motor4Power);
+    }
 
     public void feildOrentedDrive(double LiftHeight){
         double JoyX;
@@ -115,24 +380,28 @@ public class TeleTest extends LinearOpMode { //The name after public class needs
         if(Math.abs(gamepad1.left_stick_y) >= 0.02 || Math.abs(gamepad1.left_stick_x) >= 0.02){
 
             Motor1Power = NewY - NewX;
-            //if(Motor1Power > 0) Motor1Power = Motor1Power - Math.abs(LiftHeight)/35000;
-            //else if(Motor1Power < 0 ) Motor1Power = Motor1Power + Math.abs(LiftHeight)/35000;
-            //else Motor1Power = 0;
+
+            if(Motor1Power > 0) Motor1Power = Motor1Power - Math.abs(LiftHeight)/35000;
+            else if(Motor1Power < 0 ) Motor1Power = Motor1Power + Math.abs(LiftHeight)/35000;
+            else Motor1Power = 0;
 
             Motor2Power = NewY + NewX;
-            //if(Motor2Power > 0) Motor2Power = Motor2Power - Math.abs(LiftHeight)/35000;
-            //else if(Motor2Power < 0 ) Motor2Power = Motor2Power + Math.abs(LiftHeight)/35000;
-            //else Motor2Power = 0;
+
+            if(Motor2Power > 0) Motor2Power = Motor2Power - Math.abs(LiftHeight)/35000;
+            else if(Motor2Power < 0 ) Motor2Power = Motor2Power + Math.abs(LiftHeight)/35000;
+            else Motor2Power = 0;
 
             Motor3Power = NewY - NewX;
-            //if(Motor3Power > 0) Motor3Power = Motor3Power - Math.abs(LiftHeight)/35000;
-            //else if(Motor3Power < 0 ) Motor3Power = Motor3Power + Math.abs(LiftHeight)/35000;
-            //else Motor3Power = 0;
+
+            if(Motor3Power > 0) Motor3Power = Motor3Power - Math.abs(LiftHeight)/35000;
+            else if(Motor3Power < 0 ) Motor3Power = Motor3Power + Math.abs(LiftHeight)/35000;
+            else Motor3Power = 0;
 
             Motor4Power = NewY + NewX;
-            //if(Motor4Power > 0) Motor4Power = Motor4Power - Math.abs(LiftHeight)/35000;
-            //else if(Motor4Power < 0 ) Motor4Power = Motor4Power + Math.abs(LiftHeight)/35000;
-            //else Motor4Power = 0;
+
+            if(Motor4Power > 0) Motor4Power = Motor4Power - Math.abs(LiftHeight)/35000;
+            else if(Motor4Power < 0 ) Motor4Power = Motor4Power + Math.abs(LiftHeight)/35000;
+            else Motor4Power = 0;
 
             Motor1Power = Range.clip(Motor1Power, -1, 1);
             Motor2Power = Range.clip(Motor2Power,-1,1);
@@ -155,7 +424,6 @@ public class TeleTest extends LinearOpMode { //The name after public class needs
             Motor2Power = Range.clip(Motor2Power, 0,1);
             Motor3Power = Range.clip(Motor3Power, 0, 1);
             Motor4Power = Range.clip(Motor4Power, -1, 0);
-
             robot.Motor1.setPower(Motor1Power);
             robot.Motor2.setPower(Motor2Power);
             robot.Motor3.setPower(Motor3Power);
