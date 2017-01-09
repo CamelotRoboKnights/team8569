@@ -21,6 +21,7 @@ import static java.lang.Boolean.TRUE;
 //@Disabled //Uncomment this if it is not wanted on the phone
 public class TeleTest extends LinearOpMode { //The name after public class needs to be the same as the file name
 
+    boolean ButtonPressed = FALSE;
 
     /* Declare OpMode members. */
     Merlin2Hardware robot = new Merlin2Hardware();//The hardware map needs to be the hardware map of the robot we are using
@@ -48,10 +49,15 @@ public class TeleTest extends LinearOpMode { //The name after public class needs
             //leftDrive(LiftHeight);
             //rightDrive(LiftHeight);
             //forwardDrive(LiftHeight);
+
             driveChoice(LiftHeight);
             collection();
             TargetEncoder = launchBall(TargetEncoder);
-            LiftHeight = lift();
+            LiftHeight = liftCapBallLift();
+            if(!ButtonPressed){
+                LiftHeight = lift();
+            }
+
 
 
             telemetry.addData("LiftHeight", LiftHeight);
@@ -102,15 +108,14 @@ public class TeleTest extends LinearOpMode { //The name after public class needs
         }
         return TargetEncoder;
     }
-    public void liftCapBallLift(){
+    public double liftCapBallLift(){
         double CurrentEncoder = robot.Lift.getCurrentPosition();
-        double FullHeight = 25000;
-        boolean ButtonPressed = FALSE;
+        double FullHeight = 23000;
         if (gamepad2.right_stick_button){
             ButtonPressed = TRUE;
         }
         if(ButtonPressed == TRUE) {
-            if (FullHeight - CurrentEncoder < 3) {
+            if (FullHeight - CurrentEncoder < 500) {
                 robot.Lift.setPower(0);
                 ButtonPressed = FALSE;
             } else {
@@ -121,6 +126,7 @@ public class TeleTest extends LinearOpMode { //The name after public class needs
         else{
             robot.Flipper.setPower(0);
         }
+        return CurrentEncoder;
     }
     public String primeCapBallLift(String CurrentCase){
         double StartTime;
