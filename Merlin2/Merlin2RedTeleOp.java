@@ -21,6 +21,8 @@ import static java.lang.Boolean.TRUE;
 //@Disabled //Uncomment this if it is not wanted on the phone
 public class Merlin2RedTeleOp extends LinearOpMode { //The name after public class needs to be the same as the file name
 
+    boolean ButtonPressed = FALSE;
+    double LiftDevisor = 28000;
 
     /* Declare OpMode members. */
     Merlin2Hardware robot = new Merlin2Hardware();//The hardware map needs to be the hardware map of the robot we are using
@@ -46,7 +48,10 @@ public class Merlin2RedTeleOp extends LinearOpMode { //The name after public cla
             driveChoice(LiftHeight);
             collection();
             TargetEncoder = launchBall(TargetEncoder);
-            LiftHeight = lift();
+            LiftHeight = liftCapBallLift();
+            if(!ButtonPressed){
+                LiftHeight = lift();
+            }
             print(LiftHeight, TargetEncoder);
 
 
@@ -56,9 +61,10 @@ public class Merlin2RedTeleOp extends LinearOpMode { //The name after public cla
     }
     public void print(double LiftHeight, double TargetEncoder){
         telemetry.addData("LiftHeight", LiftHeight);
-
+        telemetry.addData("YAW", robot.navx_device.getYaw());
         telemetry.addData("Flip Encoder", TargetEncoder);
-
+        telemetry.addData("AccelX", robot.navx_device.getWorldLinearAccelX()*386.0886);
+        telemetry.addData("Accely", robot.navx_device.getWorldLinearAccelY()*386.0886);
         telemetry.addData("Left Light = ", robot.LeftLight.getLightDetected());
         telemetry.addData("Right Light = ", robot.RightLight.getLightDetected());
         telemetry.addData("Right raw ultrasonic", robot.RightRange.rawUltrasonic());
@@ -100,15 +106,14 @@ public class Merlin2RedTeleOp extends LinearOpMode { //The name after public cla
         }
         return TargetEncoder;
     }
-    public void liftCapBallLift(){
+    public double liftCapBallLift(){
         double CurrentEncoder = robot.Lift.getCurrentPosition();
         double FullHeight = 23000;
-        boolean ButtonPressed = FALSE;
         if (gamepad2.right_stick_button){
             ButtonPressed = TRUE;
         }
         if(ButtonPressed == TRUE) {
-            if (FullHeight - CurrentEncoder < 3) {
+            if (FullHeight - CurrentEncoder < 500) {
                 robot.Lift.setPower(0);
                 ButtonPressed = FALSE;
             } else {
@@ -119,6 +124,7 @@ public class Merlin2RedTeleOp extends LinearOpMode { //The name after public cla
         else{
             robot.Flipper.setPower(0);
         }
+        return CurrentEncoder;
     }
     public String primeCapBallLift(String CurrentCase){
         double StartTime;
@@ -161,7 +167,7 @@ public class Merlin2RedTeleOp extends LinearOpMode { //The name after public cla
         double Motor3Power = 0;
         double Motor4Power = 0;
 
-        double LiftHeightScaled = 1-Math.abs(LiftHeight)/35000;
+        double LiftHeightScaled = 1-Math.abs(LiftHeight)/26000;
 
         if(Math.abs(gamepad1.left_stick_y) >= 0.02 || Math.abs(gamepad1.left_stick_x) >= 0.02){
 
@@ -224,7 +230,7 @@ public class Merlin2RedTeleOp extends LinearOpMode { //The name after public cla
         double Motor3Power = 0;
         double Motor4Power = 0;
 
-        double LiftHeightScaled = 1-Math.abs(LiftHeight)/35000;
+        double LiftHeightScaled = 1-Math.abs(LiftHeight)/26000;
 
         if(Math.abs(gamepad1.left_stick_y) >= 0.02 || Math.abs(gamepad1.left_stick_x) >= 0.02){
 
@@ -286,7 +292,7 @@ public class Merlin2RedTeleOp extends LinearOpMode { //The name after public cla
         double Motor3Power = 0;
         double Motor4Power = 0;
 
-        double LiftHeightScaled = 1-Math.abs(LiftHeight)/35000;
+        double LiftHeightScaled = 1-Math.abs(LiftHeight)/26000;
 
         if(Math.abs(gamepad1.left_stick_y) >= 0.02 || Math.abs(gamepad1.left_stick_x) >= 0.02){
 
@@ -348,7 +354,7 @@ public class Merlin2RedTeleOp extends LinearOpMode { //The name after public cla
         double Motor3Power = 0;
         double Motor4Power = 0;
 
-        double LiftHeightScaled = 1-Math.abs(LiftHeight)/35000;
+        double LiftHeightScaled = 1-Math.abs(LiftHeight)/26000;
 
         if(Math.abs(gamepad1.left_stick_y) >= 0.02 || Math.abs(gamepad1.left_stick_x) >= 0.02){
 
@@ -434,7 +440,7 @@ public class Merlin2RedTeleOp extends LinearOpMode { //The name after public cla
         NewY = JoyY * Math.cos(OrientationRadians) + JoyX * Math.sin(OrientationRadians);
         NewX = -JoyY * Math.sin(OrientationRadians) + JoyX * Math.cos(OrientationRadians);
 
-        double LiftHeightScaled = 1-Math.abs(LiftHeight)/35000;
+        double LiftHeightScaled = 1-Math.abs(LiftHeight)/26000;
 
         if(Math.abs(gamepad1.left_stick_y) >= 0.02 || Math.abs(gamepad1.left_stick_x) >= 0.02){
 
