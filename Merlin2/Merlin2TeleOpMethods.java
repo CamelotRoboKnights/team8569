@@ -1,4 +1,11 @@
 package org.firstinspires.ftc.teamcode.team.Merlin2;
+
+import com.qualcomm.robotcore.util.Range;
+
+import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
+
+import static java.lang.Boolean.FALSE;
+import static java.lang.Boolean.TRUE;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
@@ -6,62 +13,40 @@ import com.qualcomm.robotcore.hardware.CompassSensor;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.util.Range;
+import com.qualcomm.robotcore.eventloop.opmode.OpMode;
+
 
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import org.firstinspires.ftc.teamcode.R;
 import org.firstinspires.ftc.teamcode.team.Merlin1.Merlin1Hardware; //More Import statements may be needed
 import org.firstinspires.ftc.teamcode.team.Merlin2.Merlin2Hardware;
 
-import java.security.cert.LDAPCertStoreParameters;
+/**
+ * Created by RoboKnights on 1/9/2017.
+ */
 
-import static java.lang.Boolean.FALSE;
-import static java.lang.Boolean.TRUE;
+public class Merlin2TeleOpMethods extends OpMode{
 
-@TeleOp(name = "RealOp", group = "Merlin2")//This NEEDS to be changed tp the name of the code
-//@Disabled //Uncomment this if it is not wanted on the phone
-public class Merlin2RedTeleOp extends LinearOpMode { //The name after public class needs to be the same as the file name
-    int VersionNumber = 1;
-    boolean ButtonPressed = FALSE;
-    double LiftDevisor =3000;
-    double TargetEncoder = 0;
-    double LiftHeight = 0;
-
-    /* Declare OpMode members. */
     Merlin2Hardware robot = new Merlin2Hardware();//The hardware map needs to be the hardware map of the robot we are using
+    public boolean ButtonPressed = FALSE;
+    public double LiftDivisor = 26000;
+    public double TargetEncoder = 0;
+    public double LiftHeight = 0;
 
-    @Override
-    public void runOpMode() {
-        /* Initialize the hardware variables.
-         * The init() method of the hardware class does all the work here
-         */
+    public void init(){
         robot.init(hardwareMap);
-        //init other variables.
-
-        // Send telemetry message to signify robot waiting;
-        telemetry.addData("Say", "Hello Driver");    //It is ready to run
-        telemetry.update();//Updates and displays data on the screen.
-        // run until the end of the match (driver presses STOP)
-        TargetEncoder = robot.Flipper.getCurrentPosition();
-        waitForStart();
-
-        while (opModeIsActive()) {
-
-            driveChoice(LiftHeight);
-            collection();
-            TargetEncoder = launchBall(TargetEncoder);
-            LiftHeight = liftCapBallLift();
-            if(!ButtonPressed){
-                LiftHeight = lift();
-            }
-            print(LiftHeight, TargetEncoder);
-
-
-            // Pause for metronome tick.  40 mS each cycle = update 25 times a second.
-            robot.waitForTick(40);
-        }
     }
+    @Override
+    public void init_loop(){}
+    @Override
+    public void start(){}
+    @Override
+    public void loop(){}
+    @Override
+    public void stop(){}
+
+
     public void print(double LiftHeight, double TargetEncoder){
-        telemetry.addData("VersionNumber", VersionNumber);
         telemetry.addData("LiftHeight", LiftHeight);
         telemetry.addData("YAW", robot.navx_device.getYaw());
         telemetry.addData("Flip Encoder", TargetEncoder);
@@ -95,12 +80,13 @@ public class Merlin2RedTeleOp extends LinearOpMode { //The name after public cla
     public double launchBall(double TargetEncoder) {
         double CurrentEncoder = robot.Flipper.getCurrentPosition();
         double OneRotation = 1650;
-        if(TargetEncoder - CurrentEncoder < 3 && gamepad2.dpad_up){
-            robot.Flipper.setPower(9);
-            TargetEncoder = CurrentEncoder+OneRotation;
-        }
-        else if (TargetEncoder - CurrentEncoder < 3){
+        //if (gamepad2.dpad_up) robot.Flipper.setPower(.9);
+        //else robot.Flipper.setPower(0);
+        if(TargetEncoder - CurrentEncoder < 3){
             robot.Flipper.setPower(0);
+            if(gamepad2.dpad_up){
+                TargetEncoder = TargetEncoder+OneRotation;
+            }
         }
         else{
             robot.Flipper.setPower(.9);
@@ -168,7 +154,7 @@ public class Merlin2RedTeleOp extends LinearOpMode { //The name after public cla
         double Motor3Power = 0;
         double Motor4Power = 0;
 
-        double LiftHeightScaled = 1-Math.abs(LiftHeight)/LiftDevisor;
+        double LiftHeightScaled = 1-Math.abs(LiftHeight)/LiftDivisor;
 
         if(Math.abs(gamepad1.left_stick_y) >= 0.02 || Math.abs(gamepad1.left_stick_x) >= 0.02){
 
@@ -231,7 +217,7 @@ public class Merlin2RedTeleOp extends LinearOpMode { //The name after public cla
         double Motor3Power = 0;
         double Motor4Power = 0;
 
-        double LiftHeightScaled = 1-Math.abs(LiftHeight)/ LiftDevisor;
+        double LiftHeightScaled = 1-Math.abs(LiftHeight)/LiftDivisor;
 
         if(Math.abs(gamepad1.left_stick_y) >= 0.02 || Math.abs(gamepad1.left_stick_x) >= 0.02){
 
@@ -293,7 +279,7 @@ public class Merlin2RedTeleOp extends LinearOpMode { //The name after public cla
         double Motor3Power = 0;
         double Motor4Power = 0;
 
-        double LiftHeightScaled = 1-Math.abs(LiftHeight)/LiftDevisor;
+        double LiftHeightScaled = 1-Math.abs(LiftHeight)/LiftDivisor;
 
         if(Math.abs(gamepad1.left_stick_y) >= 0.02 || Math.abs(gamepad1.left_stick_x) >= 0.02){
 
@@ -355,7 +341,7 @@ public class Merlin2RedTeleOp extends LinearOpMode { //The name after public cla
         double Motor3Power = 0;
         double Motor4Power = 0;
 
-        double LiftHeightScaled = 1-Math.abs(LiftHeight)/LiftDevisor;
+        double LiftHeightScaled = 1-Math.abs(LiftHeight)/LiftDivisor;
 
         if(Math.abs(gamepad1.left_stick_y) >= 0.02 || Math.abs(gamepad1.left_stick_x) >= 0.02){
 
@@ -441,7 +427,7 @@ public class Merlin2RedTeleOp extends LinearOpMode { //The name after public cla
         NewY = JoyY * Math.cos(OrientationRadians) + JoyX * Math.sin(OrientationRadians);
         NewX = -JoyY * Math.sin(OrientationRadians) + JoyX * Math.cos(OrientationRadians);
 
-        double LiftHeightScaled = 1-Math.abs(LiftHeight)/LiftDevisor;
+        double LiftHeightScaled = 1-Math.abs(LiftHeight)/LiftDivisor;
 
         if(Math.abs(gamepad1.left_stick_y) >= 0.02 || Math.abs(gamepad1.left_stick_x) >= 0.02){
 
