@@ -1,4 +1,3 @@
-//Commenting is done 17-1-13
 /*
 * My methods and what they do.
 *
@@ -19,7 +18,7 @@
 *
  */
 
-
+//Commenting is done 17-1-13
 package org.firstinspires.ftc.teamcode.team.Merlin2;
 
 import android.widget.Switch;

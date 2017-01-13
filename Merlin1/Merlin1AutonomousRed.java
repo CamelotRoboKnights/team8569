@@ -1,4 +1,10 @@
 /*
+ * This is the code from our scrimadge
+ */
+
+
+
+/*
 * Cases:
 *
 * 1. Launch ball 1 Using encoder
@@ -42,6 +48,7 @@ package org.firstinspires.ftc.teamcode.team.Merlin1;
 
 import com.kauailabs.navx.ftc.navXPIDController;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorController;
@@ -54,7 +61,7 @@ import java.sql.Time;
 import java.util.Currency;
 
 @Autonomous(name = "RED", group = "Merlin1")
-
+@Disabled
 
 public class Merlin1AutonomousRed extends LinearOpMode {
 

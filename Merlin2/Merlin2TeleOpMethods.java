@@ -80,18 +80,17 @@ class Merlin2TeleOpMethods extends OpMode {
         if (gamepad2.right_stick_button){
             ButtonPressed = TRUE;
         }
-        if(ButtonPressed == TRUE) {
+        else if(ButtonPressed == TRUE) {
             if (FullHeight - CurrentEncoder < 500) {
                 robot.Lift.setPower(0);
                 ButtonPressed = FALSE;
-            } else {
+            }
+            else {
                 robot.Lift.setPower(1);
 
             }
         }
-        else{
-            robot.Lift.setPower(0);
-        }
+
 
         return CurrentEncoder;
     }
@@ -450,10 +449,10 @@ class Merlin2TeleOpMethods extends OpMode {
 
     void collection(){
         if (gamepad2.x){//if X is pressed make the spinner set to dispose of balls
-            robot.LiftCollector.setPower(.9);
+            robot.LiftCollector.setPower(.4);
         }
         else if(gamepad2.b){//If B os pressed make the spinner set to collect balls
-            robot.LiftCollector.setPower(-.9);
+            robot.LiftCollector.setPower(-.4);
         }
         else if(gamepad2.a){//If A is pressed make the spinner not spin
             robot.LiftCollector.setPower(0);

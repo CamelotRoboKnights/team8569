@@ -7,8 +7,8 @@ package org.firstinspires.ftc.teamcode.team.Merlin2;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
-@TeleOp(name = "TeleOp", group = "Merlin2")//This NEEDS to be changed tp the name of the code
-@Disabled //Uncomment this if it is not wanted on the phone
+@TeleOp(name = "RealOp", group = "Merlin2")//This NEEDS to be changed tp the name of the code
+//@Disabled //Uncomment this if it is not wanted on the phone
 public class Merlin2RealTeleOp extends Merlin2TeleOpMethods{
 
     public void init(){//This only runs once
