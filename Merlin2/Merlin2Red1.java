@@ -63,14 +63,13 @@ public class Merlin2Red1 extends Merlin2Auto {
 
     @Override
     public void init() {
-
-        robot.init(hardwareMap);
-        //super.initCamera();
+        super.init();
+        super.initCamera();
 
         telemetry.addData("Say", "Hello Driver");    //
         robot.navx_device.zeroYaw();
 
-        
+
 
     }
 
@@ -90,7 +89,7 @@ public class Merlin2Red1 extends Merlin2Auto {
         telemetry.addData("Side", BeaconSide);
         switch (CurrentCase){
             case "GoForwardBeforeShoot":
-                CompletionClause = super.driveBasedOnEncoders(10, "Forward");
+                CompletionClause = super.driveBasedOnEncoders(20, "Forward");
                 if(CompletionClause.equals("Done")){
                     CurrentCase = "MakeSureItIsOnAngle";
                     CompletionClause = "NOTDONE";
@@ -124,6 +123,14 @@ public class Merlin2Red1 extends Merlin2Auto {
             case "ShootSecondBall":
                 CompletionClause = super.launchBall();
                 if(CompletionClause.equals("Done")){
+                    CurrentCase = "AngleToDetermineBeacon";
+                    CompletionClause = "NOTDONE";
+                    super.resetAll();
+                }
+                break;
+            case "AngleToDetermineBeacon":
+                CompletionClause = super.turnToGyroHeading(10);//CodeWorks till here
+                if(CompletionClause.equals("Done")){
                     CurrentCase = "TryToIdentifyBeaconTakeOne";
                     CompletionClause = "NOTDONE";
                     super.resetAll();
@@ -138,7 +145,7 @@ public class Merlin2Red1 extends Merlin2Auto {
                 }
                 break;
             case "FirstTurnToBeacon":
-                CompletionClause = super.turnToGyroHeading(-22);//CodeWorks till here
+                CompletionClause = super.turnToGyroHeading(-30);//CodeWorks till here
                 if(CompletionClause.equals("Done")){
                     CurrentCase = "GoToTheWhiteLineAfterShoot";
                     CompletionClause = "NOTDONE";

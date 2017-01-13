@@ -20,7 +20,7 @@ import org.opencv.core.Size;
  * even extend the VisionOpMode class! Be sure to extend it if writing your own OpMode structure.
  */
 
-//@Autonomous(name = "Basic Vision", group = "vision")
+@Autonomous(name = "Basic Vision2", group = "vision")
 
 public class BasicVisionSample extends VisionOpMode {
 
@@ -40,7 +40,7 @@ public class BasicVisionSample extends VisionOpMode {
          * Larger = sometimes more accurate, but also much slower
          * After this method runs, it will set the "width" and "height" of the frame
          **/
-        this.setFrameSize(new Size(900, 900));
+        this.setFrameSize(new Size(1280, 720));
 
         /**
          * Enable extensions. Use what you need.
@@ -54,14 +54,14 @@ public class BasicVisionSample extends VisionOpMode {
          * Set the beacon analysis method
          * Try them all and see what works!
          */
-        beacon.setAnalysisMethod(Beacon.AnalysisMethod.FAST);
+        beacon.setAnalysisMethod(Beacon.AnalysisMethod.COMPLEX);
 
         /**
          * Set color tolerances
          * 0 is default, -1 is minimum and 1 is maximum tolerance
          */
-        beacon.setColorToleranceRed(0);
-        beacon.setColorToleranceBlue(0);
+        beacon.setColorToleranceRed(-.5);
+        beacon.setColorToleranceBlue(-.5);
 
         /**
          * Set analysis boundary
@@ -89,7 +89,7 @@ public class BasicVisionSample extends VisionOpMode {
          */
         rotation.setIsUsingSecondaryCamera(false);
         rotation.disableAutoRotate();
-        rotation.setActivityOrientationFixed(ScreenOrientation.PORTRAIT);
+        rotation.setActivityOrientationFixed(ScreenOrientation.LANDSCAPE_REVERSE);
 
         /**
          * Set camera control extension preferences
@@ -104,7 +104,9 @@ public class BasicVisionSample extends VisionOpMode {
     @Override
     public void loop() {
         super.loop();
-
+        telemetry.addData("BlueLeft", beacon.getAnalysis().isLeftBlue());
+        telemetry.addData("BlueRight", beacon.getAnalysis().isRightBlue());
+        telemetry.addData("RedLeft", beacon.getAnalysis().isLeftRed());
         telemetry.addData("Beacon Color", beacon.getAnalysis().getColorString());
         telemetry.addData("Beacon Center", beacon.getAnalysis().getLocationString());
         telemetry.addData("Beacon Confidence", beacon.getAnalysis().getConfidenceString());

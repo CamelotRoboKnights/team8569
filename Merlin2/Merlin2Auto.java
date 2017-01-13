@@ -21,11 +21,16 @@ class Merlin2Auto extends VisionOpMode {//This extends Vision Op Mode witch allo
     private boolean FirstTime = true;//Used in driveBasedOnEncoders and launch ball to signify the first time the method has run
     private double TargetEncoder = 0;//Used in launchBall to determine at what encoder value the ball will be launched.
     private int CantTellCounter;//Used in choseSide to decide if it can't tell the color
+    private int RightConfidence;
+    private int LeftConfidence;
+    private int AllBlue;
+    private int AllRed;
 
     /* Declare OpMode members. */
     Merlin2Hardware robot = new Merlin2Hardware();//The hardware map needs to be the hardware map of the robot we are using
     @Override
-    public void init(){//robot.init(hardwareMap);
+    public void init(){robot.init(hardwareMap);
+
     }//This initializes the hardware map for use
     @Override
     public void init_loop(){}//Part of the OpMode requirements
@@ -280,25 +285,40 @@ class Merlin2Auto extends VisionOpMode {//This extends Vision Op Mode witch allo
     String choseSide(String TeamColor){ //this is for red side
         String Side = "";//The side of the beacon is the color I want
         if(TeamColor.equals("RED")){//If my team color is red
-            if (beacon.getAnalysis().getConfidence() > 90 && beacon.getAnalysis().isBeaconFound()){//if I am confident enough in my color desision
+            if (beacon.getAnalysis().isBeaconFound()){//if I am confident enough in my color desision
                 if(beacon.getAnalysis().isLeftBlue() && beacon.getAnalysis().isRightBlue()){//If both sides are blue return that is is all blue
-                    Side = "NOblue";
+                    AllBlue++;
+                    if(AllBlue > 1000) {
+                        Side = "NOBlue";
+                    }
                 }
                 else if (beacon.getAnalysis().isLeftRed() && beacon.getAnalysis().isRightRed()){//If both sides are red return that is is all red
-                    Side = "NORed";
+                    AllRed++;
+                    if(AllRed > 1000){
+                        Side = "NORed";
+                    }
                 }
                 else if(beacon.getAnalysis().isLeftBlue() && beacon.getAnalysis().isRightRed()){//If red is on the right tell me red is on the right
-                    Side = "Right";
+                    RightConfidence++;
+                    if(RightConfidence > 1000) {
+                        Side = "Right";
+                    }
                 }
                 else if(beacon.getAnalysis().isLeftRed() && beacon.getAnalysis().isRightBlue()){//if the left side is red tell me I want the left side
-                    Side = "Left";
+                    LeftConfidence++;
+                    if(LeftConfidence > 1000){
+                        Side = "Left";
+                    }
                 }
                 else{//If none of those are true and I can't tell even though im 90% certain then tell me that
-                    Side = "JustNO";
+                    CantTellCounter++;
+                    if(CantTellCounter > 1000) {
+                        Side = "JustNO";
+                    }
                 }
             }
             else{//If it isnt 90% accurate tell me it cant tell after running a few times
-                if(CantTellCounter > 50){
+                if(CantTellCounter > 1000){
                     Side = "CantTell";
                     telemetry.addData("Can't", "tell");
                 }
@@ -306,7 +326,7 @@ class Merlin2Auto extends VisionOpMode {//This extends Vision Op Mode witch allo
             }
         }
         else if(TeamColor.equals("BLUE")){//Same thing as the red but it is looking for one side to be blue
-            if (beacon.getAnalysis().getConfidence() > 90 && beacon.getAnalysis().isBeaconFound()){
+            if (beacon.getAnalysis().isBeaconFound()){
                 if(beacon.getAnalysis().isLeftBlue() && beacon.getAnalysis().isRightBlue()){
                     Side = "NOBLUE";
                 }
@@ -325,15 +345,22 @@ class Merlin2Auto extends VisionOpMode {//This extends Vision Op Mode witch allo
                 }
             }
             else{
-                if(CantTellCounter > 50){
+                if(CantTellCounter > 1000){
                     Side = "CantTell";
                     telemetry.addData("Can't", "tell");
                 }
                 else CantTellCounter++;
             }
+
         }
+        telemetry.addData("Blue Left", beacon.getAnalysis().isLeftBlue());
+        telemetry.addData("Blue Rigth", beacon.getAnalysis().isRightBlue());
+        telemetry.addData("Red left", beacon.getAnalysis().isLeftRed());
+        telemetry.addData("red right", beacon.getAnalysis().isRightRed());
+        telemetry.addData("Beacon Confidence", beacon.getAnalysis().getConfidenceString());
         telemetry.addData("Side", Side);
         return Side;
+
     }
 
     String driveBasedOnEncoders(double Distance, String Direction){
@@ -430,7 +457,7 @@ class Merlin2Auto extends VisionOpMode {//This extends Vision Op Mode witch allo
          * Larger = sometimes more accurate, but also much slower
          * After this method runs, it will set the "width" and "height" of the frame
          **/
-        this.setFrameSize(new Size(900, 900));
+        this.setFrameSize(new Size(1280, 720));
 
         /**
          * Enable extensions. Use what you need.
@@ -450,8 +477,8 @@ class Merlin2Auto extends VisionOpMode {//This extends Vision Op Mode witch allo
          * Set color tolerances
          * 0 is default, -1 is minimum and 1 is maximum tolerance
          */
-        beacon.setColorToleranceRed(0);
-        beacon.setColorToleranceBlue(0);
+        beacon.setColorToleranceRed(-.5);
+        beacon.setColorToleranceBlue(-.5);
 
         /**
          * Set analysis boundary
@@ -479,7 +506,7 @@ class Merlin2Auto extends VisionOpMode {//This extends Vision Op Mode witch allo
          */
         rotation.setIsUsingSecondaryCamera(false);
         rotation.disableAutoRotate();
-        rotation.setActivityOrientationFixed(ScreenOrientation.PORTRAIT);
+        rotation.setActivityOrientationFixed(ScreenOrientation.LANDSCAPE_REVERSE);
 
         /**
          * Set camera control extension preferences

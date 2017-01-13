@@ -1,5 +1,7 @@
 package org.firstinspires.ftc.teamcode.team.Vision_Code;
 
+import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+
 import org.lasarobotics.vision.android.Cameras;
 import org.lasarobotics.vision.detection.ColorBlobDetector;
 import org.lasarobotics.vision.ftc.resq.Beacon;

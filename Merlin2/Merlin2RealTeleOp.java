@@ -8,6 +8,7 @@ public class Merlin2RealTeleOp extends Merlin2TeleOpMethods{
 
     public void init(){
         super.init();
+        //super.initCamera();
     }
     @Override
     public void init_loop(){
@@ -19,8 +20,10 @@ public class Merlin2RealTeleOp extends Merlin2TeleOpMethods{
 
         super.driveChoice(super.LiftHeight);
         super.collection();
+
         super.TargetEncoder = super.launchBall(TargetEncoder);
         super.LiftHeight = liftCapBallLift();
+
         if(!super.ButtonPressed){
             super.LiftHeight = super.lift();
         }
