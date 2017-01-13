@@ -1,9 +1,16 @@
+/*
+ * This was written when trying to write the field oriented drive, it was used
+ * to do mass amounts of math for us
+ */
+
 package org.firstinspires.ftc.teamcode.team.Other;
 
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 @TeleOp(name="Math", group = "Other")
+@Disabled
 public class LongMath extends LinearOpMode {
 
     double versionNumber = 1;

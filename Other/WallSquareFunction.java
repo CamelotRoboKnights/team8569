@@ -1,3 +1,8 @@
+/*
+ * This squares us against the wall, it could be used but deemed unnecessary
+ * due to the gyro on the NavX sensor
+ */
+
 package org.firstinspires.ftc.teamcode.team.Other;
 
 
@@ -21,7 +26,7 @@ import org.firstinspires.ftc.teamcode.team.Merlin1.Merlin1Hardware;
 
 
 @TeleOp(name = "wall square", group = "Merlin1")//This is the name of the code and what will be seen on the robot phone
-//@Disabled //Uncomment this if it is not wanted on the phone
+@Disabled //Uncomment this if it is not wanted on the phone
 public class WallSquareFunction extends LinearOpMode {
 
 

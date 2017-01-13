@@ -1,46 +1,37 @@
+/*
+* This is an Old autonomous and is no longer being used so warnings were not cleaned up,
+* this is a basic early version of the Methods for our new Autonomous programs
+*
+*
+ */
+
+
 package org.firstinspires.ftc.teamcode.team.Merlin2;//This might need to changed to be in a differnt folder like Merlin1 or K9Robo
 
 
-import android.widget.Switch;
-
-import com.ftdi.j2xx.ft4222.FT_4222_Defines;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-import com.qualcomm.robotcore.hardware.CompassSensor;
-import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.DcMotorSimple;
-import com.qualcomm.robotcore.hardware.Gamepad;
-import com.qualcomm.robotcore.util.DifferentialControlLoopCoefficients;
 import com.qualcomm.robotcore.util.Range;
 
-import java.lang.annotation.Target;
-import java.util.*;
-
-import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
-import org.firstinspires.ftc.teamcode.team.Merlin1.Merlin1Hardware; //More Import statements may be needed
-
-import java.sql.Time;
-
 @Autonomous(name = "RED2", group = "Merlin2")//This NEEDS to be changed tp the name of the code
-//@Disabled //Uncomment this if it is not wanted on the phone
+@Disabled //Uncomment this if it is not wanted on the phone
 public class Merlin2Red extends LinearOpMode { //The name after public class needs to be the same as the file name
-    long StartTime = 0;
-    long TargetTime = 0;
-    double LastWorldLinearAccelX;
-    double LastWorldLinearAccelY;
-    static double LeftLightValue = .05;
-    static double RightLightValue = .2;
-    boolean CheckForWhiteLine = false;
-    double DistanceTraveled = 0;
-    double VelocityBefore = 0;
-    double VelocityNow = 0;
-    boolean FirstTime = false;
-    double StartEncoder;
+    private long StartTime = 0;
+    private long TargetTime = 0;
+    private double LastWorldLinearAccelX;
+    private double LastWorldLinearAccelY;
+    private static double LeftLightValue = .05;
+    private static double RightLightValue = .2;
+    private boolean CheckForWhiteLine = false;
+    private double DistanceTraveled = 0;
+    private double VelocityBefore = 0;
+    private double VelocityNow = 0;
+    private boolean FirstTime = false;
+    private double StartEncoder;
 
     /* Declare OpMode members. */
-    Merlin2Hardware robot = new Merlin2Hardware();//The hardware map needs to be the hardware map of the robot we are using
+    private Merlin2Hardware robot = new Merlin2Hardware();//The hardware map needs to be the hardware map of the robot we are using
 
     @Override
     public void runOpMode() {

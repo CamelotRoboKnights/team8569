@@ -1,3 +1,8 @@
+/*
+ * This is the old TeleOp and has been replaced by Merlin2RealTeleOp.
+ */
+
+
 package org.firstinspires.ftc.teamcode.team.Merlin2;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
@@ -18,7 +23,7 @@ import static java.lang.Boolean.FALSE;
 import static java.lang.Boolean.TRUE;
 
 @TeleOp(name = "RealOp", group = "Merlin2")//This NEEDS to be changed tp the name of the code
-//@Disabled //Uncomment this if it is not wanted on the phone
+@Disabled //Uncomment this if it is not wanted on the phone
 public class Merlin2RedTeleOp extends LinearOpMode { //The name after public class needs to be the same as the file name
     int VersionNumber = 1;
     boolean ButtonPressed = FALSE;

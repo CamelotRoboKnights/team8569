@@ -1,3 +1,8 @@
+/*
+ * This is the teleOp that things get tested in before implementation, the real TeleOp is Merlin2RealTeleOp
+ *
+ */
+
 package org.firstinspires.ftc.teamcode.team.Merlin2;//This might need to changed to be in a differnt folder like Merlin1 or K9Robo
 
 
@@ -18,7 +23,7 @@ import static java.lang.Boolean.FALSE;
 import static java.lang.Boolean.TRUE;
 
 @TeleOp(name = "TestOp", group = "Merlin2")//This NEEDS to be changed tp the name of the code
-//@Disabled //Uncomment this if it is not wanted on the phone
+@Disabled //Uncomment this if it is not wanted on the phone
 public class TeleTest extends LinearOpMode { //The name after public class needs to be the same as the file name
 
     boolean ButtonPressed = FALSE;

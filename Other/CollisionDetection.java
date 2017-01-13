@@ -1,3 +1,11 @@
+/*
+ * This is the Collision Detection code, it detects when colisions happen,
+ * is is used in the collisionDetection method of Merlin2Auto. This has not been
+ * as fine tuned as the code in the method and is a general Idea for it so it can be
+ * used with different robots and be fine tuned to be proper for them.
+ *
+ */
+
 package org.firstinspires.ftc.teamcode.team.Other;
 
 
@@ -11,7 +19,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import org.firstinspires.ftc.teamcode.team.Merlin1.Merlin1Hardware;
 
 @TeleOp(name = "Collision", group = "Other")//This is the name of the code and what will be seen on the robot phone
-//@Disabled //Uncomment this if it is not wanted on the phone
+@Disabled //Uncomment this if it is not wanted on the phone
 public class CollisionDetection extends LinearOpMode {
 
 

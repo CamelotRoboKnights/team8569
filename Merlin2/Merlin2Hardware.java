@@ -1,3 +1,5 @@
+//This is done being commented 17-1-13
+
 package org.firstinspires.ftc.teamcode.team.Merlin2;
 
 import com.kauailabs.navx.ftc.AHRS;
@@ -31,7 +33,12 @@ import com.qualcomm.robotcore.util.ElapsedTime;
  * Motor channel:  Sweeper:     "sweeper"
  * Motor channel:  Flipper:     "flipper"
  *
- * STILL NEED THE SENSORS
+ * Core Device Module: "dim"
+ * Optical Distance Sensor: LeftLight: "odrSensor"          The wiring for these two is backwards
+ * Optical Distance Sensor: RightLight: "odlSensor"
+ * Range Sensor: RightRange: "RightRange"
+ * Range Sensor: LeftRange: "LeftRange"
+ *
  *
  *
  */
@@ -124,12 +131,12 @@ public class Merlin2Hardware
 
         // Set all motors to run without encoders.
         // May want to use RUN_USING_ENCODERS if encoders are installed.
-        Motor1.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        Motor2.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        Motor3.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        Motor4.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        LiftCollector.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        Flipper.setMode(DcMotor.RunMode.RUN_USING_ENCODER);//Use encoder's becuase that is used for the flicking
+        Motor1.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        Motor2.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        Motor3.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        Motor4.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        LiftCollector.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        Flipper.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         Lift.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
 

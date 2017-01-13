@@ -1,11 +1,17 @@
+/*
+ * This was written as a basic implementation of the FieldOrientedDrive
+ */
+
 package org.firstinspires.ftc.teamcode.team.Other;
 
 
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import org.firstinspires.ftc.teamcode.team.Merlin1.Merlin1Hardware;
 
 @TeleOp(name = "Feild Orented", group = "Other")
+@Disabled
 public class FeildOrentedDrive extends LinearOpMode {
 
 

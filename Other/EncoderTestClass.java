@@ -1,8 +1,17 @@
+/*
+ * This class was created in order to try to understand what the flipper does and
+ * how it works, after we understood what it does it was written into both of our launchBall
+ * programs.
+ *
+ */
+
+
 package org.firstinspires.ftc.teamcode.team.Other;
 
 
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
@@ -10,6 +19,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import org.firstinspires.ftc.teamcode.team.Merlin1.Merlin1Hardware;
 
 @Autonomous(name = "EncoderText", group = "Other")
+@Disabled
 public class EncoderTestClass extends LinearOpMode {
 
 

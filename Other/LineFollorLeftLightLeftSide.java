@@ -1,3 +1,9 @@
+/*
+ * This is a concept for following a line, it has yet to be tested, it was a project that the
+ * new programmers worked on to learn coding, there are four of them, they each follow either
+ * a different side of the line or using a different sensor
+ */
+
 package org.firstinspires.ftc.teamcode.team.Other;//This might need to changed to be in a differnt folder like Merlin1 or K9Robo
 
 //This code follows the line on the right side with the right sensor

@@ -1,43 +1,22 @@
 package org.firstinspires.ftc.teamcode.team.Merlin2;
 
+import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.util.Range;
-
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
-
 import static java.lang.Boolean.FALSE;
 import static java.lang.Boolean.TRUE;
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
-import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-import com.qualcomm.robotcore.hardware.CompassSensor;
-import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.Gamepad;
-import com.qualcomm.robotcore.util.Range;
-import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 
 
-import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
-import org.firstinspires.ftc.teamcode.R;
-import org.firstinspires.ftc.teamcode.team.Merlin1.Merlin1Hardware; //More Import statements may be needed
-import org.firstinspires.ftc.teamcode.team.Merlin2.Merlin2Hardware;
-import org.lasarobotics.vision.android.Cameras;
-import org.lasarobotics.vision.ftc.resq.Beacon;
-import org.lasarobotics.vision.opmode.VisionOpMode;
-import org.lasarobotics.vision.opmode.extensions.CameraControlExtension;
-import org.lasarobotics.vision.util.ScreenOrientation;
-import org.opencv.core.Size;
+class Merlin2TeleOpMethods extends OpMode {
 
-
-public class Merlin2TeleOpMethods extends VisionOpMode{
-
-    Merlin2Hardware robot = new Merlin2Hardware();//The hardware map needs to be the hardware map of the robot we are using
-    public boolean ButtonPressed = FALSE;
-    public double LiftDivisor = 28000;
-    public double TargetEncoder = 0;
-    public double LiftHeight = 0;
+    private Merlin2Hardware robot = new Merlin2Hardware();//The hardware map needs to be the hardware map of the robot we are using
+    boolean ButtonPressed = FALSE;
+    private double LiftDivisor = 28000;
+    double TargetEncoder = 0;
+    double LiftHeight = 0;
 
     public void init(){
-
+        robot.init(hardwareMap);
     }
     @Override
     public void init_loop(){}
@@ -49,7 +28,7 @@ public class Merlin2TeleOpMethods extends VisionOpMode{
     public void stop(){}
 
 
-    public void print(double LiftHeight, double TargetEncoder){
+    void print(double LiftHeight, double TargetEncoder){
         telemetry.addData("LiftHeight", LiftHeight);
         telemetry.addData("YAW", robot.navx_device.getYaw());
         telemetry.addData("Flip Encoder Target", TargetEncoder);
@@ -66,14 +45,9 @@ public class Merlin2TeleOpMethods extends VisionOpMode{
         telemetry.addData("L raw optical", robot.LeftRange.rawOptical());
         telemetry.addData("L cm optical", "%.2f cm", robot.LeftRange.cmOptical());
         telemetry.addData(" L cm", "%.2f cm", robot.LeftRange.getDistance(DistanceUnit.CM));
-//        telemetry.addData("Blue Left", beacon.getAnalysis().isLeftBlue());
-//        telemetry.addData("Blue Rigth", beacon.getAnalysis().isRightBlue());
-//        telemetry.addData("Red left", beacon.getAnalysis().isLeftRed());
-//        telemetry.addData("red right", beacon.getAnalysis().isRightRed());
-//        telemetry.addData("Beacon Confidence", beacon.getAnalysis().getConfidenceString());
         telemetry.update();
     }
-    public double lift(){
+    double lift(){
         if(gamepad2.right_trigger > .02){
             robot.Lift.setPower(gamepad2.right_trigger);
         }
@@ -86,7 +60,7 @@ public class Merlin2TeleOpMethods extends VisionOpMode{
         return robot.Lift.getCurrentPosition();
 
     }
-    public double launchBall(double TargetEncoder) {
+    double launchBall(double TargetEncoder) {
         double CurrentEncoder = robot.Flipper.getCurrentPosition();
         double OneRotation = 1650;
         if(TargetEncoder - CurrentEncoder < 3){
@@ -100,7 +74,7 @@ public class Merlin2TeleOpMethods extends VisionOpMode{
         }
         return TargetEncoder;
     }
-    public double liftCapBallLift(){
+    double liftCapBallLift(){
         double CurrentEncoder = robot.Lift.getCurrentPosition();
         double FullHeight = 23000;
         if (gamepad2.right_stick_button){
@@ -121,9 +95,10 @@ public class Merlin2TeleOpMethods extends VisionOpMode{
 
         return CurrentEncoder;
     }
+    /*
     public String primeCapBallLift(String CurrentCase){
         double StartTime;
-        double CurrentTime = System.currentTimeMillis();
+        //double CurrentTime = System.currentTimeMillis();
 
         switch (CurrentCase){
             case "RaiseLift":
@@ -132,7 +107,7 @@ public class Merlin2TeleOpMethods extends VisionOpMode{
                 if (Height - CurrentEncoder < 3) {
                     robot.Lift.setPower(0);
                     CurrentCase = "Wait";
-                    StartTime = System.currentTimeMillis();
+                    //StartTime = System.currentTimeMillis();
                 } else {
                     robot.Lift.setPower(.8);
                 }
@@ -144,7 +119,8 @@ public class Merlin2TeleOpMethods extends VisionOpMode{
         }
         return "WORK ON THIS MORE";
     }
-    public void driveChoice (double LiftHeight){
+    */
+    void driveChoice (double LiftHeight){
 
         if(2*Math.abs(gamepad1.right_stick_x)+.2 <= -gamepad1.right_stick_y) forwardDrive(LiftHeight);
         else if (-2*Math.abs(gamepad1.right_stick_x)-.2 >= -gamepad1.right_stick_y) backDrive(LiftHeight);
@@ -153,7 +129,7 @@ public class Merlin2TeleOpMethods extends VisionOpMode{
         else feildOrentedDrive(LiftHeight);
     }
 
-    public void backDrive(double LiftHeight){
+    private void backDrive(double LiftHeight){
 
         double JoyY = -gamepad1.left_stick_y;
         double JoyX = gamepad1.left_stick_x;
@@ -216,7 +192,7 @@ public class Merlin2TeleOpMethods extends VisionOpMode{
 
     }
 
-    public void forwardDrive(double LiftHeight){
+    private void forwardDrive(double LiftHeight){
 
         double JoyY = -gamepad1.left_stick_y;
         double JoyX = gamepad1.left_stick_x;
@@ -246,12 +222,6 @@ public class Merlin2TeleOpMethods extends VisionOpMode{
             Motor4Power = Motor4Power*LiftHeightScaled;
 
 
-            Motor1Power = Motor1Power;
-            Motor2Power = Motor2Power;
-            Motor3Power = Motor3Power;
-            Motor4Power = Motor4Power;
-
-
             moveMotorsPower(Motor1Power, Motor2Power, Motor3Power, Motor4Power);
 
         }
@@ -278,7 +248,7 @@ public class Merlin2TeleOpMethods extends VisionOpMode{
         telemetry.addData("M4", Motor4Power);
 
     }
-    public void rightDrive(double LiftHeight){
+    private void rightDrive(double LiftHeight){
 
         double JoyY = -gamepad1.left_stick_y;
         double JoyX = gamepad1.left_stick_x;
@@ -309,10 +279,7 @@ public class Merlin2TeleOpMethods extends VisionOpMode{
 
 
             Motor1Power = -Motor1Power;
-            Motor2Power = Motor2Power;
             Motor3Power = -Motor3Power;
-            Motor4Power = Motor4Power;
-
 
             moveMotorsPower(Motor1Power, Motor2Power, Motor3Power, Motor4Power);
 
@@ -340,7 +307,7 @@ public class Merlin2TeleOpMethods extends VisionOpMode{
         telemetry.addData("M4", Motor4Power);
 
     }
-    public void leftDrive(double LiftHeight){
+    private void leftDrive(double LiftHeight){
 
         double JoyY = -gamepad1.left_stick_y;
         double JoyX = gamepad1.left_stick_x;
@@ -370,9 +337,7 @@ public class Merlin2TeleOpMethods extends VisionOpMode{
             Motor4Power = Motor4Power*LiftHeightScaled;
 
 
-            Motor1Power = Motor1Power;
             Motor2Power = -Motor2Power;
-            Motor3Power = Motor3Power;
             Motor4Power = -Motor4Power;
 
 
@@ -403,7 +368,7 @@ public class Merlin2TeleOpMethods extends VisionOpMode{
 
     }
 
-    public void moveMotorsPower (double Motor1Power, double Motor2Power, double Motor3Power, double Motor4Power){
+    private void moveMotorsPower (double Motor1Power, double Motor2Power, double Motor3Power, double Motor4Power){
         Motor1Power = Range.clip(Motor1Power, -1, 1);
         Motor2Power = Range.clip(Motor2Power,-1,1);
         Motor3Power = Range.clip(Motor3Power, -1, 1);
@@ -416,7 +381,7 @@ public class Merlin2TeleOpMethods extends VisionOpMode{
         robot.Motor4.setPower(Motor4Power);
     }
 
-    public void feildOrentedDrive(double LiftHeight){
+    private void feildOrentedDrive(double LiftHeight){
         double JoyX;
         double JoyY;
         double NewX;
@@ -454,12 +419,6 @@ public class Merlin2TeleOpMethods extends VisionOpMode{
             Motor4Power = NewY + NewX;
             Motor4Power = Range.clip(Motor4Power, -1, 1);
             Motor4Power = Motor4Power*LiftHeightScaled;
-
-
-            Motor1Power = Motor1Power;
-            Motor2Power = Motor2Power;
-            Motor3Power = Motor3Power;
-            Motor4Power = Motor4Power;
 
 
             moveMotorsPower(Motor1Power, Motor2Power, Motor3Power, Motor4Power);
@@ -501,79 +460,4 @@ public class Merlin2TeleOpMethods extends VisionOpMode{
         }
 
     }
-    void initCamera(){
-        super.init();
-        /**
-         * Set the camera used for detection
-         * PRIMARY = Front-facing, larger camera
-         * SECONDARY = Screen-facing, "selfie" camera :D
-         **/
-        this.setCamera(Cameras.PRIMARY);
-
-        /**
-         * Set the frame size
-         * Larger = sometimes more accurate, but also much slower
-         * After this method runs, it will set the "width" and "height" of the frame
-         **/
-        this.setFrameSize(new Size(900, 900));
-
-        /**
-         * Enable extensions. Use what you need.
-         * If you turn on the BEACON extension, it's best to turn on ROTATION too.
-         */
-        enableExtension(Extensions.BEACON);         //Beacon detection
-        enableExtension(Extensions.ROTATION);       //Automatic screen rotation correction
-        enableExtension(Extensions.CAMERA_CONTROL); //Manual camera control
-
-        /**
-         * Set the beacon analysis method
-         * Try them all and see what works!
-         */
-        beacon.setAnalysisMethod(Beacon.AnalysisMethod.COMPLEX);
-
-        /**
-         * Set color tolerances
-         * 0 is default, -1 is minimum and 1 is maximum tolerance
-         */
-        beacon.setColorToleranceRed(0);
-        beacon.setColorToleranceBlue(0);
-
-        /**
-         * Set analysis boundary
-         * You should comment this to use the entire screen and uncomment only if
-         * you want faster analysis at the cost of not using the entire frame.
-         * This is also particularly useful if you know approximately where the beacon is
-         * as this will eliminate parts of the frame which may cause problems
-         * This will not work on some methods, such as COMPLEX
-         **/
-        //beacon.setAnalysisBounds(new Rectangle(new Point(width / 2, height / 2), width - 200, 200));
-
-        /**
-         * Set the rotation parameters of the screen
-         * If colors are being flipped or output appears consistently incorrect, try changing these.
-         *
-         * First, tell the extension whether you are using a secondary camera
-         * (or in some devices, a front-facing camera that reverses some colors).
-         *
-         * It's a good idea to disable global auto rotate in Android settings. You can do this
-         * by calling disableAutoRotate() or enableAutoRotate().
-         *
-         * It's also a good idea to force the phone into a specific orientation (or auto rotate) by
-         * calling either setActivityOrientationAutoRotate() or setActivityOrientationFixed(). If
-         * you don't, the camera reader may have problems reading the current orientation.
-         */
-        rotation.setIsUsingSecondaryCamera(false);
-        rotation.disableAutoRotate();
-        rotation.setActivityOrientationFixed(ScreenOrientation.PORTRAIT);
-
-        /**
-         * Set camera control extension preferences
-         *
-         * Enabling manual settings will improve analysis rate and may lead to better results under
-         * tested conditions. If the environment changes, expect to change these values.
-         */
-        cameraControl.setColorTemperature(CameraControlExtension.ColorTemperature.AUTO);
-        cameraControl.setAutoExposureCompensation();
-    }
-
 }

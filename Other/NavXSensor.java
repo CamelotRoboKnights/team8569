@@ -1,3 +1,7 @@
+/*
+ * This was written to try to understand the values from the NavX sensor
+ */
+
 package org.firstinspires.ftc.teamcode.team.Other;
 
 

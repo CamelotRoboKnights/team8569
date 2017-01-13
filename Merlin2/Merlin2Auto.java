@@ -1,4 +1,28 @@
+//Commenting is done 17-1-13
+/*
+* My methods and what they do.
+*
+* done - This is used in the done case and prints done on the screen and turns the motors off
+* broken - This is used in the default care to tell us that the code lost track of where it should be
+* turnToGyroHeading - This will turn the robot within 2 degrees of the "TargetHeading" that I enter.
+* moveMotorsPower - This will move all the motors at the speed that is imputed into it
+* resetAll - Resets all variables in this program so they can be used in a different method later
+* loadBall- Loads the ball to get it ready to shoot
+* driveUntilWhiteLine - Drives the robot at any speed it is given till it sees a white line
+* collisionDetection - Used to understand if the robot has been hit
+* launchBall- launches the ball
+* driveUntilHit - Drives the robot till it runs into a wall
+* crossLeftLight - Has the robot drive till the left light sensor crosses over the line
+* choseSide - Determines beacon color and which side the robot needs to go hit
+* driveBasedOnEncoders - drives the robot to a distance based on encoder ticks
+* cameraInit - Initializes the camera when called
+*
+ */
+
+
 package org.firstinspires.ftc.teamcode.team.Merlin2;
+
+import android.widget.Switch;
 
 import com.qualcomm.robotcore.util.Range;//Allows the use of the Range Clip
 import org.lasarobotics.vision.android.Cameras;//Lets us access and modify the camera
@@ -20,7 +44,7 @@ class Merlin2Auto extends VisionOpMode {//This extends Vision Op Mode witch allo
     private double StartEncoder;//Used in driveBasedOnEncoders to remember the starting encoder value
     private boolean FirstTime = true;//Used in driveBasedOnEncoders and launch ball to signify the first time the method has run
     private double TargetEncoder = 0;//Used in launchBall to determine at what encoder value the ball will be launched.
-    private int CantTellCounter;//Used in choseSide to decide if it can't tell the color
+    private int CantTellCounter;//The rest are used in choseSide to decide what color is it
     private int RightConfidence;
     private int LeftConfidence;
     private int AllBlue;
@@ -181,7 +205,7 @@ class Merlin2Auto extends VisionOpMode {//This extends Vision Op Mode witch allo
 
     }
 
-    private String collisionDetection() {//IT WORKS!!!!
+    private String collisionDetection() {//This is a private method that other methods use to determine if the robot has been hit
         double CurrWorldLinearAccelX;//My current acceleration
         double CurrWorldLinearAccelY;
         double CurrentJerkX;//My change in Acceleration
@@ -243,9 +267,17 @@ class Merlin2Auto extends VisionOpMode {//This extends Vision Op Mode witch allo
         return ReturnValue;
     }
 
-    String driveUntilHit() {//This Works speed might be able to be deresed but it passed the mom test
+    String driveUntilHit(String Side) {//This Works speed might be able to be deresed but it passed the mom test
         String ReturnedValue = collisionDetection();//This gets the collision value
-        moveMotorsPower(.6,-.6,.6,-.6);//Go forward at .6 motor power
+        switch(Side){
+            case "Red":
+                moveMotorsPower(.6,-.6,.6,-.6);//Go forward at .6 motor power
+                break;
+            case "Blue":
+                moveMotorsPower(-.6,.6,-.6,.6);//Go forward at .6 motor power
+                break;
+        }
+
         switch (ReturnedValue){ //If the value returned is slowing it down in any direction it is done otherwise im not done yet
             case "YStop":
                 moveMotorsPower(0,0,0,0);
@@ -353,22 +385,20 @@ class Merlin2Auto extends VisionOpMode {//This extends Vision Op Mode witch allo
             }
 
         }
-        telemetry.addData("Blue Left", beacon.getAnalysis().isLeftBlue());
+        telemetry.addData("Blue Left", beacon.getAnalysis().isLeftBlue());//Printing everything that I need to see what the robot is thinking
         telemetry.addData("Blue Rigth", beacon.getAnalysis().isRightBlue());
         telemetry.addData("Red left", beacon.getAnalysis().isLeftRed());
         telemetry.addData("red right", beacon.getAnalysis().isRightRed());
         telemetry.addData("Beacon Confidence", beacon.getAnalysis().getConfidenceString());
         telemetry.addData("Side", Side);
-        return Side;
+        return Side;//Return what side the beacon is on
 
     }
 
     String driveBasedOnEncoders(double Distance, String Direction){
         String ReturnValue = "";
-        double Speed;
-
-        if(FirstTime) {
-            switch (Direction){
+        if(FirstTime) {//If it is the first time running the code get the starting value
+            switch (Direction){//Determines what direction I am trying to go and tries to find a motor that willl be going positive if possible
                 case "Forward":
                     StartEncoder = robot.Motor1.getCurrentPosition();
                     FirstTime = false;
@@ -388,7 +418,7 @@ class Merlin2Auto extends VisionOpMode {//This extends Vision Op Mode witch allo
 
             }
         }
-        else {
+        else {//If it is not the first time get how far the encoders have gone
             double CurrentEncoder = 0;
             switch (Direction){
                 case "Forward":
@@ -405,16 +435,17 @@ class Merlin2Auto extends VisionOpMode {//This extends Vision Op Mode witch allo
                     break;
 
             }
-            double OneRotation = 1120;
+            double OneRotation = 1120;//Then turn it to actual distance
             double WheelSize = 4*Math.PI;
             DistanceTraveled = ((Math.abs(CurrentEncoder) / OneRotation) * WheelSize)*1.125;
             telemetry.addData("",CurrentEncoder);
-            if (DistanceTraveled > Distance) {
+
+            if (DistanceTraveled > Distance) {//If I have gone the distance I want stop moving
                 moveMotorsPower(0,0,0,0);
                 ReturnValue = "Done";
                 FirstTime = true;
             }
-            else {
+            else {//Otherwise keep going
                 ReturnValue = "NOTDONE";
                 switch (Direction){
                     case "Forward":
@@ -443,7 +474,7 @@ class Merlin2Auto extends VisionOpMode {//This extends Vision Op Mode witch allo
 
     }
 
-    void initCamera(){
+    void initCamera(){//This initializes the camera for use
         super.init();
         /**
          * Set the camera used for detection

@@ -1,3 +1,8 @@
+/*
+ * This is an old template and is no longer proper because we have switched to the OpMode
+  * style rather than the LinerOpMode
+ */
+
 package org.firstinspires.ftc.teamcode.team.Other;//This might need to changed to be in a differnt folder like Merlin1 or K9Robo
 
 
