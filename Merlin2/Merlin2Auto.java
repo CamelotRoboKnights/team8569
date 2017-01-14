@@ -92,7 +92,7 @@ class Merlin2Auto extends VisionOpMode {//This extends Vision Op Mode witch allo
             telemetry.addData("I got", "Here");
         }
         else{
-            telemetry.addData("THIS IS BEING DUMB","YES IT IS");//making sure the motor power is not so low that the robot wont move
+            telemetry.addData("Go Robot"," Go");//making sure the motor power is not so low that the robot wont move
         }
         telemetry.addData("HDS", HeadingDiffernceScalled);//Prints the motor powers
         telemetry.addData("CurrentYAW", CurrentHeading);//Prints the current angle the robot is at
@@ -273,7 +273,7 @@ class Merlin2Auto extends VisionOpMode {//This extends Vision Op Mode witch allo
                 moveMotorsPower(.5,-.5,.5,-.5);//Go forward at .6 motor power
                 break;
             case "Blue":
-                moveMotorsPower(-.6,.6,-.6,.6);//Go forward at .6 motor power
+                moveMotorsPower(-.5,.5,-.5,.5);//Go forward at .6 motor power
                 break;
         }
 
@@ -358,22 +358,37 @@ class Merlin2Auto extends VisionOpMode {//This extends Vision Op Mode witch allo
         }
         else if(TeamColor.equals("BLUE")){//Same thing as the red but it is looking for one side to be blue
             if (beacon.getAnalysis().isBeaconFound()){
-                if(beacon.getAnalysis().isLeftBlue() && beacon.getAnalysis().isRightBlue()){
-                    Side = "NOBLUE";
+                if(beacon.getAnalysis().isLeftBlue() && beacon.getAnalysis().isRightBlue()){//If both sides are blue return that is is all blue
+                    AllBlue++;
+                    if(AllBlue > 750) {
+                        Side = "NOBlue";
+                    }
                 }
-                else if (beacon.getAnalysis().isLeftRed() && beacon.getAnalysis().isRightRed()){
-                    Side = "NORED";
+                else if (beacon.getAnalysis().isLeftRed() && beacon.getAnalysis().isRightRed()){//If both sides are red return that is is all red
+                    AllRed++;
+                    if(AllRed > 750){
+                        Side = "NORed";
+                    }
                 }
-                else if(beacon.getAnalysis().isLeftBlue() && beacon.getAnalysis().isRightRed()){
-                    Side = "Left";
+                else if(beacon.getAnalysis().isLeftBlue() && beacon.getAnalysis().isRightRed()){//If red is on the right tell me red is on the right
+                    RightConfidence++;
+                    if(RightConfidence > 750) {
+                        Side = "Left";
+                    }
                 }
-                else if(beacon.getAnalysis().isLeftRed() && beacon.getAnalysis().isRightBlue()){
-                    Side = "Right";
+                else if(beacon.getAnalysis().isLeftRed() && beacon.getAnalysis().isRightBlue()){//if the left side is red tell me I want the left side
+                    LeftConfidence++;
+                    if(LeftConfidence > 750){
+                        Side = "Right";
+                    }
                 }
-                else{
-                    Side = "JustNO";
+                else{//If none of those are true and I can't tell even though im 90% certain then tell me that
+                    CantTellCounter++;
+                    if(CantTellCounter > 750) {
+                        Side = "JustNO";
+                    }
+                }
 
-                }
             }
             else{
                 if(CantTellCounter > 1000){
