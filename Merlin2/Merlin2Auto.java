@@ -270,7 +270,7 @@ class Merlin2Auto extends VisionOpMode {//This extends Vision Op Mode witch allo
         String ReturnedValue = collisionDetection();//This gets the collision value
         switch(Side){
             case "Red":
-                moveMotorsPower(.6,-.6,.6,-.6);//Go forward at .6 motor power
+                moveMotorsPower(.5,-.5,.5,-.5);//Go forward at .6 motor power
                 break;
             case "Blue":
                 moveMotorsPower(-.6,.6,-.6,.6);//Go forward at .6 motor power
@@ -319,37 +319,37 @@ class Merlin2Auto extends VisionOpMode {//This extends Vision Op Mode witch allo
             if (beacon.getAnalysis().isBeaconFound()){//if I am confident enough in my color desision
                 if(beacon.getAnalysis().isLeftBlue() && beacon.getAnalysis().isRightBlue()){//If both sides are blue return that is is all blue
                     AllBlue++;
-                    if(AllBlue > 1000) {
+                    if(AllBlue > 750) {
                         Side = "NOBlue";
                     }
                 }
                 else if (beacon.getAnalysis().isLeftRed() && beacon.getAnalysis().isRightRed()){//If both sides are red return that is is all red
                     AllRed++;
-                    if(AllRed > 1000){
+                    if(AllRed > 750){
                         Side = "NORed";
                     }
                 }
                 else if(beacon.getAnalysis().isLeftBlue() && beacon.getAnalysis().isRightRed()){//If red is on the right tell me red is on the right
                     RightConfidence++;
-                    if(RightConfidence > 1000) {
+                    if(RightConfidence > 750) {
                         Side = "Right";
                     }
                 }
                 else if(beacon.getAnalysis().isLeftRed() && beacon.getAnalysis().isRightBlue()){//if the left side is red tell me I want the left side
                     LeftConfidence++;
-                    if(LeftConfidence > 1000){
+                    if(LeftConfidence > 750){
                         Side = "Left";
                     }
                 }
                 else{//If none of those are true and I can't tell even though im 90% certain then tell me that
                     CantTellCounter++;
-                    if(CantTellCounter > 1000) {
+                    if(CantTellCounter > 750) {
                         Side = "JustNO";
                     }
                 }
             }
             else{//If it isnt 90% accurate tell me it cant tell after running a few times
-                if(CantTellCounter > 1000){
+                if(CantTellCounter > 750){
                     Side = "CantTell";
                     telemetry.addData("Can't", "tell");
                 }

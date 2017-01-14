@@ -449,10 +449,10 @@ class Merlin2TeleOpMethods extends OpMode {
 
     void collection(){
         if (gamepad2.x){//if X is pressed make the spinner set to dispose of balls
-            robot.LiftCollector.setPower(.4);
+            robot.LiftCollector.setPower(.3);
         }
         else if(gamepad2.b){//If B os pressed make the spinner set to collect balls
-            robot.LiftCollector.setPower(-.4);
+            robot.LiftCollector.setPower(-.3);
         }
         else if(gamepad2.a){//If A is pressed make the spinner not spin
             robot.LiftCollector.setPower(0);
