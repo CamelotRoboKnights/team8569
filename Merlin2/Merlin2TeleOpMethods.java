@@ -77,19 +77,18 @@ class Merlin2TeleOpMethods extends OpMode {
     double liftCapBallLift(){
         double CurrentEncoder = robot.Lift.getCurrentPosition();
         double FullHeight = 23000;
-        if (gamepad2.right_stick_button){
-            ButtonPressed = TRUE;
-        }
-        else if(ButtonPressed == TRUE) {
-            if (FullHeight - CurrentEncoder < 500) {
-                robot.Lift.setPower(0);
-                ButtonPressed = FALSE;
-            }
-            else {
-                robot.Lift.setPower(1);
+            if (gamepad2.right_stick_button) {
+                ButtonPressed = TRUE;
+            } else if (ButtonPressed == TRUE) {
+                if (FullHeight - CurrentEncoder < 500) {
+                    robot.Lift.setPower(0);
+                    ButtonPressed = FALSE;
+                } else {
+                    robot.Lift.setPower(1);
 
+                }
             }
-        }
+
 
 
         return CurrentEncoder;

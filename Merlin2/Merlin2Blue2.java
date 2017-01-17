@@ -36,8 +36,8 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
  *
  * Drive to ball
  */
-@Autonomous(name = "Blue1, BBC", group = "Merlin2")
-public class Merlin2Blue1 extends Merlin2Auto {
+@Autonomous(name = "Blue2, BBC", group = "Merlin2")
+public class Merlin2Blue2 extends Merlin2Auto {
 
     @Override
     public void init() {

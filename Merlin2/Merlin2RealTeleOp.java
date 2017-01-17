@@ -26,10 +26,13 @@ public class Merlin2RealTeleOp extends Merlin2TeleOpMethods{
         super.collection();//Runs my collection method
 
         super.TargetEncoder = super.launchBall(TargetEncoder);//Run the launch ball method
-        super.LiftHeight = liftCapBallLift();//Run the method that lifts the cap ball all the way when a button is pressed
-        if(!super.ButtonPressed){//If that button is not pressed
-            super.LiftHeight = super.lift();//Raise the cap ball lift manually
+        if(System.currentTimeMillis() >= 115000) {
+            super.LiftHeight = liftCapBallLift();//Run the method that lifts the cap ball all the way when a button is pressed
+            if (!super.ButtonPressed) {//If that button is not pressed
+                super.LiftHeight = super.lift();//Raise the cap ball lift manually
+            }
         }
+
         super.print(LiftHeight, TargetEncoder);//Print everything that I want
 
     }
