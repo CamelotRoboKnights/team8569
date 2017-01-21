@@ -1,0 +1,54 @@
+//This is done being commented 17-1-13
+/*
+ * This is our new TeleOp and has the methods separate.
+ */
+package org.firstinspires.ftc.teamcode.team.Merlin2_2;
+
+import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+
+import org.firstinspires.ftc.teamcode.team.Merlin2_2.Merlin2TeleOpMethods;
+
+@TeleOp(name = "RealOp", group = "Merlin2")//This NEEDS to be changed tp the name of the code
+//@Disabled //Uncomment this if it is not wanted on the phone
+public class Merlin2RealTeleOp extends Merlin2TeleOpMethods {
+    private double StartTime;
+
+    public void init(){//This only runs once
+        super.init();//Initializing everything needed
+    }
+    @Override
+    public void init_loop(){//Tis runs many time during the init phase
+        StartTime = System.currentTimeMillis();
+    }
+    @Override
+    public void start(){}//This runs when the start button is pressed
+    @Override
+    public void loop(){//This runs while opmode is active
+
+        double CurrentTime = (System.currentTimeMillis() - StartTime)/1000;
+        if(CurrentTime >= 100) {
+            super.primeCapBallLift();
+        }
+        if(super.CurrentCase.equals("AllSet")) {
+            super.driveChoice(super.LiftHeight);//The method that determines what drive program to use and gives the programs everything it needs
+            super.collection();//Runs my collection method
+            super.TargetEncoder = super.launchBall(super.TargetEncoder);//Run the launch ball method
+            if(CurrentTime >= 100) {
+                super.TargetEncoder = super.launchBall(super.TargetEncoder);//Run the launch ball method
+                super.LiftHeight = super.liftCapBallLift();//Run the method that lifts the cap ball all the way when a button is pressed
+                super.LiftHeight = super.lowerCapBallLift();
+                if (!super.ButtonPressed) {//If that button is not pressed
+                    super.LiftHeight = super.lift();//Raise the cap ball lift manually
+                }
+            }
+        }
+
+
+        super.print(super.LiftHeight, super.TargetEncoder);//Print everything that I want
+
+    }
+    @Override
+    public void stop(){}
+
+
+}

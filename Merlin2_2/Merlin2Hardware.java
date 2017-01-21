@@ -1,6 +1,6 @@
 //This is done being commented 17-1-13
 
-package org.firstinspires.ftc.teamcode.team.Merlin2;
+package org.firstinspires.ftc.teamcode.team.Merlin2_2;
 
 import com.kauailabs.navx.ftc.AHRS;
 import com.kauailabs.navx.ftc.navXPIDController;

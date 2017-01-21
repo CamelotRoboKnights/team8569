@@ -19,16 +19,18 @@
  */
 
 //Commenting is done 17-1-13
-package org.firstinspires.ftc.teamcode.team.Merlin2;
+package org.firstinspires.ftc.teamcode.team.Merlin2_2;
 
-import android.widget.Switch;
+import android.graphics.ColorMatrixColorFilter;
 
 import com.qualcomm.robotcore.util.Range;//Allows the use of the Range Clip
+
 import org.lasarobotics.vision.android.Cameras;//Lets us access and modify the camera
 import org.lasarobotics.vision.ftc.resq.Beacon;//Lets us understand what the beacon looks like
 import org.lasarobotics.vision.opmode.VisionOpMode;//lets us use the Vision op mode that is what we are extending
 import org.lasarobotics.vision.opmode.extensions.CameraControlExtension;//Gives more control of the camera
 import org.lasarobotics.vision.util.ScreenOrientation;//Lets us control the orientation of the screen
+import org.lasarobotics.vision.util.color.Color;
 import org.opencv.core.Size;//Lets us understand picture size
 
 class Merlin2Auto extends VisionOpMode {//This extends Vision Op Mode witch allows us to use the
@@ -48,6 +50,7 @@ class Merlin2Auto extends VisionOpMode {//This extends Vision Op Mode witch allo
     private int LeftConfidence;
     private int AllBlue;
     private int AllRed;
+    private String  ColorValue = "";
 
     /* Declare OpMode members. */
     Merlin2Hardware robot = new Merlin2Hardware();//The hardware map needs to be the hardware map of the robot we are using
@@ -69,12 +72,13 @@ class Merlin2Auto extends VisionOpMode {//This extends Vision Op Mode witch allo
         telemetry.addData("Done","Case");
         moveMotorsPower(0,0,0,0);
     }
-
-
     void broken(){//What the robot will do if it gets to the default case, it will display Try Again and turn the motor powers off
         telemetry.addData("Try", "Again");
         moveMotorsPower(0,0,0,0);
     }
+
+
+
 
     String turnToGyroHeading(double TargetHeading) {//Working and will turn the robot to a gyro heading within 2degrees
         String ReturnValue;//The value the method will return
@@ -104,32 +108,49 @@ class Merlin2Auto extends VisionOpMode {//This extends Vision Op Mode witch allo
         }
         return ReturnValue;
     }
-    private void moveMotorsPower (double Motor1Power, double Motor2Power, double Motor3Power, double Motor4Power){//This method range clips the values put into it and sets these to the motor powers
-        Motor1Power = Range.clip(Motor1Power, -1, 1);
-        Motor2Power = Range.clip(Motor2Power,-1,1);
-        Motor3Power = Range.clip(Motor3Power, -1, 1);
-        Motor4Power = Range.clip(Motor4Power, -1, 1);
 
 
-        robot.Motor1.setPower(Motor1Power);
-        robot.Motor2.setPower(Motor2Power);
-        robot.Motor3.setPower(Motor3Power);
-        robot.Motor4.setPower(Motor4Power);
+
+
+
+    String shootAndIdentify(String Side){
+        String ReturnValue = "";
+        String FirstLaunchReturnValue = "";
+        String LoadBallValue = "";
+        String SecondLaunchReturnValue = "";
+        String Done = "";
+
+        if(!FirstLaunchReturnValue.equals("Done") && !LoadBallValue.equals("Done") && !SecondLaunchReturnValue.equals("Done")){
+            FirstLaunchReturnValue = launchBall();
+        }
+        else if(FirstLaunchReturnValue.equals("Done") && !LoadBallValue.equals("Done") && !SecondLaunchReturnValue.equals("Done")){
+            LoadBallValue = loadBall();
+        }
+        else if(FirstLaunchReturnValue.equals("Done") && LoadBallValue.equals("Done") && !SecondLaunchReturnValue.equals("Done")){
+            SecondLaunchReturnValue = launchBall();
+            Done = "Done";
+        }
+
+        if(ColorValue.equals("")){
+            if(Side.equals("RED")) {
+                ColorValue = choseSide("RED");
+            }
+            else if(Side.equals("BLUE")){
+                ColorValue = choseSide("BLUE");
+            }
+        }
+
+
+        if(!ColorValue.equals("") && Done.equals("Done")){
+            ReturnValue = "Done";
+        }
+        else {
+            ReturnValue = "";
+        }
+
+        return ReturnValue;
     }
-    void resetAll(){//These reset all the values for future use and turns off all motors to get it ready for the next case
-        StartTime = 0;
-        TargetTime = 0;
-        CheckForWhiteLine = false;
-        DistanceTraveled = 0;
-        StartEncoder = 0;
-        FirstTime = true;
-        TargetEncoder = 0;
-        moveMotorsPower(0,0,0,0);
-        robot.Flipper.setPower(0);
-        robot.Lift.setPower(0);
-        robot.LiftCollector.setPower(0);
-        CantTellCounter = 0;
-    }
+
     String loadBall() {//Works with the knot in the front and ball at the top of the shoot.
         String ReturnValue = "";
         double CurrentTime = System.currentTimeMillis();//Gets the current time
@@ -146,101 +167,6 @@ class Merlin2Auto extends VisionOpMode {//This extends Vision Op Mode witch allo
             ReturnValue = "NOTDONE";
             robot.LiftCollector.setPower(.5);
         }
-        return ReturnValue;
-    }
-
-    String driveUltilWhiteLine(String Direction, String Sensor, double speed) {//Works Max speed, .3 min speed .9 Max speed passes line by about an inch
-        double LightRead = 0;
-        String ReturnValue = "";
-        switch (Sensor){
-            case "Left"://If the sensor I am useing is the left one
-                telemetry.addData("Left", "Sensor");
-                LightRead = robot.LeftLight.getLightDetected();
-                if (LightRead > LeftLightValue) {
-                    moveMotorsPower(0,0,0,0);
-                    ReturnValue = "Done";
-                }
-                else ReturnValue = "NOTDONE";
-                break;
-            case "Right"://if the sensor I am using is the right one
-                telemetry.addData("Right", "Sensor");
-                LightRead = robot.RightLight.getLightDetected();
-                if (LightRead > RightLightValue) {
-                    moveMotorsPower(0,0,0,0);
-                    ReturnValue = "Done";
-                }
-                else ReturnValue = "NOTDONE";
-                break;
-            default://If it is given anything else it stops and informs that It was given a bad imput
-                moveMotorsPower(0,0,0,0);
-                telemetry.addData("bad", "sensor");
-                break;
-
-        }
-        switch (Direction){//Decides the direction the robot is going
-            case "Forward"://If the direction is forward
-                moveMotorsPower(speed,speed,speed,speed);//Set the motors speed
-                telemetry.addData("Forward", "Forward");//Display that Im going forward
-                break;
-            case "Back"://If the direction is back
-                moveMotorsPower(-speed,-speed,-speed,-speed);//Set the motors speed
-                telemetry.addData("Back", "Back");//Display that Im going back
-                break;
-            case "Left"://If the direction is left
-                moveMotorsPower(speed,-speed,speed,-speed);//Set the motors speed
-                telemetry.addData("Left", "Left");//Display that Im going left
-                break;
-            case "Right"://If the direction is left
-                moveMotorsPower(-speed,speed,-speed,speed);//Set the motors speed
-                telemetry.addData("Right", "Right");//Display that Im going right
-                break;
-            default://If it is given a weird direction
-                telemetry.addData("You Broke", "it with direction");//Tell me that it is broken
-                break;
-        }
-        telemetry.addData("Light read", LightRead);//Display the light value
-        return ReturnValue;
-
-
-    }
-
-    private String collisionDetection() {//This is a private method that other methods use to determine if the robot has been hit
-        double CurrWorldLinearAccelX;//My current acceleration
-        double CurrWorldLinearAccelY;
-        double CurrentJerkX;//My change in Acceleration
-        double CurrentJerkY;
-        final double CollisionThesholdG = .25;//The threshold that has to be crossed to trigger a colision
-        String ReturnValue = "";//The Value that will be returned
-
-        CurrWorldLinearAccelX = robot.navx_device.getWorldLinearAccelX();//Gives the current acceleration
-        CurrWorldLinearAccelY = robot.navx_device.getWorldLinearAccelY();
-        CurrentJerkX = CurrWorldLinearAccelX - LastWorldLinearAccelX;//Figures out the acceleration change
-        CurrentJerkY = CurrWorldLinearAccelY - LastWorldLinearAccelY;
-        if (CollisionThesholdG < Math.abs(CurrentJerkX) || CollisionThesholdG < Math.abs(CurrentJerkY)) {//Detects if a collision has happened
-            if (CurrentJerkX >= CollisionThesholdG) {
-                ReturnValue = "YFast";//The robot is going faster in the Y direction
-            } //if
-            else if (CurrentJerkX <= -CollisionThesholdG) {
-                ReturnValue = "YStop";//The robot is going slower in the Y direction
-            } //else if
-
-            if (CurrentJerkY >= CollisionThesholdG) {
-                ReturnValue = "XFast";//The robot is going faster in the X direction
-            } //if
-            else if (CurrentJerkY <= -CollisionThesholdG) {
-                ReturnValue = "XStop";//The robot is going slower in the X direction
-            }//else if
-        } //if
-        else {
-            ReturnValue = "";
-        }//else
-        telemetry.addData("Collision", ReturnValue);
-        telemetry.addData("AccelX", CurrWorldLinearAccelX);
-        telemetry.addData("AccelY", CurrWorldLinearAccelX);
-
-        LastWorldLinearAccelX = CurrWorldLinearAccelX;
-        LastWorldLinearAccelY = CurrWorldLinearAccelY;
-
         return ReturnValue;
     }
     String launchBall() {//Launches the ball
@@ -265,54 +191,6 @@ class Merlin2Auto extends VisionOpMode {//This extends Vision Op Mode witch allo
         }
         return ReturnValue;
     }
-
-    String driveUntilHit(String Side) {//This Works speed might be able to be deresed but it passed the mom test
-        String ReturnedValue = collisionDetection();//This gets the collision value
-        switch(Side){
-            case "Red":
-                moveMotorsPower(.5,-.5,.5,-.5);//Go forward at .6 motor power
-                break;
-            case "Blue":
-                moveMotorsPower(-.5,.5,-.5,.5);//Go forward at .6 motor power
-                break;
-        }
-
-        switch (ReturnedValue){ //If the value returned is slowing it down in any direction it is done otherwise im not done yet
-            case "YStop":
-                moveMotorsPower(0,0,0,0);
-                return "Done";
-            case "XStop":
-                moveMotorsPower(0,0,0,0);
-                return "Done";
-            default:
-                return "NOTDONE";
-        }
-    }
-
-    String crossLeftLight() {//It crosses over the left light sensor till it has passed the white line
-
-        double CurrentLightValue = robot.LeftLight.getLightDetected();//The current light value
-        String ReturnValue;//The value that will be returned
-
-        if(CurrentLightValue < LeftLightValue && CheckForWhiteLine){//If I see black and have already seen white I am done
-            ReturnValue = "Done";
-            moveMotorsPower(0,0,0,0);
-        }
-        else if(CurrentLightValue > LeftLightValue && !CheckForWhiteLine){//If I see white line remember that
-            CheckForWhiteLine = true;
-            ReturnValue = "NOTDONE";
-            moveMotorsPower(.3,.3,.3,.3);
-        }
-        else{//Otherwise keep going
-            telemetry.addData("Nothing","");
-            ReturnValue = "NOTDONE";
-            moveMotorsPower(.3,.3,.3,.3);
-            telemetry.update();
-        }
-        telemetry.addData("WHITE SEEN?", CheckForWhiteLine);//Tell me if ive seen white
-        return ReturnValue;
-    }
-
     String choseSide(String TeamColor){ //this is for red side
         String Side = "";//The side of the beacon is the color I want
         if(TeamColor.equals("RED")){//If my team color is red
@@ -409,6 +287,8 @@ class Merlin2Auto extends VisionOpMode {//This extends Vision Op Mode witch allo
 
     }
 
+
+
     String driveBasedOnEncoders(double Distance, String Direction){
         String ReturnValue = "";
         if(FirstTime) {//If it is the first time running the code get the starting value
@@ -429,7 +309,22 @@ class Merlin2Auto extends VisionOpMode {//This extends Vision Op Mode witch allo
                     StartEncoder = robot.Motor2.getCurrentPosition();
                     FirstTime = false;
                     break;
-
+                case "ForwardRight":
+                    StartEncoder = robot.Motor2.getCurrentPosition();
+                    FirstTime = false;
+                    break;
+                case "ForwardLeft":
+                    StartEncoder = robot.Motor1.getCurrentPosition();
+                    FirstTime = false;
+                    break;
+                case "BackRight":
+                    StartEncoder = robot.Motor2.getCurrentPosition();
+                    FirstTime = false;
+                    break;
+                case "BackLeft":
+                    StartEncoder = robot.Motor1.getCurrentPosition();
+                    FirstTime = false;
+                    break;
             }
         }
         else {//If it is not the first time get how far the encoders have gone
@@ -446,6 +341,18 @@ class Merlin2Auto extends VisionOpMode {//This extends Vision Op Mode witch allo
                     break;
                 case "Right":
                     CurrentEncoder = robot.Motor2.getCurrentPosition() - StartEncoder;
+                    break;
+                case "ForwardRight":
+                    CurrentEncoder = robot.Motor2.getCurrentPosition() - StartEncoder;
+                    break;
+                case "ForwardLeft":
+                    CurrentEncoder = robot.Motor1.getCurrentPosition() - StartEncoder;
+                    break;
+                case "BackRight":
+                    CurrentEncoder = StartEncoder - robot.Motor2.getCurrentPosition();
+                    break;
+                case "BackLeft":
+                    CurrentEncoder = StartEncoder - robot.Motor1.getCurrentPosition();
                     break;
 
             }
@@ -474,6 +381,22 @@ class Merlin2Auto extends VisionOpMode {//This extends Vision Op Mode witch allo
                     case "Right":
                         moveMotorsPower(-.3,.3,-.3,.3);
                         break;
+                    case "ForwardRight":
+                        moveMotorsPower(0, 3, 0, 3);
+                        telemetry.addData("Forward", "Right");//Display that Im going right
+                        break;
+                    case "ForwardLeft":
+                        moveMotorsPower(3, 0, 3, 0);
+                        telemetry.addData("Forward", "Left");//Display that Im going right
+                        break;
+                    case "BackRight":
+                        moveMotorsPower(0, -3, 0, -3);
+                        telemetry.addData("Forward", "Right");//Display that Im going right
+                        break;
+                    case "BackLeft":
+                        moveMotorsPower(-3, 0, -3, 0);
+                        telemetry.addData("Forward", "Left");//Display that Im going right
+                        break;
                     default:
                         telemetry.addData("DIRECTION Broke it", "Yes it did");
                         break;
@@ -487,6 +410,148 @@ class Merlin2Auto extends VisionOpMode {//This extends Vision Op Mode witch allo
         return ReturnValue;
 
     }
+    String driveUltilWhiteLine(String Direction, String Sensor, double speed) {//Works Max speed, .3 min speed .9 Max speed passes line by about an inch
+        double LightRead = 0;
+        String ReturnValue = "";
+        switch (Sensor){
+            case "Left"://If the sensor I am useing is the left one
+                telemetry.addData("Left", "Sensor");
+                LightRead = robot.LeftLight.getLightDetected();
+                if (LightRead > LeftLightValue) {
+                    moveMotorsPower(0,0,0,0);
+                    ReturnValue = "Done";
+                }
+                else ReturnValue = "NOTDONE";
+                break;
+            case "Right"://if the sensor I am using is the right one
+                telemetry.addData("Right", "Sensor");
+                LightRead = robot.RightLight.getLightDetected();
+                if (LightRead > RightLightValue) {
+                    moveMotorsPower(0,0,0,0);
+                    ReturnValue = "Done";
+                }
+                else ReturnValue = "NOTDONE";
+                break;
+            case "Both":
+                if (robot.LeftLight.getLightDetected() > LeftLightValue || robot.RightLight.getLightDetected() > RightLightValue) {
+                    moveMotorsPower(0,0,0,0);
+                    ReturnValue = "Done";
+                }
+                else ReturnValue = "NOTDONE";
+                break;
+            default://If it is given anything else it stops and informs that It was given a bad imput
+                moveMotorsPower(0,0,0,0);
+                telemetry.addData("bad", "sensor");
+                break;
+
+        }
+        switch (Direction){//Decides the direction the robot is going
+            case "Forward"://If the direction is forward
+                moveMotorsPower(speed,speed,speed,speed);//Set the motors speed
+                telemetry.addData("Forward", "Forward");//Display that Im going forward
+                break;
+            case "Back"://If the direction is back
+                moveMotorsPower(-speed,-speed,-speed,-speed);//Set the motors speed
+                telemetry.addData("Back", "Back");//Display that Im going back
+                break;
+            case "Left"://If the direction is left
+                moveMotorsPower(speed,-speed,speed,-speed);//Set the motors speed
+                telemetry.addData("Left", "Left");//Display that Im going left
+                break;
+            case "Right"://If the direction is left
+                moveMotorsPower(-speed,speed,-speed,speed);//Set the motors speed
+                telemetry.addData("Right", "Right");//Display that Im going right
+                break;
+            case "ForwardRight":
+                moveMotorsPower(0, speed, 0, speed);
+                telemetry.addData("Forward", "Right");//Display that Im going right
+                break;
+            case "ForwardLeft":
+                moveMotorsPower(speed, 0, speed, 0);
+                telemetry.addData("Forward", "Left");//Display that Im going right
+                break;
+            case "BackRight":
+                moveMotorsPower(0, -speed, 0, -speed);
+                telemetry.addData("Forward", "Right");//Display that Im going right
+                break;
+            case "BackLeft":
+                moveMotorsPower(-speed, 0, -speed, 0);
+                telemetry.addData("Forward", "Left");//Display that Im going right
+                break;
+            default://If it is given a weird direction
+                telemetry.addData("You Broke", "it with direction");//Tell me that it is broken
+                break;
+        }
+        telemetry.addData("Light read", LightRead);//Display the light value
+        return ReturnValue;
+
+
+    }
+    String driveUntilHit(String Side) {//This Works speed might be able to be deresed but it passed the mom test
+        String ReturnedValue = collisionDetection();//This gets the collision value
+        switch(Side){
+            case "Red":
+                moveMotorsPower(.5,-.5,.5,-.5);//Go forward at .6 motor power
+                break;
+            case "Blue":
+                moveMotorsPower(-.5,.5,-.5,.5);//Go forward at .6 motor power
+                break;
+        }
+
+        switch (ReturnedValue){ //If the value returned is slowing it down in any direction it is done otherwise im not done yet
+            case "YStop":
+                moveMotorsPower(0,0,0,0);
+                return "Done";
+            case "XStop":
+                moveMotorsPower(0,0,0,0);
+                return "Done";
+            default:
+                return "NOTDONE";
+        }
+    }
+    private String collisionDetection() {//This is a private method that other methods use to determine if the robot has been hit
+        double CurrWorldLinearAccelX;//My current acceleration
+        double CurrWorldLinearAccelY;
+        double CurrentJerkX;//My change in Acceleration
+        double CurrentJerkY;
+        final double CollisionThesholdG = .25;//The threshold that has to be crossed to trigger a colision
+        String ReturnValue = "";//The Value that will be returned
+
+        CurrWorldLinearAccelX = robot.navx_device.getWorldLinearAccelX();//Gives the current acceleration
+        CurrWorldLinearAccelY = robot.navx_device.getWorldLinearAccelY();
+        CurrentJerkX = CurrWorldLinearAccelX - LastWorldLinearAccelX;//Figures out the acceleration change
+        CurrentJerkY = CurrWorldLinearAccelY - LastWorldLinearAccelY;
+        if (CollisionThesholdG < Math.abs(CurrentJerkX) || CollisionThesholdG < Math.abs(CurrentJerkY)) {//Detects if a collision has happened
+            if (CurrentJerkX >= CollisionThesholdG) {
+                ReturnValue = "YFast";//The robot is going faster in the Y direction
+            } //if
+            else if (CurrentJerkX <= -CollisionThesholdG) {
+                ReturnValue = "YStop";//The robot is going slower in the Y direction
+            } //else if
+
+            if (CurrentJerkY >= CollisionThesholdG) {
+                ReturnValue = "XFast";//The robot is going faster in the X direction
+            } //if
+            else if (CurrentJerkY <= -CollisionThesholdG) {
+                ReturnValue = "XStop";//The robot is going slower in the X direction
+            }//else if
+        } //if
+        else {
+            ReturnValue = "";
+        }//else
+        telemetry.addData("Collision", ReturnValue);
+        telemetry.addData("AccelX", CurrWorldLinearAccelX);
+        telemetry.addData("AccelY", CurrWorldLinearAccelX);
+
+        LastWorldLinearAccelX = CurrWorldLinearAccelX;
+        LastWorldLinearAccelY = CurrWorldLinearAccelY;
+
+        return ReturnValue;
+    }
+
+
+
+
 
     void initCamera(){//This initializes the camera for use
         super.init();
@@ -561,6 +626,36 @@ class Merlin2Auto extends VisionOpMode {//This extends Vision Op Mode witch allo
          */
         cameraControl.setColorTemperature(CameraControlExtension.ColorTemperature.AUTO);
         cameraControl.setAutoExposureCompensation();
+    }
+    private void moveMotorsPower (double Motor1Power, double Motor2Power, double Motor3Power, double Motor4Power){//This method range clips the values put into it and sets these to the motor powers
+        Motor1Power = Range.clip(Motor1Power, -1, 1);
+        Motor2Power = Range.clip(Motor2Power,-1,1);
+        Motor3Power = Range.clip(Motor3Power, -1, 1);
+        Motor4Power = Range.clip(Motor4Power, -1, 1);
+
+
+        robot.Motor1.setPower(Motor1Power);
+        robot.Motor2.setPower(Motor2Power);
+        robot.Motor3.setPower(Motor3Power);
+        robot.Motor4.setPower(Motor4Power);
+    }
+    void resetAll(){//These reset all the values for future use and turns off all motors to get it ready for the next case
+        StartTime = 0;
+        TargetTime = 0;
+        CheckForWhiteLine = false;
+        DistanceTraveled = 0;
+        StartEncoder = 0;
+        FirstTime = true;
+        TargetEncoder = 0;
+        moveMotorsPower(0,0,0,0);
+        robot.Flipper.setPower(0);
+        robot.Lift.setPower(0);
+        robot.LiftCollector.setPower(0);
+        CantTellCounter = 0;
+        int RightConfidence;
+        int LeftConfidence;
+        int AllBlue;
+        int AllRed;
     }
     void stopCamera(){super.stop();}
 }

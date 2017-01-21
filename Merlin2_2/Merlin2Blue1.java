@@ -1,5 +1,8 @@
-package org.firstinspires.ftc.teamcode.team.Merlin2;
+package org.firstinspires.ftc.teamcode.team.Merlin2_2;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+
+import org.firstinspires.ftc.teamcode.team.Merlin2_2.Merlin2Auto;
+
 /*
  * My cases are:
  *

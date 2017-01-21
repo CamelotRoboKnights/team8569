@@ -7,17 +7,10 @@ package org.firstinspires.ftc.teamcode.team.Merlin2;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-import com.qualcomm.robotcore.hardware.CompassSensor;
-import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.util.Range;
 
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
-import org.firstinspires.ftc.teamcode.R;
-import org.firstinspires.ftc.teamcode.team.Merlin1.Merlin1Hardware; //More Import statements may be needed
-import org.firstinspires.ftc.teamcode.team.Merlin2.Merlin2Hardware;
-
-import java.security.cert.LDAPCertStoreParameters;
+import org.firstinspires.ftc.teamcode.team.Merlin2_2.Merlin2Hardware;
 
 import static java.lang.Boolean.FALSE;
 import static java.lang.Boolean.TRUE;
