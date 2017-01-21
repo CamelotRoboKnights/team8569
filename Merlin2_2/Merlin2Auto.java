@@ -50,7 +50,13 @@ class Merlin2Auto extends VisionOpMode {//This extends Vision Op Mode witch allo
     private int LeftConfidence;
     private int AllBlue;
     private int AllRed;
-    private String  ColorValue = "";
+
+    String FirstLaunchReturnValue = "";
+    String LoadBallValue = "";
+    String SecondLaunchReturnValue = "";
+    String Done = "";
+
+    String  ColorValue = "";
 
     /* Declare OpMode members. */
     Merlin2Hardware robot = new Merlin2Hardware();//The hardware map needs to be the hardware map of the robot we are using
@@ -115,10 +121,6 @@ class Merlin2Auto extends VisionOpMode {//This extends Vision Op Mode witch allo
 
     String shootAndIdentify(String Side){
         String ReturnValue = "";
-        String FirstLaunchReturnValue = "";
-        String LoadBallValue = "";
-        String SecondLaunchReturnValue = "";
-        String Done = "";
 
         if(!FirstLaunchReturnValue.equals("Done") && !LoadBallValue.equals("Done") && !SecondLaunchReturnValue.equals("Done")){
             FirstLaunchReturnValue = launchBall();
@@ -128,6 +130,8 @@ class Merlin2Auto extends VisionOpMode {//This extends Vision Op Mode witch allo
         }
         else if(FirstLaunchReturnValue.equals("Done") && LoadBallValue.equals("Done") && !SecondLaunchReturnValue.equals("Done")){
             SecondLaunchReturnValue = launchBall();
+        }
+        else if(FirstLaunchReturnValue.equals("Done") && LoadBallValue.equals("Done") && SecondLaunchReturnValue.equals("Done")){
             Done = "Done";
         }
 
@@ -370,31 +374,31 @@ class Merlin2Auto extends VisionOpMode {//This extends Vision Op Mode witch allo
                 ReturnValue = "NOTDONE";
                 switch (Direction){
                     case "Forward":
-                        moveMotorsPower(.3,.3,.3,.3);
+                        moveMotorsPower(.5,.5,.5,.5);
                         break;
                     case "Back":
-                        moveMotorsPower(-.3,-.3,-.3,-.3);
+                        moveMotorsPower(-.5,-.5,-.5,-.5);
                         break;
                     case "Left":
-                        moveMotorsPower(.3, -.3,.3,-.3);
+                        moveMotorsPower(.5, -.5, .5,-.5);
                         break;
                     case "Right":
-                        moveMotorsPower(-.3,.3,-.3,.3);
+                        moveMotorsPower(-.5,.5,-.5,.5);
                         break;
                     case "ForwardRight":
-                        moveMotorsPower(0, 3, 0, 3);
+                        moveMotorsPower(0, .5, 0, .5);
                         telemetry.addData("Forward", "Right");//Display that Im going right
                         break;
                     case "ForwardLeft":
-                        moveMotorsPower(3, 0, 3, 0);
+                        moveMotorsPower(.5, 0, .5, 0);
                         telemetry.addData("Forward", "Left");//Display that Im going right
                         break;
                     case "BackRight":
-                        moveMotorsPower(0, -3, 0, -3);
+                        moveMotorsPower(0, -.5, 0, -.5);
                         telemetry.addData("Forward", "Right");//Display that Im going right
                         break;
                     case "BackLeft":
-                        moveMotorsPower(-3, 0, -3, 0);
+                        moveMotorsPower(-.5, 0, -.5, 0);
                         telemetry.addData("Forward", "Left");//Display that Im going right
                         break;
                     default:
@@ -514,7 +518,7 @@ class Merlin2Auto extends VisionOpMode {//This extends Vision Op Mode witch allo
         double CurrWorldLinearAccelY;
         double CurrentJerkX;//My change in Acceleration
         double CurrentJerkY;
-        final double CollisionThesholdG = .25;//The threshold that has to be crossed to trigger a colision
+        final double CollisionThesholdG = .7;//The threshold that has to be crossed to trigger a colision
         String ReturnValue = "";//The Value that will be returned
 
         CurrWorldLinearAccelX = robot.navx_device.getWorldLinearAccelX();//Gives the current acceleration
