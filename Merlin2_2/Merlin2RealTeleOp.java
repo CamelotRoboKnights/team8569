@@ -12,6 +12,7 @@ import org.firstinspires.ftc.teamcode.team.Merlin2_2.Merlin2TeleOpMethods;
 //@Disabled //Uncomment this if it is not wanted on the phone
 public class Merlin2RealTeleOp extends Merlin2TeleOpMethods {
     private double StartTime;
+    private String CurrentCase = "AllSet";
 
     public void init(){//This only runs once
         super.init();//Initializing everything needed
@@ -26,18 +27,32 @@ public class Merlin2RealTeleOp extends Merlin2TeleOpMethods {
     public void loop(){//This runs while opmode is active
 
         double CurrentTime = (System.currentTimeMillis() - StartTime)/1000;
-        if(CurrentTime >= 100) {
-            super.primeCapBallLift();
+
+
+        if(CurrentTime >= 60){
+            CurrentCase = super.primeCapBallLift();
         }
-        if(super.CurrentCase.equals("AllSet")) {
+
+        if(CurrentCase.equals("AllSet")) {
             super.driveChoice(super.LiftHeight);//The method that determines what drive program to use and gives the programs everything it needs
             super.collection();//Runs my collection method
             super.TargetEncoder = super.launchBall(super.TargetEncoder);//Run the launch ball method
-            if(CurrentTime >= 100) {
-                super.TargetEncoder = super.launchBall(super.TargetEncoder);//Run the launch ball method
-                super.LiftHeight = super.liftCapBallLift();//Run the method that lifts the cap ball all the way when a button is pressed
-                super.LiftHeight = super.lowerCapBallLift();
-                if (!super.ButtonPressed) {//If that button is not pressed
+
+
+            if(CurrentTime >= 80) {
+                if(!super.LiftButtonPressed) {
+                    super.LiftHeight = super.lowerCapBallLift();//Run the method that lifts the cap ball all the way when a button is pressed
+                }
+                else{
+                    LiftHeight = liftCapBallLift();
+                }
+                if(!super.LowerButtonPressed){
+                    super.LiftHeight = super.liftCapBallLift();
+                }
+                else{
+                    super.LiftHeight = super.lowerCapBallLift();
+                }
+                if (!super.LiftButtonPressed && !super.LowerButtonPressed) {//If that button is not pressed
                     super.LiftHeight = super.lift();//Raise the cap ball lift manually
                 }
             }

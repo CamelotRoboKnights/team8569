@@ -1,3 +1,24 @@
+/* Our autonomous codes
+ *
+ * 1 at the end - The main autonomous that sets up at the normal spot does everything including: Launch, beacon, beacon, Cap ball
+ * 2 at the end - A secondary autonomous that sets up close to the line and does: launch, Cap Ball.
+ * 3 at the end - A main Autonomous that sets up at the normal spot and does: Launch, beacon, beacon, CornerVortex. NEEDS CREATING
+ * 4 at the end - A tertiary Autonomous that sets as far from the corner vortex and does: launch, CornerVortex. NEEDS CREATIG
+ *
+ * For what is on the drivers station
+ *
+ * Blue- Blue side
+ * Red- Red side
+ * 1- Standard location
+ * 2- Secondary location
+ * L- Launch
+ * B- Beacon
+ * C- Cap Ball
+ *
+ *
+ *
+ */
+
 package org.firstinspires.ftc.teamcode.team.Merlin2_2;
 import com.qualcomm.hardware.modernrobotics.PretendModernRoboticsUsbDevice;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
@@ -7,40 +28,31 @@ import org.firstinspires.ftc.teamcode.team.Merlin2_2.Merlin2Auto;
 /*
  * My cases are:
  *
- * Drive Forward
- * Launch
- * Load
- * Launch
+ * Drive Forward away from wall
+ * Turn To Go to identification location
+ * Drive Forward to identification location
+ * Turn to identify
+ * Shoot/Identify
+ * Turn to identify second beacon
  * Identify
- * Turn to first beacon
- * Go to white line going forward till right sensor
- * Turn to 0
- *
- * if Right drive left till hit
- * Back Up
- *
- * if Left Go to white line left till right sensor
- * Drive forward Till hit
- * Back Up
- * Go left Till left Light
- *
- * Go left Till Left right
- * Back up
- * Identify Beacon
- *
- * If right Drive till hit
- * Back Up
- * Turn to Ball
+ * Drive Left till Left sensor has seen white
+ * Square against wall
+ * Press beacon
+ * Forward drive to get close to second white line
+ * Drive forward to white line
+ * Press beacon
+ * Drive Right to hit the cap ball
+ * Spin to knock the ball off
  *
  *
- * if Left drive Right
- * Drive Till hit
- * Back up
- * Turn to ball
+ * Press beacon includes
+ * if left drive back some
+ * if right drive forward some
+ * drive till hit
+ * back up
  *
- * Drive to ball
  */
-@Autonomous(name = "Blue1, BBC", group = "Merlin2")
+@Autonomous(name = "Blue1, BBC, 0 sec", group = "Merlin2")
 public class Merlin2Blue1 extends Merlin2Auto {
 
     @Override
@@ -103,6 +115,10 @@ public class Merlin2Blue1 extends Merlin2Auto {
     private double SquareAgainstTheFirstBeacon = 178;
 
     private double MakeSureTheRobotIsAngledForToHitTheFirstBeacon = 178;
+
+
+    private double DriveBackAndHitCapBall = 40;
+    private double SpinToKnockOffCapBall = 0;
 
     private double DriveOntoTheCornerVortex = 40;
 
@@ -305,16 +321,41 @@ public class Merlin2Blue1 extends Merlin2Auto {
             case "DriveTillTheFirstBeaconIsHit"://Dive till the robot has hit the beacon
                 CompletionClause = super.driveUntilHit("Red");
                 if(CompletionClause.equals("Done")){
-                    CurrentCase = "DriveBackAfterHittingTheSecondBeacon";
+                    CurrentCase = "DriveBackAndHitCapBall";
                     CompletionClause = "NOTDONE";
                     super.resetAll();
                 }
                 break;
+            case "DriveBackAndHitCapBall":
+                CompletionClause = super.driveBasedOnEncoders(DriveBackAfterHittingTheSecondBeacon, "Right");
+                if(CompletionClause.equals("Done")){
+                    CompletionClause = "NOTDONE";
+                    CurrentCase = "SpinToKnockOffCapBall";
+                    super.resetAll();
+                }
+                break;
+            case "SpinToKnockOffCapBall":
+                CompletionClause = super.turnToGyroHeading(SpinToKnockOffCapBall);
+                if(CompletionClause.equals("Done")){
+                    CurrentCase = "Done";
+                    CompletionClause = "NOTDONE";
+                    super.resetAll();
+                }
+                break;
+
+
+
+
+
+
+
+
             case "DriveBackAfterHittingTheFirstBeacon"://Drive back after hitting the beacon
                 CompletionClause = super.driveBasedOnEncoders(DriveBackAfterHittingTheSecondBeacon, "Right");
                 if(CompletionClause.equals("Done")){
                     CompletionClause = "NOTDONE";
-                    super.resetAll();
+                    CurrentCase = "DriveOntoTheCornerVortex";
+                            super.resetAll();
                 }
                 break;
             case "DriveOntoTheCornerVortex":

@@ -11,7 +11,8 @@ import static java.lang.Boolean.TRUE;
 class Merlin2TeleOpMethods extends OpMode {
 
     private Merlin2Hardware robot = new Merlin2Hardware();//The hardware map needs to be the hardware map of the robot we are using
-    boolean ButtonPressed = FALSE;
+    boolean LowerButtonPressed = FALSE;
+    boolean LiftButtonPressed = FALSE;
     private double LiftDivisor = 28000;
     double TargetEncoder = 0;
     double LiftHeight = 0;
@@ -52,6 +53,7 @@ class Merlin2TeleOpMethods extends OpMode {
         telemetry.addData("L cm optical", "%.2f cm", robot.LeftRange.cmOptical());
         telemetry.addData(" L cm", "%.2f cm", robot.LeftRange.getDistance(DistanceUnit.CM));
         telemetry.update();
+        telemetry.addData("CurrentCase = ", CurrentCase);
     }
 
     double launchBall(double TargetEncoder) {
@@ -68,6 +70,8 @@ class Merlin2TeleOpMethods extends OpMode {
         }
         return TargetEncoder;
     }
+
+
     double lift(){
         if(gamepad2.right_trigger > .02){
             robot.Lift.setPower(gamepad2.right_trigger);
@@ -85,12 +89,13 @@ class Merlin2TeleOpMethods extends OpMode {
         double CurrentEncoder = robot.Lift.getCurrentPosition();
         double FullHeight = 23000;
             if (gamepad2.right_bumper) {
-                ButtonPressed = TRUE;
+                LiftButtonPressed = TRUE;
             }
-            else if (ButtonPressed == TRUE) {
+            else if (LiftButtonPressed == TRUE) {
                 if (FullHeight - CurrentEncoder < 500) {
-                    ButtonPressed = FALSE;
-                } else {
+                    LiftButtonPressed = FALSE;
+                }
+                else {
                     robot.Lift.setPower(1);
 
                 }
@@ -101,10 +106,11 @@ class Merlin2TeleOpMethods extends OpMode {
         double CurrentEncoder = robot.Lift.getCurrentPosition();
         double DropCapBallHeight = 23000;
         if (gamepad2.left_bumper) {
-            ButtonPressed = TRUE;
-        } else if (ButtonPressed == TRUE) {
+            LowerButtonPressed = TRUE;
+        }
+        else if (LowerButtonPressed == TRUE) {
             if (CurrentEncoder - DropCapBallHeight < 0) {
-                ButtonPressed = FALSE;
+                LowerButtonPressed = FALSE;
                 SpeedModulation = false;
             } else {
                 robot.Lift.setPower(-1);
@@ -116,7 +122,7 @@ class Merlin2TeleOpMethods extends OpMode {
     String primeCapBallLift(){
         double CurrentTime = System.currentTimeMillis();
 
-        if(gamepad1.right_stick_button)CurrentCase = "RaiseLift";
+        if(gamepad2.right_stick_button)CurrentCase = "RaiseLift";
 
         switch (CurrentCase){
             case "RaiseLift":
@@ -152,26 +158,43 @@ class Merlin2TeleOpMethods extends OpMode {
                 }
                 break;
             case "AllSet":
+
                 break;
         }
-        return "WORK ON THIS MORE";
+        return CurrentCase;
     }
 
     void driveChoice (double LiftHeight){
-        //if(SpeedModulation) {
+        if(SpeedModulation) {
             if (2 * Math.abs(gamepad1.right_stick_x) + .2 <= -gamepad1.right_stick_y) forwardDriveModulated(LiftHeight);
             else if (-2 * Math.abs(gamepad1.right_stick_x) - .2 >= -gamepad1.right_stick_y) backDriveModulated(LiftHeight);
             else if (2 * Math.abs(-gamepad1.right_stick_y) + .2 <= gamepad1.right_stick_x) rightDriveModulated(LiftHeight);
             else if (-2 * Math.abs(-gamepad1.right_stick_y) - .2 >= gamepad1.right_stick_x) leftDriveModulated(LiftHeight);
             else feildOrentedDriveModulated(LiftHeight);
-        //}
-        //else{
-        //    if (2 * Math.abs(gamepad1.right_stick_x) + .2 <= -gamepad1.right_stick_y) forwardDrive(LiftHeight);
-        //    else if (-2 * Math.abs(gamepad1.right_stick_x) - .2 >= -gamepad1.right_stick_y) backDrive(LiftHeight);
-        //    else if (2 * Math.abs(-gamepad1.right_stick_y) + .2 <= gamepad1.right_stick_x) rightDrive(LiftHeight);
-        //    else if (-2 * Math.abs(-gamepad1.right_stick_y) - .2 >= gamepad1.right_stick_x) leftDrive(LiftHeight);
-        //    else feildOrentedDrive(LiftHeight);
-        //}
+        }
+        else{
+            if (2 * Math.abs(gamepad1.right_stick_x) + .2 <= -gamepad1.right_stick_y) forwardDrive(LiftHeight);
+            else if (-2 * Math.abs(gamepad1.right_stick_x) - .2 >= -gamepad1.right_stick_y) backDrive(LiftHeight);
+            else if (2 * Math.abs(-gamepad1.right_stick_y) + .2 <= gamepad1.right_stick_x) rightDrive(LiftHeight);
+            else if (-2 * Math.abs(-gamepad1.right_stick_y) - .2 >= gamepad1.right_stick_x) leftDrive(LiftHeight);
+            else feildOrentedDrive(LiftHeight);
+        }
+    }
+    void driveChoiceNoFeildOriented (double LiftHeight){
+        if(SpeedModulation) {
+            if (2 * Math.abs(gamepad1.right_stick_x) + .2 <= -gamepad1.right_stick_y) forwardDriveModulated(LiftHeight);
+            else if (-2 * Math.abs(gamepad1.right_stick_x) - .2 >= -gamepad1.right_stick_y) backDriveModulated(LiftHeight);
+            else if (2 * Math.abs(-gamepad1.right_stick_y) + .2 <= gamepad1.right_stick_x) rightDriveModulated(LiftHeight);
+            else if (-2 * Math.abs(-gamepad1.right_stick_y) - .2 >= gamepad1.right_stick_x) leftDriveModulated(LiftHeight);
+            else moveMotorsPower(0,0,0,0);
+        }
+        else{
+            if (2 * Math.abs(gamepad1.right_stick_x) + .2 <= -gamepad1.right_stick_y) forwardDrive(LiftHeight);
+            else if (-2 * Math.abs(gamepad1.right_stick_x) - .2 >= -gamepad1.right_stick_y) backDrive(LiftHeight);
+            else if (2 * Math.abs(-gamepad1.right_stick_y) + .2 <= gamepad1.right_stick_x) rightDrive(LiftHeight);
+            else if (-2 * Math.abs(-gamepad1.right_stick_y) - .2 >= gamepad1.right_stick_x) leftDrive(LiftHeight);
+            else moveMotorsPower(0,0,0,0);
+        }
     }
 
     private void backDriveModulated(double LiftHeight){

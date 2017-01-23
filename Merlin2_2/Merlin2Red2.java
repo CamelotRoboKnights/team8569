@@ -2,6 +2,8 @@
  *
  * 1 at the end - The main autonomous that sets up at the normal spot does everything including: Launch, beacon, beacon, Cap ball
  * 2 at the end - A secondary autonomous that sets up close to the line and does: launch, Cap Ball.
+ * 3 at the end - A main Autonomous that sets up at the normal spot and does: Launch, beacon, beacon, CornerVortex. NEEDS CREATING
+ * 4 at the end - A tertiary Autonomous that sets as far from the corner vortex and does: launch, CornerVortex. NEEDS CREATIG
  *
  * For what is on the drivers station
  *
@@ -20,9 +22,20 @@
 package org.firstinspires.ftc.teamcode.team.Merlin2_2;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 
-import org.firstinspires.ftc.teamcode.team.Merlin2_2.Merlin2Auto;
+/*
+ * My cases are:
+ *
+ * Wait
+ * Go forward away from wall
+ * Turn
+ * Shoot Ball
+ * Load Ball
+ * Shoot Ball
+ * Drive Forward
+ *
+ */
 
-@Autonomous(name = "Red2, LC", group = "Merlin2")
+@Autonomous(name = "Red2, LC, 5 sec", group = "Merlin2")
 public class Merlin2Red2 extends Merlin2Auto {
 
     @Override
@@ -44,13 +57,26 @@ public class Merlin2Red2 extends Merlin2Auto {
     @Override
     public void start() {
     }
-    private String CurrentCase = "GoForwardBeforeShoot";
+    private String CurrentCase = "Wait";
     private String CompletionClause = "";
+    double StartTime = 0;
     @Override
     public void loop() {
         telemetry.addData("CurrentCase", CurrentCase);
 
         switch (CurrentCase){
+            case "Wait":
+                double CurrentTime = 0;
+                if (StartTime == 0){
+                    StartTime = System.currentTimeMillis();
+                }
+                else{
+                    CurrentTime = (System.currentTimeMillis() - StartTime)/1000;
+                }
+                if(CurrentTime > 5) {
+                    CurrentCase = "GoFrowardAwayFromWall";
+                }
+                break;
             case "GoFrowardAwayFromWall":
                 CompletionClause = super.driveBasedOnEncoders(5, "Forward");
                 if(CompletionClause.equals("Done")){
