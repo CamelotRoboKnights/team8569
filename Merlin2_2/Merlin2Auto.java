@@ -196,30 +196,32 @@ class Merlin2Auto extends VisionOpMode {//This extends Vision Op Mode witch allo
         return ReturnValue;
     }
     String choseSide(String TeamColor){ //this is for red side
+        double RedConfidenceValueNeeded = 600;
+        double BlueConfidenceValueNeeded = 750;
         String Side = "";//The side of the beacon is the color I want
         if(TeamColor.equals("RED")){//If my team color is red
             if (beacon.getAnalysis().isBeaconFound()){//if I am confident enough in my color desision
                 if(beacon.getAnalysis().isLeftBlue() && beacon.getAnalysis().isRightBlue()){//If both sides are blue return that is is all blue
                     AllBlue++;
-                    if(AllBlue > 750) {
+                    if(AllBlue > 700) {
                         Side = "NOBlue";
                     }
                 }
                 else if (beacon.getAnalysis().isLeftRed() && beacon.getAnalysis().isRightRed()){//If both sides are red return that is is all red
                     AllRed++;
-                    if(AllRed > 750){
+                    if(AllRed > 700){
                         Side = "NORed";
                     }
                 }
                 else if(beacon.getAnalysis().isLeftBlue() && beacon.getAnalysis().isRightRed()){//If red is on the right tell me red is on the right
                     RightConfidence++;
-                    if(RightConfidence > 750) {
+                    if(RightConfidence > RedConfidenceValueNeeded) {
                         Side = "Right";
                     }
                 }
                 else if(beacon.getAnalysis().isLeftRed() && beacon.getAnalysis().isRightBlue()){//if the left side is red tell me I want the left side
                     LeftConfidence++;
-                    if(LeftConfidence > 750){
+                    if(LeftConfidence > RedConfidenceValueNeeded){
                         Side = "Left";
                     }
                 }
@@ -254,13 +256,13 @@ class Merlin2Auto extends VisionOpMode {//This extends Vision Op Mode witch allo
                 }
                 else if(beacon.getAnalysis().isLeftBlue() && beacon.getAnalysis().isRightRed()){//If red is on the right tell me red is on the right
                     RightConfidence++;
-                    if(RightConfidence > 750) {
+                    if(RightConfidence > BlueConfidenceValueNeeded) {
                         Side = "Left";
                     }
                 }
                 else if(beacon.getAnalysis().isLeftRed() && beacon.getAnalysis().isRightBlue()){//if the left side is red tell me I want the left side
                     LeftConfidence++;
-                    if(LeftConfidence > 750){
+                    if(LeftConfidence > BlueConfidenceValueNeeded){
                         Side = "Right";
                     }
                 }
@@ -518,7 +520,7 @@ class Merlin2Auto extends VisionOpMode {//This extends Vision Op Mode witch allo
         double CurrWorldLinearAccelY;
         double CurrentJerkX;//My change in Acceleration
         double CurrentJerkY;
-        final double CollisionThesholdG = .7;//The threshold that has to be crossed to trigger a colision
+        final double CollisionThesholdG = .5;//The threshold that has to be crossed to trigger a colision
         String ReturnValue = "";//The Value that will be returned
 
         CurrWorldLinearAccelX = robot.navx_device.getWorldLinearAccelX();//Gives the current acceleration
@@ -591,8 +593,8 @@ class Merlin2Auto extends VisionOpMode {//This extends Vision Op Mode witch allo
          * Set color tolerances
          * 0 is default, -1 is minimum and 1 is maximum tolerance
          */
-        beacon.setColorToleranceRed(-.5);
-        beacon.setColorToleranceBlue(-.5);
+        beacon.setColorToleranceRed(-.7);
+        beacon.setColorToleranceBlue(-.7);
 
         /**
          * Set analysis boundary
@@ -656,10 +658,10 @@ class Merlin2Auto extends VisionOpMode {//This extends Vision Op Mode witch allo
         robot.Lift.setPower(0);
         robot.LiftCollector.setPower(0);
         CantTellCounter = 0;
-        int RightConfidence;
-        int LeftConfidence;
-        int AllBlue;
-        int AllRed;
+        RightConfidence = 0;
+        LeftConfidence = 0;
+        AllBlue = 0;
+        AllRed = 0;
     }
     void stopCamera(){super.stop();}
 }

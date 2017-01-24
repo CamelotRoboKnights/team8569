@@ -118,7 +118,7 @@ public class Merlin2Hardware
         Motor4.setDirection(DcMotorSimple.Direction.REVERSE);//Sets the motor power to reverse so forwards is positive
         LiftCollector.setDirection(DcMotorSimple.Direction.FORWARD);//Sets the motor power to reverse so collecting is positive
         Flipper.setDirection(DcMotorSimple.Direction.REVERSE);//Sets the Flipper to forward so launching is positive
-        Lift.setDirection(DcMotorSimple.Direction.REVERSE);
+        Lift.setDirection(DcMotorSimple.Direction.FORWARD);
 
         // Set all motors to zero power
         Motor1.setPower(0);//Sets the power to 0 so motors don't move
