@@ -60,8 +60,8 @@ public class BasicVisionSample extends VisionOpMode {
          * Set color tolerances
          * 0 is default, -1 is minimum and 1 is maximum tolerance
          */
-        beacon.setColorToleranceRed(-.5);
-        beacon.setColorToleranceBlue(-.5);
+        beacon.setColorToleranceRed(-.7);
+        beacon.setColorToleranceBlue(-.7);
 
         /**
          * Set analysis boundary

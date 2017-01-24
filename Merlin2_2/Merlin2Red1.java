@@ -46,7 +46,7 @@ import org.firstinspires.ftc.teamcode.team.Merlin2_2.Merlin2Auto;
  * Press beacon
  * Back Right Angle Drive
  */
-@Autonomous(name = "Red1, BBC, 0 sec", group = "Merlin2")
+@Autonomous(name = "Red1, LBBC, 0 sec", group = "Merlin2")
 public class Merlin2Red1 extends Merlin2Auto {
 
     @Override
@@ -68,31 +68,31 @@ public class Merlin2Red1 extends Merlin2Auto {
     @Override
     public void start() {
     }
-    private String CurrentCase = "MakeSureItIsOnAngle";
+    private String CurrentCase = "DriveForwardAwayFromWallToBeAbleToTurn";
     private String CompletionClause = "";
     private String FirstBeaconSide = "";
     private String SecondBeaconSide = "";
 
     private double DriveForwardAwayFromWallToBeAbleToTurn = 5;
 
-    private double TurnToGoToTheFirstBeaconIdentificationLocation = -47;
+    private double TurnToGoToTheFirstBeaconIdentificationLocation = -30;
 
-    private double GoForwardToTheFirstBeaconIdentificationLocation = 28;
+    private double GoForwardToTheFirstBeaconIdentificationLocation = 26;
 
     private double TurnToIdentifyAndShoot = 43.87;
 
 
     private double SquareAgainstWall = 0;
 
-    private double DriveToHitLeftButtonOfTheFirstBeaconDistance = 1;
+    private double DriveToHitLeftButtonOfTheFirstBeaconDistance = 3;
     private String DriveToHitLeftButtonOfTheFirstBeaconDirection = "Back";
 
     private double DriveToHitRightButtonOfTheFirstBeaconDistance = 1;
     private String DriveToHitRightButtonOfTheFirstBeaconDirection = "Forward";
 
-    private double DriveBackAfterHittingTheFirstBeacon = 12;
+    private double DriveBackAfterHittingTheFirstBeacon = 14;
 
-    private double TurnToGoToTheSecondBeaconIdentificationLocation = 17;
+    private double TurnToGoToTheSecondBeaconIdentificationLocation = 19;
 
     private double GoToTheSecondBeaconIdentificationLocation = 29;
 
@@ -100,13 +100,14 @@ public class Merlin2Red1 extends Merlin2Auto {
 
     private double TurnToGoToSecondBeacon = 0;
 
-    private double DriveToHitLeftButtonOfTheSecondBeaconDistance = 1;
+    private double DriveToHitLeftButtonOfTheSecondBeaconDistance = 5;
     private String DriveToHitLeftButtonOfTheSecondBeaconDirection = "Back";
 
     private double DriveToHitRightButtonOfTheSecondBeaconDistance = 1;
     private String DriveToHitRightButtonOfTheSecondBeaconDirection = "Forward";
 
     private double DriveBackAfterHittingTheSecondBeacon = 12;
+
     private double BackRightDriveToHitTheCapBall = 80;
 
 
@@ -329,7 +330,7 @@ public class Merlin2Red1 extends Merlin2Auto {
                 }
                 break;
             case "BackRightDriveToHitTheCapBall":
-                CompletionClause = super.driveBasedOnEncoders(DriveBackAfterHittingTheSecondBeacon, "BackRight");
+                CompletionClause = super.driveBasedOnEncoders(BackRightDriveToHitTheCapBall, "BackLeft");
                 if(CompletionClause.equals("Done")){
                     CurrentCase = "Done";
                     CompletionClause = "NOTDONE";
