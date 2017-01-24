@@ -33,6 +33,13 @@ class Merlin2TeleOpMethods extends OpMode {
     public void stop(){}
 
 
+    void resetYaw(){
+        if(gamepad1.a){
+            robot.navx_device.zeroYaw();
+        }
+    }
+
+
 
 
     void print(double LiftHeight, double TargetEncoder){

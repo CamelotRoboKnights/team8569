@@ -7,6 +7,7 @@ package org.firstinspires.ftc.teamcode.team.Merlin2_2;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.teamcode.team.Merlin2_2.Merlin2TeleOpMethods;
+import org.firstinspires.ftc.teamcode.team.Other.NavXSensor;
 
 @TeleOp(name = "PracticeOp", group = "Merlin2")//This NEEDS to be changed tp the name of the code
 //@Disabled //Uncomment this if it is not wanted on the phone
@@ -28,6 +29,7 @@ public class Merlin2PracticeTeleOp extends Merlin2TeleOpMethods {
     public void loop(){//This runs while opmode is active
 
         CurrentCase = super.primeCapBallLift();
+        resetYaw();
 
         if(CurrentCase.equals("AllSet")) {
             super.driveChoiceNoFeildOriented(super.LiftHeight);//The method that determines what drive program to use and gives the programs everything it needs
