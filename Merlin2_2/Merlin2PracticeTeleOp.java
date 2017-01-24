@@ -29,10 +29,9 @@ public class Merlin2PracticeTeleOp extends Merlin2TeleOpMethods {
     public void loop(){//This runs while opmode is active
 
         CurrentCase = super.primeCapBallLift();
-        resetYaw();
 
         if(CurrentCase.equals("AllSet")) {
-            super.driveChoiceNoFeildOriented(super.LiftHeight);//The method that determines what drive program to use and gives the programs everything it needs
+            super.driveChoice(super.LiftHeight);//The method that determines what drive program to use and gives the programs everything it needs
             super.collection();//Runs my collection method
             super.TargetEncoder = super.launchBall(super.TargetEncoder);//Run the launch ball method
 

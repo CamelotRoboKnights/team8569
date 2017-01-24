@@ -27,7 +27,7 @@ public class Merlin2RealTeleOp extends Merlin2TeleOpMethods {
     public void loop(){//This runs while opmode is active
 
         double CurrentTime = (System.currentTimeMillis() - StartTime)/1000;
-
+        resetYaw();
 
         if(CurrentTime >= 60){
             CurrentCase = super.primeCapBallLift();

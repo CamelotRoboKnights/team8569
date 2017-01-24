@@ -94,7 +94,7 @@ class Merlin2TeleOpMethods extends OpMode {
     }
     double liftCapBallLift(){
         double CurrentEncoder = robot.Lift.getCurrentPosition();
-        double FullHeight = 23000;
+        double FullHeight = 25500;
             if (gamepad2.right_bumper) {
                 LiftButtonPressed = TRUE;
             }
@@ -111,7 +111,7 @@ class Merlin2TeleOpMethods extends OpMode {
     }
     double lowerCapBallLift(){
         double CurrentEncoder = robot.Lift.getCurrentPosition();
-        double DropCapBallHeight = 23000;
+        double DropCapBallHeight = 22000;
         if (gamepad2.left_bumper) {
             LowerButtonPressed = TRUE;
         }
@@ -145,7 +145,7 @@ class Merlin2TeleOpMethods extends OpMode {
                 }
                 break;
             case "Wait":
-                if(CurrentTime - StartTime+500 >= 0 ){
+                if(CurrentTime - StartTime+1000 >= 0 ){
                     CurrentCase = "Lower";
                     moveMotorsPower(0,0,0,0);
                 }
@@ -155,13 +155,13 @@ class Merlin2TeleOpMethods extends OpMode {
                 break;
             case "Lower":
                 CurrentEncoder = robot.Lift.getCurrentPosition();
-                if (CurrentEncoder < 3) {
+                if (CurrentEncoder < 10) {
                     robot.Lift.setPower(0);
                     CurrentCase = "AllSet";
                     StartTime = System.currentTimeMillis();
                 }
                 else {
-                    robot.Lift.setPower(.8);
+                    robot.Lift.setPower(-.6);
                 }
                 break;
             case "AllSet":
