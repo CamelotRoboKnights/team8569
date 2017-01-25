@@ -75,11 +75,13 @@ public class Merlin2Red1 extends Merlin2Auto {
 
     private double DriveForwardAwayFromWallToBeAbleToTurn = 5;
 
-    private double TurnToGoToTheFirstBeaconIdentificationLocation = -30;
+    private double TurnToGoToTheFirstBeaconIdentificationLocation = -25;
 
-    private double GoForwardToTheFirstBeaconIdentificationLocation = 26;
+    private double GoForwardToTheFirstBeaconIdentificationLocation = 40;
 
-    private double TurnToIdentifyAndShoot = 43.87;
+    private double TurnToIdentifyAndShoot = 43;
+
+    private double DriveForwardMore = 10;
 
 
     private double SquareAgainstWall = 0;
@@ -156,6 +158,14 @@ public class Merlin2Red1 extends Merlin2Auto {
                     CurrentCase = "DriveLeftForwardToTheFirstWhiteLine";
                     CompletionClause = "NOTDONE";
                     FirstBeaconSide = super.ColorValue;
+                    super.resetAll();
+                }
+                break;
+            case "DriveForwardMore":
+                CompletionClause = super.driveBasedOnEncoders(DriveForwardMore, "Forward");
+                if(CompletionClause.equals("Done")){
+                    CurrentCase = "TurnToIdentifyAndShoot";
+                    CompletionClause = "NOTDONE";
                     super.resetAll();
                 }
                 break;
