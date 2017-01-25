@@ -820,4 +820,74 @@ class Merlin2TeleOpMethods extends OpMode {
         telemetry.addData("M4", Motor4Power);
 
     }
+    private void feildOrentedDriveWithTurning(double LiftHeight){
+        double JoyX;
+        double JoyY;
+        double NewX;
+        double NewY;
+        double OrientationDegrees;
+        double OrientationRadians;
+        double Motor1Power = 0;
+        double Motor2Power = 0;
+        double Motor3Power = 0;
+        double Motor4Power = 0;
+
+        JoyY = -gamepad1.left_stick_y;
+        JoyX = gamepad1.left_stick_x;
+        OrientationDegrees = robot.navx_device.getYaw();
+        OrientationRadians = OrientationDegrees * Math.PI / 180;
+        NewY = JoyY * Math.cos(OrientationRadians) + JoyX * Math.sin(OrientationRadians);
+        NewX = -JoyY * Math.sin(OrientationRadians) + JoyX * Math.cos(OrientationRadians);
+
+        double LiftHeightScaled = 1-Math.abs(LiftHeight)/LiftDivisor;
+
+        if(Math.abs(gamepad1.left_stick_y) >= 0.02 || Math.abs(gamepad1.left_stick_x) >= 0.02){
+
+            Motor1Power = NewY - NewX;
+            Motor1Power = Range.clip(Motor1Power, -1, 1);
+            if(gamepad1.right_trigger > .02){
+                Motor1Power = Motor1Power*.5 + .5*(Math.cos(OrientationDegrees + .25*Math.PI));
+            }
+            else if(gamepad1.left_trigger > .02){
+                Motor1Power = Motor1Power*.5 + .5*-(Math.cos(OrientationDegrees + .25*Math.PI));
+            }
+
+            Motor2Power = NewY + NewX;
+            Motor2Power = Range.clip(Motor2Power, -1, 1);
+            if(gamepad1.right_trigger > .02){
+
+            }
+            else if(gamepad1.left_trigger > .02){
+
+            }
+
+            Motor3Power = NewY - NewX;
+            Motor3Power = Range.clip(Motor3Power, -1, 1);
+            if(gamepad1.right_trigger > .02){
+
+            }
+            else if(gamepad1.left_trigger > .02){
+
+            }
+
+            Motor4Power = NewY + NewX;
+            Motor4Power = Range.clip(Motor4Power, -1, 1);
+            if(gamepad1.right_trigger > .02){
+
+            }
+            else if(gamepad1.left_trigger > .02){
+
+            }
+
+
+            moveMotorsPower(Motor1Power, Motor2Power, Motor3Power, Motor4Power);
+
+        }
+        telemetry.addData("M1", Motor1Power);
+        telemetry.addData("M2", Motor2Power);
+        telemetry.addData("M3", Motor3Power);
+        telemetry.addData("M4", Motor4Power);
+
+    }
 }
+
