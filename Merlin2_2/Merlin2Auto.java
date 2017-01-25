@@ -85,7 +85,41 @@ class Merlin2Auto extends VisionOpMode {//This extends Vision Op Mode witch allo
 
 
 
+    String TurnTo180Degrees(){
+        String ReturnValue;//The value the method will return
+        double CurrentHeading = robot.navx_device.getYaw();//The robot's current heading
+        double HeadingDifference;
+        if(CurrentHeading>0) {
+            HeadingDifference = 180 - CurrentHeading;//How far the robot is from its target heading
+        }
+        else{
+            HeadingDifference = -180 + CurrentHeading;//How far the robot is from its target heading
 
+        }
+        double HeadingScaler = .005;//The scalier that edits how much the speed is affect
+        double HeadingDiffernceScalled = HeadingDifference * HeadingScaler;//The scaled value that is used for the motor power
+        HeadingDiffernceScalled = Range.clip(HeadingDiffernceScalled, -1, 1);//Making sure that the number is within a reasonable motor power
+
+        if(HeadingDiffernceScalled < .09 && HeadingDiffernceScalled > 0){//making sure the motor power is not so low that the robot wont move
+            HeadingDiffernceScalled = .09;
+        }
+        else if(Math.abs(HeadingDiffernceScalled) < .09 && HeadingDiffernceScalled <0){//making sure the motor power is not so low that the robot wont move
+            HeadingDiffernceScalled = -.09;
+            telemetry.addData("I got", "Here");
+        }
+        else{
+            telemetry.addData("Go Robot"," Go");//making sure the motor power is not so low that the robot wont move
+        }
+        telemetry.addData("HDS", HeadingDiffernceScalled);//Prints the motor powers
+        telemetry.addData("CurrentYAW", CurrentHeading);//Prints the current angle the robot is at
+        moveMotorsPower(-HeadingDiffernceScalled, HeadingDiffernceScalled, HeadingDiffernceScalled, -HeadingDiffernceScalled);//My method to run the motors
+        if (1 >= Math.abs(HeadingDifference)) {//If it is within 2 degrees I am done
+            ReturnValue = "Done";
+        } else {//Otherwise it isn't done
+            ReturnValue = "NOTDONE";
+        }
+        return ReturnValue;
+    }
     String turnToGyroHeading(double TargetHeading) {//Working and will turn the robot to a gyro heading within 2degrees
         String ReturnValue;//The value the method will return
         double CurrentHeading = robot.navx_device.getYaw();//The robot's current heading
@@ -196,7 +230,7 @@ class Merlin2Auto extends VisionOpMode {//This extends Vision Op Mode witch allo
         return ReturnValue;
     }
     String choseSide(String TeamColor){ //this is for red side
-        double RedConfidenceValueNeeded = 600;
+        double RedConfidenceValueNeeded = 750;
         double BlueConfidenceValueNeeded = 750;
         String Side = "";//The side of the beacon is the color I want
         if(TeamColor.equals("RED")){//If my team color is red
