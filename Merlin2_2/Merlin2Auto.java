@@ -85,7 +85,7 @@ class Merlin2Auto extends VisionOpMode {//This extends Vision Op Mode witch allo
 
 
 
-    String TurnTo180Degrees(){
+    String turnTo180Degrees(){
         String ReturnValue;//The value the method will return
         double CurrentHeading = robot.navx_device.getYaw();//The robot's current heading
         double HeadingDifference;
@@ -230,7 +230,7 @@ class Merlin2Auto extends VisionOpMode {//This extends Vision Op Mode witch allo
         return ReturnValue;
     }
     String choseSide(String TeamColor){ //this is for red side
-        double RedConfidenceValueNeeded = 750;
+        double RedConfidenceValueNeeded = 600;
         double BlueConfidenceValueNeeded = 750;
         String Side = "";//The side of the beacon is the color I want
         if(TeamColor.equals("RED")){//If my team color is red
