@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.team.Merlin2_2;
+package org.firstinspires.ftc.teamcode.team.Merlin1617.Merlin2_2;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.util.Range;

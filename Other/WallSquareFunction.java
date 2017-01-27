@@ -9,20 +9,11 @@ package org.firstinspires.ftc.teamcode.team.Other;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-import com.qualcomm.robotcore.hardware.CompassSensor;
-import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.Gamepad;
+
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
-import org.firstinspires.ftc.teamcode.team.Merlin1.Merlin1Hardware;
-import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-import com.qualcomm.robotcore.hardware.DcMotor;
+import org.firstinspires.ftc.teamcode.team.Merlin1617.Merlin1.Merlin1Hardware;
+
 import com.qualcomm.robotcore.util.Range;
-import com.kauailabs.navx.ftc.AHRS;
-import com.qualcomm.robotcore.eventloop.opmode.OpMode;
-import com.qualcomm.robotcore.util.ElapsedTime;
-import java.text.DecimalFormat;
-import org.firstinspires.ftc.teamcode.team.Merlin1.Merlin1Hardware;
 
 
 @TeleOp(name = "wall square", group = "Merlin1")//This is the name of the code and what will be seen on the robot phone

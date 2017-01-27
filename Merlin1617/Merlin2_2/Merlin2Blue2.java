@@ -18,8 +18,7 @@
  *
  *
  */
-package org.firstinspires.ftc.teamcode.team.Merlin2_2;
-import com.qualcomm.hardware.adafruit.BNO055IMU;
+package org.firstinspires.ftc.teamcode.team.Merlin1617.Merlin2_2;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 
 /*
@@ -44,6 +43,7 @@ public class Merlin2Blue2 extends Merlin2Auto {
         super.initCamera();
 
         telemetry.addData("Say", "Hello Driver");    //
+        telemetry.addData("Blue2", "LCap, 15 sec");
         robot.navx_device.zeroYaw();
 
 

@@ -19,9 +19,7 @@
  */
 
 //Commenting is done 17-1-13
-package org.firstinspires.ftc.teamcode.team.Merlin2_2;
-
-import android.graphics.ColorMatrixColorFilter;
+package org.firstinspires.ftc.teamcode.team.Merlin1617.Merlin2_2;
 
 import com.qualcomm.robotcore.util.Range;//Allows the use of the Range Clip
 
@@ -30,7 +28,6 @@ import org.lasarobotics.vision.ftc.resq.Beacon;//Lets us understand what the bea
 import org.lasarobotics.vision.opmode.VisionOpMode;//lets us use the Vision op mode that is what we are extending
 import org.lasarobotics.vision.opmode.extensions.CameraControlExtension;//Gives more control of the camera
 import org.lasarobotics.vision.util.ScreenOrientation;//Lets us control the orientation of the screen
-import org.lasarobotics.vision.util.color.Color;
 import org.opencv.core.Size;//Lets us understand picture size
 
 class Merlin2Auto extends VisionOpMode {//This extends Vision Op Mode witch allows us to use the
@@ -86,37 +83,19 @@ class Merlin2Auto extends VisionOpMode {//This extends Vision Op Mode witch allo
 
 
     String turnTo180Degrees(){
-        String ReturnValue;//The value the method will return
+        String ReturnValue = "";//The value the method will return
         double CurrentHeading = robot.navx_device.getYaw();//The robot's current heading
-        double HeadingDifference;
-        if(CurrentHeading>0) {
-            HeadingDifference = 180 - CurrentHeading;//How far the robot is from its target heading
-        }
-        else{
-            HeadingDifference = -180 + CurrentHeading;//How far the robot is from its target heading
 
-        }
-        double HeadingScaler = .005;//The scalier that edits how much the speed is affect
-        double HeadingDiffernceScalled = HeadingDifference * HeadingScaler;//The scaled value that is used for the motor power
-        HeadingDiffernceScalled = Range.clip(HeadingDiffernceScalled, -1, 1);//Making sure that the number is within a reasonable motor power
-
-        if(HeadingDiffernceScalled < .09 && HeadingDiffernceScalled > 0){//making sure the motor power is not so low that the robot wont move
-            HeadingDiffernceScalled = .09;
-        }
-        else if(Math.abs(HeadingDiffernceScalled) < .09 && HeadingDiffernceScalled <0){//making sure the motor power is not so low that the robot wont move
-            HeadingDiffernceScalled = -.09;
-            telemetry.addData("I got", "Here");
-        }
-        else{
-            telemetry.addData("Go Robot"," Go");//making sure the motor power is not so low that the robot wont move
-        }
-        telemetry.addData("HDS", HeadingDiffernceScalled);//Prints the motor powers
-        telemetry.addData("CurrentYAW", CurrentHeading);//Prints the current angle the robot is at
-        moveMotorsPower(-HeadingDiffernceScalled, HeadingDiffernceScalled, HeadingDiffernceScalled, -HeadingDiffernceScalled);//My method to run the motors
-        if (1 >= Math.abs(HeadingDifference)) {//If it is within 2 degrees I am done
-            ReturnValue = "Done";
-        } else {//Otherwise it isn't done
+        if(CurrentHeading > 0 && CurrentHeading < 179) {
+            moveMotorsPower(-.1, .1, .1, -.1);//My method to run the motors
             ReturnValue = "NOTDONE";
+        }
+        else if (CurrentHeading <= 0&& CurrentHeading > -179){
+            moveMotorsPower(.1, -.1, -.1, .1);//My method to run the motors
+            ReturnValue = "NOTDONE";
+        }
+        else{
+            ReturnValue = "Done";
         }
         return ReturnValue;
     }

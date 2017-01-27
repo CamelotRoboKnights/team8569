@@ -2,11 +2,9 @@
 /*
  * This is our new TeleOp and has the methods separate.
  */
-package org.firstinspires.ftc.teamcode.team.Merlin2_2;
+package org.firstinspires.ftc.teamcode.team.Merlin1617.Merlin2_2;
 
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-
-import org.firstinspires.ftc.teamcode.team.Merlin2_2.Merlin2TeleOpMethods;
 
 @TeleOp(name = "RealOp", group = "Merlin2")//This NEEDS to be changed tp the name of the code
 //@Disabled //Uncomment this if it is not wanted on the phone

@@ -6,7 +6,7 @@
  */
 
 
-package org.firstinspires.ftc.teamcode.team.Merlin2;//This might need to changed to be in a differnt folder like Merlin1 or K9Robo
+package org.firstinspires.ftc.teamcode.team.Merlin1617.Merlin2;//This might need to changed to be in a differnt folder like Merlin1 or K9Robo
 
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
@@ -14,7 +14,7 @@ import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.util.Range;
 
-import org.firstinspires.ftc.teamcode.team.Merlin2_2.Merlin2Hardware;
+import org.firstinspires.ftc.teamcode.team.Merlin1617.Merlin2_2.Merlin2Hardware;
 
 @Autonomous(name = "RED2", group = "Merlin2")//This NEEDS to be changed tp the name of the code
 @Disabled //Uncomment this if it is not wanted on the phone

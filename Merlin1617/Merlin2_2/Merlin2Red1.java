@@ -20,10 +20,8 @@
  */
 
 
-package org.firstinspires.ftc.teamcode.team.Merlin2_2;
+package org.firstinspires.ftc.teamcode.team.Merlin1617.Merlin2_2;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
-
-import org.firstinspires.ftc.teamcode.team.Merlin2_2.Merlin2Auto;
 
 /*
  * My cases are:
@@ -46,7 +44,7 @@ import org.firstinspires.ftc.teamcode.team.Merlin2_2.Merlin2Auto;
  * Press beacon
  * Back Right Angle Drive
  */
-@Autonomous(name = "Red1, LBBC, 0 sec", group = "Merlin2")
+@Autonomous(name = "Red1, BBC, 0 sec", group = "Merlin2")
 public class Merlin2Red1 extends Merlin2Auto {
 
     @Override
@@ -55,6 +53,7 @@ public class Merlin2Red1 extends Merlin2Auto {
         super.initCamera();
 
         telemetry.addData("Say", "Hello Driver");    //
+        telemetry.addData("Red1", "BBC, 0sec");
         robot.navx_device.zeroYaw();
 
 

@@ -19,7 +19,7 @@
  *
  */
 
-package org.firstinspires.ftc.teamcode.team.Merlin2_2;
+package org.firstinspires.ftc.teamcode.team.Merlin1617.Merlin2_2;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 
 /*
@@ -35,8 +35,8 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
  *
  */
 
-@Autonomous(name = "Blue2, LC, 5 sec", group = "Merlin2")
-public class Merlin2Blue3 extends Merlin2Auto {
+@Autonomous(name = "Red2, LC, 15 sec", group = "Merlin2")
+public class Merlin2Red3 extends Merlin2Auto {
 
     @Override
     public void init() {
@@ -44,6 +44,7 @@ public class Merlin2Blue3 extends Merlin2Auto {
         super.initCamera();
 
         telemetry.addData("Say", "Hello Driver");
+        telemetry.addData("Red2","LC", "15 sec");
         robot.navx_device.zeroYaw();
 
 
@@ -86,7 +87,7 @@ public class Merlin2Blue3 extends Merlin2Auto {
                 }
                 break;
             case "TurnToShoot":
-                CompletionClause = super.turnToGyroHeading(45);//The robot makes sure it is on angle for the shot.
+                CompletionClause = super.turnToGyroHeading(-45);//The robot makes sure it is on angle for the shot.
                 if(CompletionClause.equals("Done")){
                     CurrentCase = "GoForwardBeforeShoot";
                     CompletionClause = "NOTDONE";
@@ -102,7 +103,7 @@ public class Merlin2Blue3 extends Merlin2Auto {
                 }
                 break;
             case "MakeSureItIsOnAngle":
-                CompletionClause = super.turnToGyroHeading(45);//The robot makes sure it is on angle for the shot.
+                CompletionClause = super.turnToGyroHeading(-45);//The robot makes sure it is on angle for the shot.
                 if(CompletionClause.equals("Done")){
                     CurrentCase = "WaitBeforeShoot";
                     CompletionClause = "NOTDONE";
@@ -156,7 +157,7 @@ public class Merlin2Blue3 extends Merlin2Auto {
                 }
                 break;
             case "TurnToHitCapBall":
-                CompletionClause = super.turnToGyroHeading(10);//The robot makes sure it is on angle for the shot.
+                CompletionClause = super.turnToGyroHeading(-10);//The robot makes sure it is on angle for the shot.
                 if(CompletionClause.equals("Done")){
                     CurrentCase = "HitTheCapBall";
                     CompletionClause = "NOTDONE";
@@ -165,7 +166,7 @@ public class Merlin2Blue3 extends Merlin2Auto {
                 break;
 
             case "HitTheCapBall":
-                CompletionClause = super.driveBasedOnEncoders(55, "Right");
+                CompletionClause = super.driveBasedOnEncoders(55, "Left");
                 if(CompletionClause.equals("Done")){
                     CurrentCase = "Done";
                     CompletionClause = "NOTDONE";

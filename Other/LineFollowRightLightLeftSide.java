@@ -14,16 +14,11 @@ package org.firstinspires.ftc.teamcode.team.Other;//This might need to changed t
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-import com.qualcomm.robotcore.hardware.CompassSensor;
-import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
-import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.util.Range;
 
-import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
-import org.firstinspires.ftc.teamcode.team.Merlin1.Merlin1Hardware; //More Import statements may be needed
+import org.firstinspires.ftc.teamcode.team.Merlin1617.Merlin1.Merlin1Hardware; //More Import statements may be needed
 
-import java.lang.reflect.Modifier;
 
 @TeleOp(name = "LineFollow", group = "Other")//This NEEDS to be changed tp the name of the code
 @Disabled //Uncomment this if it is not wanted on the phone

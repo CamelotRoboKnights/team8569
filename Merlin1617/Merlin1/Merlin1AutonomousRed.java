@@ -43,22 +43,14 @@
 *
 *
  */
-package org.firstinspires.ftc.teamcode.team.Merlin1;
+package org.firstinspires.ftc.teamcode.team.Merlin1617.Merlin1;
 
 
-import com.kauailabs.navx.ftc.navXPIDController;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.DcMotorController;
-import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.Range;
-
-import org.lasarobotics.vision.ftc.resq.Beacon;
-import java.security.Permission;
-import java.sql.Time;
-import java.util.Currency;
 
 @Autonomous(name = "RED", group = "Merlin1")
 @Disabled

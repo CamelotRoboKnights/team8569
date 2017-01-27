@@ -7,21 +7,9 @@ package org.firstinspires.ftc.teamcode.team.Other;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.util.Range;
-import android.util.Log;
-import com.kauailabs.navx.ftc.navXPIDController;
-import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.DcMotorController;
-
-import com.kauailabs.navx.ftc.AHRS;
-import com.qualcomm.robotcore.util.ElapsedTime;
-
-import java.text.DecimalFormat;
 
 
-import org.firstinspires.ftc.teamcode.team.Merlin1.Merlin1Hardware;
+import org.firstinspires.ftc.teamcode.team.Merlin1617.Merlin1.Merlin1Hardware;
 
 @TeleOp(name = "NavX Sensor", group = "Other")
 public class NavXSensor extends LinearOpMode {
