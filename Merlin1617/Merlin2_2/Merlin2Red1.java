@@ -85,10 +85,10 @@ public class Merlin2Red1 extends Merlin2Auto {
 
     private double SquareAgainstWall = 0;
 
-    private double DriveToHitLeftButtonOfTheFirstBeaconDistance = 8;
+    private double DriveToHitLeftButtonOfTheFirstBeaconDistance = 6;
     private String DriveToHitLeftButtonOfTheFirstBeaconDirection = "Back";
 
-    private double DriveToHitRightButtonOfTheFirstBeaconDistance = 2;
+    private double DriveToHitRightButtonOfTheFirstBeaconDistance = 0;
     private String DriveToHitRightButtonOfTheFirstBeaconDirection = "Back";
 
     private double DriveBackAfterHittingTheFirstBeacon = 14;

@@ -81,7 +81,7 @@ public class Merlin2Blue1 extends Merlin2Auto {
 
     private double DriveForwardToBeAbleToTurnDistance = 5;
 
-    private double AngleToDriveToFirstBeaconIdentifyingSpot = 30;
+    private double AngleToDriveToFirstBeaconIdentifyingSpot = 20;
 
     private double DistanceToDriveForwardToBeaconIdentifyingSpot = 68;
 
@@ -93,10 +93,10 @@ public class Merlin2Blue1 extends Merlin2Auto {
 
     private double SquareAgainstTheSecondBeacon = 178;
 
-    private double DriveToHitTheLeftButtonOfTheSecondBeacon = 12;
+    private double DriveToHitTheLeftButtonOfTheSecondBeacon = 10;
     private String DriveToHitTheLeftButtonDirectionOfTheSecondBeacon = "Back";
 
-    private double DriveToHitTheRightButtonOfTheSecondBeacon = 2;
+    private double DriveToHitTheRightButtonOfTheSecondBeacon = 0;
     private String DriveToHitTheRightButtonDirectionOfTheSecondBeacon = "Back";
 
     private double MakeSureTheRobotIsAngledForToHitTheSecondBeacon = 175;
