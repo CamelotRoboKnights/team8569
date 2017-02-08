@@ -25,7 +25,7 @@ public class Merlin2RealTeleOp extends Merlin2TeleOpMethods {
     public void loop(){//This runs while opmode is active
 
         double CurrentTime = (System.currentTimeMillis() - StartTime)/1000;
-        resetYaw();
+        XResetYaw();
 
         if(CurrentTime >= 60){
             CurrentCase = super.primeCapBallLift();
@@ -37,7 +37,7 @@ public class Merlin2RealTeleOp extends Merlin2TeleOpMethods {
             super.TargetEncoder = super.launchBall(super.TargetEncoder);//Run the launch ball method
 
 
-            if(CurrentTime >= 80) {
+            if(CurrentTime >= 90) {
                 if(!super.LiftButtonPressed) {
                     super.LiftHeight = super.lowerCapBallLift();//Run the method that lifts the cap ball all the way when a button is pressed
                 }

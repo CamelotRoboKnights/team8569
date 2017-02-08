@@ -13,7 +13,7 @@ class Merlin2TeleOpMethods extends OpMode {
     private Merlin2Hardware robot = new Merlin2Hardware();//The hardware map needs to be the hardware map of the robot we are using
     boolean LowerButtonPressed = FALSE;
     boolean LiftButtonPressed = FALSE;
-    private double LiftDivisor = 28000;
+    private double LiftDivisor = 31000;
     double TargetEncoder = 0;
     double LiftHeight = 0;
     private boolean SpeedModulation = true;
@@ -33,8 +33,8 @@ class Merlin2TeleOpMethods extends OpMode {
     public void stop(){}
 
 
-    void resetYaw(){
-        if(gamepad1.a){
+    void XResetYaw(){
+        if(gamepad1.x){
             robot.navx_device.zeroYaw();
         }
     }
@@ -80,22 +80,17 @@ class Merlin2TeleOpMethods extends OpMode {
 
 
     double lift(){
-        if(gamepad2.right_trigger > .02){
-            robot.Lift.setPower(gamepad2.right_trigger);
+        if(Math.abs(gamepad2.left_stick_y) > .02){
+            robot.Lift.setPower(-gamepad2.left_stick_y);
         }
-        else if(gamepad2.left_trigger > .02){
-            robot.Lift.setPower(-gamepad2.left_trigger);
-        }
-        else{
-            robot.Lift.setPower(0);
-        }
+
         return robot.Lift.getCurrentPosition();
 
     }
     double liftCapBallLift(){
         double CurrentEncoder = robot.Lift.getCurrentPosition();
-        double FullHeight = 25500;
-            if (gamepad2.right_bumper) {
+        double FullHeight = 26000;
+            if (2 * Math.abs(gamepad2.right_stick_x) + .2 <= -gamepad2.right_stick_y && gamepad2.right_stick_button) {
                 LiftButtonPressed = TRUE;
             }
             else if (LiftButtonPressed == TRUE) {
@@ -112,7 +107,7 @@ class Merlin2TeleOpMethods extends OpMode {
     double lowerCapBallLift(){
         double CurrentEncoder = robot.Lift.getCurrentPosition();
         double DropCapBallHeight = 22000;
-        if (gamepad2.left_bumper) {
+        if (-2 * Math.abs(gamepad2.right_stick_x) - .2 >= -gamepad2.right_stick_y && gamepad2.right_stick_button) {
             LowerButtonPressed = TRUE;
         }
         else if (LowerButtonPressed == TRUE) {
@@ -129,12 +124,15 @@ class Merlin2TeleOpMethods extends OpMode {
     String primeCapBallLift(){
         double CurrentTime = System.currentTimeMillis();
 
-        if(gamepad2.right_stick_button)CurrentCase = "RaiseLift";
+        if(gamepad2.right_stick_button
+                && !(-2 * Math.abs(gamepad2.right_stick_x) - .2 >= -gamepad2.right_stick_y)
+                && !(2 * Math.abs(gamepad2.right_stick_x) + .2 <= -gamepad2.right_stick_y))
+            CurrentCase = "RaiseLift";
 
         switch (CurrentCase){
             case "RaiseLift":
                 double CurrentEncoder = robot.Lift.getCurrentPosition();
-                double Height = 300;
+                double Height = 1000;
                 if (Height - CurrentEncoder < 3) {
                     robot.Lift.setPower(0);
                     CurrentCase = "Wait";
@@ -524,13 +522,13 @@ class Merlin2TeleOpMethods extends OpMode {
     }
 
     void collection(){
-        if (gamepad2.x){//if X is pressed make the spinner set to dispose of balls
+        if (gamepad2.dpad_left){//if X is pressed make the spinner set to dispose of balls
             robot.LiftCollector.setPower(.3);
         }
-        else if(gamepad2.b){//If B os pressed make the spinner set to collect balls
+        else if(gamepad2.dpad_right){//If B os pressed make the spinner set to collect balls
             robot.LiftCollector.setPower(-.3);
         }
-        else if(gamepad2.a){//If A is pressed make the spinner not spin
+        else if(gamepad2.dpad_down){//If A is pressed make the spinner not spin
             robot.LiftCollector.setPower(0);
         }
 

@@ -1,6 +1,24 @@
 //This is done being commented 17-1-13
 /*
  * This is our new TeleOp and has the methods separate.
+ *
+ * Driver
+ *
+ * Left joy Drive
+ * Right joy Direction
+ * X reset yaw
+ * RT spin right
+ * LT spin left
+ *
+ * Gunner
+ *
+ * Left joy Modulated lift
+ * Right joy Lift Sets
+ * Dpad collector/flipper
+ *
+ *
+ *
+ *
  */
 package org.firstinspires.ftc.teamcode.team.Merlin1617.Merlin2_2;
 

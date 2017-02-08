@@ -74,7 +74,7 @@ public class Merlin2Red1 extends Merlin2Auto {
 
     private double DriveForwardAwayFromWallToBeAbleToTurn = 5;
 
-    private double TurnToGoToTheFirstBeaconIdentificationLocation = 0;
+    private double TurnToGoToTheFirstBeaconIdentificationLocation = -5;
 
     private double GoForwardToTheFirstBeaconIdentificationLocation = 36;
 
