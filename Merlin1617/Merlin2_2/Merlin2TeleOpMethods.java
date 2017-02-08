@@ -68,7 +68,7 @@ class Merlin2TeleOpMethods extends OpMode {
         double OneRotation = 1650;
         if(TargetEncoder - CurrentEncoder < 3){
             robot.Flipper.setPower(0);
-            if(gamepad2.dpad_up){
+            if(gamepad2.y){
                 TargetEncoder = TargetEncoder+OneRotation;
             }
         }
@@ -78,6 +78,18 @@ class Merlin2TeleOpMethods extends OpMode {
         return TargetEncoder;
     }
 
+    void collection(){
+        if (gamepad2.x){//if X is pressed make the spinner set to dispose of balls
+            robot.LiftCollector.setPower(.3);
+        }
+        else if(gamepad2.b){//If B os pressed make the spinner set to collect balls
+            robot.LiftCollector.setPower(-.3);
+        }
+        else if(gamepad2.a){//If A is pressed make the spinner not spin
+            robot.LiftCollector.setPower(0);
+        }
+
+    }
 
     double lift(){
         if(Math.abs(gamepad2.left_stick_y) > .02){
@@ -521,18 +533,6 @@ class Merlin2TeleOpMethods extends OpMode {
 
     }
 
-    void collection(){
-        if (gamepad2.dpad_left){//if X is pressed make the spinner set to dispose of balls
-            robot.LiftCollector.setPower(.3);
-        }
-        else if(gamepad2.dpad_right){//If B os pressed make the spinner set to collect balls
-            robot.LiftCollector.setPower(-.3);
-        }
-        else if(gamepad2.dpad_down){//If A is pressed make the spinner not spin
-            robot.LiftCollector.setPower(0);
-        }
-
-    }
     private void backDrive(double LiftHeight){
 
         double JoyY = -gamepad1.left_stick_y;
