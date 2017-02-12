@@ -4,6 +4,8 @@
  */
 package org.firstinspires.ftc.teamcode.team.Merlin1617.Merlin2_2;
 
+import android.hardware.TriggerEventListener;
+
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 @TeleOp(name = "RealOp", group = "Merlin2")//This NEEDS to be changed tp the name of the code
@@ -56,7 +58,8 @@ public class Merlin2RealTeleOp extends Merlin2TeleOpMethods {
             }
         }
 
-
+        telemetry.addData("Lift", LiftButtonPressed);
+        telemetry.addData("Lower", LowerButtonPressed);
         super.print(super.LiftHeight, super.TargetEncoder);//Print everything that I want
 
     }

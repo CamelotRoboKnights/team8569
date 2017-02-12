@@ -74,7 +74,7 @@ public class Merlin2Red1 extends Merlin2Auto {
 
     private double DriveForwardAwayFromWallToBeAbleToTurn = 5;
 
-    private double TurnToGoToTheFirstBeaconIdentificationLocation = -5;
+    private double TurnToGoToTheFirstBeaconIdentificationLocation = -10;
 
     private double GoForwardToTheFirstBeaconIdentificationLocation = 36;
 
@@ -85,7 +85,7 @@ public class Merlin2Red1 extends Merlin2Auto {
 
     private double SquareAgainstWall = 0;
 
-    private double DriveToHitLeftButtonOfTheFirstBeaconDistance = 6;
+    private double DriveToHitLeftButtonOfTheFirstBeaconDistance = 4;
     private String DriveToHitLeftButtonOfTheFirstBeaconDirection = "Back";
 
     private double DriveToHitRightButtonOfTheFirstBeaconDistance = 0;
@@ -93,20 +93,20 @@ public class Merlin2Red1 extends Merlin2Auto {
 
     private double DriveBackAfterHittingTheFirstBeacon = 14;
 
-    private double TurnToGoToTheSecondBeaconIdentificationLocation = 19;
+    private double TurnToGoToTheSecondBeaconIdentificationLocation = 13;
 
-    private double GoToTheSecondBeaconIdentificationLocation = 29;
-    private double GoToTheSecondBeaconIdentificationLocationLeftButton = 33;
+    private double GoToTheSecondBeaconIdentificationLocation = 30;
+    private double GoToTheSecondBeaconIdentificationLocationLeftButton = 35;
 
-    private double TurnToIdentifySecondBeacon = 22.79;
+    private double TurnToIdentifySecondBeacon = 10;
 
     private double TurnToGoToSecondBeacon = 0;
 
-    private double DriveToHitLeftButtonOfTheSecondBeaconDistance = 5;
+    private double DriveToHitLeftButtonOfTheSecondBeaconDistance = 10;
     private String DriveToHitLeftButtonOfTheSecondBeaconDirection = "Back";
 
     private double DriveToHitRightButtonOfTheSecondBeaconDistance = 1;
-    private String DriveToHitRightButtonOfTheSecondBeaconDirection = "Forward";
+    private String DriveToHitRightButtonOfTheSecondBeaconDirection = "Back";
 
     private double DriveBackAfterHittingTheSecondBeacon = 12;
 

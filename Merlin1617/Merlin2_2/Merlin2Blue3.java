@@ -74,7 +74,7 @@ public class Merlin2Blue3 extends Merlin2Auto {
                 else{
                     CurrentTime = (System.currentTimeMillis() - StartTime)/1000;
                 }
-                if(CurrentTime > 15) {
+                if(CurrentTime > 0) {
                     CurrentCase = "GoFrowardAwayFromWall";
                 }
                 break;
@@ -87,7 +87,7 @@ public class Merlin2Blue3 extends Merlin2Auto {
                 }
                 break;
             case "TurnToShoot":
-                CompletionClause = super.turnToGyroHeading(45);//The robot makes sure it is on angle for the shot.
+                CompletionClause = super.turnToGyroHeading(40);//The robot makes sure it is on angle for the shot.
                 if(CompletionClause.equals("Done")){
                     CurrentCase = "GoForwardBeforeShoot";
                     CompletionClause = "NOTDONE";
@@ -95,7 +95,7 @@ public class Merlin2Blue3 extends Merlin2Auto {
                 }
                 break;
             case "GoForwardBeforeShoot"://First Case that drives the robot forward to a position that can launch the balls and identify the beacon
-                CompletionClause = super.driveBasedOnEncoders(18, "Forward");
+                CompletionClause = super.driveBasedOnEncoders(25, "Forward");
                 if(CompletionClause.equals("Done")){
                     CurrentCase = "MakeSureItIsOnAngle";
                     CompletionClause = "NOTDONE";
@@ -164,7 +164,6 @@ public class Merlin2Blue3 extends Merlin2Auto {
                     super.resetAll();
                 }
                 break;
-
             case "HitTheCapBall":
                 CompletionClause = super.driveBasedOnEncoders(55, "Right");
                 if(CompletionClause.equals("Done")){

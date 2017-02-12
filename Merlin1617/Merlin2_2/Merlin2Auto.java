@@ -209,8 +209,8 @@ class Merlin2Auto extends VisionOpMode {//This extends Vision Op Mode witch allo
         return ReturnValue;
     }
     String choseSide(String TeamColor){ //this is for red side
-        double RedConfidenceValueNeeded = 600;
-        double BlueConfidenceValueNeeded = 750;
+        double RedConfidenceValueNeeded = 300;
+        double BlueConfidenceValueNeeded = 250;
         String Side = "";//The side of the beacon is the color I want
         if(TeamColor.equals("RED")){//If my team color is red
             if (beacon.getAnalysis().isBeaconFound()){//if I am confident enough in my color desision

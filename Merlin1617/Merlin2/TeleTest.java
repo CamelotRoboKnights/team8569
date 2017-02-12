@@ -50,7 +50,7 @@ public class TeleTest extends LinearOpMode { //The name after public class needs
             //rightDrive(LiftHeight);
             //forwardDrive(LiftHeight);
 
-            driveChoice(LiftHeight);
+//            driveChoice(LiftHeight);
             collection();
             TargetEncoder = launchBall(TargetEncoder);
             LiftHeight = liftCapBallLift();

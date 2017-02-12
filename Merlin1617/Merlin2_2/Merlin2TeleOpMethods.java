@@ -92,10 +92,16 @@ class Merlin2TeleOpMethods extends OpMode {
     }
 
     double lift(){
-        if(Math.abs(gamepad2.left_stick_y) > .02){
-            robot.Lift.setPower(-gamepad2.left_stick_y);
+        if(gamepad2.right_trigger > .02){
+            robot.Lift.setPower(gamepad2.right_trigger);
         }
+        else if (gamepad2.left_trigger > .02){
+            robot.Lift.setPower(-gamepad2.left_trigger);
+        }
+        else{
+            robot.Lift.setPower(0);
 
+        }
         return robot.Lift.getCurrentPosition();
 
     }
@@ -144,7 +150,7 @@ class Merlin2TeleOpMethods extends OpMode {
         switch (CurrentCase){
             case "RaiseLift":
                 double CurrentEncoder = robot.Lift.getCurrentPosition();
-                double Height = 1000;
+                double Height = 2000;
                 if (Height - CurrentEncoder < 3) {
                     robot.Lift.setPower(0);
                     CurrentCase = "Wait";
@@ -886,6 +892,58 @@ class Merlin2TeleOpMethods extends OpMode {
         telemetry.addData("M3", Motor3Power);
         telemetry.addData("M4", Motor4Power);
 
+    }
+    void math(){
+        double angle = 0;
+        telemetry.addData("M1, 0", .5*(1-2*Math.pow(Math.sin(Math.toRadians(angle + 45)), 2)) + .5 * Math.sin(Math.toRadians(angle + 45)));
+        telemetry.addData("M2, 0", .5*(1-2*Math.pow(Math.sin(Math.toRadians(angle - 45)), 2)) + .5 * Math.sin(Math.toRadians(angle - 45)));
+        telemetry.addData("M3, 0", .5*(1-2*Math.pow(Math.sin(Math.toRadians(angle - 135)), 2)) + .5 * Math.sin(Math.toRadians(angle - 135)));
+        telemetry.addData("M4, 0", .5*(1-2*Math.pow(Math.sin(Math.toRadians(angle + 135)), 2)) + .5 * Math.sin(Math.toRadians(angle + 135)));
+        angle = 45;
+        telemetry.addData("M1, 45", .5*(1-2*Math.pow(Math.sin(Math.toRadians(angle + 45)), 2)) + .5 * Math.sin(Math.toRadians(angle + 45)));
+        telemetry.addData("M2, 45", .5*(1-2*Math.pow(Math.sin(Math.toRadians(angle - 45)), 2)) + .5 * Math.sin(Math.toRadians(angle - 45)));
+        telemetry.addData("M3, 45", .5*(1-2*Math.pow(Math.sin(Math.toRadians(angle - 135)), 2)) + .5 * Math.sin(Math.toRadians(angle - 135)));
+        telemetry.addData("M4, 45", .5*(1-2*Math.pow(Math.sin(Math.toRadians(angle + 135)), 2)) + .5 * Math.sin(Math.toRadians(angle + 135)));
+        angle = 90;
+        telemetry.addData("M1, 90", .5*(1-2*Math.pow(Math.sin(Math.toRadians(angle + 45)), 2)) + .5 * Math.sin(Math.toRadians(angle + 45)));
+        telemetry.addData("M2, 90", .5*(1-2*Math.pow(Math.sin(Math.toRadians(angle - 45)), 2)) + .5 * Math.sin(Math.toRadians(angle - 45)));
+        telemetry.addData("M3, 90", .5*(1-2*Math.pow(Math.sin(Math.toRadians(angle - 135)), 2)) + .5 * Math.sin(Math.toRadians(angle - 135)));
+        telemetry.addData("M4, 90", .5*(1-2*Math.pow(Math.sin(Math.toRadians(angle + 135)), 2)) + .5 * Math.sin(Math.toRadians(angle + 135)));
+        angle = 135;
+        telemetry.addData("M1, 135", .5*(1-2*Math.pow(Math.sin(Math.toRadians(angle + 45)), 2)) + .5 * Math.sin(Math.toRadians(angle + 45)));
+        telemetry.addData("M2, 135", .5*(1-2*Math.pow(Math.sin(Math.toRadians(angle - 45)), 2)) + .5 * Math.sin(Math.toRadians(angle - 45)));
+        telemetry.addData("M3, 135", .5*(1-2*Math.pow(Math.sin(Math.toRadians(angle - 135)), 2)) + .5 * Math.sin(Math.toRadians(angle - 135)));
+        telemetry.addData("M4, 135", .5*(1-2*Math.pow(Math.sin(Math.toRadians(angle + 135)), 2)) + .5 * Math.sin(Math.toRadians(angle + 135)));
+        angle = 180;
+        telemetry.addData("M1, 180", .5*(1-2*Math.pow(Math.sin(Math.toRadians(angle + 45)), 2)) + .5 * Math.sin(Math.toRadians(angle + 45)));
+        telemetry.addData("M2, 180", .5*(1-2*Math.pow(Math.sin(Math.toRadians(angle - 45)), 2)) + .5 * Math.sin(Math.toRadians(angle - 45)));
+        telemetry.addData("M3, 180", .5*(1-2*Math.pow(Math.sin(Math.toRadians(angle - 135)), 2)) + .5 * Math.sin(Math.toRadians(angle - 135)));
+        telemetry.addData("M4, 180", .5*(1-2*Math.pow(Math.sin(Math.toRadians(angle + 135)), 2)) + .5 * Math.sin(Math.toRadians(angle + 135)));
+        angle = -45;
+        telemetry.addData("M1, -45", .5*(1-2*Math.pow(Math.sin(Math.toRadians(angle + 45)), 2)) + .5 * Math.sin(Math.toRadians(angle + 45)));
+        telemetry.addData("M2, -45", .5*(1-2*Math.pow(Math.sin(Math.toRadians(angle - 45)), 2)) + .5 * Math.sin(Math.toRadians(angle - 45)));
+        telemetry.addData("M3, -45", .5*(1-2*Math.pow(Math.sin(Math.toRadians(angle - 135)), 2)) + .5 * Math.sin(Math.toRadians(angle - 135)));
+        telemetry.addData("M4, -45", .5*(1-2*Math.pow(Math.sin(Math.toRadians(angle + 135)), 2)) + .5 * Math.sin(Math.toRadians(angle + 135)));
+        angle = -90;
+        telemetry.addData("M1, -90", .5*(1-2*Math.pow(Math.sin(Math.toRadians(angle + 45)), 2)) + .5 * Math.sin(Math.toRadians(angle + 45)));
+        telemetry.addData("M2, -90", .5*(1-2*Math.pow(Math.sin(Math.toRadians(angle - 45)), 2)) + .5 * Math.sin(Math.toRadians(angle - 45)));
+        telemetry.addData("M3, -90", .5*(1-2*Math.pow(Math.sin(Math.toRadians(angle - 135)), 2)) + .5 * Math.sin(Math.toRadians(angle - 135)));
+        telemetry.addData("M4, -90", .5*(1-2*Math.pow(Math.sin(Math.toRadians(angle + 135)), 2)) + .5 * Math.sin(Math.toRadians(angle + 135)));
+        angle = -135;
+        telemetry.addData("M1, -135", .5*(1-2*Math.pow(Math.sin(Math.toRadians(angle + 45)), 2)) + .5 * Math.sin(Math.toRadians(angle + 45)));
+        telemetry.addData("M2, -135", .5*(1-2*Math.pow(Math.sin(Math.toRadians(angle - 45)), 2)) + .5 * Math.sin(Math.toRadians(angle - 45)));
+        telemetry.addData("M3, -135", .5*(1-2*Math.pow(Math.sin(Math.toRadians(angle - 135)), 2)) + .5 * Math.sin(Math.toRadians(angle - 135)));
+        telemetry.addData("M4, -135", .5*(1-2*Math.pow(Math.sin(Math.toRadians(angle + 135)), 2)) + .5 * Math.sin(Math.toRadians(angle + 135)));
+
+
+
+
+    }
+    void forwardAndTurn(){
+        robot.Motor1.setPower(.5*(1-2*Math.pow(Math.sin(Math.toRadians(robot.navx_device.getYaw() + 45)), 2)) + .5 * Math.sin(Math.toRadians(robot.navx_device.getYaw() + 45)));
+        robot.Motor2.setPower(.5*(1-2*Math.pow(Math.sin(Math.toRadians(robot.navx_device.getYaw() - 45)), 2)) + .5 * Math.sin(Math.toRadians(robot.navx_device.getYaw() - 45)));
+        robot.Motor3.setPower(.5*(1-2*Math.pow(Math.sin(Math.toRadians(robot.navx_device.getYaw() - 135)), 2)) + .5 * Math.sin(Math.toRadians(robot.navx_device.getYaw() -135)));
+        robot.Motor4.setPower(.5*(1-2*Math.pow(Math.sin(Math.toRadians(robot.navx_device.getYaw() + 135)), 2)) + .5 * Math.sin(Math.toRadians(robot.navx_device.getYaw() + 135)));
     }
 }
 
