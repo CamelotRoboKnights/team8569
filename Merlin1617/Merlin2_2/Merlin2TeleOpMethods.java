@@ -203,6 +203,23 @@ class Merlin2TeleOpMethods extends OpMode {
             else feildOrentedDrive(LiftHeight);
         }
     }
+    void driveChoiceInverted (double LiftHeight){
+        if(SpeedModulation) {
+            if (2 * Math.abs(gamepad1.right_stick_x) + .2 <= -gamepad1.right_stick_y) forwardDriveModulated(LiftHeight);
+            else if (-2 * Math.abs(gamepad1.right_stick_x) - .2 >= -gamepad1.right_stick_y) backDriveModulated(LiftHeight);
+            else if (2 * Math.abs(-gamepad1.right_stick_y) + .2 <= gamepad1.right_stick_x) rightDriveModulated(LiftHeight);
+            else if (-2 * Math.abs(-gamepad1.right_stick_y) - .2 >= gamepad1.right_stick_x) leftDriveModulated(LiftHeight);
+            else invertedFieldOrientedDrive(LiftHeight);
+        }
+        else{
+            if (2 * Math.abs(gamepad1.right_stick_x) + .2 <= -gamepad1.right_stick_y) forwardDrive(LiftHeight);
+            else if (-2 * Math.abs(gamepad1.right_stick_x) - .2 >= -gamepad1.right_stick_y) backDrive(LiftHeight);
+            else if (2 * Math.abs(-gamepad1.right_stick_y) + .2 <= gamepad1.right_stick_x) rightDrive(LiftHeight);
+            else if (-2 * Math.abs(-gamepad1.right_stick_y) - .2 >= gamepad1.right_stick_x) leftDrive(LiftHeight);
+            else invertedFieldOrientedDrive(LiftHeight);
+        }
+    }
+
     void driveChoiceNoFeildOriented (double LiftHeight){
         if(SpeedModulation) {
             if (2 * Math.abs(gamepad1.right_stick_x) + .2 <= -gamepad1.right_stick_y) forwardDriveModulated(LiftHeight);
@@ -822,6 +839,81 @@ class Merlin2TeleOpMethods extends OpMode {
         telemetry.addData("M2", Motor2Power);
         telemetry.addData("M3", Motor3Power);
         telemetry.addData("M4", Motor4Power);
+
+    }
+    private void invertedFieldOrientedDrive(double LiftHeight){
+        double JoyX;
+        double JoyY;
+        double NewX;
+        double NewY;
+        double OrientationDegrees;
+        double OrientationRadians;
+        double Motor1Power = 0;
+        double Motor2Power = 0;
+        double Motor3Power = 0;
+        double Motor4Power = 0;
+
+        JoyY = -gamepad1.left_stick_y;
+        JoyX = gamepad1.left_stick_x;
+        OrientationDegrees = robot.navx_device.getYaw();
+
+        if(OrientationDegrees < 0){
+            OrientationDegrees = OrientationDegrees +180;
+        }
+        else if(OrientationDegrees >= 0){
+            OrientationDegrees = OrientationDegrees -180;
+        }
+
+        OrientationRadians = OrientationDegrees * Math.PI / 180;
+        NewY = JoyY * Math.cos(OrientationRadians) + JoyX * Math.sin(OrientationRadians);
+        NewX = -JoyY * Math.sin(OrientationRadians) + JoyX * Math.cos(OrientationRadians);
+
+        double LiftHeightScaled = 1-Math.abs(LiftHeight)/LiftDivisor;
+
+        if(Math.abs(gamepad1.left_stick_y) >= 0.02 || Math.abs(gamepad1.left_stick_x) >= 0.02){
+
+            Motor1Power = NewY - NewX;
+            Motor1Power = Range.clip(Motor1Power, -1, 1);
+            Motor1Power = Motor1Power*LiftHeightScaled;
+
+            Motor2Power = NewY + NewX;
+            Motor2Power = Range.clip(Motor2Power, -1, 1);
+            Motor2Power = Motor2Power*LiftHeightScaled;
+
+            Motor3Power = NewY - NewX;
+            Motor3Power = Range.clip(Motor3Power, -1, 1);
+            Motor3Power = Motor3Power*LiftHeightScaled;
+
+            Motor4Power = NewY + NewX;
+            Motor4Power = Range.clip(Motor4Power, -1, 1);
+            Motor4Power = Motor4Power*LiftHeightScaled;
+
+
+            moveMotorsPower(Motor1Power, Motor2Power, Motor3Power, Motor4Power);
+
+        }
+        else if(gamepad1.right_trigger >= .02){//This cancels out noise and sets the robot to turn right at the speed of the right trigger
+            Motor1Power = -gamepad1.right_trigger*LiftHeightScaled*.5;
+            Motor2Power = gamepad1.right_trigger*LiftHeightScaled*.5;
+            Motor3Power = gamepad1.right_trigger*LiftHeightScaled*.5;
+            Motor4Power = -gamepad1.right_trigger*LiftHeightScaled*.5;
+            moveMotorsPower(Motor1Power, Motor2Power, Motor3Power, Motor4Power);
+        }
+        else if(gamepad1.left_trigger >= .02){//This cancels out noise and sets the robot to turn left at the speed of the left trigger
+            Motor1Power = gamepad1.left_trigger*LiftHeightScaled*.5;
+            Motor2Power = -gamepad1.left_trigger*LiftHeightScaled*.5;
+            Motor3Power = -gamepad1.left_trigger*LiftHeightScaled*.5;
+            Motor4Power = gamepad1.left_trigger*LiftHeightScaled*.5;
+            moveMotorsPower(Motor1Power, Motor2Power, Motor3Power, Motor4Power);
+        }
+        else{//If none of these is true turn the power off to the motors to stop the robot
+            moveMotorsPower(0, 0, 0, 0);
+        }
+        telemetry.addData("M1", Motor1Power);
+        telemetry.addData("M2", Motor2Power);
+        telemetry.addData("M3", Motor3Power);
+        telemetry.addData("M4", Motor4Power);
+
 
     }
     private void feildOrentedDriveWithTurning(double LiftHeight){

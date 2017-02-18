@@ -44,8 +44,8 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
  * Press beacon
  * Back Right Angle Drive
  */
-@Autonomous(name = "Red1, BBC, 0 sec", group = "Merlin2")
-public class Merlin2Red1 extends Merlin2Auto {
+@Autonomous(name = "Red1, BBCL, 0 sec", group = "Merlin2")
+public class Merlin2Red1Launch extends Merlin2Auto {
 
     @Override
     public void init() {
@@ -85,10 +85,10 @@ public class Merlin2Red1 extends Merlin2Auto {
 
     private double SquareAgainstWall = 0;
 
-    private double DriveToHitLeftButtonOfTheFirstBeaconDistance = 4;
+    private double DriveToHitLeftButtonOfTheFirstBeaconDistance = 6;
     private String DriveToHitLeftButtonOfTheFirstBeaconDirection = "Back";
 
-    private double DriveToHitRightButtonOfTheFirstBeaconDistance = 0;
+    private double DriveToHitRightButtonOfTheFirstBeaconDistance = 2;
     private String DriveToHitRightButtonOfTheFirstBeaconDirection = "Back";
 
     private double DriveBackAfterHittingTheFirstBeacon = 14;
@@ -340,13 +340,53 @@ public class Merlin2Red1 extends Merlin2Auto {
             case "DriveBackAfterHittingTheSecondBeacon"://Drive back after hitting the beacon
                 CompletionClause = super.driveBasedOnEncoders(DriveBackAfterHittingTheSecondBeacon, "Right");
                 if(CompletionClause.equals("Done")){
+                    CurrentCase = "MakeSureItIsOnAngleForShoot";
+                    CompletionClause = "NOTDONE";
+                    super.resetAll();
+                }
+                break;
+            case "MakeSureItIsOnAngleForShoot":
+                CompletionClause = super.turnToGyroHeading(135);//The robot makes sure it is on angle for the shot.
+                if(CompletionClause.equals("Done")){
+                    CurrentCase = "GoForwardBeforeShoot";
+                    CompletionClause = "NOTDONE";
+                    super.resetAll();
+                }
+                break;
+            case "GoForwardBeforeShoot"://First Case that drives the robot forward to a position that can launch the balls and identify the beacon
+                CompletionClause = super.driveBasedOnEncoders(5, "Forward");
+                if(CompletionClause.equals("Done")){
+                    CurrentCase = "ShootFirstBall";
+                    CompletionClause = "NOTDONE";
+                    super.resetAll();
+                }
+                break;
+            case "ShootFirstBall"://Shoot the first ball to try to make it in the hoop
+                CompletionClause = super.launchBall();
+                if(CompletionClause.equals("Done")){
+                    CurrentCase = "LoadSecondBall";
+                    CompletionClause = "NOTDONE";
+                    super.resetAll();
+                }
+                break;
+            case "LoadSecondBall"://Load the second ball in the flipper
+                CompletionClause = super.loadBall();
+                if(CompletionClause.equals("Done")){
+                    CurrentCase = "ShootSecondBall";
+                    CompletionClause = "NOTDONE";
+                    super.resetAll();
+                }
+                break;
+            case "ShootSecondBall"://Shoot the second ball into the hoop
+                CompletionClause = super.launchBall();
+                if(CompletionClause.equals("Done")){
                     CurrentCase = "BackRightDriveToHitTheCapBall";
                     CompletionClause = "NOTDONE";
                     super.resetAll();
                 }
                 break;
             case "BackRightDriveToHitTheCapBall":
-                CompletionClause = super.driveBasedOnEncoders(BackRightDriveToHitTheCapBall, "BackLeft");
+                CompletionClause = super.driveBasedOnEncoders(BackRightDriveToHitTheCapBall, "Forward");
                 if(CompletionClause.equals("Done")){
                     CurrentCase = "Done";
                     CompletionClause = "NOTDONE";
@@ -366,7 +406,7 @@ public class Merlin2Red1 extends Merlin2Auto {
 
     @Override
     public void stop() {
-    super.stopCamera();
+        super.stopCamera();
     }
 
 

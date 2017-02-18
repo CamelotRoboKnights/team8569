@@ -93,11 +93,11 @@ public class Merlin2Blue1 extends Merlin2Auto {
 
     private double SquareAgainstTheSecondBeacon = 178;
 
-    private double DriveToHitTheLeftButtonOfTheSecondBeacon = 5;
+    private double DriveToHitTheLeftButtonOfTheSecondBeacon = 10;
     private String DriveToHitTheLeftButtonDirectionOfTheSecondBeacon = "Back";
 
-    private double DriveToHitTheRightButtonOfTheSecondBeacon = 0;
-    private String DriveToHitTheRightButtonDirectionOfTheSecondBeacon = "Back";
+    private double DriveToHitTheRightButtonOfTheSecondBeacon = 5;
+    private String DriveToHitTheRightButtonDirectionOfTheSecondBeacon = "Forward";
 
     private double MakeSureTheRobotIsAngledForToHitTheSecondBeacon = 175;
 
