@@ -20,7 +20,7 @@
  */
 
 
-package org.firstinspires.ftc.teamcode.team.Merlin1617.Merlin2_2;
+package org.firstinspires.ftc.teamcode.team.Merlin1617.Merlin3;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 
 /*
@@ -44,8 +44,8 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
  * Press beacon
  * Back Right Angle Drive
  */
-@Autonomous(name = "Blue1, BBCL, 0 sec", group = "Merlin2")
-public class Melin2Blue1WithLaunch extends Merlin2Auto {
+@Autonomous(name = "Red1 BeaconsLaunchCap", group = "Merlin3")
+public class Red1Beacons extends Merlin3AutoMethods {
 
     @Override
     public void init() {
@@ -74,18 +74,18 @@ public class Melin2Blue1WithLaunch extends Merlin2Auto {
 
     private double DriveForwardAwayFromWallToBeAbleToTurn = 5;
 
-    private double TurnToGoToTheFirstBeaconIdentificationLocation = 10;
+    private double TurnToGoToTheFirstBeaconIdentificationLocation = -10;
 
-    private double GoForwardToTheFirstBeaconIdentificationLocation = 28;
+    private double GoForwardToTheFirstBeaconIdentificationLocation = 36;
 
-    private double TurnToIdentifyAndShoot = -9;
+    private double TurnToIdentifyAndShoot = 0;
 
     private double DriveForwardMore = 10;
 
 
     private double SquareAgainstWall = 0;
 
-    private double DriveToHitLeftButtonOfTheFirstBeaconDistance = 5;
+    private double DriveToHitLeftButtonOfTheFirstBeaconDistance = 6;
     private String DriveToHitLeftButtonOfTheFirstBeaconDirection = "Back";
 
     private double DriveToHitRightButtonOfTheFirstBeaconDistance = 2;
@@ -93,24 +93,24 @@ public class Melin2Blue1WithLaunch extends Merlin2Auto {
 
     private double DriveBackAfterHittingTheFirstBeacon = 14;
 
-    private double TurnToGoToTheSecondBeaconIdentificationLocation = -13;
+    private double TurnToGoToTheSecondBeaconIdentificationLocation = 13;
 
-    private double GoToTheSecondBeaconIdentificationLocation = 35;
-    private double GoToTheSecondBeaconIdentificationLocationLeftButton = 30;
+    private double GoToTheSecondBeaconIdentificationLocation = 30;
+    private double GoToTheSecondBeaconIdentificationLocationLeftButton = 35;
 
-    private double TurnToIdentifySecondBeacon = -10;
+    private double TurnToIdentifySecondBeacon = 10;
 
     private double TurnToGoToSecondBeacon = 0;
 
-    private double DriveToHitLeftButtonOfTheSecondBeaconDistance = 2;
+    private double DriveToHitLeftButtonOfTheSecondBeaconDistance = 12;
     private String DriveToHitLeftButtonOfTheSecondBeaconDirection = "Back";
 
-    private double DriveToHitRightButtonOfTheSecondBeaconDistance = 0;
+    private double DriveToHitRightButtonOfTheSecondBeaconDistance = 1;
     private String DriveToHitRightButtonOfTheSecondBeaconDirection = "Back";
 
     private double DriveBackAfterHittingTheSecondBeacon = 12;
 
-    private double BackRightDriveToHitTheCapBall = 60;
+    private double BackRightDriveToHitTheCapBall = 50;
 
 
 
@@ -121,7 +121,7 @@ public class Melin2Blue1WithLaunch extends Merlin2Auto {
         telemetry.addData("SecondSide", SecondBeaconSide);
         switch (CurrentCase){
             case "DriveForwardAwayFromWallToBeAbleToTurn":
-                CompletionClause = super.driveBasedOnEncoders(DriveForwardAwayFromWallToBeAbleToTurn, "Back");
+                CompletionClause = super.driveBasedOnEncoders(DriveForwardAwayFromWallToBeAbleToTurn, "Forward");
                 if(CompletionClause.equals("Done")){
                     CurrentCase = "TurnToGoToTheFirstBeaconIdentificationLocation";
                     CompletionClause = "NOTDONE";
@@ -137,7 +137,7 @@ public class Melin2Blue1WithLaunch extends Merlin2Auto {
                 }
                 break;
             case "GoForwardToTheFirstBeaconIdentificationLocation":
-                CompletionClause = super.driveBasedOnEncoders(GoForwardToTheFirstBeaconIdentificationLocation, "Back");
+                CompletionClause = super.driveBasedOnEncoders(GoForwardToTheFirstBeaconIdentificationLocation, "Forward");
                 if(CompletionClause.equals("Done")){
                     CurrentCase = "TurnToIdentifyAndShoot";
                     CompletionClause = "NOTDONE";
@@ -153,7 +153,7 @@ public class Melin2Blue1WithLaunch extends Merlin2Auto {
                 }
                 break;
             case "Identify":
-                FirstBeaconSide = super.choseSide("BLUE");
+                FirstBeaconSide = super.choseSide("RED");
                 if(!FirstBeaconSide.equals("")){
                     CurrentCase = "DriveLeftForwardToTheFirstWhiteLine";
                     CompletionClause = "NOTDONE";
@@ -161,7 +161,7 @@ public class Melin2Blue1WithLaunch extends Merlin2Auto {
                 }
                 break;
             case "DriveLeftForwardToTheFirstWhiteLine":
-                CompletionClause = super.driveUltilWhiteLine("BackRight", "Right", .2);
+                CompletionClause = super.driveUltilWhiteLine("ForwardLeft", "Left", .2);
                 telemetry.addData("Light", robot.LeftLight.getLightDetected());
                 if(CompletionClause.equals("Done")){
                     CurrentCase = "SquareAgainstWallForFirstBeacon";
@@ -241,7 +241,7 @@ public class Melin2Blue1WithLaunch extends Merlin2Auto {
                 }
                 break;
             case "GoToTheSecondBeaconIdentificationLocationRightButton":
-                CompletionClause = super.driveBasedOnEncoders(GoToTheSecondBeaconIdentificationLocation, "Back");
+                CompletionClause = super.driveBasedOnEncoders(GoToTheSecondBeaconIdentificationLocation, "Forward");
                 if(CompletionClause.equals("Done")){
                     CurrentCase = "TurnToIdentifySecondBeacon";
                     CompletionClause = "NOTDONE";
@@ -249,7 +249,7 @@ public class Melin2Blue1WithLaunch extends Merlin2Auto {
                 }
                 break;
             case "GoToTheSecondBeaconIdentificationLocationLeftButton":
-                CompletionClause = super.driveBasedOnEncoders(GoToTheSecondBeaconIdentificationLocationLeftButton, "Back");
+                CompletionClause = super.driveBasedOnEncoders(GoToTheSecondBeaconIdentificationLocationLeftButton, "Forward");
                 if(CompletionClause.equals("Done")){
                     CurrentCase = "TurnToIdentifySecondBeacon";
                     CompletionClause = "NOTDONE";
@@ -265,7 +265,7 @@ public class Melin2Blue1WithLaunch extends Merlin2Auto {
                 }
                 break;
             case "IdentifySecondBeacon":
-                SecondBeaconSide = super.choseSide("BLUE");
+                SecondBeaconSide = super.choseSide("RED");
                 if(!SecondBeaconSide.equals("")){
                     CurrentCase = "TurnToGoToSecondBeacon";
                     CompletionClause = "NOTDONE";
@@ -281,7 +281,7 @@ public class Melin2Blue1WithLaunch extends Merlin2Auto {
                 }
                 break;
             case "GoForwardToTheSecondBeaconWhiteLine":
-                CompletionClause = super.driveUltilWhiteLine("Back", "Left", .2);
+                CompletionClause = super.driveUltilWhiteLine("Forward", "Right", .2);
                 telemetry.addData("Light", robot.LeftLight.getLightDetected());
                 if(CompletionClause.equals("Done")){
                     CurrentCase = "SquareAgainstWallForTheSecondBeacon";
@@ -340,13 +340,28 @@ public class Melin2Blue1WithLaunch extends Merlin2Auto {
             case "DriveBackAfterHittingTheSecondBeacon"://Drive back after hitting the beacon
                 CompletionClause = super.driveBasedOnEncoders(DriveBackAfterHittingTheSecondBeacon, "Right");
                 if(CompletionClause.equals("Done")){
-                    CurrentCase = "MakeSureItIsOnAngleForShoot";
+                    switch (SecondBeaconSide){
+                        case "Left":
+                            CurrentCase = "MakeSureItIsOnAngleForShootForLeft";
+                            break;
+                        case "Right":
+                            CurrentCase = "MakeSureItIsOnAngleForShootForRight";
+                            break;
+                    }
                     CompletionClause = "NOTDONE";
                     super.resetAll();
                 }
                 break;
-            case "MakeSureItIsOnAngleForShoot":
-                CompletionClause = super.turnToGyroHeading(45);//The robot makes sure it is on angle for the shot.
+            case "MakeSureItIsOnAngleForShootForLeft":
+                CompletionClause = super.turnToGyroHeading(135);//The robot makes sure it is on angle for the shot.
+                if(CompletionClause.equals("Done")){
+                    CurrentCase = "GoForwardBeforeShoot";
+                    CompletionClause = "NOTDONE";
+                    super.resetAll();
+                }
+                break;
+            case "MakeSureItIsOnAngleForShootForRight":
+                CompletionClause = super.turnToGyroHeading(145);//The robot makes sure it is on angle for the shot.
                 if(CompletionClause.equals("Done")){
                     CurrentCase = "GoForwardBeforeShoot";
                     CompletionClause = "NOTDONE";
@@ -354,7 +369,7 @@ public class Melin2Blue1WithLaunch extends Merlin2Auto {
                 }
                 break;
             case "GoForwardBeforeShoot"://First Case that drives the robot forward to a position that can launch the balls and identify the beacon
-                CompletionClause = super.driveBasedOnEncoders(5, "Forward");
+                CompletionClause = super.driveBasedOnEncoders(7, "Forward");
                 if(CompletionClause.equals("Done")){
                     CurrentCase = "ShootFirstBall";
                     CompletionClause = "NOTDONE";

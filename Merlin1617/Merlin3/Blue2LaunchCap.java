@@ -1,27 +1,8 @@
-/* Our autonomous codes
- *
- * 1 at the end - The main autonomous that sets up at the normal spot does everything including: Launch, beacon, beacon, Cap ball
- * 2 at the end - A secondary autonomous that sets up close to the line and does: launch, Cap Ball.
- * 3 at the end - A main Autonomous that sets up at the normal spot and does: Launch, beacon, beacon, CornerVortex. NEEDS CREATING
- * 4 at the end - A tertiary Autonomous that sets as far from the corner vortex and does: launch, CornerVortex. NEEDS CREATIG
- *
- * For what is on the drivers station
- *
- * Blue- Blue side
- * Red- Red side
- * 1- Standard location
- * 2- Secondary location
- * L- Launch
- * B- Beacon
- * C- Cap Ball
- *
- *
- *
- */
+package org.firstinspires.ftc.teamcode.team.Merlin1617.Merlin3;
 
-package org.firstinspires.ftc.teamcode.team.Merlin1617.Merlin2_2;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
+
+import org.firstinspires.ftc.teamcode.team.Merlin1617.Merlin3.Merlin3AutoMethods;
 
 /*
  * My cases are:
@@ -35,18 +16,17 @@ import com.qualcomm.robotcore.eventloop.opmode.Disabled;
  * Drive Forward
  *
  */
+@Autonomous(name = "Blue LCAPO", group = "Merlin3")
+public class Blue2LaunchCap extends Merlin3AutoMethods {
 
-@Autonomous(name = "Red2, LCap, 15 sec", group = "Merlin2")
-@Disabled
-public class Merlin2Red2 extends Merlin2Auto {
 
     @Override
     public void init() {
         super.init();
         super.initCamera();
 
-        telemetry.addData("Say", "Hello Driver");
-        telemetry.addData("Red2", "LCap, 15 sec");
+        telemetry.addData("Say", "Hello Driver");    //
+        telemetry.addData("Blue2", "LCapo, 15 sec");
         robot.navx_device.zeroYaw();
 
 
@@ -66,7 +46,6 @@ public class Merlin2Red2 extends Merlin2Auto {
     @Override
     public void loop() {
         telemetry.addData("CurrentCase", CurrentCase);
-        telemetry.addData("VersionNumber", 1);
 
         switch (CurrentCase){
             case "Wait":
@@ -77,7 +56,7 @@ public class Merlin2Red2 extends Merlin2Auto {
                 else{
                     CurrentTime = (System.currentTimeMillis() - StartTime)/1000;
                 }
-                if(CurrentTime > 15) {
+                if(CurrentTime > 0) {
                     CurrentCase = "GoFrowardAwayFromWall";
                 }
                 break;
@@ -90,7 +69,7 @@ public class Merlin2Red2 extends Merlin2Auto {
                 }
                 break;
             case "TurnToShoot":
-                CompletionClause = super.turnToGyroHeading(-25);//The robot makes sure it is on angle for the shot.
+                CompletionClause = super.turnToGyroHeading(60);//The robot makes sure it is on angle for the shot.
                 if(CompletionClause.equals("Done")){
                     CurrentCase = "GoForwardBeforeShoot";
                     CompletionClause = "NOTDONE";
@@ -98,7 +77,7 @@ public class Merlin2Red2 extends Merlin2Auto {
                 }
                 break;
             case "GoForwardBeforeShoot"://First Case that drives the robot forward to a position that can launch the balls and identify the beacon
-                CompletionClause = super.driveBasedOnEncoders(17, "Forward");
+                CompletionClause = super.driveBasedOnEncoders(22, "Forward");
                 if(CompletionClause.equals("Done")){
                     CurrentCase = "MakeSureItIsOnAngle";
                     CompletionClause = "NOTDONE";
@@ -106,7 +85,7 @@ public class Merlin2Red2 extends Merlin2Auto {
                 }
                 break;
             case "MakeSureItIsOnAngle":
-                CompletionClause = super.turnToGyroHeading(-40);//The robot makes sure it is on angle for the shot.
+                CompletionClause = super.turnToGyroHeading(45);//The robot makes sure it is on angle for the shot.
                 if(CompletionClause.equals("Done")){
                     CurrentCase = "WaitBeforeShoot";
                     CompletionClause = "NOTDONE";
@@ -160,7 +139,7 @@ public class Merlin2Red2 extends Merlin2Auto {
                 }
                 break;
             case "TurnToHitCapBall":
-                CompletionClause = super.turnToGyroHeading(-20);//The robot makes sure it is on angle for the shot.
+                CompletionClause = super.turnToGyroHeading(45);//The robot makes sure it is on angle for the shot.
                 if(CompletionClause.equals("Done")){
                     CurrentCase = "HitTheCapBall";
                     CompletionClause = "NOTDONE";
