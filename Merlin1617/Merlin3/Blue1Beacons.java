@@ -44,8 +44,8 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
  * Press beacon
  * Back Right Angle Drive
  */
-@Autonomous(name = "Red1 BeaconsLaunchCap", group = "Merlin3")
-public class Red1Beacons extends Merlin3AutoMethods {
+@Autonomous(name = "Blue Beacons", group = "Merlin3")
+public class Blue1Beacons extends Merlin3AutoMethods {
 
     @Override
     public void init() {
@@ -74,43 +74,43 @@ public class Red1Beacons extends Merlin3AutoMethods {
 
     private double DriveForwardAwayFromWallToBeAbleToTurn = 5;
 
-    private double TurnToGoToTheFirstBeaconIdentificationLocation = -10;
+    private double TurnToGoToTheFirstBeaconIdentificationLocation = 12;
 
-    private double GoForwardToTheFirstBeaconIdentificationLocation = 36;
+    private double GoForwardToTheFirstBeaconIdentificationLocation = 37;
 
-    private double TurnToIdentifyAndShoot = 0;
+    private double TurnToIdentifyAndShoot = -9;
 
     private double DriveForwardMore = 10;
 
 
     private double SquareAgainstWall = 0;
 
-    private double DriveToHitLeftButtonOfTheFirstBeaconDistance = 6;
+    private double DriveToHitLeftButtonOfTheFirstBeaconDistance = 0;
     private String DriveToHitLeftButtonOfTheFirstBeaconDirection = "Back";
 
-    private double DriveToHitRightButtonOfTheFirstBeaconDistance = 2;
-    private String DriveToHitRightButtonOfTheFirstBeaconDirection = "Back";
+    private double DriveToHitRightButtonOfTheFirstBeaconDistance = 5;
+    private String DriveToHitRightButtonOfTheFirstBeaconDirection = "Forward";
 
     private double DriveBackAfterHittingTheFirstBeacon = 14;
 
-    private double TurnToGoToTheSecondBeaconIdentificationLocation = 13;
+    private double TurnToGoToTheSecondBeaconIdentificationLocation = -5;//-17,-10
 
-    private double GoToTheSecondBeaconIdentificationLocation = 30;
-    private double GoToTheSecondBeaconIdentificationLocationLeftButton = 33;
+    private double GoToTheSecondBeaconIdentificationLocation = 35;
+    private double GoToTheSecondBeaconIdentificationLocationLeftButton = 30;
 
-    private double TurnToIdentifySecondBeacon = 10;
+    private double TurnToIdentifySecondBeacon = -10;
 
     private double TurnToGoToSecondBeacon = 0;
 
-    private double DriveToHitLeftButtonOfTheSecondBeaconDistance = 12;
+    private double DriveToHitLeftButtonOfTheSecondBeaconDistance = 4;
     private String DriveToHitLeftButtonOfTheSecondBeaconDirection = "Back";
 
-    private double DriveToHitRightButtonOfTheSecondBeaconDistance = 1;
-    private String DriveToHitRightButtonOfTheSecondBeaconDirection = "Back";
+    private double DriveToHitRightButtonOfTheSecondBeaconDistance = 0;
+    private String DriveToHitRightButtonOfTheSecondBeaconDirection = "Forward";
 
     private double DriveBackAfterHittingTheSecondBeacon = 12;
 
-    private double BackRightDriveToHitTheCapBall = 50;
+    private double BackRightDriveToHitTheCapBall = 60;
 
 
 
@@ -121,7 +121,7 @@ public class Red1Beacons extends Merlin3AutoMethods {
         telemetry.addData("SecondSide", SecondBeaconSide);
         switch (CurrentCase){
             case "DriveForwardAwayFromWallToBeAbleToTurn":
-                CompletionClause = super.driveBasedOnEncoders(DriveForwardAwayFromWallToBeAbleToTurn, "Forward");
+                CompletionClause = super.driveBasedOnEncoders(DriveForwardAwayFromWallToBeAbleToTurn, "Back");
                 if(CompletionClause.equals("Done")){
                     CurrentCase = "TurnToGoToTheFirstBeaconIdentificationLocation";
                     CompletionClause = "NOTDONE";
@@ -137,7 +137,7 @@ public class Red1Beacons extends Merlin3AutoMethods {
                 }
                 break;
             case "GoForwardToTheFirstBeaconIdentificationLocation":
-                CompletionClause = super.driveBasedOnEncoders(GoForwardToTheFirstBeaconIdentificationLocation, "Forward");
+                CompletionClause = super.driveBasedOnEncoders(GoForwardToTheFirstBeaconIdentificationLocation, "Back");
                 if(CompletionClause.equals("Done")){
                     CurrentCase = "TurnToIdentifyAndShoot";
                     CompletionClause = "NOTDONE";
@@ -153,15 +153,23 @@ public class Red1Beacons extends Merlin3AutoMethods {
                 }
                 break;
             case "Identify":
-                FirstBeaconSide = super.choseSide("RED");
+                FirstBeaconSide = super.choseSide("BLUE");
                 if(!FirstBeaconSide.equals("")){
+                    CurrentCase = "TurnToDriveToWhiteLine";
+                    CompletionClause = "NOTDONE";
+                    super.resetAll();
+                }
+                break;
+            case "TurnToDriveToWhiteLine":
+                CompletionClause = super.turnToGyroHeading(50);
+                if(CompletionClause.equals("Done")){
                     CurrentCase = "DriveLeftForwardToTheFirstWhiteLine";
                     CompletionClause = "NOTDONE";
                     super.resetAll();
                 }
                 break;
             case "DriveLeftForwardToTheFirstWhiteLine":
-                CompletionClause = super.driveUltilWhiteLine("ForwardLeft", "Left", .2);
+                CompletionClause = super.driveUltilWhiteLine("Back", "Right", .2);
                 telemetry.addData("Light", robot.LeftLight.getLightDetected());
                 if(CompletionClause.equals("Done")){
                     CurrentCase = "SquareAgainstWallForFirstBeacon";
@@ -220,36 +228,28 @@ public class Red1Beacons extends Merlin3AutoMethods {
             case "DriveBackAfterHittingTheFirstBeacon"://Drive back after hitting the beacon
                 CompletionClause = super.driveBasedOnEncoders(DriveBackAfterHittingTheFirstBeacon, "Right");
                 if(CompletionClause.equals("Done")){
+                    CurrentCase = "TurnToGoToTheSecondBeaconIdentificationLocationLeftButton";
+                    CompletionClause = "NOTDONE";
+                    super.resetAll();
+                }
+                break;
+            case "TurnToGoToTheSecondBeaconIdentificationLocationLeftButton":
+                CompletionClause = super.turnToGyroHeading(TurnToGoToTheSecondBeaconIdentificationLocation);
+                if(CompletionClause.equals("Done")){
                     switch (FirstBeaconSide){
                         case "Left":
-                            CurrentCase = "TurnToGoToTheSecondBeaconIdentificationLocationLeftButton";
+                            CurrentCase = "GoToTheSecondBeaconIdentificationLocationLeftButton";
                             break;
                         case "Right":
-                            CurrentCase = "TurnToGoToTheSecondBeaconIdentificationLocationRightButton";
+                            CurrentCase = "GoToTheSecondBeaconIdentificationLocationRightButton";
                             break;
                     }
                     CompletionClause = "NOTDONE";
                     super.resetAll();
                 }
                 break;
-            case "TurnToGoToTheSecondBeaconIdentificationLocationLeftButton":
-                CompletionClause = super.turnToGyroHeading(11);
-                if(CompletionClause.equals("Done")){
-                    CurrentCase = "GoToTheSecondBeaconIdentificationLocationLeftButton";
-                    CompletionClause = "NOTDONE";
-                    super.resetAll();
-                }
-                break;
-            case "TurnToGoToTheSecondBeaconIdentificationLocationRightButton":
-                CompletionClause = super.turnToGyroHeading(TurnToGoToTheSecondBeaconIdentificationLocation);
-                if(CompletionClause.equals("Done")){
-                    CurrentCase = "GoToTheSecondBeaconIdentificationLocationRightButton";
-                    CompletionClause = "NOTDONE";
-                    super.resetAll();
-                }
-                break;
             case "GoToTheSecondBeaconIdentificationLocationRightButton":
-                CompletionClause = super.driveBasedOnEncoders(GoToTheSecondBeaconIdentificationLocation, "Forward");
+                CompletionClause = super.driveBasedOnEncoders(GoToTheSecondBeaconIdentificationLocation, "Back");
                 if(CompletionClause.equals("Done")){
                     CurrentCase = "TurnToIdentifySecondBeacon";
                     CompletionClause = "NOTDONE";
@@ -257,7 +257,7 @@ public class Red1Beacons extends Merlin3AutoMethods {
                 }
                 break;
             case "GoToTheSecondBeaconIdentificationLocationLeftButton":
-                CompletionClause = super.driveBasedOnEncoders(GoToTheSecondBeaconIdentificationLocationLeftButton, "Forward");
+                CompletionClause = super.driveBasedOnEncoders(GoToTheSecondBeaconIdentificationLocationLeftButton, "Back");
                 if(CompletionClause.equals("Done")){
                     CurrentCase = "TurnToIdentifySecondBeacon";
                     CompletionClause = "NOTDONE";
@@ -273,7 +273,7 @@ public class Red1Beacons extends Merlin3AutoMethods {
                 }
                 break;
             case "IdentifySecondBeacon":
-                SecondBeaconSide = super.choseSide("RED");
+                SecondBeaconSide = super.choseSide("BLUE");
                 if(!SecondBeaconSide.equals("")){
                     CurrentCase = "TurnToGoToSecondBeacon";
                     CompletionClause = "NOTDONE";
@@ -289,7 +289,7 @@ public class Red1Beacons extends Merlin3AutoMethods {
                 }
                 break;
             case "GoForwardToTheSecondBeaconWhiteLine":
-                CompletionClause = super.driveUltilWhiteLine("Forward", "Right", .2);
+                CompletionClause = super.driveUltilWhiteLine("Back", "Left", .2);
                 telemetry.addData("Light", robot.LeftLight.getLightDetected());
                 if(CompletionClause.equals("Done")){
                     CurrentCase = "SquareAgainstWallForTheSecondBeacon";
@@ -300,19 +300,34 @@ public class Red1Beacons extends Merlin3AutoMethods {
             case "SquareAgainstWallForTheSecondBeacon":
                 CompletionClause = super.turnToGyroHeading(SquareAgainstWall);
                 if(CompletionClause.equals("Done")){
-                    switch (SecondBeaconSide){
+                    switch(FirstBeaconSide) {
                         case "Left":
-                            CurrentCase = "DriveToHitLeftButtonOfTheSecondBeacon";
+                        switch (SecondBeaconSide) {
+                            case "Left":
+                                CurrentCase = "DriveToHitLeftButtonOfTheSecondBeaconLeft";
+                                break;
+                            case "Right":
+                                CurrentCase = "DriveToHitRightButtonOfTheSecondBeaconLeft";
+                                break;
+                        }
                             break;
+
                         case "Right":
-                            CurrentCase = "DriveToHitRightButtonOfTheSecondBeacon";
-                            break;
+                            switch (SecondBeaconSide){
+                                case "Left":
+                                    CurrentCase = "DriveToHitLeftButtonOfTheSecondBeaconRight";
+                                    break;
+                                case "Right":
+                                    CurrentCase = "DriveToHitRightButtonOfTheSecondBeaconRight";
+                                    break;
+                            }
                     }
+
                     CompletionClause = "NOTDONE";
                     super.resetAll();
                 }
                 break;
-            case "DriveToHitLeftButtonOfTheSecondBeacon"://Drive to the left so that the robot is only in front of the beacon's left button
+            case "DriveToHitLeftButtonOfTheSecondBeaconLeft"://Drive to the left so that the robot is only in front of the beacon's left button
                 CompletionClause = super.driveBasedOnEncoders(DriveToHitLeftButtonOfTheSecondBeaconDistance, DriveToHitLeftButtonOfTheSecondBeaconDirection);
                 if(CompletionClause.equals("Done")){
                     CurrentCase = "MakeSureTheRobotIsAngledForTheHitOfTheSecondBeacon";
@@ -320,8 +335,24 @@ public class Red1Beacons extends Merlin3AutoMethods {
                     super.resetAll();
                 }
                 break;
-            case "DriveToHitRightButtonOfTheSecondBeacon":
+            case "DriveToHitRightButtonOfTheSecondBeaconLeft":
                 CompletionClause = super.driveBasedOnEncoders(DriveToHitRightButtonOfTheSecondBeaconDistance, DriveToHitRightButtonOfTheSecondBeaconDirection);
+                if(CompletionClause.equals("Done")){
+                    CurrentCase = "MakeSureTheRobotIsAngledForTheHitOfTheSecondBeacon";
+                    CompletionClause = "NOTDONE";
+                    super.resetAll();
+                }
+                break;
+            case "DriveToHitLeftButtonOfTheSecondBeaconRight"://Drive to the left so that the robot is only in front of the beacon's left button
+                CompletionClause = super.driveBasedOnEncoders(4, DriveToHitLeftButtonOfTheSecondBeaconDirection);
+                if(CompletionClause.equals("Done")){
+                    CurrentCase = "MakeSureTheRobotIsAngledForTheHitOfTheSecondBeacon";
+                    CompletionClause = "NOTDONE";
+                    super.resetAll();
+                }
+                break;
+            case "DriveToHitRightButtonOfTheSecondBeaconRight":
+                CompletionClause = super.driveBasedOnEncoders(0, DriveToHitRightButtonOfTheSecondBeaconDirection);
                 if(CompletionClause.equals("Done")){
                     CurrentCase = "MakeSureTheRobotIsAngledForTheHitOfTheSecondBeacon";
                     CompletionClause = "NOTDONE";
@@ -338,7 +369,7 @@ public class Red1Beacons extends Merlin3AutoMethods {
                 }
                 break;
             case "DriveTillTheSecondBeaconIsHit"://Dive till the robot has hit the beacon
-                CompletionClause = super.driveUntilHit("Red");
+                CompletionClause = super.driveBasedOnEncoders(35, "Left");
                 if(CompletionClause.equals("Done")){
                     CurrentCase = "DriveBackAfterHittingTheSecondBeacon";
                     CompletionClause = "NOTDONE";
@@ -361,7 +392,7 @@ public class Red1Beacons extends Merlin3AutoMethods {
                 }
                 break;
             case "MakeSureItIsOnAngleForShootForLeft":
-                CompletionClause = super.turnToGyroHeading(135);//The robot makes sure it is on angle for the shot.
+                CompletionClause = super.turnToGyroHeading(40);//The robot makes sure it is on angle for the shot.
                 if(CompletionClause.equals("Done")){
                     CurrentCase = "GoForwardBeforeShootLeft";
                     CompletionClause = "NOTDONE";
@@ -369,7 +400,7 @@ public class Red1Beacons extends Merlin3AutoMethods {
                 }
                 break;
             case "MakeSureItIsOnAngleForShootForRight":
-                CompletionClause = super.turnToGyroHeading(155);//The robot makes sure it is on angle for the shot.
+                CompletionClause = super.turnToGyroHeading(45);//The robot makes sure it is on angle for the shot.
                 if(CompletionClause.equals("Done")){
                     CurrentCase = "GoForwardBeforeShootRight";
                     CompletionClause = "NOTDONE";
@@ -377,7 +408,7 @@ public class Red1Beacons extends Merlin3AutoMethods {
                 }
                 break;
             case "GoForwardBeforeShootLeft"://First Case that drives the robot forward to a position that can launch the balls and identify the beacon
-                CompletionClause = super.driveBasedOnEncoders(13, "Forward");
+                CompletionClause = super.driveBasedOnEncoders(22, "Forward");
                 if(CompletionClause.equals("Done")){
                     CurrentCase = "ShootFirstBall";
                     CompletionClause = "NOTDONE";
@@ -385,7 +416,7 @@ public class Red1Beacons extends Merlin3AutoMethods {
                 }
                 break;
             case "GoForwardBeforeShootRight"://First Case that drives the robot forward to a position that can launch the balls and identify the beacon
-                CompletionClause = super.driveBasedOnEncoders(22, "Forward");
+                CompletionClause = super.driveBasedOnEncoders(14, "Forward");
                 if(CompletionClause.equals("Done")){
                     CurrentCase = "ShootFirstBall";
                     CompletionClause = "NOTDONE";
@@ -424,6 +455,8 @@ public class Red1Beacons extends Merlin3AutoMethods {
                     super.resetAll();
                 }
                 break;
+
+
 
 
             case"Done":

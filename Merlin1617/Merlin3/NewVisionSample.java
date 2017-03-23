@@ -22,7 +22,7 @@ import com.qualcomm.robotcore.hardware.HardwareDevice;
  * even extend the VisionOpMode class! Be sure to extend it if writing your own OpMode structure.
  */
 
-@Autonomous(name = "New Vision", group = "Merlin2")
+@Autonomous(name = "New Vision", group = "Merlin3")
 
 public class NewVisionSample extends VisionOpMode {
 
@@ -42,7 +42,7 @@ public class NewVisionSample extends VisionOpMode {
          * Larger = sometimes more accurate, but also much slower
          * After this method runs, it will set the "width" and "height" of the frame
          **/
-        this.setFrameSize(new Size(3000, 2000));
+        this.setFrameSize(new Size(1280, 720));
 
         /**
          * Enable extensions. Use what you need.
@@ -62,8 +62,8 @@ public class NewVisionSample extends VisionOpMode {
          * Set color tolerances
          * 0 is default, -1 is minimum and 1 is maximum tolerance
          */
-        beacon.setColorToleranceRed(0);
-        beacon.setColorToleranceBlue(0);
+        beacon.setColorToleranceRed(-.9);
+        beacon.setColorToleranceBlue(-.9);
 
         /**
          * Set analysis boundary
