@@ -35,7 +35,7 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
  *
  */
 
-@Autonomous(name = "Blue2, LC, 5 sec", group = "Merlin2")
+@Autonomous(name = "Blue2, LC, 5 sec", group = "Merlin2")//This is the autonomous for  the blue side that goes and goes to the corner.
 public class Merlin2Blue3 extends Merlin2Auto {
 
     @Override
