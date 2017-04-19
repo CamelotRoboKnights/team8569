@@ -19,7 +19,7 @@
  *
  */
 
-package org.firstinspires.ftc.teamcode.team.Merlin2_2;//this is an example comment
+package org.firstinspires.ftc.teamcode.team.Merlin2_2;//this is an example comment.
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 
 /*
