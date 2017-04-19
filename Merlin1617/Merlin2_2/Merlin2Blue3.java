@@ -43,7 +43,7 @@ public class Merlin2Blue3 extends Merlin2Auto {
         super.init();
         super.initCamera();
 
-        telemetry.addData("Say", "Hello Driver");
+        telemetry.addData("Say", "Hello Driver");//This is an example comment
         telemetry.addData("Blue2", "LC, 5 sec");
         robot.navx_device.zeroYaw();
 
