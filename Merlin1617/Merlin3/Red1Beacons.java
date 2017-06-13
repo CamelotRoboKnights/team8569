@@ -74,14 +74,11 @@ public class Red1Beacons extends Merlin3AutoMethods {
 
     private double DriveForwardAwayFromWallToBeAbleToTurn = 5;
 
-    private double TurnToGoToTheFirstBeaconIdentificationLocation = -10;
+    private double TurnToGoToTheFirstBeaconIdentificationLocation = -8;
 
     private double GoForwardToTheFirstBeaconIdentificationLocation = 36;
 
     private double TurnToIdentifyAndShoot = 0;
-
-    private double DriveForwardMore = 10;
-
 
     private double SquareAgainstWall = 0;
 

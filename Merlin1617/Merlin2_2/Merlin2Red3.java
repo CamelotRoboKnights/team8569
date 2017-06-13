@@ -21,6 +21,7 @@
 
 package org.firstinspires.ftc.teamcode.team.Merlin1617.Merlin2_2;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 
 /*
  * My cases are:
@@ -36,6 +37,7 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
  */
 
 @Autonomous(name = "Red2, LC, 15 sec", group = "Merlin2")
+@Disabled
 public class Merlin2Red3 extends Merlin2Auto {
 
     @Override

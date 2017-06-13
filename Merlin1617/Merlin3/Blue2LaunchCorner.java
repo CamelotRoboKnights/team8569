@@ -56,7 +56,7 @@ public class Blue2LaunchCorner extends Merlin3AutoMethods {
                 else{
                     CurrentTime = (System.currentTimeMillis() - StartTime)/1000;
                 }
-                if(CurrentTime > 0) {
+                if(CurrentTime > 15) {
                     CurrentCase = "GoFrowardAwayFromWall";
                 }
                 break;

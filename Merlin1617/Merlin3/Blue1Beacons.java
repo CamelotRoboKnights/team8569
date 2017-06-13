@@ -53,7 +53,7 @@ public class Blue1Beacons extends Merlin3AutoMethods {
         super.initCamera();
 
         telemetry.addData("Say", "Hello Driver");    //
-        telemetry.addData("Red1", "BBC, 0sec");
+        telemetry.addData("Blue 1", "Beacons");
         robot.navx_device.zeroYaw();
 
 
@@ -74,7 +74,7 @@ public class Blue1Beacons extends Merlin3AutoMethods {
 
     private double DriveForwardAwayFromWallToBeAbleToTurn = 5;
 
-    private double TurnToGoToTheFirstBeaconIdentificationLocation = 12;
+    private double TurnToGoToTheFirstBeaconIdentificationLocation = 16;
 
     private double GoForwardToTheFirstBeaconIdentificationLocation = 37;
 
@@ -85,8 +85,8 @@ public class Blue1Beacons extends Merlin3AutoMethods {
 
     private double SquareAgainstWall = 0;
 
-    private double DriveToHitLeftButtonOfTheFirstBeaconDistance = 0;
-    private String DriveToHitLeftButtonOfTheFirstBeaconDirection = "Back";
+    private double DriveToHitLeftButtonOfTheFirstBeaconDistance = 1;
+    private String DriveToHitLeftButtonOfTheFirstBeaconDirection = "Forward";
 
     private double DriveToHitRightButtonOfTheFirstBeaconDistance = 5;
     private String DriveToHitRightButtonOfTheFirstBeaconDirection = "Forward";
@@ -102,11 +102,11 @@ public class Blue1Beacons extends Merlin3AutoMethods {
 
     private double TurnToGoToSecondBeacon = 0;
 
-    private double DriveToHitLeftButtonOfTheSecondBeaconDistance = 4;
+    private double DriveToHitLeftButtonOfTheSecondBeaconDistance = 5;
     private String DriveToHitLeftButtonOfTheSecondBeaconDirection = "Back";
 
-    private double DriveToHitRightButtonOfTheSecondBeaconDistance = 0;
-    private String DriveToHitRightButtonOfTheSecondBeaconDirection = "Forward";
+    private double DriveToHitRightButtonOfTheSecondBeaconDistance = 1;
+    private String DriveToHitRightButtonOfTheSecondBeaconDirection = "Bacl";
 
     private double DriveBackAfterHittingTheSecondBeacon = 12;
 
@@ -161,7 +161,7 @@ public class Blue1Beacons extends Merlin3AutoMethods {
                 }
                 break;
             case "TurnToDriveToWhiteLine":
-                CompletionClause = super.turnToGyroHeading(50);
+                CompletionClause = super.turnToGyroHeading(55);
                 if(CompletionClause.equals("Done")){
                     CurrentCase = "DriveLeftForwardToTheFirstWhiteLine";
                     CompletionClause = "NOTDONE";
@@ -344,7 +344,7 @@ public class Blue1Beacons extends Merlin3AutoMethods {
                 }
                 break;
             case "DriveToHitLeftButtonOfTheSecondBeaconRight"://Drive to the left so that the robot is only in front of the beacon's left button
-                CompletionClause = super.driveBasedOnEncoders(4, DriveToHitLeftButtonOfTheSecondBeaconDirection);
+                CompletionClause = super.driveBasedOnEncoders(5, DriveToHitLeftButtonOfTheSecondBeaconDirection);
                 if(CompletionClause.equals("Done")){
                     CurrentCase = "MakeSureTheRobotIsAngledForTheHitOfTheSecondBeacon";
                     CompletionClause = "NOTDONE";
@@ -352,7 +352,7 @@ public class Blue1Beacons extends Merlin3AutoMethods {
                 }
                 break;
             case "DriveToHitRightButtonOfTheSecondBeaconRight":
-                CompletionClause = super.driveBasedOnEncoders(0, DriveToHitRightButtonOfTheSecondBeaconDirection);
+                CompletionClause = super.driveBasedOnEncoders(1, DriveToHitRightButtonOfTheSecondBeaconDirection);
                 if(CompletionClause.equals("Done")){
                     CurrentCase = "MakeSureTheRobotIsAngledForTheHitOfTheSecondBeacon";
                     CompletionClause = "NOTDONE";

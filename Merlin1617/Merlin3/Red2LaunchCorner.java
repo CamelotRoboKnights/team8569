@@ -104,7 +104,7 @@ public class Red2LaunchCorner extends Merlin3AutoMethods {
                 }
                 break;
             case "MakeSureItIsOnAngle":
-                CompletionClause = super.turnToGyroHeading(-29);//The robot makes sure it is on angle for the shot.
+                CompletionClause = super.turnToGyroHeading(-23);//The robot makes sure it is on angle for the shot.
                 if(CompletionClause.equals("Done")){
                     CurrentCase = "WaitBeforeShoot";
                     CompletionClause = "NOTDONE";
