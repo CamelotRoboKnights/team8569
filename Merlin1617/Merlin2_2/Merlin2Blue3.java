@@ -36,8 +36,12 @@ import com.qualcomm.robotcore.eventloop.opmode.Disabled;
  *
  */
 
+<<<<<<< HEAD
 @Autonomous(name = "Blue2, LC, 5 sec", group = "Merlin2")
 @Disabled
+=======
+@Autonomous(name = "Blue2, LC, 5 sec", group = "Merlin2")//This is the autonomous for  the blue side that goes and goes to the corner.
+>>>>>>> 18a06fd79dd4fb675c19fa16a9c29f43bc53a86d
 public class Merlin2Blue3 extends Merlin2Auto {
 
     @Override
@@ -45,8 +49,8 @@ public class Merlin2Blue3 extends Merlin2Auto {
         super.init();
         super.initCamera();
 
-        telemetry.addData("Say", "Hello Driver");
-        telemetry.addData("Blue2", "LC, 5 sec");
+        telemetry.addData("Say", "Hello Driver");//This is an example comment
+        telemetry.addData("Blue2", "LC, 5 sec");//This is an example comment 
         robot.navx_device.zeroYaw();
 
 
