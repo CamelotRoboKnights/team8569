@@ -24,6 +24,10 @@ public class ZachK9 extends OpMode {
     public void init(){
         robot.init(hardwareMap);
     }
+    double neck = 0;
+    double mouth = 0;
+    // upon int set mouth and neck to 0
+
     @Override
     public void init_loop(){}
     @Override
@@ -31,7 +35,32 @@ public class ZachK9 extends OpMode {
     @Override
     public void loop(){
         // Write your code in here
+        double rightMotorPower = -gamepad1.right_stick_y-gamepad1.right_stick_x;
+        double leftMotorPower = -gamepad1.right_stick_y+gamepad1.right_stick_x;
+        //arcade joystick drivetrain
+        leftMotorPower = Range.clip(leftMotorPower, -1, 1);
+        rightMotorPower = Range.clip(rightMotorPower, -1,1);
+        robot.leftMotor.setPower(rightMotorPower);
+        robot.leftMotor.setPower(leftMotorPower);
 
+
+        //servo
+        if (gamepad1.a) {
+            mouth = mouth + .01;
+        }
+        else if (gamepad1.b) {
+            mouth = mouth - .01;
+        }
+        if (gamepad1.x) {
+            neck = neck + .01;
+        }
+        else if (gamepad1.y) {
+            neck = neck - .01;
+        }
+        neck = Range.clip(neck,0,1);
+        mouth = Range.clip(mouth,0,1);
+        robot.arm.setPosition(neck);
+        robot.claw.setPosition(mouth);
     }
     @Override
     public void stop(){}
@@ -46,8 +75,10 @@ public class ZachK9 extends OpMode {
  *  gamepad1.left_trigger - returns how far the left trigger has been pressed
  *  gamepad1.right_trigger - returns how far the left trigger has been pressed
  *  robot.leftMotor.setPower(value); - how you set the left motor power
- *  robot.rightMotor.setPower(value); - how you set the right motor power
+ *  robot.leftMotor.setPower(value); - how you set the right motor power
  *  double someName - how you create a number variable.
  *  Variable1 = Range.clip(Variable1, min value, max value); - Range clips that value
+ *  robot.servo.setPosition(value); arm or claw
+ *
  *
  */
