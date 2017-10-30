@@ -14,6 +14,9 @@ public class ScrimmageHardware
     public DcMotor  Motor2    = null;//Front left motor
     public DcMotor  Motor3    = null;//Back left motor
     public DcMotor  Motor4    = null;//Back right motor
+    public DcMotor  glyph    = null;
+    public Servo leftGrasper = null;
+    public Servo rightGrasper = null;
 
     /* local OpMode members. */
     HardwareMap hwMap           =  null; //Saying this this has no opmode
@@ -34,6 +37,9 @@ public class ScrimmageHardware
         Motor2  = hwMap.dcMotor.get("motor2");//Finds the front left motor in the hardware map
         Motor3  = hwMap.dcMotor.get("motor3");//Finds the back left motor in the hardware map
         Motor4  = hwMap.dcMotor.get("motor4");//Finds the back right motor in the hardware map
+        glyph = hwMap.dcMotor.get("glyph");
+        leftGrasper = hwMap.servo.get("left");
+        rightGrasper = hwMap.servo.get("right");
 
         Motor1.setDirection(DcMotorSimple.Direction.REVERSE);//Sets the motor power to reverse so forwards is positive
         Motor2.setDirection(DcMotorSimple.Direction.FORWARD);//Sets the motor power as positive so forward is still positive
@@ -45,6 +51,8 @@ public class ScrimmageHardware
         Motor2.setPower(0);
         Motor3.setPower(0);
         Motor4.setPower(0);
+        leftGrasper.setPosition(0);
+        rightGrasper.setPosition(1);
 
         // Set all motors to run without encoders.
         // May want to use RUN_USING_ENCODERS if encoders are installed.

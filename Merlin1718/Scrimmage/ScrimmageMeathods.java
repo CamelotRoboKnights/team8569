@@ -84,5 +84,8 @@ class ScrimmageMeathods extends OpMode {
             moveMotorsPower(0, 0, 0, 0);
         }
     }
+    public void glyph(){
+        //write it here
+    }
 }
 
