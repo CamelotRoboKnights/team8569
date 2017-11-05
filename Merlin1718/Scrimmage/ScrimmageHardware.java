@@ -2,10 +2,14 @@
 
 package org.firstinspires.ftc.teamcode.team.Merlin1718.Scrimmage;
 
+import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
+
+import org.firstinspires.ftc.robotcontroller.external.samples.SensorMRColor;
+import org.firstinspires.ftc.robotcontroller.external.samples.SensorREVColorDistance;
 
 public class ScrimmageHardware
 {
@@ -17,6 +21,10 @@ public class ScrimmageHardware
     public DcMotor  glyph    = null;
     public Servo leftGrasper = null;
     public Servo rightGrasper = null;
+    public Servo leftSorter = null;
+    public Servo rightSorter = null;
+    public ColorSensor leftColor = null;
+    public ColorSensor rightColor = null;
 
     /* local OpMode members. */
     HardwareMap hwMap           =  null; //Saying this this has no opmode
@@ -38,8 +46,14 @@ public class ScrimmageHardware
         Motor3  = hwMap.dcMotor.get("motor3");//Finds the back left motor in the hardware map
         Motor4  = hwMap.dcMotor.get("motor4");//Finds the back right motor in the hardware map
         glyph = hwMap.dcMotor.get("glyph");
-        leftGrasper = hwMap.servo.get("left");
-        rightGrasper = hwMap.servo.get("right");
+        leftGrasper = hwMap.servo.get("leftGrasper");
+        rightGrasper = hwMap.servo.get("rightGrasper");
+        leftSorter = hwMap.servo.get("leftSorter");
+        rightSorter = hwMap.servo.get("rightSorter");
+        leftColor = hwMap.get(ColorSensor.class, "leftColor");
+        rightColor = hwMap.get(ColorSensor.class, "rightColor");
+
+
 
         Motor1.setDirection(DcMotorSimple.Direction.REVERSE);//Sets the motor power to reverse so forwards is positive
         Motor2.setDirection(DcMotorSimple.Direction.FORWARD);//Sets the motor power as positive so forward is still positive
@@ -51,8 +65,6 @@ public class ScrimmageHardware
         Motor2.setPower(0);
         Motor3.setPower(0);
         Motor4.setPower(0);
-        leftGrasper.setPosition(0);
-        rightGrasper.setPosition(1);
 
         // Set all motors to run without encoders.
         // May want to use RUN_USING_ENCODERS if encoders are installed.
