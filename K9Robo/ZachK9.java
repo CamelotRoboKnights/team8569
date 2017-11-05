@@ -40,7 +40,7 @@ public class ZachK9 extends OpMode {
         //arcade joystick drivetrain
         leftMotorPower = Range.clip(leftMotorPower, -1, 1);
         rightMotorPower = Range.clip(rightMotorPower, -1,1);
-        robot.leftMotor.setPower(rightMotorPower);
+        robot.rightMotor.setPower(rightMotorPower);
         robot.leftMotor.setPower(leftMotorPower);
 
 

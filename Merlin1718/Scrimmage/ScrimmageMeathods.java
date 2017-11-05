@@ -23,7 +23,10 @@ class ScrimmageMeathods extends OpMode {
     public void loop(){}
     @Override
     public void stop(){}
-
+    double leftGrasperOpen;
+    double rightGrasperOpen;
+    double leftGrasperClose;
+    double rightGrasperClosed;
 
 
     private void moveMotorsPower (double Motor1Power, double Motor2Power, double Motor3Power, double Motor4Power){
@@ -86,6 +89,22 @@ class ScrimmageMeathods extends OpMode {
     }
     public void glyph(){
         //write it here
+        if (gamepad1.x) {//Raise mecanism
+            robot.glyph.setPower(.5);
+        }
+        else if (gamepad1.y) {//Lower mecanism
+            robot.glyph.setPower(-.5);
+        }
+
+        if (gamepad1.a) {//close gripper
+            robot.leftGrasper.setPosition(1);
+            robot.rightGrasper.setPosition(0);
+        }
+        else if (gamepad1.b) {//open gripper
+            robot.leftGrasper.setPosition(0);
+            robot.rightGrasper.setPosition(1);
+        }
+
     }
 }
 
