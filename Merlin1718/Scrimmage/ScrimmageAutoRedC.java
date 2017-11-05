@@ -39,9 +39,9 @@ public class ScrimmageAutoRedC extends ScrimmageMeathods {
     public void loop(){//This runs while opmode is active
         switch (currentCase){
             case "DropSorter":
-                String doneYet;
+                boolean doneYet;
                 doneYet = sorter("down", color);
-                if(doneYet.equals("done")){
+                if(doneYet){
                     currentCase = "IDCryptographPicAndJewelColor";
                 }
                 break;
@@ -50,69 +50,69 @@ public class ScrimmageAutoRedC extends ScrimmageMeathods {
                 break;
             case "KnockForward":
                 doneYet = driveBasedOnEncoders(driveForwardToKnockDistance, "Forward");
-                if(doneYet.equals("done")){
+                if(doneYet){
                     currentCase = "RaiseSorter";
                 }
                 break;
             case "KnockBack":
                 doneYet = driveBasedOnEncoders(driveBackToKnockDistance, "Back");
-                if(doneYet.equals("done")){
+                if(doneYet){
                     currentCase = "RaiseSorter";
                 }
                 break;
             case "RaiseSorter":
                 doneYet = sorter("up", color);
-                if(doneYet.equals("done") && !jewel.equals("back")){
+                if(doneYet && !jewel.equals("back")){
                     currentCase = choseColumnCase(column);
-                } else if(doneYet.equals("done")){
+                } else if(doneYet){
                     currentCase = "ToForwardPosition";
                 }
                 break;
             case "ToForwardPosition":
                 doneYet = driveBasedOnEncoders(driveForwardToKnockDistance + driveBackToKnockDistance, "Forward");
-                if(doneYet.equals("done")){
+                if(doneYet){
                     currentCase = choseColumnCase(column);
                 }
                 break;
             case "ToRightColumn":
                 doneYet = driveBasedOnEncoders(driveDistanceToRightColumn, "Forward");
-                if(doneYet.equals("done")){
+                if(doneYet){
                     currentCase = "SpinTo90";
                 }
                 break;
             case "ToCenterColumn":
                 doneYet = driveBasedOnEncoders(driveDistanceToCenterColumn, "Forward");
-                if(doneYet.equals("done")){
+                if(doneYet){
                     currentCase = "SpinTo90";
                 }
                 break;
             case "ToLeftColumn":
                 doneYet = driveBasedOnEncoders(driveDistanceToLeftColumn, "Forward");
-                if(doneYet.equals("done")){
+                if(doneYet){
                     currentCase = "SpinTo90";
                 }
                 break;
             case "SpinTo90":
                 doneYet = turnToGyroHeading(90,0);
-                if(doneYet.equals("done")){
+                if(doneYet){
                     currentCase = "DriveForward";
                 }
                 break;
             case "DriveForward":
                 doneYet = driveBasedOnEncoders(driveForwardToCryptobox, "Forward");
-                if(doneYet.equals("done")){
+                if(doneYet){
                     currentCase = "ReleaseGripper";
                 }
                 break;
             case "ReleaseGripper":
                 doneYet = glyphAuto("open");
-                if(doneYet.equals("done")){
+                if(doneYet){
                     currentCase = "DriveBack";
                 }
                 break;
             case "DriveBack":
                 doneYet = driveBasedOnEncoders(driveAwayFromCryptobox, "Forward");
-                if(doneYet.equals("done")){
+                if(doneYet){
                     currentCase = "End";
                 }
                 break;

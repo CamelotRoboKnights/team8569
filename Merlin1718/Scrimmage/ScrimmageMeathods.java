@@ -26,6 +26,21 @@ import java.io.StringWriter;
 import static java.lang.Boolean.FALSE;
 import static java.lang.Boolean.TRUE;
 
+/* Meathods
+ * moveMotorPower(M1p, M2p, M3p, M4p) void - set all drive motor power
+ * joyValues () double[] - set joystick values
+ * makeFieldOriented (origanalxyz, Orientation Degrees) Double [] - orients drivetrain
+ * glyph () void - controls glyph mechinism during teleop
+ * sorter(String upOrDown, Sring redOrBlue) Boolean - controls the string
+ * moveDirection (String direction, Double power) void - gives us comands that can move the robot in a direction
+ * currentEncoder(DcMotor motor, String direction) Boolean Double [] - find ou what the encoder value is
+ * turnToGyroHeading(Double target heading, Double current heading) Boolean - turns Gyro to specific heading
+ * driveBasedOnEncoders(Double distance, String Direction) Boolean
+ * initCamera () void - initializes camera
+ * key () String - figuring out wich vuMark you are sensing
+ */
+
+
 
 class ScrimmageMeathods extends OpMode {
 
@@ -55,6 +70,7 @@ class ScrimmageMeathods extends OpMode {
 
 
     public void moveMotorsPower (double Motor1Power, double Motor2Power, double Motor3Power, double Motor4Power){
+        //this method rangeclips the motorpower to be from 1 to -1
         robot.Motor1.setPower(Range.clip(Motor1Power, -1, 1));
         robot.Motor2.setPower(Range.clip(Motor2Power,-1,1));
         robot.Motor3.setPower(Range.clip(Motor3Power, -1, 1));
@@ -63,26 +79,33 @@ class ScrimmageMeathods extends OpMode {
     public double[] joyValues(){
         double[] joyXYZ;
         joyXYZ = new double[3];
+        //Set value x to the x axis on the left joystick if the value is above .01
         if(Math.abs(gamepad1.left_stick_x) > .01){
             joyXYZ[0] = gamepad1.left_stick_x;
+            //otherwise set vaue to 0
         } else {
             joyXYZ[0] = 0;
         }
+        //Set value y to the y axis on the left joystick if the value is above .01
         if(Math.abs(gamepad1.left_stick_y) > .01){
             joyXYZ[1] = -gamepad1.left_stick_y;
+            //otherwise set value to 0
         } else {
             joyXYZ[1] = 0;
         }
+        //Set value z to the z axis on the left trigger if the value is above .01
         if(gamepad1.left_trigger > .01){
             joyXYZ[2] = -gamepad1.left_trigger;
+            //Set value z to the z axis on the right trigger if the value is above .01
         } else if (gamepad1.right_trigger > .01){
             joyXYZ[2] = gamepad1.right_trigger;
+            //if the value is not above .01 set the value to 0
         } else {
             joyXYZ[2] = 0;
         }
         return joyXYZ;
     }
-
+            //Make divetrain fieldOriented to the driver
     public double[] makeFieldOriented(double[] originalXYZ, double OrientationDegrees) {
 
         double[] fieldOrientedXYZ = new double[3];
@@ -94,7 +117,7 @@ class ScrimmageMeathods extends OpMode {
 
         return fieldOrientedXYZ;
     }
-
+    //If the absalute value of x or the absalute value of y is greater than 0.01 then spin each motor accordingly
     public void drive(double[] givenXYZ) {
         if (Math.abs(givenXYZ[0]) >= 0.01 || Math.abs(givenXYZ[1]) >= 0.01) {
 
@@ -104,7 +127,7 @@ class ScrimmageMeathods extends OpMode {
             double Motor4Power = givenXYZ[1] + givenXYZ[0];
 
             moveMotorsPower(Motor1Power, Motor2Power, Motor3Power, Motor4Power);
-
+            // otherwise move motors accordingly
         } else if (Math.abs(givenXYZ[2]) >= .01) {
             double Motor1Power = -givenXYZ[2] * .5;
             double Motor2Power = givenXYZ[2] * .5;
@@ -118,7 +141,7 @@ class ScrimmageMeathods extends OpMode {
         }
     }
     public void glyph(){
-        //write it here
+        //This is the code for our glyph collecting mechanism during TeleOp
         if (gamepad1.x) {//Raise mecanism
             robot.glyph.setPower(.5);
         }
@@ -127,11 +150,11 @@ class ScrimmageMeathods extends OpMode {
         }
 
         if (gamepad1.a) {//close gripper
-            robot.leftGrasper.setPosition(leftGrasperClosed);
+            robot.leftGrasper.setPosition(leftGrasperClosed); // glyphAuto("close");
             robot.rightGrasper.setPosition(rightGrasperClosed);
         }
         else if (gamepad1.b) {//open gripper
-            robot.leftGrasper.setPosition(leftGrasperOpen);
+            robot.leftGrasper.setPosition(leftGrasperOpen); // glyphAuto("open");
             robot.rightGrasper.setPosition(rightGrasperOpen);
         }
     }
@@ -143,17 +166,18 @@ class ScrimmageMeathods extends OpMode {
     private boolean firstTime = true;//Used in driveBasedOnEncoders and launch ball to signify the first time the method has run
     private double DistanceTraveled = 0;//Used in driveBasedOnEncoders to remember how far the robot has gone
     private double redJewelThreshold = 0;
-
-    public String sorter (String upOrDown, String redOrBlue) {
+        //This part of code desides wich sorter we are going to use depending as to which side of the field we are on
+    public boolean sorter (String upOrDown, String redOrBlue) {
         if(redOrBlue.equals("red")){
-            if(upOrDown.equals("up")) robot.rightSorter.setPosition(rightSorterDown);
-            else robot.rightSorter.setPosition(rightSorterUp);
+            if(upOrDown.equals("up")) robot.rightSorter.setPosition(rightSorterUp);
+            else robot.rightSorter.setPosition(rightSorterDown);
         } else {
-            if(upOrDown.equals("up")) robot.leftSorter.setPosition(leftSorterDown);
-            else robot.leftSorter.setPosition(leftSorterUp);
+            if(upOrDown.equals("up")) robot.leftSorter.setPosition(leftSorterUp);
+            else robot.leftSorter.setPosition(leftSorterDown);
         }
-        return "Done";
+        return true;
     }
+    //use the proper color sensor and have it tell the robot wich color that it senses
     private String jewelColor (String color) {
         ColorSensor colorSensor;
         if(color.equals("red")){
@@ -165,7 +189,8 @@ class ScrimmageMeathods extends OpMode {
 
         return "blue";
     }
-    public String glyphAuto (String openOrClose){
+    //if openOrClose variable = open then open the grasper
+    public boolean glyphAuto (String openOrClose){
         if(openOrClose.equals("open")){
             robot.leftGrasper.setPosition(leftGrasperOpen);
             robot.rightGrasper.setPosition(rightGrasperOpen);
@@ -173,8 +198,9 @@ class ScrimmageMeathods extends OpMode {
             robot.leftGrasper.setPosition(leftGrasperClosed);
             robot.rightGrasper.setPosition(rightGrasperClosed);
         }
-        return "Done";
+        return true;
     }
+    //This makes it so that if we say a command then it will move accordingly
     private void moveDirection (String direction, double power) {
         switch (direction){
             case "Forward":
@@ -197,6 +223,7 @@ class ScrimmageMeathods extends OpMode {
 
         }
     }
+    //This finds out what the encoderis at when the code starts up
     private double currentEncoder (DcMotor motor, String direction) {
         double currentEncoder = 0;
         if(firstTime) {//If it is the first time running the code get the starting value
@@ -220,8 +247,8 @@ class ScrimmageMeathods extends OpMode {
         }
         return currentEncoder;
     }
-    String turnToGyroHeading(double targetHeading, double currentHeading) {//Working and will turn the robot to a gyro heading within 2degrees
-        String ReturnValue;//The value the method will return
+    boolean turnToGyroHeading(double targetHeading, double currentHeading) {//Working and will turn the robot to a gyro heading within 2degrees
+        boolean returnValue;//The value the method will return
         double headingDifference = targetHeading - currentHeading;//How far the robot is from its target heading
         double headingScaler = .005;//The scalier that edits how much the speed is affect
         double headingDiffernceScalled = headingDifference * headingScaler;//The scaled value that is used for the motor power
@@ -241,17 +268,17 @@ class ScrimmageMeathods extends OpMode {
         telemetry.addData("CurrentYAW", currentHeading);//Prints the current angle the robot is at
         moveMotorsPower(-headingDiffernceScalled, headingDiffernceScalled, headingDiffernceScalled, -headingDiffernceScalled);//My method to run the motors
         if (1 >= Math.abs(headingDifference)) {//If it is within 2 degrees I am done
-            ReturnValue = "Done";
+            returnValue = true;
         } else {//Otherwise it isn't done
-            ReturnValue = "NOTDONE";
+            returnValue = false;
         }
-        return ReturnValue;
+        return returnValue;
     }
 
 
-
-    String driveBasedOnEncoders(double distance, String direction){
-        String ReturnValue;
+        //Drive a certain distance based on encoders
+    boolean driveBasedOnEncoders(double distance, String direction){
+        boolean returnValue;
         DcMotor motor;
         switch (direction){
             case "Forward":
@@ -274,19 +301,19 @@ class ScrimmageMeathods extends OpMode {
         telemetry.addData("",CurrentEncoder);
         if (DistanceTraveled > distance) {//If I have gone the distance I want stop moving
             moveMotorsPower(0,0,0,0);
-            ReturnValue = "Done";
+            returnValue = true;
             firstTime = true;
         }
         else {//Otherwise keep going
-            ReturnValue = "NOTDONE";
+            returnValue = false;
             moveDirection(direction, .5);
         }
 
         telemetry.addData("Distance", DistanceTraveled);
-        return ReturnValue;
+        return returnValue;
 
     }
-
+        //initializes camera
     public void initCamera() {
                 /*
          * To start up Vuforia, tell it the view that we wish to use for camera monitor (on the RC phone);
@@ -327,6 +354,7 @@ class ScrimmageMeathods extends OpMode {
          * @see VuMarkInstanceId
          */
     }
+    //finds out witch vuMark you are seeing
     public String key (){
         VuforiaTrackables relicTrackables = this.vuforia.loadTrackablesFromAsset("RelicVuMark");
         VuforiaTrackable relicTemplate = relicTrackables.get(0);
