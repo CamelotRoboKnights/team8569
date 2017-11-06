@@ -61,10 +61,10 @@ class ScrimmageMeathods extends OpMode {
     public void loop(){}
     @Override
     public void stop(){}
-    private double leftGrasperOpen = 0;
-    private double rightGrasperOpen = 1;
-    private double leftGrasperClosed = 1;
-    private double rightGrasperClosed = 0;
+    private double leftGrasperOpen = .25;
+    private double rightGrasperOpen = .75;
+    private double leftGrasperClosed = .75;
+    private double rightGrasperClosed = .27;
     private double leftSorterUp = 0;
     private double leftSorterDown = 1;
     private double rightSorterUp = 1;
@@ -151,7 +151,8 @@ class ScrimmageMeathods extends OpMode {
         }
         else if (gamepad1.y) {//Lower mecanism
             robot.glyph.setPower(-.5);
-        } else {
+        }
+        else {
             robot.glyph.setPower(0);
         }
 
