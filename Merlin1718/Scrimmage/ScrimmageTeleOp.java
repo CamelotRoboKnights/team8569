@@ -9,6 +9,7 @@ import java.sql.Driver;
 @TeleOp(name = "Scrimmage", group = "Scrimmage")
 //@Disabled //Uncomment this if it is not wanted on the phone
 public class ScrimmageTeleOp extends ScrimmageMeathods {
+    private ScrimmageHardware robot = new ScrimmageHardware();//The hardware map needs to be the hardware map of the robot we are using
 
     public void init(){//This only runs once
         super.init();//Initializing everything needed
@@ -20,7 +21,7 @@ public class ScrimmageTeleOp extends ScrimmageMeathods {
     public void start(){}//This runs when the start button is pressed
     @Override
     public void loop(){//This runs while opmode is active
-        drive(makeFieldOriented(joyValues(), 0));
+        drive(joyValues());
         glyph();
     }
     @Override

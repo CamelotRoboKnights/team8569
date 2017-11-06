@@ -59,7 +59,7 @@ public class ScrimmageHardware
         Motor2.setDirection(DcMotorSimple.Direction.FORWARD);//Sets the motor power as positive so forward is still positive
         Motor3.setDirection(DcMotorSimple.Direction.FORWARD);//Sets the motor power as positive so forward is still positive
         Motor4.setDirection(DcMotorSimple.Direction.REVERSE);//Sets the motor power to reverse so forwards is positive
-
+        glyph.setDirection(DcMotorSimple.Direction.REVERSE);
         // Set all motors to zero power
         Motor1.setPower(0);//Sets the power to 0 so motors don't move
         Motor2.setPower(0);

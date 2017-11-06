@@ -48,6 +48,10 @@ class ScrimmageMeathods extends OpMode {
 
     public void init(){
         robot.init(hardwareMap);
+        robot.leftGrasper.setPosition(leftGrasperClosed);
+        robot.rightGrasper.setPosition(rightGrasperClosed);
+        robot.leftSorter.setPosition(leftSorterUp);
+        robot.rightSorter.setPosition(rightSorterUp);
     }
     @Override
     public void init_loop(){}
@@ -57,14 +61,14 @@ class ScrimmageMeathods extends OpMode {
     public void loop(){}
     @Override
     public void stop(){}
-    private double leftGrasperOpen;
-    private double rightGrasperOpen;
-    private double leftGrasperClosed;
-    private double rightGrasperClosed;
-    private double leftSorterUp;
-    private double leftSorterDown;
-    private double rightSorterUp;
-    private double rightSorterDown;
+    private double leftGrasperOpen = 0;
+    private double rightGrasperOpen = 1;
+    private double leftGrasperClosed = 1;
+    private double rightGrasperClosed = 0;
+    private double leftSorterUp = 0;
+    private double leftSorterDown = 1;
+    private double rightSorterUp = 1;
+    private double rightSorterDown = 0;
     VuforiaLocalizer vuforia;
 
 
@@ -147,6 +151,8 @@ class ScrimmageMeathods extends OpMode {
         }
         else if (gamepad1.y) {//Lower mecanism
             robot.glyph.setPower(-.5);
+        } else {
+            robot.glyph.setPower(0);
         }
 
         if (gamepad1.a) {//close gripper
