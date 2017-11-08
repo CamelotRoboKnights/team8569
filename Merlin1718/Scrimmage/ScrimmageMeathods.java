@@ -45,13 +45,34 @@ import static java.lang.Boolean.TRUE;
 class ScrimmageMeathods extends OpMode {
 
     private ScrimmageHardware robot = new ScrimmageHardware();//The hardware map needs to be the hardware map of the robot we are using
+    private class ServoPositions {
+        double open;
+        double closed;
+        ServoPositions (double open, double closed) {
+            this.open = open;
+            this.closed = closed;
+        }
+    }
+    private class JoyValues {
+        double x;
+        double y;
+        double z;
+
+        JoyValues (double x, double y, double z) {
+            this.x = x;
+            this.y = y;
+            this.z = z;
+        }
+    }
+
+
 
     public void init(){
         robot.init(hardwareMap);
-        robot.leftGrasper.setPosition(leftGrasperClosed);
-        robot.rightGrasper.setPosition(rightGrasperClosed);
-        robot.leftSorter.setPosition(leftSorterUp);
-        robot.rightSorter.setPosition(rightSorterUp);
+        robot.leftGrasper.setPosition(leftGrasper.closed);
+        robot.rightGrasper.setPosition(rightGrasper.closed);
+        robot.leftSorter.setPosition(leftSorter.closed);
+        robot.rightSorter.setPosition(rightSorter.closed);
     }
     @Override
     public void init_loop(){}
@@ -61,14 +82,11 @@ class ScrimmageMeathods extends OpMode {
     public void loop(){}
     @Override
     public void stop(){}
-    private double leftGrasperOpen = .25;
-    private double rightGrasperOpen = .75;
-    private double leftGrasperClosed = .75;
-    private double rightGrasperClosed = .27;
-    private double leftSorterUp = 0;
-    private double leftSorterDown = 1;
-    private double rightSorterUp = 1;
-    private double rightSorterDown = 0;
+
+    private ServoPositions leftGrasper = new ServoPositions(.5, 1);
+    private ServoPositions rightGrasper = new ServoPositions(.75, .25);
+    private ServoPositions leftSorter = new ServoPositions(1, 0);
+    private ServoPositions rightSorter = new ServoPositions(0, 1);
     VuforiaLocalizer vuforia;
 
 
@@ -80,63 +98,56 @@ class ScrimmageMeathods extends OpMode {
         robot.Motor3.setPower(Range.clip(Motor3Power, -1, 1));
         robot.Motor4.setPower(Range.clip(Motor4Power, -1, 1));
     }
-    public double[] joyValues(){
-        double[] joyXYZ;
-        joyXYZ = new double[3];
+    public JoyValues joyValues(){
+        JoyValues joyXYZ = new JoyValues(0, 0, 0);
         //Set value x to the x axis on the left joystick if the value is above .01
         if(Math.abs(gamepad1.left_stick_x) > .01){
-            joyXYZ[0] = gamepad1.left_stick_x;
+            joyXYZ.x = gamepad1.left_stick_x;
             //otherwise set vaue to 0
-        } else {
-            joyXYZ[0] = 0;
         }
         //Set value y to the y axis on the left joystick if the value is above .01
         if(Math.abs(gamepad1.left_stick_y) > .01){
-            joyXYZ[1] = -gamepad1.left_stick_y;
+            joyXYZ.y = -gamepad1.left_stick_y;
             //otherwise set value to 0
-        } else {
-            joyXYZ[1] = 0;
         }
         //Set value z to the z axis on the left trigger if the value is above .01
         if(gamepad1.left_trigger > .01){
-            joyXYZ[2] = -gamepad1.left_trigger;
+            joyXYZ.z = -gamepad1.left_trigger;
             //Set value z to the z axis on the right trigger if the value is above .01
         } else if (gamepad1.right_trigger > .01){
-            joyXYZ[2] = gamepad1.right_trigger;
+            joyXYZ.z = gamepad1.right_trigger;
             //if the value is not above .01 set the value to 0
-        } else {
-            joyXYZ[2] = 0;
         }
         return joyXYZ;
     }
             //Make divetrain fieldOriented to the driver
-    public double[] makeFieldOriented(double[] originalXYZ, double OrientationDegrees) {
+    public JoyValues makeFieldOriented(JoyValues originalXYZ, double OrientationDegrees) {
 
-        double[] fieldOrientedXYZ = new double[3];
+        JoyValues fieldOrientedXYZ = new JoyValues(0, 0, 0);
 
         double OrientationRadians = OrientationDegrees * Math.PI / 180;
-        fieldOrientedXYZ[0] = -originalXYZ[1] * Math.sin(OrientationRadians) + originalXYZ[0] * Math.cos(OrientationRadians);
-        fieldOrientedXYZ[1] = originalXYZ[1] * Math.cos(OrientationRadians) + originalXYZ[0] * Math.sin(OrientationRadians);
-        fieldOrientedXYZ[2] = originalXYZ[2];
+        fieldOrientedXYZ.x = -originalXYZ.y * Math.sin(OrientationRadians) + originalXYZ.x * Math.cos(OrientationRadians);
+        fieldOrientedXYZ.y = originalXYZ.y * Math.cos(OrientationRadians) + originalXYZ.x * Math.sin(OrientationRadians);
+        fieldOrientedXYZ.z = originalXYZ.z;
 
         return fieldOrientedXYZ;
     }
     //If the absalute value of x or the absalute value of y is greater than 0.01 then spin each motor accordingly
-    public void drive(double[] givenXYZ) {
-        if (Math.abs(givenXYZ[0]) >= 0.01 || Math.abs(givenXYZ[1]) >= 0.01) {
+    public void drive(JoyValues givenXYZ) {
+        if (Math.abs(givenXYZ.x) >= 0.01 || Math.abs(givenXYZ.y) >= 0.01) {
 
-            double Motor1Power = givenXYZ[1] - givenXYZ[0];
-            double Motor2Power = givenXYZ[1] + givenXYZ[0];
-            double Motor3Power = givenXYZ[1] - givenXYZ[0];
-            double Motor4Power = givenXYZ[1] + givenXYZ[0];
+            double Motor1Power = givenXYZ.y - givenXYZ.x;
+            double Motor2Power = givenXYZ.y + givenXYZ.x;
+            double Motor3Power = givenXYZ.y - givenXYZ.x;
+            double Motor4Power = givenXYZ.y + givenXYZ.x;
 
             moveMotorsPower(Motor1Power, Motor2Power, Motor3Power, Motor4Power);
             // otherwise move motors accordingly
-        } else if (Math.abs(givenXYZ[2]) >= .01) {
-            double Motor1Power = -givenXYZ[2] * .5;
-            double Motor2Power = givenXYZ[2] * .5;
-            double Motor3Power = givenXYZ[2] * .5;
-            double Motor4Power = -givenXYZ[2] * .5;
+        } else if (Math.abs(givenXYZ.z) >= .01) {
+            double Motor1Power = -givenXYZ.z * .5;
+            double Motor2Power = givenXYZ.z * .5;
+            double Motor3Power = givenXYZ.z * .5;
+            double Motor4Power = -givenXYZ.z * .5;
 
             moveMotorsPower(Motor1Power, Motor2Power, Motor3Power, Motor4Power);
 
@@ -146,23 +157,22 @@ class ScrimmageMeathods extends OpMode {
     }
     public void glyph(){
         //This is the code for our glyph collecting mechanism during TeleOp
+        double glyphPower = 0;
         if (gamepad1.x) {//Raise mecanism
-            robot.glyph.setPower(.5);
+            glyphPower = .5;
         }
         else if (gamepad1.y) {//Lower mecanism
-            robot.glyph.setPower(-.5);
+            glyphPower = -.5;
         }
-        else {
-            robot.glyph.setPower(0);
-        }
+        robot.glyph.setPower(glyphPower);
 
         if (gamepad1.a) {//close gripper
-            robot.leftGrasper.setPosition(leftGrasperClosed); // glyphAuto("close");
-            robot.rightGrasper.setPosition(rightGrasperClosed);
+            robot.leftGrasper.setPosition(leftGrasper.closed); // glyphAuto("close");
+            robot.rightGrasper.setPosition(rightGrasper.closed);
         }
         else if (gamepad1.b) {//open gripper
-            robot.leftGrasper.setPosition(leftGrasperOpen); // glyphAuto("open");
-            robot.rightGrasper.setPosition(rightGrasperOpen);
+            robot.leftGrasper.setPosition(leftGrasper.open); // glyphAuto("open");
+            robot.rightGrasper.setPosition(rightGrasper.open);
         }
     }
 
@@ -176,11 +186,11 @@ class ScrimmageMeathods extends OpMode {
         //This part of code desides wich sorter we are going to use depending as to which side of the field we are on
     public boolean sorter (String upOrDown, String redOrBlue) {
         if(redOrBlue.equals("red")){
-            if(upOrDown.equals("up")) robot.rightSorter.setPosition(rightSorterUp);
-            else robot.rightSorter.setPosition(rightSorterDown);
+            if(upOrDown.equals("up")) robot.rightSorter.setPosition(rightSorter.closed);
+            else robot.rightSorter.setPosition(rightSorter.open);
         } else {
-            if(upOrDown.equals("up")) robot.leftSorter.setPosition(leftSorterUp);
-            else robot.leftSorter.setPosition(leftSorterDown);
+            if(upOrDown.equals("up")) robot.leftSorter.setPosition(leftSorter.closed);
+            else robot.leftSorter.setPosition(leftSorter.open);
         }
         return true;
     }
@@ -199,11 +209,11 @@ class ScrimmageMeathods extends OpMode {
     //if openOrClose variable = open then open the grasper
     public boolean glyphAuto (String openOrClose){
         if(openOrClose.equals("open")){
-            robot.leftGrasper.setPosition(leftGrasperOpen);
-            robot.rightGrasper.setPosition(rightGrasperOpen);
+            robot.leftGrasper.setPosition(leftGrasper.open);
+            robot.rightGrasper.setPosition(rightGrasper.open);
         } else{
-            robot.leftGrasper.setPosition(leftGrasperClosed);
-            robot.rightGrasper.setPosition(rightGrasperClosed);
+            robot.leftGrasper.setPosition(leftGrasper.closed);
+            robot.rightGrasper.setPosition(rightGrasper.closed);
         }
         return true;
     }
@@ -231,27 +241,13 @@ class ScrimmageMeathods extends OpMode {
         }
     }
     //This finds out what the encoderis at when the code starts up
-    private double currentEncoder (DcMotor motor, String direction) {
+    private double currentEncoder (DcMotor motor) {
         double currentEncoder = 0;
         if(firstTime) {//If it is the first time running the code get the starting value
             startEncoder = motor.getCurrentPosition();
             firstTime = false;
         }
-        //If it is not the first time get how far the encoders have gone
-        switch (direction) {
-            case "Forward":
-                currentEncoder = motor.getCurrentPosition() - startEncoder;
-                break;
-            case "Back":
-                currentEncoder = startEncoder - motor.getCurrentPosition();
-                break;
-            case "Left":
-                currentEncoder = motor.getCurrentPosition() - startEncoder;
-                break;
-            case "Right":
-                currentEncoder = motor.getCurrentPosition() - startEncoder;
-                break;
-        }
+        currentEncoder = Math.abs(motor.getCurrentPosition() - startEncoder);
         return currentEncoder;
     }
     boolean turnToGyroHeading(double targetHeading, double currentHeading) {//Working and will turn the robot to a gyro heading within 2degrees
@@ -286,24 +282,7 @@ class ScrimmageMeathods extends OpMode {
         //Drive a certain distance based on encoders
     boolean driveBasedOnEncoders(double distance, String direction){
         boolean returnValue;
-        DcMotor motor;
-        switch (direction){
-            case "Forward":
-                motor = robot.Motor1;
-                break;
-            case "Back":
-                motor = robot.Motor1;
-                break;
-            case "Left":
-                motor = robot.Motor1;
-                break;
-            case "Right":
-                motor = robot.Motor2;
-                break;
-            default:
-                motor = robot.Motor1;
-        }
-        double CurrentEncoder = currentEncoder(motor, direction);
+        double CurrentEncoder = currentEncoder(robot.Motor1);
         DistanceTraveled = ((Math.abs(CurrentEncoder) / OneRotation) * WheelSize)*1.125;
         telemetry.addData("",CurrentEncoder);
         if (DistanceTraveled > distance) {//If I have gone the distance I want stop moving
