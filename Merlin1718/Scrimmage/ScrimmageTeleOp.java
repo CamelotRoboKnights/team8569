@@ -21,7 +21,7 @@ public class ScrimmageTeleOp extends ScrimmageMeathods {
     public void start(){}//This runs when the start button is pressed
     @Override
     public void loop(){//This runs while opmode is active
-        drive(joyValues());
+        drive(makeFieldOriented(joyValues(),0));
         glyph();
     }
     @Override

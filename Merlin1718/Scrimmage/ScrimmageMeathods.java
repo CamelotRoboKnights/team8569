@@ -83,10 +83,11 @@ class ScrimmageMeathods extends OpMode {
     @Override
     public void stop(){}
 
-    private ServoPositions leftGrasper = new ServoPositions(.5, 1);
-    private ServoPositions rightGrasper = new ServoPositions(.75, .25);
-    private ServoPositions leftSorter = new ServoPositions(1, 0);
+    private ServoPositions leftGrasper = new ServoPositions(.75, .9);
+    private ServoPositions rightGrasper = new ServoPositions(.75, .5);
     private ServoPositions rightSorter = new ServoPositions(0, 1);
+    private ServoPositions leftSorter = new ServoPositions(1, 0);
+
     VuforiaLocalizer vuforia;
 
 
@@ -169,10 +170,14 @@ class ScrimmageMeathods extends OpMode {
         if (gamepad1.a) {//close gripper
             robot.leftGrasper.setPosition(leftGrasper.closed); // glyphAuto("close");
             robot.rightGrasper.setPosition(rightGrasper.closed);
+            telemetry.addData("Close", "");
+            telemetry.update();
         }
         else if (gamepad1.b) {//open gripper
             robot.leftGrasper.setPosition(leftGrasper.open); // glyphAuto("open");
             robot.rightGrasper.setPosition(rightGrasper.open);
+            telemetry.addData("Open", "");
+            telemetry.update();
         }
     }
 
