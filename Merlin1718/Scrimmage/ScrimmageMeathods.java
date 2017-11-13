@@ -45,6 +45,7 @@ import static java.lang.Boolean.TRUE;
 class ScrimmageMeathods extends OpMode {
 
     private ScrimmageHardware robot = new ScrimmageHardware();//The hardware map needs to be the hardware map of the robot we are using
+
     private class ServoPositions {
         double open;
         double closed;
@@ -136,18 +137,18 @@ class ScrimmageMeathods extends OpMode {
     public void drive(JoyValues givenXYZ) {
         if (Math.abs(givenXYZ.x) >= 0.01 || Math.abs(givenXYZ.y) >= 0.01) {
 
-            double Motor1Power = givenXYZ.y - givenXYZ.x;
-            double Motor2Power = givenXYZ.y + givenXYZ.x;
-            double Motor3Power = givenXYZ.y - givenXYZ.x;
-            double Motor4Power = givenXYZ.y + givenXYZ.x;
+            double Motor1Power = givenXYZ.y + givenXYZ.x;
+            double Motor2Power = givenXYZ.y - givenXYZ.x;
+            double Motor3Power = givenXYZ.y + givenXYZ.x;
+            double Motor4Power = givenXYZ.y - givenXYZ.x;
 
             moveMotorsPower(Motor1Power, Motor2Power, Motor3Power, Motor4Power);
             // otherwise move motors accordingly
         } else if (Math.abs(givenXYZ.z) >= .01) {
-            double Motor1Power = -givenXYZ.z * .5;
-            double Motor2Power = givenXYZ.z * .5;
-            double Motor3Power = givenXYZ.z * .5;
-            double Motor4Power = -givenXYZ.z * .5;
+            double Motor1Power = givenXYZ.z * .5;
+            double Motor2Power = -givenXYZ.z * .5;
+            double Motor3Power = -givenXYZ.z * .5;
+            double Motor4Power = givenXYZ.z * .5;
 
             moveMotorsPower(Motor1Power, Motor2Power, Motor3Power, Motor4Power);
 
