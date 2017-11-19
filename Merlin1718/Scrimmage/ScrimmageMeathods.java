@@ -71,8 +71,8 @@ class ScrimmageMeathods extends OpMode {
         robot.init(hardwareMap);
         robot.leftGrasper.setPosition(leftGrasper.closed);
         robot.rightGrasper.setPosition(rightGrasper.closed);
-        robot.leftSorter.setPosition(leftSorter.closed);
-        robot.rightSorter.setPosition(rightSorter.closed);
+        // robot.leftSorter.setPosition(leftSorter.closed);
+        // robot.rightSorter.setPosition(rightSorter.closed);
     }
     @Override
     public void init_loop(){}
@@ -137,18 +137,18 @@ class ScrimmageMeathods extends OpMode {
     public void drive(JoyValues givenXYZ) {
         if (Math.abs(givenXYZ.x) >= 0.01 || Math.abs(givenXYZ.y) >= 0.01) {
 
-            double Motor1Power = givenXYZ.y - givenXYZ.x;
-            double Motor2Power = givenXYZ.y + givenXYZ.x;
-            double Motor3Power = givenXYZ.y - givenXYZ.x;
-            double Motor4Power = givenXYZ.y + givenXYZ.x;
+            double Motor1Power = givenXYZ.y + givenXYZ.x;
+            double Motor2Power = givenXYZ.y - givenXYZ.x;
+            double Motor3Power = givenXYZ.y + givenXYZ.x;
+            double Motor4Power = givenXYZ.y - givenXYZ.x;
 
             moveMotorsPower(Motor1Power, Motor2Power, Motor3Power, Motor4Power);
             // otherwise move motors accordingly
         } else if (Math.abs(givenXYZ.z) >= .01) {
-            double Motor1Power = -givenXYZ.z * .5;
-            double Motor2Power = givenXYZ.z * .5;
-            double Motor3Power = givenXYZ.z * .5;
-            double Motor4Power = -givenXYZ.z * .5;
+            double Motor1Power = givenXYZ.z * .5;
+            double Motor2Power = -givenXYZ.z * .5;
+            double Motor3Power = -givenXYZ.z * .5;
+            double Motor4Power = givenXYZ.z * .5;
 
             moveMotorsPower(Motor1Power, Motor2Power, Motor3Power, Motor4Power);
 
@@ -156,14 +156,36 @@ class ScrimmageMeathods extends OpMode {
             moveMotorsPower(0, 0, 0, 0);
         }
     }
+    boolean isOpen = false;
+    boolean pressed = false;
+
     public void glyph(){
+        if(Math.abs(gamepad2.left_stick_y) > .01) robot.glyph.setPower(-gamepad2.left_stick_y);
+        else robot.glyph.setPower(0);
+        if(isOpen){
+            glyphAuto("open");
+            telemetry.addData("Open", "");
+        } else {
+            glyphAuto("close");
+            telemetry.addData("Close", "");
+        }
+
+
+        if(gamepad2.left_stick_button && !pressed){
+            pressed = true;
+        } else if (!gamepad2.left_stick_button && pressed){
+            pressed = false;
+            isOpen = !isOpen;
+        }
+    }
+    public void glyphZach(){
         //This is the code for our glyph collecting mechanism during TeleOp
         double glyphPower = 0;
-        if (gamepad1.x) {//Raise mecanism
-            glyphPower = .5;
+        if (gamepad1.a) {//lower mecanism
+            glyphPower = 1;
         }
-        else if (gamepad1.y) {//Lower mecanism
-            glyphPower = -.5;
+        else if (gamepad1.y) {//raise mecanism
+            glyphPower = 1;
         }
         robot.glyph.setPower(glyphPower);
 

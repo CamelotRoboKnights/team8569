@@ -4,6 +4,10 @@ import android.hardware.TriggerEventListener;
 
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
+import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
+import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
+import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
+
 import java.sql.Driver;
 
 @TeleOp(name = "Scrimmage", group = "Scrimmage")
@@ -23,6 +27,14 @@ public class ScrimmageTeleOp extends ScrimmageMeathods {
     public void loop(){//This runs while opmode is active
         drive(makeFieldOriented(joyValues(),0));
         glyph();
+//        robot.angles   = robot.imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
+//        robot.gravity  = robot.imu.getGravity();
+//
+//        telemetry.addData("First angle", robot.angles.firstAngle);
+//        telemetry.addData("Second angle", robot.angles.secondAngle);
+//        telemetry.addData("Third angle", robot.angles.thirdAngle);
+//        telemetry.addData("Angle Unit", robot.angles.angleUnit);
+        telemetry.update();
     }
     @Override
     public void stop(){}

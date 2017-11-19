@@ -14,6 +14,8 @@ import org.firstinspires.ftc.robotcontroller.external.samples.SensorMRColor;
 import org.firstinspires.ftc.robotcontroller.external.samples.SensorREVColorDistance;
 import org.firstinspires.ftc.robotcore.external.navigation.Acceleration;
 import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
+import java.util.Locale;
+
 
 public class ScrimmageHardware
 {
@@ -29,7 +31,7 @@ public class ScrimmageHardware
     public Servo rightSorter = null;
     public ColorSensor leftColor = null;
     public ColorSensor rightColor = null;
-    public BNO055IMU imu = null;
+    public BNO055IMU imu;
 
 
     public Orientation angles;
@@ -70,6 +72,10 @@ public class ScrimmageHardware
         parameters.loggingEnabled      = true;
         parameters.loggingTag          = "IMU";
         parameters.accelerationIntegrationAlgorithm = new JustLoggingAccelerationIntegrator();
+
+        // Retrieve and initialize the IMU. We expect the IMU to be attached to an I2C port
+        // on a Core Device Interface Module, configured to be a sensor of type "AdaFruit IMU",
+        // and named "imu".
         imu = hwMap.get(BNO055IMU.class, "imu");
         imu.initialize(parameters);
 
@@ -80,7 +86,7 @@ public class ScrimmageHardware
         Motor2.setDirection(DcMotorSimple.Direction.FORWARD);//Sets the motor power as positive so forward is still positive
         Motor3.setDirection(DcMotorSimple.Direction.FORWARD);//Sets the motor power as positive so forward is still positive
         Motor4.setDirection(DcMotorSimple.Direction.REVERSE);//Sets the motor power to reverse so forwards is positive
-        glyph.setDirection(DcMotorSimple.Direction.REVERSE);
+        glyph.setDirection(DcMotorSimple.Direction.FORWARD);
         // Set all motors to zero power
         Motor1.setPower(0);//Sets the power to 0 so motors don't move
         Motor2.setPower(0);
