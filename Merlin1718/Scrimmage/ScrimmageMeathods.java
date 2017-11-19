@@ -45,6 +45,7 @@ import static java.lang.Boolean.TRUE;
 class ScrimmageMeathods extends OpMode {
 
     private ScrimmageHardware robot = new ScrimmageHardware();//The hardware map needs to be the hardware map of the robot we are using
+
     private class ServoPositions {
         double open;
         double closed;
