@@ -44,7 +44,7 @@ import static java.lang.Boolean.TRUE;
 
 class ScrimmageMeathods extends OpMode {
 
-    private ScrimmageHardware robot = new ScrimmageHardware();//The hardware map needs to be the hardware map of the robot we are using
+    public ScrimmageHardware robot = new ScrimmageHardware();//The hardware map needs to be the hardware map of the robot we are using
 
     private class ServoPositions {
         double open;
@@ -53,6 +53,10 @@ class ScrimmageMeathods extends OpMode {
             this.open = open;
             this.closed = closed;
         }
+    }
+    public double orientation() {
+        Orientation navxAngles = robot.gyro.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
+        return -navxAngles.firstAngle;
     }
     private class JoyValues {
         double x;
@@ -70,8 +74,6 @@ class ScrimmageMeathods extends OpMode {
 
     public void init(){
         robot.init(hardwareMap);
-        robot.leftGrasper.setPosition(leftGrasper.closed);
-        robot.rightGrasper.setPosition(rightGrasper.closed);
         // robot.leftSorter.setPosition(leftSorter.closed);
         // robot.rightSorter.setPosition(rightSorter.closed);
     }

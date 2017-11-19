@@ -4,16 +4,20 @@ package org.firstinspires.ftc.teamcode.team.Merlin1718.Scrimmage;
 
 import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.hardware.bosch.JustLoggingAccelerationIntegrator;
+import com.qualcomm.hardware.kauailabs.NavxMicroNavigationSensor;
 import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
+import com.qualcomm.robotcore.hardware.IntegratingGyroscope;
 import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.robotcontroller.external.samples.SensorMRColor;
 import org.firstinspires.ftc.robotcontroller.external.samples.SensorREVColorDistance;
 import org.firstinspires.ftc.robotcore.external.navigation.Acceleration;
 import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
+import org.firstinspires.ftc.teamcode.team.Other.NavXSensor;
+
 import java.util.Locale;
 
 
@@ -32,6 +36,9 @@ public class ScrimmageHardware
     public ColorSensor leftColor = null;
     public ColorSensor rightColor = null;
     public BNO055IMU imu;
+    public NavxMicroNavigationSensor navX;
+    IntegratingGyroscope gyro;
+
 
 
     public Orientation angles;
@@ -63,6 +70,9 @@ public class ScrimmageHardware
         rightSorter = hwMap.servo.get("rightSorter");
         leftColor = hwMap.get(ColorSensor.class, "leftColor");
         rightColor = hwMap.get(ColorSensor.class, "rightColor");
+        navX = hwMap.get(NavxMicroNavigationSensor.class, "navx");
+        gyro = (IntegratingGyroscope)navX;
+
 
 
         BNO055IMU.Parameters parameters = new BNO055IMU.Parameters();
