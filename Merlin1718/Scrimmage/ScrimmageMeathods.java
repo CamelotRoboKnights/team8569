@@ -58,6 +58,10 @@ class ScrimmageMeathods extends OpMode {
         Orientation navxAngles = robot.gyro.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
         return -navxAngles.firstAngle;
     }
+    public double revOrientation() {
+        robot.angles   = robot.imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
+        return -robot.angles.firstAngle;
+    }
     private class JoyValues {
         double x;
         double y;
