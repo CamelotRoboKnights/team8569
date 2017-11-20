@@ -217,6 +217,7 @@ class ScrimmageMeathods extends OpMode {
     private boolean firstTime = true;//Used in driveBasedOnEncoders and launch ball to signify the first time the method has run
     private double DistanceTraveled = 0;//Used in driveBasedOnEncoders to remember how far the robot has gone
     private double redJewelThreshold = 0;
+    private double blueJewelThreshold = 0;
         //This part of code desides wich sorter we are going to use depending as to which side of the field we are on
     public boolean sorter (String upOrDown, String redOrBlue) {
         if(redOrBlue.equals("red")){
@@ -229,16 +230,12 @@ class ScrimmageMeathods extends OpMode {
         return true;
     }
     //use the proper color sensor and have it tell the robot wich color that it senses
-    private String jewelColor (String color) {
+    public String jewelColor () {
         ColorSensor colorSensor;
-        if(color.equals("red")){
-            colorSensor = robot.rightColor;
-        } else {
-            colorSensor = robot.leftColor;
-        }
+        colorSensor = robot.rightColor;
         if (colorSensor.red() > redJewelThreshold) return "red";
-
-        return "blue";
+        else if (colorSensor.blue() > blueJewelThreshold) return "blue";
+        return "null";
     }
     //if openOrClose variable = open then open the grasper
     public boolean glyphAuto (String openOrClose){

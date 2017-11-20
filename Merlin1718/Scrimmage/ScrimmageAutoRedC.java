@@ -24,19 +24,19 @@ public class ScrimmageAutoRedC extends ScrimmageMeathods {
     private String color = "red";
     private double driveForwardToKnockDistance;
     private double driveBackToKnockDistance;
-    private double driveDistanceToRightColumn;
-    private double driveDistanceToCenterColumn;
-    private double driveDistanceToLeftColumn;
-    private double driveForwardToCryptobox;
-    private double driveAwayFromCryptobox;
-    private double spinRightToKnockOffRightJewel;
-    private double spinLeftToKnockOffLeftJewel;
+    private double spinRightToKnockOffRightJewel = 10;
+    private double spinLeftToKnockOffLeftJewel = -10;
+    private double driveDistanceToRightColumn = 28;
+    private double driveDistanceToCenterColumn = 35;
+    private double driveDistanceToLeftColumn = 45;
+    private double driveForwardToCryptobox = 10;
+    private double driveAwayFromCryptobox = 2;
 
 
 
     private String currentCase = "DropSorter";
-    private String jewel;
-    private String column;
+    private String jewel = "null";
+    private String column = "null";
     @Override
     public void loop(){//This runs while opmode is active
         switch (currentCase){
@@ -48,16 +48,21 @@ public class ScrimmageAutoRedC extends ScrimmageMeathods {
                 }
                 break;
             case "IDCryptographPicAndJewelColor":
-
+                jewel = super.jewelColor();
+                column = super.key();
+                if(!jewel.equals("null") && !column.equals("null")){
+                    if(jewel.equals("red")) currentCase = "SpinLeftToKnockOffLeftJewel";
+                    else currentCase = "SpinLeftToKnockOffLeftJewel";
+                }
                 break;
             case "SpinRightToKnockOffRightJewel":
-                doneYet = turnToGyroHeading(spinRightToKnockOffRightJewel, 0);
+                doneYet = turnToGyroHeading(spinRightToKnockOffRightJewel, revOrientation());
                 if(doneYet){
                     currentCase = "RaiseSorter";
                 }
                 break;
             case "SpinLeftToKnockOffLeftJewel":
-                doneYet = turnToGyroHeading(spinLeftToKnockOffLeftJewel, 0);
+                doneYet = turnToGyroHeading(spinLeftToKnockOffLeftJewel, revOrientation());
                 if(doneYet){
                     currentCase = "RaiseSorter";
                 }
@@ -69,7 +74,7 @@ public class ScrimmageAutoRedC extends ScrimmageMeathods {
                 }
                 break;
             case "SpinBackToStartingPosition":
-                doneYet = turnToGyroHeading(0,0);
+                doneYet = turnToGyroHeading(0,revOrientation());
                 if(doneYet){
                     currentCase = choseColumnCase(column);
                 }
@@ -93,7 +98,7 @@ public class ScrimmageAutoRedC extends ScrimmageMeathods {
                 }
                 break;
             case "SpinTo90":
-                doneYet = turnToGyroHeading(90,0);
+                doneYet = turnToGyroHeading(90,revOrientation());
                 if(doneYet){
                     currentCase = "DriveForward";
                 }
@@ -137,11 +142,11 @@ public class ScrimmageAutoRedC extends ScrimmageMeathods {
 
     private String choseColumnCase(String column){
         switch (column){
-            case "right":
+            case "RIGHT":
                 return "ToRightColumn";
-            case "center":
+            case "CENTER":
                 return "ToCenterColumn";
-            case "left":
+            case "LEFT":
                 return "ToLeftColumn";
             default:
                 telemetry.addData("Not Left Right Or", " Center");
