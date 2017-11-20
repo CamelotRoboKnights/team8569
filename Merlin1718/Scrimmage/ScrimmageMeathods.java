@@ -220,7 +220,7 @@ class ScrimmageMeathods extends OpMode {
             else robot.rightSorter.setPosition(rightSorter.open);
         } else {
             if(upOrDown.equals("up")) robot.leftSorter.setPosition(leftSorter.closed);
-            else robot.leftSorter.setPosition(leftSorter.open);
+            else robot.leftSorter.setPosition(leftSorter.open); //We need to remove the 2nd sorter that we no longer have
         }
         return true;
     }

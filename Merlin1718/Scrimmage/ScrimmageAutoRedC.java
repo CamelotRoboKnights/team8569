@@ -29,6 +29,8 @@ public class ScrimmageAutoRedC extends ScrimmageMeathods {
     private double driveDistanceToLeftColumn;
     private double driveForwardToCryptobox;
     private double driveAwayFromCryptobox;
+    private double spinRightToKnockOffRightJewel;
+    private double spinLeftToKnockOffLeftJewel;
 
 
 
@@ -48,28 +50,26 @@ public class ScrimmageAutoRedC extends ScrimmageMeathods {
             case "IDCryptographPicAndJewelColor":
 
                 break;
-            case "KnockForward":
-                doneYet = driveBasedOnEncoders(driveForwardToKnockDistance, "Forward");
+            case "SpinRightToKnockOffRightJewel":
+                doneYet = turnToGyroHeading(spinRightToKnockOffRightJewel, 0);
                 if(doneYet){
                     currentCase = "RaiseSorter";
                 }
                 break;
-            case "KnockBack":
-                doneYet = driveBasedOnEncoders(driveBackToKnockDistance, "Back");
+            case "SpinLeftToKnockOffLeftJewel":
+                doneYet = turnToGyroHeading(spinLeftToKnockOffLeftJewel, 0);
                 if(doneYet){
                     currentCase = "RaiseSorter";
                 }
                 break;
             case "RaiseSorter":
                 doneYet = sorter("up", color);
-                if(doneYet && !jewel.equals("back")){
-                    currentCase = choseColumnCase(column);
-                } else if(doneYet){
-                    currentCase = "ToForwardPosition";
+                if(doneYet){
+                    currentCase = "SpinBackToStartingPosition";
                 }
                 break;
-            case "ToForwardPosition":
-                doneYet = driveBasedOnEncoders(driveForwardToKnockDistance + driveBackToKnockDistance, "Forward");
+            case "SpinBackToStartingPosition":
+                doneYet = turnToGyroHeading(0,0);
                 if(doneYet){
                     currentCase = choseColumnCase(column);
                 }
