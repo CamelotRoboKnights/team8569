@@ -27,6 +27,8 @@ import static java.lang.Boolean.FALSE;
 import static java.lang.Boolean.TRUE;
 
 /* Meathods
+ * orientation() double - returns the navX orientation
+ * revOrientation() double - returns the orientation of the rev device 
  * moveMotorPower(M1p, M2p, M3p, M4p) void - set all drive motor power
  * joyValues () double[] - set joystick values
  * makeFieldOriented (origanalxyz, Orientation Degrees) Double [] - orients drivetrain
