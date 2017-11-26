@@ -25,8 +25,8 @@ public class ScrimmageAutoRedC extends ScrimmageMeathods {
     private String color = "red";
     private double driveForwardToKnockDistance;
     private double driveBackToKnockDistance;
-    private double spinRightToKnockOffRightJewel = 10;
-    private double spinLeftToKnockOffLeftJewel = -10;
+    private double spinRightToKnockOffRightJewel = 5; //= 10;
+    private double spinLeftToKnockOffLeftJewel  = -5;// = -10;
     private double driveDistanceToRightColumn = 28;
     private double driveDistanceToCenterColumn = 35;
     private double driveDistanceToLeftColumn = 45;
@@ -41,36 +41,45 @@ public class ScrimmageAutoRedC extends ScrimmageMeathods {
     @Override
     public void loop(){//This runs while opmode is active
         telemetry.addData("CurrentCase", currentCase);
+        telemetry.addData("jewel", jewel);
+        telemetry.addData("colum", column);
         switch (currentCase){
             case "DropSorter":
                 boolean doneYet;
-                doneYet = sorter("down", color);
+                doneYet = sorter("up");
                 if(doneYet){
                     currentCase = "IDCryptographPicAndJewelColor";
                 }
                 break;
             case "IDCryptographPicAndJewelColor":
                 jewel = super.jewelColor();
-                column = super.key();
+                column = "RIGHT";
+                //column = super.key();
                 if(!jewel.equals("null") && !column.equals("null")){
-                    if(jewel.equals("red")) currentCase = "SpinLeftToKnockOffLeftJewel";
-                    else currentCase = "SpinLeftToKnockOffLeftJewel";
+                    if(jewel.equals("red")){
+                        currentCase = "SpinRightToKnockOffRightJewel";
+                    }
+                    else {
+                        currentCase = "SpinLeftToKnockOffLeftJewel";
+                    }
                 }
                 break;
             case "SpinRightToKnockOffRightJewel":
                 doneYet = turnToGyroHeading(spinRightToKnockOffRightJewel, revOrientation());
                 if(doneYet){
-                    currentCase = "RaiseSorter";
+                    //currentCase = "RaiseSorter";
+                    currentCase = "End";
                 }
                 break;
             case "SpinLeftToKnockOffLeftJewel":
                 doneYet = turnToGyroHeading(spinLeftToKnockOffLeftJewel, revOrientation());
                 if(doneYet){
-                    currentCase = "RaiseSorter";
+                    // currentCase = "RaiseSorter";
+                    currentCase = "End";
                 }
                 break;
             case "RaiseSorter":
-                doneYet = sorter("up", color);
+                doneYet = sorter("down");
                 if(doneYet){
                     currentCase = "SpinBackToStartingPosition";
                 }

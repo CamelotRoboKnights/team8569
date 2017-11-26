@@ -62,7 +62,7 @@ class ScrimmageMeathods extends OpMode {
     }
     public double revOrientation() {
         robot.angles   = robot.imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
-        return -robot.angles.firstAngle;
+        return robot.angles.firstAngle;
     }
     private class JoyValues {
         double x;
@@ -94,10 +94,8 @@ class ScrimmageMeathods extends OpMode {
 
     private ServoPositions leftGrasper = new ServoPositions(.75, .9);
     private ServoPositions rightGrasper = new ServoPositions(.75, .5);
-    private ServoPositions rightSorter = new ServoPositions(0, 1);
-    private ServoPositions leftSorter = new ServoPositions(1, 0);
+    private ServoPositions rightSorter = new ServoPositions(.9, .2);
 
-    VuforiaLocalizer vuforia;
 
 
 
@@ -220,15 +218,11 @@ class ScrimmageMeathods extends OpMode {
     private double DistanceTraveled = 0;//Used in driveBasedOnEncoders to remember how far the robot has gone
     private double redJewelThreshold = 0;
     private double blueJewelThreshold = 0;
-        //This part of code desides wich sorter we are going to use depending as to which side of the field we are on
-    public boolean sorter (String upOrDown, String redOrBlue) {
-        if(redOrBlue.equals("red")){
-            if(upOrDown.equals("up")) robot.rightSorter.setPosition(rightSorter.closed);
-            else robot.rightSorter.setPosition(rightSorter.open);
-        } else {
-            if(upOrDown.equals("up")) robot.leftSorter.setPosition(leftSorter.closed);
-            else robot.leftSorter.setPosition(leftSorter.open); //We need to remove the 2nd sorter that we no longer have
-        }
+        //This part of code decides wich sorter we are going to use depending as to which side of the field we are on
+    public boolean sorter (String upOrDown) {
+
+        if(upOrDown.equals("up")) robot.rightSorter.setPosition(rightSorter.closed);
+        else robot.rightSorter.setPosition(rightSorter.open);
         return true;
     }
     //use the proper color sensor and have it tell the robot wich color that it senses
@@ -302,10 +296,11 @@ class ScrimmageMeathods extends OpMode {
         }
         telemetry.addData("HDS", headingDiffernceScalled);//Prints the motor powers
         telemetry.addData("CurrentYAW", currentHeading);//Prints the current angle the robot is at
-        moveMotorsPower(-headingDiffernceScalled, headingDiffernceScalled, headingDiffernceScalled, -headingDiffernceScalled);//My method to run the motors
         if (1 >= Math.abs(headingDifference)) {//If it is within 2 degrees I am done
+            moveMotorsPower(0,0,0,0);
             returnValue = true;
         } else {//Otherwise it isn't done
+            moveMotorsPower(-headingDiffernceScalled, headingDiffernceScalled, headingDiffernceScalled, -headingDiffernceScalled);//My method to run the motors
             returnValue = false;
         }
         return returnValue;
@@ -332,7 +327,18 @@ class ScrimmageMeathods extends OpMode {
         return returnValue;
 
     }
-        //initializes camera
+    public static final String TAG = "Vuforia VuMark Sample";
+    OpenGLMatrix lastLocation = null;
+
+
+    /**
+     * {@link #vuforia} is the variable we will use to store our instance of the Vuforia
+     * localization engine.
+     */
+    VuforiaLocalizer vuforia;
+
+
+    //initializes camera
     public void initCamera() {
                 /*
          * To start up Vuforia, tell it the view that we wish to use for camera monitor (on the RC phone);
