@@ -27,7 +27,7 @@ public class ScrimmageTeleOp extends ScrimmageMeathods {
     public void loop(){//This runs while opmode is active
         super.drive(super.makeFieldOriented(super.joyValues(), super.orientation()));
         super.glyph();
-
+        telemetry.addData("color", jewelColor());
         telemetry.update();
     }
     @Override

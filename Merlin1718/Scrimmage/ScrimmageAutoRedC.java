@@ -14,6 +14,7 @@ public class ScrimmageAutoRedC extends ScrimmageMeathods {
 
     public void init(){//This only runs once
         super.init();//Initializing everything needed
+        super.initCamera();
     }
     @Override
     public void init_loop(){//Tis runs many time during the init phase
@@ -39,6 +40,7 @@ public class ScrimmageAutoRedC extends ScrimmageMeathods {
     private String column = "null";
     @Override
     public void loop(){//This runs while opmode is active
+        telemetry.addData("CurrentCase", currentCase);
         switch (currentCase){
             case "DropSorter":
                 boolean doneYet;
