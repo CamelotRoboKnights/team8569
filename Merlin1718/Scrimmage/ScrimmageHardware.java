@@ -33,7 +33,6 @@ public class ScrimmageHardware
     public Servo rightGrasper = null;
     public Servo leftSorter = null;
     public Servo rightSorter = null;
-    public ColorSensor leftColor = null;
     public ColorSensor rightColor = null;
     public BNO055IMU imu;
     public NavxMicroNavigationSensor navX;
@@ -68,10 +67,10 @@ public class ScrimmageHardware
         rightGrasper = hwMap.servo.get("rightGrasper");
         leftSorter = hwMap.servo.get("leftSorter");
         rightSorter = hwMap.servo.get("rightSorter");
-        leftColor = hwMap.get(ColorSensor.class, "leftColor");
         rightColor = hwMap.get(ColorSensor.class, "rightColor");
         navX = hwMap.get(NavxMicroNavigationSensor.class, "navx");
         gyro = (IntegratingGyroscope)navX;
+
 
 
 

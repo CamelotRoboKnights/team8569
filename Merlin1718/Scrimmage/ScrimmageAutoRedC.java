@@ -25,8 +25,8 @@ public class ScrimmageAutoRedC extends ScrimmageMeathods {
     private String color = "red";
     private double driveForwardToKnockDistance;
     private double driveBackToKnockDistance;
-    private double spinRightToKnockOffRightJewel = 5; //= 10;
-    private double spinLeftToKnockOffLeftJewel  = -5;// = -10;
+    private double spinRightToKnockOffRightJewel = -7; //= 10;
+    private double spinLeftToKnockOffLeftJewel  = 7;// = -10;
     private double driveDistanceToRightColumn = 28;
     private double driveDistanceToCenterColumn = 35;
     private double driveDistanceToLeftColumn = 45;
@@ -46,7 +46,8 @@ public class ScrimmageAutoRedC extends ScrimmageMeathods {
         switch (currentCase){
             case "DropSorter":
                 boolean doneYet;
-                doneYet = sorter("up");
+                doneYet = sorter("down");
+                glyphAuto("close");
                 if(doneYet){
                     currentCase = "IDCryptographPicAndJewelColor";
                 }
@@ -67,25 +68,23 @@ public class ScrimmageAutoRedC extends ScrimmageMeathods {
             case "SpinRightToKnockOffRightJewel":
                 doneYet = turnToGyroHeading(spinRightToKnockOffRightJewel, revOrientation());
                 if(doneYet){
-                    //currentCase = "RaiseSorter";
-                    currentCase = "End";
+                    currentCase = "RaiseSorter";
                 }
                 break;
             case "SpinLeftToKnockOffLeftJewel":
                 doneYet = turnToGyroHeading(spinLeftToKnockOffLeftJewel, revOrientation());
                 if(doneYet){
-                    // currentCase = "RaiseSorter";
-                    currentCase = "End";
+                    currentCase = "RaiseSorter";
                 }
                 break;
             case "RaiseSorter":
-                doneYet = sorter("down");
+                doneYet = sorter("up");
                 if(doneYet){
                     currentCase = "SpinBackToStartingPosition";
                 }
                 break;
             case "SpinBackToStartingPosition":
-                doneYet = turnToGyroHeading(0,revOrientation());
+                doneYet = turnToGyroHeading(0, revOrientation());
                 if(doneYet){
                     currentCase = choseColumnCase(column);
                 }
@@ -109,9 +108,10 @@ public class ScrimmageAutoRedC extends ScrimmageMeathods {
                 }
                 break;
             case "SpinTo90":
-                doneYet = turnToGyroHeading(90,revOrientation());
+                doneYet = turnToGyroHeading(-90,revOrientation());
                 if(doneYet){
                     currentCase = "DriveForward";
+                    currentCase = "End";
                 }
                 break;
             case "DriveForward":

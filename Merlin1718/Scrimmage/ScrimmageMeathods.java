@@ -92,9 +92,9 @@ class ScrimmageMeathods extends OpMode {
     @Override
     public void stop(){}
 
-    private ServoPositions leftGrasper = new ServoPositions(.75, .9);
+    private ServoPositions leftGrasper = new ServoPositions(.3, .7);//.75, .9
     private ServoPositions rightGrasper = new ServoPositions(.75, .5);
-    private ServoPositions rightSorter = new ServoPositions(.9, .2);
+    private ServoPositions rightSorter = new ServoPositions(.25, .85);
 
 
 
@@ -221,8 +221,8 @@ class ScrimmageMeathods extends OpMode {
         //This part of code decides wich sorter we are going to use depending as to which side of the field we are on
     public boolean sorter (String upOrDown) {
 
-        if(upOrDown.equals("up")) robot.rightSorter.setPosition(rightSorter.closed);
-        else robot.rightSorter.setPosition(rightSorter.open);
+        if(upOrDown.equals("up")) { robot.rightSorter.setPosition(rightSorter.closed);}
+        else {robot.rightSorter.setPosition(rightSorter.open);}
         return true;
     }
     //use the proper color sensor and have it tell the robot wich color that it senses
@@ -236,10 +236,8 @@ class ScrimmageMeathods extends OpMode {
     //if openOrClose variable = open then open the grasper
     public boolean glyphAuto (String openOrClose){
         if(openOrClose.equals("open")){
-            robot.leftGrasper.setPosition(leftGrasper.open);
             robot.rightGrasper.setPosition(rightGrasper.open);
         } else{
-            robot.leftGrasper.setPosition(leftGrasper.closed);
             robot.rightGrasper.setPosition(rightGrasper.closed);
         }
         return true;
