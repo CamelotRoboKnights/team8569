@@ -101,6 +101,7 @@ public class ScrimmageHardware
         Motor2.setPower(0);
         Motor3.setPower(0);
         Motor4.setPower(0);
+        glyph.setPower(0);
 
         // Set all motors to run without encoders.
         // May want to use RUN_USING_ENCODERS if encoders are installed.
@@ -108,6 +109,7 @@ public class ScrimmageHardware
         Motor2.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         Motor3.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         Motor4.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        glyph.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
 
         // Define and initialize ALL installed servos.

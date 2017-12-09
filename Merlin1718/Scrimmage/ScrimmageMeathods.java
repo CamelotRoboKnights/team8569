@@ -80,8 +80,7 @@ class ScrimmageMeathods extends OpMode {
 
     public void init(){
         robot.init(hardwareMap);
-        // robot.leftSorter.setPosition(leftSorter.closed);
-        // robot.rightSorter.setPosition(rightSorter.closed);
+        glyphAuto("open");
     }
     @Override
     public void init_loop(){}
@@ -92,7 +91,7 @@ class ScrimmageMeathods extends OpMode {
     @Override
     public void stop(){}
 
-    private ServoPositions leftGrasper = new ServoPositions(.3, .7);//.75, .9
+    private ServoPositions leftGrasper = new ServoPositions(.75, .9);//.75, .9
     private ServoPositions rightGrasper = new ServoPositions(.75, .5);
     private ServoPositions rightSorter = new ServoPositions(.25, .85);
 
@@ -185,6 +184,26 @@ class ScrimmageMeathods extends OpMode {
             isOpen = !isOpen;
         }
     }
+    public void glyphWith0minimum () {
+        if(robot.glyph.getCurrentPosition() >= -10 && Math.abs(gamepad2.left_stick_y) > .01)  robot.glyph.setPower(-gamepad2.left_stick_y);
+        else if (-gamepad2.left_stick_y > .01) robot.glyph.setPower(-gamepad2.left_stick_y);
+        else robot.glyph.setPower(0);
+
+
+        if(isOpen){
+            glyphAuto("open");
+            telemetry.addData("Open", "");
+        } else {
+            glyphAuto("close");
+            telemetry.addData("Close", "");
+        }
+        if(gamepad2.left_stick_button && !pressed){
+            pressed = true;
+        } else if (!gamepad2.left_stick_button && pressed){
+            pressed = false;
+            isOpen = !isOpen;
+        }
+    }
     public void glyphZach(){
         //This is the code for our glyph collecting mechanism during TeleOp
         double glyphPower = 0;
@@ -237,8 +256,10 @@ class ScrimmageMeathods extends OpMode {
     public boolean glyphAuto (String openOrClose){
         if(openOrClose.equals("open")){
             robot.rightGrasper.setPosition(rightGrasper.open);
+            robot.leftGrasper.setPosition(leftGrasper.open);
         } else{
             robot.rightGrasper.setPosition(rightGrasper.closed);
+            robot.leftGrasper.setPosition(leftGrasper.closed);
         }
         return true;
     }

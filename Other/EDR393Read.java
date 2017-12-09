@@ -1,9 +1,12 @@
 package org.firstinspires.ftc.teamcode.team.Other;
 
+import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.I2cDevice;
 import com.qualcomm.robotcore.hardware.Servo;
+import com.qualcomm.robotcore.hardware.configuration.ServoConfiguration;
 import com.qualcomm.robotcore.util.Range;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
@@ -50,10 +53,11 @@ import static java.lang.Boolean.TRUE;
  */
 
 
-
+@Autonomous(name = "edr", group = "Other")
 class EDR393Read extends OpMode {
     I2cDevice encoder;
     Servo servo;
+
     public void init(){
         encoder = hardwareMap.i2cDevice.get("encoder");
         servo = hardwareMap.servo.get("servo");
@@ -65,6 +69,21 @@ class EDR393Read extends OpMode {
     public void start(){}
     @Override
     public void loop(){
+        servo.setPosition(1);
+        if (encoder.isI2cPortReady()) {
+            telemetry.addData("ready", "yeh");
+            if(encoder.isI2cPortInReadMode()) {
+                telemetry.addData("read", "mode");
+                telemetry.addData("buffer", encoder.getCopyOfReadBuffer().toString());
+                telemetry.addData("cashe", encoder.getI2cReadCache().toString());
+            }
+            if(encoder.isI2cPortInWriteMode()) {
+                telemetry.addData("write", "mode");
+            }
+
+        }
+
+
 
     }
     @Override
