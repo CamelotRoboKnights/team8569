@@ -273,10 +273,10 @@ class ScrimmageMeathods extends OpMode {
             case "Back":
                 moveMotorsPower(-power, -power, -power, -power);
                 break;
-            case "Left":
+            case "Right":
                 moveMotorsPower(power, -power, power, -power);
                 break;
-            case "Right":
+            case "Left":
                 moveMotorsPower(-power, power, -power, power);
                 break;
             default:

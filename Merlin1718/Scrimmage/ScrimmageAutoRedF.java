@@ -24,10 +24,10 @@ public class ScrimmageAutoRedF extends ScrimmageMeathods {
     private String color = "red";
     private double spinRightToKnockOffRightJewel = -7;
     private double spinLeftToKnockOffLeftJewel  = 7;
-    private double driveDistanceForwardOffBalencePad = 10;
-    private double driveDistanceToRightColumn = 10;
-    private double driveDistanceToCenterColumn = 17;
-    private double driveDistanceToLeftColumn = 24;
+    private double driveDistanceForwardOffBalencePad = 20;
+    private double driveDistanceToRightColumn = 3;
+    private double driveDistanceToCenterColumn = 8;
+    private double driveDistanceToLeftColumn = 15;
     private double driveForwardToCryptobox = 10;
     private double driveAwayFromCryptobox = 5;
 
@@ -97,37 +97,45 @@ public class ScrimmageAutoRedF extends ScrimmageMeathods {
             case "SpinBackToStartingPosition":
                 doneYet = turnToGyroHeading(0, revOrientation());
                 if(doneYet){
-                    currentCase = choseColumnCase(column);
+                    currentCase = "ForwardOffBalancePad";
                 }
                 break;
             case "ForwardOffBalancePad":
                 doneYet = driveBasedOnEncoders(driveDistanceForwardOffBalencePad, "Forward");
                 if(doneYet){
-                    currentCase = "SpinTo90";
+                    currentCase = "SpinBackToStartingPosition2";
+                }
+                break;
+            case "SpinBackToStartingPosition2":
+                doneYet = turnToGyroHeading(0, revOrientation());
+                if(doneYet){
+                    currentCase = choseColumnCase(column);
+
                 }
                 break;
             case "DriveLeftToRightColumn":
                 doneYet = driveBasedOnEncoders(driveDistanceToRightColumn, "Left");
                 if(doneYet){
-                    currentCase = "SpinTo90";
+                    currentCase = "DriveForward";
                 }
                 break;
             case "DriveLeftToCenterColumn":
                 doneYet = driveBasedOnEncoders(driveDistanceToCenterColumn, "Left");
                 if(doneYet){
-                    currentCase = "SpinTo90";
+                    currentCase = "DriveForward";
                 }
                 break;
             case "DriveLeftToLeftColumn":
                 doneYet = driveBasedOnEncoders(driveDistanceToLeftColumn, "Left");
                 if(doneYet){
-                    currentCase = "SpinTo90";
+                    currentCase = "DriveForward";
                 }
                 break;
             case "DriveForward":
                 doneYet = driveBasedOnEncoders(driveForwardToCryptobox, "Forward");
                 if(doneYet){
                     currentCase = "ReleaseGripper";
+                    currentCase = "End";
                 }
                 break;
             case "ReleaseGripper":
@@ -170,11 +178,11 @@ public class ScrimmageAutoRedF extends ScrimmageMeathods {
     private String choseColumnCase(String column){
         switch (column){
             case "RIGHT":
-                return "ToRightColumn";
+                return "DriveLeftToRightColumn";
             case "CENTER":
-                return "ToCenterColumn";
+                return "DriveLeftToCenterColumn";
             case "LEFT":
-                return "ToLeftColumn";
+                return "DriveLeftToLeftColumn";
             default:
                 telemetry.addData("Not Left Right Or", " Center");
                 return "";
