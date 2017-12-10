@@ -356,8 +356,8 @@ class ScrimmageMeathods extends OpMode {
      * localization engine.
      */
     VuforiaLocalizer vuforia;
-    VuforiaTrackables relicTrackables = this.vuforia.loadTrackablesFromAsset("RelicVuMark");
-    VuforiaTrackable relicTemplate = relicTrackables.get(0);
+    VuforiaTrackables relicTrackables;// = vuforia.loadTrackablesFromAsset("RelicVuMark");
+    VuforiaTrackable relicTemplate;// = relicTrackables.get(0);
 
 
     //initializes camera
@@ -366,11 +366,11 @@ class ScrimmageMeathods extends OpMode {
          * To start up Vuforia, tell it the view that we wish to use for camera monitor (on the RC phone);
          * If no camera monitor is desired, use the parameterless constructor instead (commented out below).
          */
-        // int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
-        // VuforiaLocalizer.Parameters parameters = new VuforiaLocalizer.Parameters(cameraMonitorViewId);
+        int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
+        VuforiaLocalizer.Parameters parameters = new VuforiaLocalizer.Parameters(cameraMonitorViewId);
 
         // OR...  Do Not Activate the Camera Monitor View, to save power
-        VuforiaLocalizer.Parameters parameters = new VuforiaLocalizer.Parameters();
+        // VuforiaLocalizer.Parameters parameters = new VuforiaLocalizer.Parameters();
 
         /*
          * IMPORTANT: You need to obtain your own license key to use Vuforia. The string below with which
@@ -393,6 +393,8 @@ class ScrimmageMeathods extends OpMode {
          */
         parameters.cameraDirection = VuforiaLocalizer.CameraDirection.BACK;
         this.vuforia = ClassFactory.createVuforiaLocalizer(parameters);
+        relicTrackables = vuforia.loadTrackablesFromAsset("RelicVuMark");
+        relicTemplate = relicTrackables.get(0);
 
         /**
          * Load the data set containing the VuMarks for Relic Recovery. There's only one trackable
@@ -400,7 +402,7 @@ class ScrimmageMeathods extends OpMode {
          * but differ in their instance id information.
          * @see VuMarkInstanceId
          */
-
+        relicTrackables.activate();
     }
 
     //finds out witch vuMark you are seeing

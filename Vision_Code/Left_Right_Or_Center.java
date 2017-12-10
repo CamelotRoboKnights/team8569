@@ -137,6 +137,7 @@ public class Left_Right_Or_Center extends LinearOpMode {
                     double rY = rot.secondAngle;
                     double rZ = rot.thirdAngle;
                 }
+
             }
             else {
                 telemetry.addData("VuMark", "not visible");

@@ -53,8 +53,8 @@ public class ScrimmageAutoRedC extends ScrimmageMeathods {
                 break;
             case "IDCryptographPicAndJewelColor":
                 jewel = super.jewelColor();
-                column = "RIGHT";
-                //column = super.key();
+                //column = "RIGHT";
+                column = super.key();
                 if(!jewel.equals("null") && !column.equals("null")){
                     if(jewel.equals("red")){
                         currentCase = "SpinRightToKnockOffRightJewel";
