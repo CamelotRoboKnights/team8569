@@ -81,6 +81,7 @@ class ScrimmageMeathods extends OpMode {
     public void init(){
         robot.init(hardwareMap);
         glyphAuto("open");
+        initCamera();
     }
     @Override
     public void init_loop(){}
@@ -421,9 +422,7 @@ class ScrimmageMeathods extends OpMode {
         }
 
     }
-    private String format(OpenGLMatrix transformationMatrix) {
-        return (transformationMatrix != null) ? transformationMatrix.formatAsTransform() : "null";
-    }
+
 
 
 }
