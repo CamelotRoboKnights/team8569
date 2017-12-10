@@ -80,7 +80,7 @@ class ScrimmageMeathods extends OpMode {
 
     public void init(){
         robot.init(hardwareMap);
-        glyphAuto("open");
+        glyphAuto("close");
         initCamera();
     }
     @Override

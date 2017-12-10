@@ -24,13 +24,13 @@ public class ScrimmageAutoRedC extends ScrimmageMeathods {
     private String color = "red";
     private double driveForwardToKnockDistance;
     private double driveBackToKnockDistance;
-    private double spinRightToKnockOffRightJewel = -7; //= 10;
-    private double spinLeftToKnockOffLeftJewel  = 7;// = -10;
-    private double driveDistanceToRightColumn = 28;
-    private double driveDistanceToCenterColumn = 35;
-    private double driveDistanceToLeftColumn = 45;
+    private double spinRightToKnockOffRightJewel = -7;
+    private double spinLeftToKnockOffLeftJewel  = 7;
+    private double driveDistanceToRightColumn = 23;//
+    private double driveDistanceToCenterColumn = 29;// 30
+    private double driveDistanceToLeftColumn = 35;//36
     private double driveForwardToCryptobox = 10;
-    private double driveAwayFromCryptobox = 2;
+    private double driveAwayFromCryptobox = 5;//2
 
 
 
@@ -53,7 +53,6 @@ public class ScrimmageAutoRedC extends ScrimmageMeathods {
                 break;
             case "IDCryptographPicAndJewelColor":
                 jewel = super.jewelColor();
-                //column = "RIGHT";
                 column = super.key();
                 if(!jewel.equals("null") && !column.equals("null")){
                     if(jewel.equals("red")){
@@ -110,7 +109,6 @@ public class ScrimmageAutoRedC extends ScrimmageMeathods {
                 doneYet = turnToGyroHeading(-90,revOrientation());
                 if(doneYet){
                     currentCase = "DriveForward";
-                    currentCase = "End";
                 }
                 break;
             case "DriveForward":
@@ -122,11 +120,17 @@ public class ScrimmageAutoRedC extends ScrimmageMeathods {
             case "ReleaseGripper":
                 doneYet = glyphAuto("open");
                 if(doneYet){
+                    currentCase = "DriveForward2";
+                }
+                break;
+            case "DriveForward2":
+                doneYet = driveBasedOnEncoders(2, "Forward");
+                if(doneYet){
                     currentCase = "DriveBack";
                 }
                 break;
             case "DriveBack":
-                doneYet = driveBasedOnEncoders(driveAwayFromCryptobox, "Forward");
+                doneYet = driveBasedOnEncoders(driveAwayFromCryptobox, "Back");
                 if(doneYet){
                     currentCase = "End";
                 }
