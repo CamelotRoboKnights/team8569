@@ -356,6 +356,8 @@ class ScrimmageMeathods extends OpMode {
      * localization engine.
      */
     VuforiaLocalizer vuforia;
+    VuforiaTrackables relicTrackables = this.vuforia.loadTrackablesFromAsset("RelicVuMark");
+    VuforiaTrackable relicTemplate = relicTrackables.get(0);
 
 
     //initializes camera
@@ -364,11 +366,11 @@ class ScrimmageMeathods extends OpMode {
          * To start up Vuforia, tell it the view that we wish to use for camera monitor (on the RC phone);
          * If no camera monitor is desired, use the parameterless constructor instead (commented out below).
          */
-        int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
-        VuforiaLocalizer.Parameters parameters = new VuforiaLocalizer.Parameters(cameraMonitorViewId);
+        // int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
+        // VuforiaLocalizer.Parameters parameters = new VuforiaLocalizer.Parameters(cameraMonitorViewId);
 
         // OR...  Do Not Activate the Camera Monitor View, to save power
-        // VuforiaLocalizer.Parameters parameters = new VuforiaLocalizer.Parameters();
+        VuforiaLocalizer.Parameters parameters = new VuforiaLocalizer.Parameters();
 
         /*
          * IMPORTANT: You need to obtain your own license key to use Vuforia. The string below with which
@@ -380,7 +382,7 @@ class ScrimmageMeathods extends OpMode {
          * random data. As an example, here is a example of a fragment of a valid key:
          *      ... yIgIzTqZ4mWjk9wd3cZO9T1axEqzuhxoGlfOOI2dRzKS4T0hQ8kT ...
          * Once you've obtained a license key, copy the string from the Vuforia web site
-         * and paste it in to your code onthe next line, between the double quotes.
+         * and paste it in to your code on the next line, between the double quotes.
          */
         parameters.vuforiaLicenseKey = "AdPKKrD/////AAAAGSIjugGbVECsk0zYoRryiTAFXRdUl/55VWc+O8yUqpFWWbX5fb+/Zve64dxPz4vsZL0Rd4TtPzzSTGDb7NHHnVppmnFp99eLe8jY+q9tvjQ4Iu9kaDaOxTNKRr8kWdWdT7Xa0AksnQ0stzkkHjgxScrOOcA8Poq3+xAEswsM3DW4Di9KeJdQqnX/xa3i5TKzOjO+748hWjwjNcAFoUYjnUbHNp9oYQnYhhiigEHoC0CGAHMTsyYFEKJdwJgcFLsYPqVH/9h/ISSd3saogNwVVpEIVRIu1QL+c7/9h6yKnDdPyV2x1qEZuiXEqTiQJjSt0t3UQ32Q47CO/634+h/VP2HaJHCv9gnJhn7jkRVc6VZA";
 
@@ -398,11 +400,11 @@ class ScrimmageMeathods extends OpMode {
          * but differ in their instance id information.
          * @see VuMarkInstanceId
          */
+
     }
+
     //finds out witch vuMark you are seeing
     public String key (){
-        VuforiaTrackables relicTrackables = this.vuforia.loadTrackablesFromAsset("RelicVuMark");
-        VuforiaTrackable relicTemplate = relicTrackables.get(0);
 
         RelicRecoveryVuMark vuMark = RelicRecoveryVuMark.from(relicTemplate);
         if (vuMark != RelicRecoveryVuMark.UNKNOWN) {

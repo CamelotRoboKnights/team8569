@@ -14,7 +14,6 @@ public class ScrimmageAutoRedC extends ScrimmageMeathods {
 
     public void init(){//This only runs once
         super.init();//Initializing everything needed
-        super.initCamera();
     }
     @Override
     public void init_loop(){//Tis runs many time during the init phase
