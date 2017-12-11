@@ -25,7 +25,7 @@ public class ScrimmageAutoBlueC extends ScrimmageMeathods {
     @Override
     public void start(){}//This runs when the start button is pressed
 
-    private String color = "red";
+    private String color = "blue";
     private double driveForwardToKnockDistance;
     private double driveBackToKnockDistance;
     private double spinRightToKnockOffRightJewel = -7;
@@ -59,7 +59,7 @@ public class ScrimmageAutoBlueC extends ScrimmageMeathods {
                 jewel = super.jewelColor();
                 column = super.key();
                 if(!jewel.equals("null") && !column.equals("null")){
-                    if(jewel.equals("blue")){
+                    if(jewel.equals(color)){
                         currentCase = "SpinRightToKnockOffRightJewel";
                     }
                     else {
@@ -94,19 +94,19 @@ public class ScrimmageAutoBlueC extends ScrimmageMeathods {
             case "ToRightColumn":
                 doneYet = driveBasedOnEncoders(driveDistanceToRightColumn, "Back");
                 if(doneYet){
-                    currentCase = "SpinTo-90";
+                    currentCase = "SpinTo90";
                 }
                 break;
             case "ToCenterColumn":
                 doneYet = driveBasedOnEncoders(driveDistanceToCenterColumn, "Back");
                 if(doneYet){
-                    currentCase = "SpinTo-90";
+                    currentCase = "SpinTo90";
                 }
                 break;
             case "ToLeftColumn":
                 doneYet = driveBasedOnEncoders(driveDistanceToLeftColumn, "Back");
                 if(doneYet){
-                    currentCase = "SpinTo-90";
+                    currentCase = "SpinTo90";
                 }
                 break;
             case "SpinTo90":
