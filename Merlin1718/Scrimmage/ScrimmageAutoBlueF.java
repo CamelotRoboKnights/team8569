@@ -8,7 +8,7 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import java.sql.Driver;
 
-@Autonomous(name = "RedF", group = "Scrimmage")
+@Autonomous(name = "BlueF", group = "Scrimmage")
 //@Disabled //Uncomment this if it is not wanted on the phone
 public class ScrimmageAutoBlueF extends ScrimmageMeathods {
 
