@@ -25,8 +25,8 @@ public class ScrimmageAutoRedF extends ScrimmageMeathods {
     private double spinRightToKnockOffRightJewel = -7;
     private double spinLeftToKnockOffLeftJewel  = 7;
     private double driveDistanceForwardOffBalencePad = 20;
-    private double driveDistanceToRightColumn = 4; // 3
-    private double driveDistanceToCenterColumn = 10; // 8
+    private double driveDistanceToRightColumn = 5; // 3
+    private double driveDistanceToCenterColumn = 11; // 8
     private double driveDistanceToLeftColumn = 14;
     private double driveForwardToCryptobox = 10;
     private double driveAwayFromCryptobox = 5;

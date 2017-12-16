@@ -26,7 +26,7 @@ public class ScrimmageAutoBlueF extends ScrimmageMeathods {
     private double spinLeftToKnockOffLeftJewel  = 7;
     private double driveDistanceForwardOffBalencePad = 20;
     private double driveDistanceToRightColumn = 14; // 4
-    private double driveDistanceToCenterColumn = 10; //
+    private double driveDistanceToCenterColumn = 7; //
     private double driveDistanceToLeftColumn = 4; // 14
     private double driveForwardToCryptobox = 10;
     private double driveAwayFromCryptobox = 5;
@@ -101,7 +101,7 @@ public class ScrimmageAutoBlueF extends ScrimmageMeathods {
                 }
                 break;
             case "ForwardOffBalancePad":
-                doneYet = driveBasedOnEncoders(driveDistanceForwardOffBalencePad, "Forward");
+                doneYet = driveBasedOnEncoders(driveDistanceForwardOffBalencePad, "Back");
                 if(doneYet){
                     currentCase = "SpinBackToStartingPosition2";
                 }

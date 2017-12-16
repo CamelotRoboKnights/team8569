@@ -10,7 +10,7 @@ public class WestCoast {
         DcMotor leftMotor;
         DcMotor rightMotor;
         Wheel centerWheel = new Wheel(2);
-        double ticksPerRotation =  1120;
+        double ticksPerRotation = 1120;
 
 
         double leftMotorEncoder = this.leftMotor.getCurrentPosition();
@@ -28,7 +28,7 @@ public class WestCoast {
 
         boolean firstTime = true;
         double startEncoder = 0;
-        boolean driveBasedOnEncoders(double distance, double direction){
+        public boolean driveBasedOnEncoders(double distance, int direction){
 
             boolean returnValue;
             double currentEncoder = (leftMotorEncoder + rightMotorEncoder)/ 2;
