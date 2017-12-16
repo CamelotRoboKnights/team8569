@@ -190,6 +190,7 @@ class ScrimmageMeathods extends OpMode {
         else if (-gamepad2.left_stick_y > .01) robot.glyph.setPower(-gamepad2.left_stick_y);
         else robot.glyph.setPower(0);
 
+        telemetry.addData("current:", robot.glyph.getCurrentPosition());
 
         if(isOpen){
             glyphAuto("open");

@@ -31,7 +31,7 @@ public class WestCoast {
         public boolean driveBasedOnEncoders(double distance, int direction){
 
             boolean returnValue;
-            double currentEncoder = (leftMotorEncoder + rightMotorEncoder)/ 2;
+            double currentEncoder = leftMotorEncoder;
             double distanceTraveled = ((Math.abs(currentEncoder) / ticksPerRotation) * centerWheel.circumference);// need to subtract start encoder
             if(firstTime) {
                 firstTime = false;
