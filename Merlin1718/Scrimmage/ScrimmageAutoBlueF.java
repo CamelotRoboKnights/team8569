@@ -10,7 +10,7 @@ import java.sql.Driver;
 
 @Autonomous(name = "RedF", group = "Scrimmage")
 //@Disabled //Uncomment this if it is not wanted on the phone
-public class ScrimmageAutoRedF extends ScrimmageMeathods {
+public class ScrimmageAutoBlueF extends ScrimmageMeathods {
 
     public void init(){//This only runs once
         super.init();//Initializing everything needed
@@ -21,13 +21,13 @@ public class ScrimmageAutoRedF extends ScrimmageMeathods {
     @Override
     public void start(){}//This runs when the start button is pressed
 
-    private String color = "red";
+    private String color = "blue";
     private double spinRightToKnockOffRightJewel = -7;
     private double spinLeftToKnockOffLeftJewel  = 7;
     private double driveDistanceForwardOffBalencePad = 20;
-    private double driveDistanceToRightColumn = 4; // 3
-    private double driveDistanceToCenterColumn = 10; // 8
-    private double driveDistanceToLeftColumn = 14;
+    private double driveDistanceToRightColumn = 14; // 4
+    private double driveDistanceToCenterColumn = 10; //
+    private double driveDistanceToLeftColumn = 4; // 14
     private double driveForwardToCryptobox = 10;
     private double driveAwayFromCryptobox = 5;
 
@@ -68,7 +68,7 @@ public class ScrimmageAutoRedF extends ScrimmageMeathods {
                 jewel = super.jewelColor();
                 column = super.key();
                 if(!jewel.equals("null") && !column.equals("null")){
-                    if(jewel.equals("red")){
+                    if(jewel.equals(color)){
                         currentCase = "SpinRightToKnockOffRightJewel";
                     }
                     else {
@@ -107,26 +107,26 @@ public class ScrimmageAutoRedF extends ScrimmageMeathods {
                 }
                 break;
             case "SpinBackToStartingPosition2":
-                doneYet = turnToGyroHeading(0, revOrientation());
+                doneYet = turnToGyroHeading(180, revOrientation());
                 if(doneYet){
                     currentCase = choseColumnCase(column);
 
                 }
                 break;
             case "DriveLeftToRightColumn":
-                doneYet = driveBasedOnEncoders(driveDistanceToRightColumn, "Left");
+                doneYet = driveBasedOnEncoders(driveDistanceToRightColumn, "Right");
                 if(doneYet){
                     currentCase = "DriveForward";
                 }
                 break;
             case "DriveLeftToCenterColumn":
-                doneYet = driveBasedOnEncoders(driveDistanceToCenterColumn, "Left");
+                doneYet = driveBasedOnEncoders(driveDistanceToCenterColumn, "Right");
                 if(doneYet){
                     currentCase = "DriveForward";
                 }
                 break;
             case "DriveLeftToLeftColumn":
-                doneYet = driveBasedOnEncoders(driveDistanceToLeftColumn, "Left");
+                doneYet = driveBasedOnEncoders(driveDistanceToLeftColumn, "Right");
                 if(doneYet){
                     currentCase = "DriveForward";
                 }

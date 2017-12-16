@@ -22,6 +22,7 @@
 
 package org.firstinspires.ftc.teamcode.team.Merlin1617.Merlin3;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 
 /*
  * My cases are:
@@ -45,6 +46,7 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
  * Back Right Angle Drive
  */
 @Autonomous(name = "Red1 BeaconsLaunchCap", group = "Merlin3")
+@Disabled
 public class Red1Beacons extends Merlin3AutoMethods {
 
     @Override

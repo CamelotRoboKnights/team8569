@@ -21,6 +21,7 @@
 
 package org.firstinspires.ftc.teamcode.team.Merlin1617.Merlin3;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 
 /*
  * My cases are:
@@ -36,6 +37,7 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
  */
 
 @Autonomous(name = "Red LCAPO", group = "Merlin3")
+@Disabled
 public class Red2LaunchCap extends Merlin3AutoMethods {
 
     @Override

@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.team.Merlin1718;
+package org.firstinspires.ftc.teamcode.team.Merlin1718.Drives;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.ColorSensor;
