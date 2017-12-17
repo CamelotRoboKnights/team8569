@@ -185,9 +185,10 @@ class ScrimmageMeathods extends OpMode {
             isOpen = !isOpen;
         }
     }
-    public void glyphWith0minimum () {
-        if(robot.glyph.getCurrentPosition() >= -10 && Math.abs(gamepad2.left_stick_y) > .01)  robot.glyph.setPower(-gamepad2.left_stick_y);
-        else if (-gamepad2.left_stick_y > .01) robot.glyph.setPower(-gamepad2.left_stick_y);
+    public void glyphWith0minimum () { //5700
+        if(robot.glyph.getCurrentPosition() >= -10 && Math.abs(gamepad2.left_stick_y) > .01 && robot.glyph.getCurrentPosition() <= 5700)  robot.glyph.setPower(-gamepad2.left_stick_y);
+        else if (-gamepad2.left_stick_y > .01 && robot.glyph.getCurrentPosition() <= 5700) robot.glyph.setPower(-gamepad2.left_stick_y);
+        else if (-gamepad2.left_stick_y < .01 && robot.glyph.getCurrentPosition() >= -10) robot.glyph.setPower(-gamepad2.left_stick_y);
         else robot.glyph.setPower(0);
 
         telemetry.addData("current:", robot.glyph.getCurrentPosition());
