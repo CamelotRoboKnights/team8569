@@ -1,12 +1,12 @@
-package org.firstinspires.ftc.teamcode.team.Merlin1718.Drives;
+package org.firstinspires.ftc.teamcode.team.Merlin1718.WestCoast;
 
 
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.I2cDevice;
 import com.qualcomm.robotcore.util.Range;
 
-public class WestCoast {
-    public class WestCoastDrive {
+public class WestCoastClass {
+    public static class WestCoastDrive {
         DcMotor leftMotor;
         DcMotor rightMotor;
         Wheel centerWheel = new Wheel(2);
@@ -78,7 +78,7 @@ public class WestCoast {
 
 
     }
-    public class Wheel {
+    public static class Wheel {
         double radius;
         double circumference =  2*Math.PI*radius;
         Wheel (double radius) {
