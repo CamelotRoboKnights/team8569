@@ -12,7 +12,7 @@ public class WestCoastClass {
         Wheel centerWheel = new Wheel(2);
         double ticksPerRotation = 1120;
 
-
+        //sets the motor positions
         double leftMotorEncoder = this.leftMotor.getCurrentPosition();
         double rightMotorEncoder = this.rightMotor.getCurrentPosition();
 
@@ -21,22 +21,23 @@ public class WestCoastClass {
             this.leftMotor = leftMotor;
             this.rightMotor = rightMotor;
         }
+        //this sets the motor power to inbetween -1 & 1
         public void drive (double leftMotorPower, double rightMotorPower) {
             this.leftMotor.setPower(Range.clip(leftMotorPower, -1, 1));
             this.rightMotor.setPower(Range.clip(rightMotorPower, -1, 1));
         }
-
+            // this makes the encoders 0 so our measurments dont get messed up
         boolean firstTime = true;
         double startEncoder = 0;
         public boolean driveBasedOnEncoders(double distance, int direction){
 
             boolean returnValue;
             double currentEncoder = leftMotorEncoder;
-            double distanceTraveled = ((Math.abs(currentEncoder) / ticksPerRotation) * centerWheel.circumference);// need to subtract start encoder
             if(firstTime) {
                 firstTime = false;
                 startEncoder = currentEncoder;
             }
+            double distanceTraveled = ((Math.abs(currentEncoder  - startEncoder) / ticksPerRotation) * centerWheel.circumference);// need to subtract start encoder
             if (distanceTraveled > distance) {//If I have gone the distance I want stop moving
                 this.drive(0,0);
                 firstTime = true;

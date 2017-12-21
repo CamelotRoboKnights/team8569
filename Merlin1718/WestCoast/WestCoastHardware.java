@@ -1,5 +1,3 @@
-//This is done being commented 17-1-13
-
 package org.firstinspires.ftc.teamcode.team.Merlin1718.WestCoast;
 
 import com.qualcomm.hardware.bosch.BNO055IMU;
@@ -9,22 +7,20 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.IntegratingGyroscope;
-
 import org.firstinspires.ftc.robotcore.external.navigation.Acceleration;
 import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
-import org.firstinspires.ftc.teamcode.team.Merlin1718.WestCoast.WestCoastClass;
+import com.qualcomm.robotcore.hardware.ColorSensor;
+import com.qualcomm.robotcore.hardware.Servo;
 
+public class WestCoastHardware {
 
-public class WestCoastHardware
-{
-    /* Public OpMode members. */
-    private DcMotor  motorR    = null;//Right motor
-    private DcMotor  motorL    = null;//Left motor
-   // public DcMotor  glyph    = null;
-   // public Servo leftGrasper = null;
-   // public Servo rightGrasper = null;
-   // public Servo rightSorter = null;
-   // public ColorSensor rightColor = null;
+    private DcMotor  motorR    = null;
+    private DcMotor  motorL    = null;
+    public DcMotor  glyph    = null;
+    public Servo leftGrasperServo = null;
+    public Servo rightGrasperServo = null;
+    public Servo sorter = null;
+    public ColorSensor colorSensor = null;
     public BNO055IMU imu;
     public NavxMicroNavigationSensor navX;
     IntegratingGyroscope gyro;
@@ -38,9 +34,7 @@ public class WestCoastHardware
     HardwareMap hwMap           =  null; //Saying this this has no opmode
 
     /* Constructor */
-    public WestCoastHardware(){
-
-    }
+    public WestCoastHardware(){}
 
     /* Initialize standard Hardware interfaces */
     public void init(HardwareMap ahwMap) {
@@ -51,11 +45,11 @@ public class WestCoastHardware
         // Define and Initialize Motors
         motorR  = hwMap.dcMotor.get("motorR");//Finds the Right motor in the hardware map
         motorL  = hwMap.dcMotor.get("motorL");//Finds the Left motor in the hardware map
-        //glyph = hwMap.dcMotor.get("glyph");
-        //leftGrasper = hwMap.servo.get("leftGrasper");
-        //rightGrasper = hwMap.servo.get("rightGrasper");
-        //rightSorter = hwMap.servo.get("rightSorter");
-        //rightColor = hwMap.get(ColorSensor.class, "rightColor");
+        glyph = hwMap.dcMotor.get("glyph");
+        leftGrasperServo = hwMap.servo.get("leftGrasper");
+        rightGrasperServo = hwMap.servo.get("rightGrasper");
+        sorter = hwMap.servo.get("sorter");
+        colorSensor = hwMap.get(ColorSensor.class, "color");
         navX = hwMap.get(NavxMicroNavigationSensor.class, "navx");
         gyro = (IntegratingGyroscope)navX;
 
@@ -79,25 +73,32 @@ public class WestCoastHardware
 
 
 
+
         motorR.setDirection(DcMotorSimple.Direction.FORWARD);//Sets the motor power to positive because duh.
         motorL.setDirection(DcMotorSimple.Direction.FORWARD);//Sets the motor power as positive because duh.
-       // glyph.setDirection(DcMotorSimple.Direction.FORWARD);
-        // Set all motors to zero power
+        glyph.setDirection(DcMotorSimple.Direction.FORWARD);
+
         motorR.setPower(0);//Sets the power to 0 so motors don't move
         motorL.setPower(0);
-       // glyph.setPower(0);
+        glyph.setPower(0);
 
-        // Set all motors to run without encoders.
-        // May want to use RUN_USING_ENCODERS if encoders are installed.
         motorR.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         motorL.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-       // glyph.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        glyph.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
 
-        // Define and initialize ALL installed servos.
 
     }
-    public WestCoastClass.WestCoastDrive westCoast = new WestCoastClass.WestCoastDrive(motorL, motorR);
+    public WestCoastClass.WestCoastDrive westCoast =
+            new WestCoastClass.WestCoastDrive(motorL, motorR);
+    public SpecificHardware.JewelSorter jewelSorter =
+            new SpecificHardware.JewelSorter(colorSensor, sorter, 0, 1);
+    private SpecificHardware.GlyphGrasper leftGrasper =
+            new SpecificHardware.GlyphGrasper(leftGrasperServo, 0, 1);
+    private SpecificHardware.GlyphGrasper rightGrasper =
+            new SpecificHardware.GlyphGrasper(rightGrasperServo, 1, 0);
+    private SpecificHardware.GlyphCollector glyphCollector =
+            new SpecificHardware.GlyphCollector(glyph, leftGrasper, rightGrasper, 10,1220,1);
+            //motor, leftGrasper, rightGrasper, maxHeight, ticksPerRotation, spoolDiameter.
 
 }
-

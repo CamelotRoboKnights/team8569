@@ -32,8 +32,7 @@ package org.firstinspires.ftc.teamcode.team.Merlin1718.WestCoast;
         import static java.lang.Boolean.FALSE;
         import static java.lang.Boolean.TRUE;
 
-
-@Autonomous(name = "RedC", group = "Scrimmage")
+@Autonomous(name = "WestCoastRedC", group = "Scrimmage")
 //@Disabled //Uncomment this if it is not wanted on the phone
 public class WestCoastRedC extends OpMode {
 
@@ -49,7 +48,7 @@ public class WestCoastRedC extends OpMode {
     }
     @Override
     public void start(){}//This runs when the start button is pressed
-
+    // distance of variables
     private String color = "red";
     private double driveForwardToKnockDistance;
     private double driveBackToKnockDistance;
@@ -80,6 +79,7 @@ public class WestCoastRedC extends OpMode {
                     currentCase = "IDCryptographPicAndJewelColor";
                 }
                 break;
+                    //Determins the color of jewls and determins witch way to spin
             case "IDCryptographPicAndJewelColor":
                 jewel = "blue";//super.jewelColor();
                 column = "RIGHT";//super.key();
@@ -92,72 +92,84 @@ public class WestCoastRedC extends OpMode {
                     }
                 }
                 break;
+                    //spin right to knock off jewl
             case "SpinRightToKnockOffRightJewel":
                 doneYet = robot.westCoast.turnToGyroHeading(spinRightToKnockOffRightJewel,0); //TurnToGyroHeading(spinRightToKnockOffRightJewel, 0);
                 if(doneYet){
                     currentCase = "RaiseSorter";
                 }
                 break;
+                    //spin left to knock off left jewl
             case "SpinLeftToKnockOffLeftJewel":
                 doneYet = robot.westCoast.turnToGyroHeading(spinLeftToKnockOffLeftJewel, 0);
                 if(doneYet){
                     currentCase = "RaiseSorter";
                 }
                 break;
+                    //raise sorter
             case "RaiseSorter":
                 doneYet = true; //sorter("up");
                 if(doneYet){
                     currentCase = "SpinBackToStartingPosition";
                 }
                 break;
+                    // turn back to 0%
             case "SpinBackToStartingPosition":
                 doneYet = robot.westCoast.turnToGyroHeading(0, 0);
                 if(doneYet){
                     currentCase = choseColumnCase(column);
                 }
                 break;
+                    //move to right collumn
             case "ToRightColumn":
                 doneYet = robot.westCoast.driveBasedOnEncoders(driveDistanceToRightColumn,1);
                 if(doneYet){
                     currentCase = "SpinTo90";
                 }
                 break;
+                    //move to center collumn
             case "ToCenterColumn":
                 doneYet = robot.westCoast.driveBasedOnEncoders(driveDistanceToCenterColumn,1);
                 if(doneYet){
                     currentCase = "SpinTo90";
                 }
                 break;
+                    //move to left collumn
             case "ToLeftColumn":
                 doneYet = robot.westCoast.driveBasedOnEncoders(driveDistanceToLeftColumn,1);
                 if(doneYet){
                     currentCase = "SpinTo90";
                 }
                 break;
+                    //turn twards the cryptobox
             case "SpinTo90":
                 doneYet = robot.westCoast.turnToGyroHeading(-90,0);
                 if(doneYet){
                     currentCase = "DriveForward";
                 }
                 break;
+                    //drive forward to cryptobox
             case "DriveForward":
                 doneYet = robot.westCoast.driveBasedOnEncoders(driveForwardToCryptobox,1);
                 if(doneYet){
                     currentCase = "ReleaseGripper";
                 }
                 break;
+                    //release glyph
             case "ReleaseGripper":
                 doneYet = true; //glyphAuto("open");
                 if(doneYet){
                     currentCase = "DriveForward2";
                 }
                 break;
+                    //drive forward to make shure glyph is in collumn
             case "DriveForward2":
                 doneYet = robot.westCoast.driveBasedOnEncoders(2,1);
                 if(doneYet){
                     currentCase = "DriveBack";
                 }
                 break;
+                    //back up
             case "DriveBack":
                 doneYet = robot.westCoast.driveBasedOnEncoders(driveAwayFromCryptobox,-1);
                 if(doneYet){

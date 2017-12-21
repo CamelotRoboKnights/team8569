@@ -1,6 +1,8 @@
 package org.firstinspires.ftc.teamcode.team.Merlin1718;
 
 
+import com.qualcomm.robotcore.hardware.Gamepad;
+
 public class JoyValues {
     public class JoyStick {
         double x;
@@ -11,10 +13,10 @@ public class JoyValues {
             this.y = y;
             this.z = z;
         }
-        void assignValues (double x, double y, double z) {
-            this.x = x;
-            this.y = y;
-            this.z = z;
+        void assignValues (Gamepad g) {
+            this.x = g.left_stick_x;
+            this.y = g.left_stick_y;
+            this.z = 0;
         }
         void makeFieldOrientated (double orientationDegrees) {
             double x = this.x;

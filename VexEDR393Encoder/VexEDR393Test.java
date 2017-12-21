@@ -3,18 +3,20 @@ package org.firstinspires.ftc.teamcode.team.VexEDR393Encoder;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.I2cDevice;
+import com.qualcomm.robotcore.hardware.I2cDeviceSynch;
 import com.qualcomm.robotcore.hardware.Servo;
+import com.qualcomm.robotcore.hardware.CRServo;
 
 
 @Autonomous(name = "VEX", group = "VEX")
 // @Disabled
 public class VexEDR393Test extends OpMode {
-    I2cDevice encoder;
-    Servo servo;
+    I2cDeviceSynch encoder;
+    CRServo servo;
 
     public void init(){
-        encoder = hardwareMap.i2cDevice.get("encoder");
-        servo = hardwareMap.servo.get("servo");
+        encoder = hardwareMap.i2cDeviceSynch.get("encoder");
+        servo = hardwareMap.crservo.get("servo");
     }
     @Override
     public void init_loop(){}
@@ -22,7 +24,7 @@ public class VexEDR393Test extends OpMode {
     public void start(){}
     @Override
     public void loop(){
-        servo.setPosition(1);
+        servo.setPower(1);
 //        encoder.enableI2cReadMode();
 //        if (encoder.isI2cPortReady()) {
 //            telemetry.addData("ready", "yeh");
