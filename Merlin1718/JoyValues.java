@@ -19,7 +19,8 @@ public class JoyValues {
             this.y = g.left_stick_y;
             this.z = 0;
         }
-        // remember witch way is zero degrees and
+        // This makes it so that the robot is always oriented from the driver perspective no matter what orientation the robot is at
+	// 
         void makeFieldOrientated (double orientationDegrees) {
             double x = this.x;
             double y = this.y;
