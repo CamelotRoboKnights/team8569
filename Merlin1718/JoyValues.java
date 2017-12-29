@@ -13,11 +13,13 @@ public class JoyValues {
             this.y = y;
             this.z = z;
         }
+        //x & y axis is = to left stick x & y axis
         void assignValues (Gamepad g) {
             this.x = g.left_stick_x;
             this.y = g.left_stick_y;
             this.z = 0;
         }
+        // remember witch way is zero degrees and
         void makeFieldOrientated (double orientationDegrees) {
             double x = this.x;
             double y = this.y;
