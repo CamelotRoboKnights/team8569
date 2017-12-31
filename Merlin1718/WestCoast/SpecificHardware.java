@@ -48,84 +48,143 @@ public class SpecificHardware {
         DcMotor motor;
 
 
-        GlyphGrasper leftGrasper;
-        GlyphGrasper rightGrasper;
+        GlyphGrasperLayer topGrasper;
+        GlyphGrasperLayer bottomGrasper;
 
         double motorEncoderValue = motor.getCurrentPosition();
+
         double maximumHeight;
         double ticksPerRotation;
         double spoolDiameter;
-        double spoolCircumference = spoolDiameter * Math.PI;
+        private double spoolCircumference = spoolDiameter * Math.PI;
+        private double quarterHeight = maximumHeight/4;
+        private double halfHeight = quarterHeight*2;
+        private double threeQuarterHeight = quarterHeight*3;
 
-        GlyphCollector (DcMotor motor, GlyphGrasper leftGrasper, GlyphGrasper rightGrasper,
+        private boolean raising = false;
+
+        double currentHeight = motorEncoderValue/ticksPerRotation*spoolCircumference;
+
+        GlyphCollector (DcMotor motor, GlyphGrasperLayer topGrasper, GlyphGrasperLayer bottomGrasper,
                         double maximumHeight, double ticksPerRotation, double spoolDiameter) {
             this.motor = motor;
-            this.leftGrasper = leftGrasper;
-            this.rightGrasper = rightGrasper;
+            this.topGrasper = topGrasper;
+            this.bottomGrasper = bottomGrasper;
             this.maximumHeight = maximumHeight;
             this.ticksPerRotation = ticksPerRotation;
             this.spoolDiameter = spoolDiameter;
         }
-        private boolean open (){
-            this.leftGrasper.open();
-            this.rightGrasper.open();
-
-            return true;
-        }
-
-
-        private boolean closed (){
-            this.leftGrasper.close();
-            this.rightGrasper.close();
-
-            return true;
-        }
         public boolean raiseToValue (double targetHeight) {//give a given height
-            double difference = (targetHeight - motorEncoderValue/ticksPerRotation*spoolCircumference);//find the difference in inches
+            this.raising = true;
+            this.raiseToValue(targetHeight);
+            double difference = (targetHeight - currentHeight);//find the difference in inches
             double scalar = .5;//the scale value to determine motor speed
-            this.motor.setPower(Range.clip(Math.abs(difference * scalar), -1, 1));
+            this.motor.setPower(Range.clip(difference * scalar, -1, 1));
             if(Math.abs(difference) <= .1) {
                 this.motor.setPower(0);
+                this.raising = false;
                 return true;
             }
             return false;
         }
+        public void raise (double raiseValue) {
+            this.motor.setPower(raiseValue);
+        }
+        double raiseingToValue;
 
-
-        boolean isOpen;
-        boolean pressed = false;
-        public void teleGlyph (double raiseValue, boolean openClose) {
-            if(motorEncoderValue >= -10 && motorEncoderValue <= maximumHeight && Math.abs(raiseValue) > .01)
-                this.motor.setPower(raiseValue);
-            else if (!(motorEncoderValue <= maximumHeight) && raiseValue > .01)
-                 this.motor.setPower(raiseValue);
-            else if (!(motorEncoderValue >= -10) && raiseValue < -.01)
-                this.motor.setPower(raiseValue);
-            else
-                this.motor.setPower(0);
-
-
-            if(isOpen){
-                this.open();
+        public void glyphCollectorTeleOp (Gamepad g) {
+            if (!this.raising){
+                this.raise(-g.right_stick_y);
+                if(currentHeight < quarterHeight-1) {//
+                    if(g.dpad_up){
+                        raiseToValue(quarterHeight);
+                    } else if (g.dpad_down) {
+                        raise(0);
+                    }
+                } else if (currentHeight < halfHeight-1) {
+                    if(g.dpad_up){
+                        raise(halfHeight);
+                    } else if (g.dpad_down) {
+                        raise(quarterHeight);
+                    }
+                } else if (currentHeight < threeQuarterHeight-1) {
+                    if(g.dpad_up){
+                        raise(threeQuarterHeight);
+                    } else if (g.dpad_down) {
+                        raise(halfHeight);
+                    }
+                } else if (currentHeight < maximumHeight-1) {
+                    if(g.dpad_up){
+                        raise(maximumHeight);
+                    } else if (g.dpad_down) {
+                        raise(threeQuarterHeight);
+                    }
+                }
             } else {
-                this.closed();
+                raise(raiseingToValue);
             }
 
-
-            if(openClose && !pressed){
-                pressed = true;
-            } else if (!openClose && pressed){
-                pressed = false;
-                isOpen = !isOpen;
+            if(currentHeight < quarterHeight-1) {//
+                if(g.dpad_up){
+                    raiseToValue(quarterHeight);
+                } else if (g.dpad_down) {
+                        raise(0);
+                }
+            } else if (currentHeight < halfHeight-1) {
+                if(g.dpad_up){
+                    raise(halfHeight);
+                } else if (g.dpad_down) {
+                    raise(quarterHeight);
+                }
+            } else if (currentHeight < threeQuarterHeight-1) {
+                if(g.dpad_up){
+                    raise(threeQuarterHeight);
+                } else if (g.dpad_down) {
+                    raise(halfHeight);
+                }
+            } else if (currentHeight < maximumHeight-1) {
+                if(g.dpad_up){
+                    raise(maximumHeight);
+                } else if (g.dpad_down) {
+                    raise(threeQuarterHeight);
+                }
             }
+
 
         }
+
     }
-    public static class GlyphGrasper {
+    public static class GlyphGrasperLayer {
+        SingleGlyphGrasper leftGrasper;
+        SingleGlyphGrasper rightGrasper;
+        boolean open;
+        GlyphGrasperLayer (SingleGlyphGrasper leftGrasper, SingleGlyphGrasper rightGrasper){
+            this.leftGrasper = leftGrasper;
+            this.rightGrasper = rightGrasper;
+        }
+        public void open () {
+            this.leftGrasper.open();
+            this.rightGrasper.open();
+            this.open = true;
+        }
+        public void close () {
+            this.leftGrasper.open();
+            this.rightGrasper.open();
+            this.open = false;
+        }
+        public void alternateState () {
+            if(open) {
+                this.close();
+            } else {
+                this.open();
+            }
+        }
+    }
+    public static class SingleGlyphGrasper {
         Servo servo;
         double openValue;
         double closeValue;
-        GlyphGrasper (Servo servo, double openValue, double closeValue) {
+        SingleGlyphGrasper (Servo servo, double openValue, double closeValue) {
             this.servo = servo;
             this.closeValue = closeValue;
             this.openValue = openValue;

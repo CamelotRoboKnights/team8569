@@ -1,5 +1,7 @@
 package org.firstinspires.ftc.teamcode.team.Merlin1718.WestCoast;
 
+import android.widget.GridLayout;
+
 import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.hardware.bosch.JustLoggingAccelerationIntegrator;
 import com.qualcomm.hardware.kauailabs.NavxMicroNavigationSensor;
@@ -16,19 +18,22 @@ public class WestCoastHardware {
 
     private DcMotor  motorR    = null;
     private DcMotor  motorL    = null;
-    public DcMotor  glyph    = null;
-    public Servo leftGrasperServo = null;
-    public Servo rightGrasperServo = null;
-    public Servo sorter = null;
-    public ColorSensor colorSensor = null;
-    public BNO055IMU imu;
-    public NavxMicroNavigationSensor navX;
+    private DcMotor  glyph    = null;
+    private Servo leftTopGrasperServo = null;
+    private Servo rightTopGrasperServo = null;
+    private Servo leftBottomGrasperServo = null;
+    private Servo rightBottomGrasperServo = null;
+
+    private Servo sorter = null;
+    private ColorSensor colorSensor = null;
+    private BNO055IMU imu;
+    private NavxMicroNavigationSensor navX;
     IntegratingGyroscope gyro;
 
 
 
-    public Orientation angles;
-    public Acceleration gravity;
+    private Orientation angles;
+    private Acceleration gravity;
 
     /* local OpMode members. */
     HardwareMap hwMap           =  null; //Saying this this has no opmode
@@ -46,8 +51,8 @@ public class WestCoastHardware {
         motorR  = hwMap.dcMotor.get("motorR");//Finds the Right motor in the hardware map
         motorL  = hwMap.dcMotor.get("motorL");//Finds the Left motor in the hardware map
         glyph = hwMap.dcMotor.get("glyph");
-        leftGrasperServo = hwMap.servo.get("leftGrasper");
-        rightGrasperServo = hwMap.servo.get("rightGrasper");
+        leftTopGrasperServo = hwMap.servo.get("leftTopGrasper");
+        rightTopGrasperServo = hwMap.servo.get("rightTopGrasper");
         sorter = hwMap.servo.get("sorter");
         colorSensor = hwMap.get(ColorSensor.class, "color");
         navX = hwMap.get(NavxMicroNavigationSensor.class, "navx");
@@ -89,16 +94,41 @@ public class WestCoastHardware {
 
 
     }
+    private double glyphCollectorMaxHeight = 10;
+    private double glyphCollectorTicksPerRotation = 1220;
+    private double glyphCollectorSpoolDiameter = 1;
+
+
     public WestCoastClass.WestCoastDrive westCoast =
             new WestCoastClass.WestCoastDrive(motorL, motorR);
+
     public SpecificHardware.JewelSorter jewelSorter =
             new SpecificHardware.JewelSorter(colorSensor, sorter, 0, 1);
-    private SpecificHardware.GlyphGrasper leftGrasper =
-            new SpecificHardware.GlyphGrasper(leftGrasperServo, 0, 1);
-    private SpecificHardware.GlyphGrasper rightGrasper =
-            new SpecificHardware.GlyphGrasper(rightGrasperServo, 1, 0);
-    private SpecificHardware.GlyphCollector glyphCollector =
-            new SpecificHardware.GlyphCollector(glyph, leftGrasper, rightGrasper, 10,1220,1);
+
+
+    private SpecificHardware.SingleGlyphGrasper topLeftGrasper =
+            new SpecificHardware.SingleGlyphGrasper(leftTopGrasperServo, 0, 1);
+
+    private SpecificHardware.SingleGlyphGrasper topRightGrasper =
+            new SpecificHardware.SingleGlyphGrasper(rightTopGrasperServo, 1, 0);
+
+    private SpecificHardware.SingleGlyphGrasper bottomLeftGrasper =
+            new SpecificHardware.SingleGlyphGrasper(leftBottomGrasperServo, 0, 1);
+
+    private SpecificHardware.SingleGlyphGrasper bottomRightGrasper =
+            new SpecificHardware.SingleGlyphGrasper(rightBottomGrasperServo, 1, 0);
+
+    private SpecificHardware.GlyphGrasperLayer topGlyphLayer =
+            new SpecificHardware.GlyphGrasperLayer(topLeftGrasper, topRightGrasper);
+
+    private SpecificHardware.GlyphGrasperLayer bottomGlyphLayer =
+            new SpecificHardware.GlyphGrasperLayer(bottomLeftGrasper, bottomRightGrasper);
+
+
+    public SpecificHardware.GlyphCollector glyphCollector =
+            new SpecificHardware.GlyphCollector(glyph, topGlyphLayer, bottomGlyphLayer,
+                    glyphCollectorMaxHeight, glyphCollectorTicksPerRotation,
+                    glyphCollectorSpoolDiameter);
             //motor, leftGrasper, rightGrasper, maxHeight, ticksPerRotation, spoolDiameter.
 
 }

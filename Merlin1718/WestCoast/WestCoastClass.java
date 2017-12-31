@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode.team.Merlin1718.WestCoast;
 
 
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.I2cDevice;
 import com.qualcomm.robotcore.util.Range;
 
@@ -25,6 +26,11 @@ public class WestCoastClass {
         public void drive (double leftMotorPower, double rightMotorPower) {
             this.leftMotor.setPower(Range.clip(leftMotorPower, -1, 1));
             this.rightMotor.setPower(Range.clip(rightMotorPower, -1, 1));
+        }
+        public void arcadeJoystick (Gamepad g) {
+            double leftMotorPower = -g.left_stick_y + g.left_stick_x;
+            double rightMotorPower = -g.left_stick_y - g.left_stick_x;
+            this.drive(leftMotorPower, rightMotorPower);
         }
             // this makes the encoders 0 so our measurments dont get messed up
         boolean firstTime = true;
