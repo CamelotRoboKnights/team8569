@@ -13,11 +13,14 @@ public class JoyValues {
             this.y = y;
             this.z = z;
         }
+        //x & y axis is = to left stick x & y axis
         void assignValues (Gamepad g) {
             this.x = g.left_stick_x;
             this.y = g.left_stick_y;
             this.z = 0;
         }
+        // This makes it so that the robot is always oriented from the driver perspective no matter what orientation the robot is at
+	// 
         void makeFieldOrientated (double orientationDegrees) {
             double x = this.x;
             double y = this.y;
