@@ -91,8 +91,9 @@ public class SpecificHardware {
             this.motor.setPower(raiseValue);
         }
         double raiseingToValue;
-
-        public void glyphCollectorTeleOp (Gamepad g) {
+        boolean topPressed;
+        boolean bottomPressed;
+        public void teleOp (Gamepad g) {
             if (!this.raising){
                 this.raise(-g.right_stick_y);
                 if(currentHeight < quarterHeight-1) {//
@@ -124,32 +125,19 @@ public class SpecificHardware {
                 raise(raiseingToValue);
             }
 
-            if(currentHeight < quarterHeight-1) {//
-                if(g.dpad_up){
-                    raiseToValue(quarterHeight);
-                } else if (g.dpad_down) {
-                        raise(0);
-                }
-            } else if (currentHeight < halfHeight-1) {
-                if(g.dpad_up){
-                    raise(halfHeight);
-                } else if (g.dpad_down) {
-                    raise(quarterHeight);
-                }
-            } else if (currentHeight < threeQuarterHeight-1) {
-                if(g.dpad_up){
-                    raise(threeQuarterHeight);
-                } else if (g.dpad_down) {
-                    raise(halfHeight);
-                }
-            } else if (currentHeight < maximumHeight-1) {
-                if(g.dpad_up){
-                    raise(maximumHeight);
-                } else if (g.dpad_down) {
-                    raise(threeQuarterHeight);
-                }
+            if(g.a && !topPressed){
+                topPressed = true;
+            } else if (!g.a && topPressed){
+                topPressed = false;
+                topGrasper.alternateState();
             }
 
+            if(g.x && !bottomPressed){
+                bottomPressed = true;
+            } else if (!g.x && bottomPressed){
+                bottomPressed = false;
+                bottomGrasper.alternateState();
+            }
 
         }
 
