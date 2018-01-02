@@ -53,6 +53,8 @@ public class WestCoastHardware {
         glyph = hwMap.dcMotor.get("glyph");
         leftTopGrasperServo = hwMap.servo.get("leftTopGrasper");
         rightTopGrasperServo = hwMap.servo.get("rightTopGrasper");
+        leftBottomGrasperServo = hwMap.servo.get("leftBottomGrasper");
+        rightBottomGrasperServo = hwMap.servo.get("rightBottomGrasper");
         sorter = hwMap.servo.get("sorter");
         colorSensor = hwMap.get(ColorSensor.class, "color");
         navX = hwMap.get(NavxMicroNavigationSensor.class, "navx");
