@@ -13,6 +13,8 @@ import org.firstinspires.ftc.robotcore.external.navigation.Acceleration;
 import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
 import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.Servo;
+import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+
 
 public class WestCoastHardware {
 
@@ -96,12 +98,12 @@ public class WestCoastHardware {
 
         westCoast = new WestCoastClass.WestCoastDrive(motorL, motorR);
 
-        jewelSorter = new SpecificHardware.JewelSorter(colorSensor, sorter, 0, 1);
+        jewelSorter = new SpecificHardware.JewelSorter(colorSensor, sorter, .8, .1);
 
-        topLeftGrasper = new SpecificHardware.SingleGlyphGrasper(leftTopGrasperServo, 0, 1);
-        topRightGrasper = new SpecificHardware.SingleGlyphGrasper(rightTopGrasperServo, 1, 0);
-        bottomLeftGrasper = new SpecificHardware.SingleGlyphGrasper(leftBottomGrasperServo, 0, 1);
-        bottomRightGrasper  = new SpecificHardware.SingleGlyphGrasper(rightBottomGrasperServo, 1, 0);
+        topLeftGrasper = new SpecificHardware.SingleGlyphGrasper(leftTopGrasperServo, 0, .1);//
+        topRightGrasper = new SpecificHardware.SingleGlyphGrasper(rightTopGrasperServo, 1, .8);
+        bottomLeftGrasper = new SpecificHardware.SingleGlyphGrasper(leftBottomGrasperServo, .8, 1);
+        bottomRightGrasper  = new SpecificHardware.SingleGlyphGrasper(rightBottomGrasperServo, .1, 0);//
 
         topGlyphLayer = new SpecificHardware.GlyphGrasperLayer(topLeftGrasper, topRightGrasper);
         bottomGlyphLayer = new SpecificHardware.GlyphGrasperLayer(bottomLeftGrasper, bottomRightGrasper);

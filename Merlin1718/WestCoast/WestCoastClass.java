@@ -11,7 +11,7 @@ public class WestCoastClass {
         DcMotor leftMotor;
         DcMotor rightMotor;
         Wheel centerWheel = new Wheel(2);
-        double ticksPerRotation = 1120;
+        double ticksPerRotation = 560;
 
         //sets the motor positions
         double leftMotorEncoder = getLeftCurrentMotorPosition();
@@ -41,14 +41,14 @@ public class WestCoastClass {
             this.rightMotor.setPower(Range.clip(rightMotorPower, -1, 1));
         }
 
-        public void arcadeJoystick (double stick_y, double stick_x) {
+        public void arcadeJoystick (double stick_y, double stick_x, double speed) {
             double leftMotorPower = stick_y + stick_x;
             double rightMotorPower = stick_y - stick_x;
-            this.drive(leftMotorPower, rightMotorPower);
+            this.drive(leftMotorPower * speed, rightMotorPower * speed);
         }
         public void teleOp (Gamepad g) {
-            if(Math.abs(g.left_stick_y) > .01 || Math.abs(g.left_stick_x) > .01) this.arcadeJoystick(-g.left_stick_y, g.left_stick_x);
-            else if (Math.abs(g.right_stick_y) > .01 || Math.abs(g.right_stick_x) > .01) this.arcadeJoystick(-.25*g.left_stick_y, .25*g.right_stick_x);
+            if(Math.abs(g.left_stick_y) > .01 || Math.abs(g.left_stick_x) > .01) this.arcadeJoystick(-g.left_stick_y, g.left_stick_x, .5);
+            else if (Math.abs(g.right_stick_y) > .01 || Math.abs(g.right_stick_x) > .01) this.arcadeJoystick(-g.left_stick_y, g.right_stick_x, .5);
             else drive(0,0);
         }
             // this makes the encoders 0 so our measurments dont get messed up

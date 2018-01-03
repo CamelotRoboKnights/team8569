@@ -57,7 +57,23 @@ public class WestCoastTeleOp extends OpMode {
     public void loop() {//This runs while opmode is active
         robot.westCoast.teleOp(gamepad1);
         //robot.glyphCollector.teleOp(gamepad2);
-        robot.glyphCollector.raise(-gamepad2.right_stick_y);
+        robot.glyphCollector.teleOp(gamepad2);
+//        robot.glyphCollector.teleRaise(gamepad2);
+//        robot.glyphCollector.teleTopLayer(gamepad2);
+//        robot.glyphCollector.teleBottomLayer(gamepad2);
+//        if(gamepad1.b){
+//            robot.jewelSorter.raise();
+//        }
+//        if(gamepad1.x) {
+//            robot.jewelSorter.lower();//up and down are flipped
+//        }
+//        telemetry.addData("Blue?: ", robot.jewelSorter.isBlue());
+//        telemetry.addData("Red?: ", robot.jewelSorter.isRed());
+//        telemetry.addData("color", robot.jewelSorter.jewelColor());
+//        telemetry.addData("height", robot.glyphCollector.currentHeight);
+//        telemetry.addData("current blue: ", robot.jewelSorter.color.blue());
+//        telemetry.addData("current Red: ", robot.jewelSorter.color.red());
+//        telemetry.update();
     }
 
     @Override

@@ -1,4 +1,5 @@
 package org.firstinspires.ftc.teamcode.team.Merlin1718.WestCoast;
+import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 
 import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DcMotor;
@@ -11,12 +12,12 @@ import org.opencv.core.Mat;
 
 public class SpecificHardware {
     public static class JewelSorter {
-        ColorSensor color;
+        public ColorSensor color;
         Servo servo;
         double up;
         double down;
-        double redJewelThreshold = 0;
-        double blueJewelThreshold = 0;
+        double redJewelThreshold = .5;
+        double blueJewelThreshold = .5;
 
         JewelSorter (ColorSensor color, Servo servo, double up, double down){
             this.color = color;
@@ -33,15 +34,15 @@ public class SpecificHardware {
             return true;
         }
         public String jewelColor () {
-            if (this.color.red() > redJewelThreshold) return "red";
-            else if (this.color.blue() > blueJewelThreshold) return "blue";
+            if (this.color.red() > this.color.blue()) return "red";
+            else if (this.color.blue() > this.color.red()) return "blue";
             return "null";
         }
         public boolean isBlue () {
-            return this.color.blue() > blueJewelThreshold;
+            return this.color.blue() > this.color.red();
         }
         public boolean isRed () {
-            return this.color.red() > redJewelThreshold;
+            return this.color.red() > this.color.blue();
         }
     }
     public static class GlyphCollector {
@@ -57,9 +58,9 @@ public class SpecificHardware {
         double ticksPerRotation;
         double spoolDiameter;
         private double spoolCircumference = spoolDiameter * Math.PI;
-        private double quarterHeight = maximumHeight/4;
-        private double halfHeight = quarterHeight*2;
-        private double threeQuarterHeight = quarterHeight*3;
+        private double thirdHeight = maximumHeight/3;
+        private double halfHeight = maximumHeight/2;
+        private double twoThirdsHeight = thirdHeight*2;
 
         private boolean raising = false;
 
@@ -94,56 +95,76 @@ public class SpecificHardware {
             return false;
         }
         public void raise (double raiseValue) {
-            this.motor.setPower(raiseValue);
+            this.motor.setPower(Range.clip(raiseValue,-1,1));
         }
         double raiseingToValue;
-        boolean topPressed;
-        boolean bottomPressed;
-        public void teleOp (Gamepad g) {
-            if (!this.raising){
-                this.raise(-g.right_stick_y);
-                if(currentHeight < quarterHeight-1) {//
-                    if(g.dpad_up){
-                        raiseToValue(quarterHeight);
-                    } else if (g.dpad_down) {
-                        raiseToValue(0);
-                    }
-                } else if (currentHeight < halfHeight-1) {
-                    if(g.dpad_up){
-                        raiseToValue(halfHeight);
-                    } else if (g.dpad_down) {
-                        raiseToValue(quarterHeight);
-                    }
-                } else if (currentHeight < threeQuarterHeight-1) {
-                    if(g.dpad_up){
-                        raiseToValue(threeQuarterHeight);
-                    } else if (g.dpad_down) {
-                        raiseToValue(halfHeight);
-                    }
-                } else if (currentHeight < maximumHeight-1) {
-                    if(g.dpad_up){
-                        raiseToValue(maximumHeight);
-                    } else if (g.dpad_down) {
-                        raiseToValue(threeQuarterHeight);
-                    }
-                }
-            } else {
-                raiseToValue(raiseingToValue);
-            }
+        public void teleRaise (Gamepad g) {
+            if(this.currentHeight >= 0 && Math.abs(g.left_stick_y) > .01 &&
+                    this.currentHeight <= maximumHeight)  this.raise(-g.left_stick_y);
 
+            else if (-g.left_stick_y > .01 && this.currentHeight <= maximumHeight)
+                this.raise(-g.left_stick_y);
+
+            else if (-g.left_stick_y < -.01 && this.currentHeight >= 0) this.raise(-g.left_stick_y);
+
+            else raise(0);
+        }
+        public void teleRaiseToPosition (Gamepad g){
+            if(currentHeight < thirdHeight -1) {//
+                if(g.dpad_up){
+                    raiseToValue(thirdHeight);
+                }
+            } else if (currentHeight < twoThirdsHeight-1) {
+                if(g.dpad_up){
+                    raiseToValue(twoThirdsHeight);
+                } else if (g.dpad_down) {
+                    raiseToValue(0);
+                }
+            } else if (currentHeight < maximumHeight - 1) {
+                if(g.dpad_up){
+                    raiseToValue(maximumHeight);
+                } else if (g.dpad_down) {
+                    raiseToValue(thirdHeight);
+                }
+            }else {
+                if(g.dpad_down) {
+                    raiseToValue(twoThirdsHeight);
+                }
+            }
+        }
+
+        boolean topPressed;
+
+        public void teleTopLayer (Gamepad g) {
             if(g.y && !topPressed){
                 topPressed = true;
             } else if (!g.y && topPressed){
                 topPressed = false;
                 topGrasper.alternateState();
             }
+        }
 
+        boolean bottomPressed;
+
+        public void teleBottomLayer (Gamepad g) {
             if(g.a && !bottomPressed){
                 bottomPressed = true;
             } else if (!g.a && bottomPressed){
                 bottomPressed = false;
                 bottomGrasper.alternateState();
             }
+        }
+        public void teleOp (Gamepad g) {
+
+//            if (!this.raising){
+//                this.teleRaise(g);
+//                this.teleRaiseToPosition(g);
+//            } else {
+//                raiseToValue(raiseingToValue);
+//            }
+            this.raise(-g.right_stick_y/4);
+            this.teleTopLayer(g);
+            this.teleBottomLayer(g);
 
         }
 
@@ -165,8 +186,8 @@ public class SpecificHardware {
             this.open = true;
         }
         public void close () {
-            this.leftGrasper.open();
-            this.rightGrasper.open();
+            this.leftGrasper.close();
+            this.rightGrasper.close();
             this.open = false;
         }
         public void alternateState () {
