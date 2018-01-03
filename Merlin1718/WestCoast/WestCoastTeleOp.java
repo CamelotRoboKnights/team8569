@@ -53,7 +53,7 @@ public class WestCoastTeleOp extends OpMode {
     @Override
     public void loop(){//This runs while opmode is active
         robot.westCoast.arcadeJoystick(gamepad1);
-        robot.glyphCollector.teleOp(gamepad2);
+        // robot.glyphCollector.teleOp(gamepad2);
     }
     @Override
     public void stop(){}

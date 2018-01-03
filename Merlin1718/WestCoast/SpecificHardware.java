@@ -125,16 +125,16 @@ public class SpecificHardware {
                 raise(raiseingToValue);
             }
 
-            if(g.a && !topPressed){
+            if(g.y && !topPressed){
                 topPressed = true;
-            } else if (!g.a && topPressed){
+            } else if (!g.y && topPressed){
                 topPressed = false;
                 topGrasper.alternateState();
             }
 
-            if(g.x && !bottomPressed){
+            if(g.a && !bottomPressed){
                 bottomPressed = true;
-            } else if (!g.x && bottomPressed){
+            } else if (!g.a && bottomPressed){
                 bottomPressed = false;
                 bottomGrasper.alternateState();
             }
@@ -142,6 +142,9 @@ public class SpecificHardware {
         }
 
     }
+
+
+
     public static class GlyphGrasperLayer {
         SingleGlyphGrasper leftGrasper;
         SingleGlyphGrasper rightGrasper;
