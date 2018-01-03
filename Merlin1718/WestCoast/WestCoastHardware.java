@@ -16,8 +16,8 @@ import com.qualcomm.robotcore.hardware.Servo;
 
 public class WestCoastHardware {
 
-    private DcMotor  motorR    = null;
-    private DcMotor  motorL    = null;
+    public DcMotor  motorR    = null;
+    public DcMotor  motorL    = null;
     private DcMotor  glyph    = null;
     private Servo leftTopGrasperServo = null;
     private Servo rightTopGrasperServo = null;
@@ -82,8 +82,8 @@ public class WestCoastHardware {
 
 
         motorR.setDirection(DcMotorSimple.Direction.FORWARD);//Sets the motor power to positive because duh.
-        motorL.setDirection(DcMotorSimple.Direction.FORWARD);//Sets the motor power as positive because duh.
-        glyph.setDirection(DcMotorSimple.Direction.FORWARD);
+        motorL.setDirection(DcMotorSimple.Direction.REVERSE);//Sets the motor power as positive because duh.
+        glyph.setDirection(DcMotorSimple.Direction.REVERSE);
 
         motorR.setPower(0);//Sets the power to 0 so motors don't move
         motorL.setPower(0);
@@ -94,43 +94,40 @@ public class WestCoastHardware {
         glyph.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
 
+        westCoast = new WestCoastClass.WestCoastDrive(motorL, motorR);
 
+        jewelSorter = new SpecificHardware.JewelSorter(colorSensor, sorter, 0, 1);
+
+        topLeftGrasper = new SpecificHardware.SingleGlyphGrasper(leftTopGrasperServo, 0, 1);
+        topRightGrasper = new SpecificHardware.SingleGlyphGrasper(rightTopGrasperServo, 1, 0);
+        bottomLeftGrasper = new SpecificHardware.SingleGlyphGrasper(leftBottomGrasperServo, 0, 1);
+        bottomRightGrasper  = new SpecificHardware.SingleGlyphGrasper(rightBottomGrasperServo, 1, 0);
+
+        topGlyphLayer = new SpecificHardware.GlyphGrasperLayer(topLeftGrasper, topRightGrasper);
+        bottomGlyphLayer = new SpecificHardware.GlyphGrasperLayer(bottomLeftGrasper, bottomRightGrasper);
+
+        glyphCollector = new SpecificHardware.GlyphCollector(glyph, topGlyphLayer, bottomGlyphLayer,
+                        glyphCollectorMaxHeight, glyphCollectorTicksPerRotation,
+                        glyphCollectorSpoolDiameter);
+        //motor, leftGrasper, rightGrasper, maxHeight, ticksPerRotation, spoolDiameter.
     }
-    private double glyphCollectorMaxHeight = 10;
+    private double glyphCollectorMaxHeight = 30;
     private double glyphCollectorTicksPerRotation = 1220;
     private double glyphCollectorSpoolDiameter = 1;
 
 
-    public WestCoastClass.WestCoastDrive westCoast =
-            new WestCoastClass.WestCoastDrive(motorL, motorR);
+    public WestCoastClass.WestCoastDrive westCoast;
 
-    public SpecificHardware.JewelSorter jewelSorter =
-            new SpecificHardware.JewelSorter(colorSensor, sorter, 0, 1);
+    public SpecificHardware.JewelSorter jewelSorter;
 
+    private SpecificHardware.SingleGlyphGrasper topLeftGrasper;
+    private SpecificHardware.SingleGlyphGrasper topRightGrasper;
+    private SpecificHardware.SingleGlyphGrasper bottomLeftGrasper;
+    private SpecificHardware.SingleGlyphGrasper bottomRightGrasper;
 
-    private SpecificHardware.SingleGlyphGrasper topLeftGrasper =
-            new SpecificHardware.SingleGlyphGrasper(leftTopGrasperServo, 0, 1);
+    private SpecificHardware.GlyphGrasperLayer topGlyphLayer;
+    private SpecificHardware.GlyphGrasperLayer bottomGlyphLayer;
 
-    private SpecificHardware.SingleGlyphGrasper topRightGrasper =
-            new SpecificHardware.SingleGlyphGrasper(rightTopGrasperServo, 1, 0);
-
-    private SpecificHardware.SingleGlyphGrasper bottomLeftGrasper =
-            new SpecificHardware.SingleGlyphGrasper(leftBottomGrasperServo, 0, 1);
-
-    private SpecificHardware.SingleGlyphGrasper bottomRightGrasper =
-            new SpecificHardware.SingleGlyphGrasper(rightBottomGrasperServo, 1, 0);
-
-    private SpecificHardware.GlyphGrasperLayer topGlyphLayer =
-            new SpecificHardware.GlyphGrasperLayer(topLeftGrasper, topRightGrasper);
-
-    private SpecificHardware.GlyphGrasperLayer bottomGlyphLayer =
-            new SpecificHardware.GlyphGrasperLayer(bottomLeftGrasper, bottomRightGrasper);
-
-
-    public SpecificHardware.GlyphCollector glyphCollector =
-            new SpecificHardware.GlyphCollector(glyph, topGlyphLayer, bottomGlyphLayer,
-                    glyphCollectorMaxHeight, glyphCollectorTicksPerRotation,
-                    glyphCollectorSpoolDiameter);
-            //motor, leftGrasper, rightGrasper, maxHeight, ticksPerRotation, spoolDiameter.
+    public SpecificHardware.GlyphCollector glyphCollector;
 
 }

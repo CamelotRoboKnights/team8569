@@ -32,51 +32,35 @@ import java.io.StringWriter;
 import static java.lang.Boolean.FALSE;
 import static java.lang.Boolean.TRUE;
 
-@Autonomous(name = "Tele", group = "Cardinal")
+@TeleOp(name = "Tele", group = "Cardinal")
 //@Disabled //Uncomment this if it is not wanted on the phone
 public class WestCoastTeleOp extends OpMode {
 
     public WestCoastHardware robot = new WestCoastHardware();//The hardware map needs to be the hardware map of the robot we are using
 
-    public void init(){//This only runs once
+    public void init() {//This only runs once
         robot.init(hardwareMap);
 
         ;//Initializing everything needed
     }
+
     @Override
-    public void init_loop(){//Tis runs many time during the init phase
+    public void init_loop() {//Tis runs many time during the init phase
     }
+
     @Override
-    public void start(){}//This runs when the start button is pressed
+    public void start() {
+    }//This runs when the start button is pressed
     // distance of variables
 
     @Override
-    public void loop(){//This runs while opmode is active
-        robot.westCoast.arcadeJoystick(gamepad1);
-        robot.glyphCollector.teleOp(gamepad2);
+    public void loop() {//This runs while opmode is active
+        robot.westCoast.teleOp(gamepad1);
+        //robot.glyphCollector.teleOp(gamepad2);
+        robot.glyphCollector.raise(-gamepad2.right_stick_y);
     }
+
     @Override
-    public void stop(){}
-
-
-
-
-
-
-
-
-    private String choseColumnCase(String column){
-        switch (column){
-            case "RIGHT":
-                return "ToRightColumn";
-            case "CENTER":
-                return "ToCenterColumn";
-            case "LEFT":
-                return "ToLeftColumn";
-            default:
-                telemetry.addData("Not Left Right Or", " Center");
-                return "";
-        }
+    public void stop() {
     }
-
 }

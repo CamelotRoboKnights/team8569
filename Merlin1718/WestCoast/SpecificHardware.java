@@ -51,7 +51,7 @@ public class SpecificHardware {
         GlyphGrasperLayer topGrasper;
         GlyphGrasperLayer bottomGrasper;
 
-        double motorEncoderValue = motor.getCurrentPosition();
+        double motorEncoderValue = getCurrentMotorPosition();
 
         double maximumHeight;
         double ticksPerRotation;
@@ -73,6 +73,12 @@ public class SpecificHardware {
             this.maximumHeight = maximumHeight;
             this.ticksPerRotation = ticksPerRotation;
             this.spoolDiameter = spoolDiameter;
+        }
+        private double getCurrentMotorPosition () {
+            if (!(this.motor == null)) {
+                return this.motor.getCurrentPosition();
+            }
+            else return 0;
         }
         public boolean raiseToValue (double targetHeight) {//give a given height
             this.raising = true;
@@ -100,29 +106,29 @@ public class SpecificHardware {
                     if(g.dpad_up){
                         raiseToValue(quarterHeight);
                     } else if (g.dpad_down) {
-                        raise(0);
+                        raiseToValue(0);
                     }
                 } else if (currentHeight < halfHeight-1) {
                     if(g.dpad_up){
-                        raise(halfHeight);
+                        raiseToValue(halfHeight);
                     } else if (g.dpad_down) {
-                        raise(quarterHeight);
+                        raiseToValue(quarterHeight);
                     }
                 } else if (currentHeight < threeQuarterHeight-1) {
                     if(g.dpad_up){
-                        raise(threeQuarterHeight);
+                        raiseToValue(threeQuarterHeight);
                     } else if (g.dpad_down) {
-                        raise(halfHeight);
+                        raiseToValue(halfHeight);
                     }
                 } else if (currentHeight < maximumHeight-1) {
                     if(g.dpad_up){
-                        raise(maximumHeight);
+                        raiseToValue(maximumHeight);
                     } else if (g.dpad_down) {
-                        raise(threeQuarterHeight);
+                        raiseToValue(threeQuarterHeight);
                     }
                 }
             } else {
-                raise(raiseingToValue);
+                raiseToValue(raiseingToValue);
             }
 
             if(g.a && !topPressed){

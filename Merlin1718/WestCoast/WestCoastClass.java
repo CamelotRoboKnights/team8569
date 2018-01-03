@@ -14,23 +14,42 @@ public class WestCoastClass {
         double ticksPerRotation = 1120;
 
         //sets the motor positions
-        double leftMotorEncoder = this.leftMotor.getCurrentPosition();
-        double rightMotorEncoder = this.rightMotor.getCurrentPosition();
+        double leftMotorEncoder = getLeftCurrentMotorPosition();
+        double rightMotorEncoder = getRightCurrentMotorPosition();
 
-
+        private double getLeftCurrentMotorPosition () {
+            if (!(this.leftMotor == null)) {
+                return this.leftMotor.getCurrentPosition();
+            }
+            else return 0;
+        }
+        private double getRightCurrentMotorPosition () {
+            if (!(this.rightMotor == null)) {
+                return this.rightMotor.getCurrentPosition();
+            }
+            else return 0;
+        }
         WestCoastDrive (DcMotor leftMotor, DcMotor rightMotor){
             this.leftMotor = leftMotor;
             this.rightMotor = rightMotor;
+
+
         }
         //this sets the motor power to inbetween -1 & 1
         public void drive (double leftMotorPower, double rightMotorPower) {
             this.leftMotor.setPower(Range.clip(leftMotorPower, -1, 1));
             this.rightMotor.setPower(Range.clip(rightMotorPower, -1, 1));
         }
-        public void arcadeJoystick (Gamepad g) {
-            double leftMotorPower = -g.left_stick_y + g.left_stick_x;
-            double rightMotorPower = -g.left_stick_y - g.left_stick_x;
+
+        public void arcadeJoystick (double stick_y, double stick_x) {
+            double leftMotorPower = stick_y + stick_x;
+            double rightMotorPower = stick_y - stick_x;
             this.drive(leftMotorPower, rightMotorPower);
+        }
+        public void teleOp (Gamepad g) {
+            if(Math.abs(g.left_stick_y) > .01 || Math.abs(g.left_stick_x) > .01) this.arcadeJoystick(-g.left_stick_y, g.left_stick_x);
+            else if (Math.abs(g.right_stick_y) > .01 || Math.abs(g.right_stick_x) > .01) this.arcadeJoystick(-.25*g.left_stick_y, .25*g.right_stick_x);
+            else drive(0,0);
         }
             // this makes the encoders 0 so our measurments dont get messed up
         boolean firstTime = true;
