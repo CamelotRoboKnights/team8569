@@ -58,6 +58,7 @@ public class WestCoastTeleOp extends OpMode {
         robot.westCoast.teleOp(gamepad1);
         //robot.glyphCollector.teleOp(gamepad2);
         robot.glyphCollector.teleOp(gamepad2);
+        double currentHeight = robot.glyphCollector.currentHeight;
 //        robot.glyphCollector.teleRaise(gamepad2);
 //        robot.glyphCollector.teleTopLayer(gamepad2);
 //        robot.glyphCollector.teleBottomLayer(gamepad2);
@@ -70,7 +71,8 @@ public class WestCoastTeleOp extends OpMode {
 //        telemetry.addData("Blue?: ", robot.jewelSorter.isBlue());
 //        telemetry.addData("Red?: ", robot.jewelSorter.isRed());
 //        telemetry.addData("color", robot.jewelSorter.jewelColor());
-//        telemetry.addData("height", robot.glyphCollector.currentHeight);
+          telemetry.addData("height", robot.glyphCollector.getCurrentMotorPosition());
+          telemetry.addData("angle", robot.navx.getCurrentOrientation());
 //        telemetry.addData("current blue: ", robot.jewelSorter.color.blue());
 //        telemetry.addData("current Red: ", robot.jewelSorter.color.red());
 //        telemetry.update();

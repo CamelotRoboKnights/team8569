@@ -16,6 +16,7 @@ import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 
+
 public class WestCoastHardware {
 
     public DcMotor  motorR    = null;
@@ -94,14 +95,15 @@ public class WestCoastHardware {
         motorR.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         motorL.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         glyph.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        
 
 
         westCoast = new WestCoastClass.WestCoastDrive(motorL, motorR);
 
-        jewelSorter = new SpecificHardware.JewelSorter(colorSensor, sorter, .8, .1);
+        jewelSorter = new SpecificHardware.JewelSorter(colorSensor, sorter, .8, .1);// Up down
 
-        topLeftGrasper = new SpecificHardware.SingleGlyphGrasper(leftTopGrasperServo, 0, .1);//
-        topRightGrasper = new SpecificHardware.SingleGlyphGrasper(rightTopGrasperServo, 1, .8);
+        topLeftGrasper = new SpecificHardware.SingleGlyphGrasper(leftTopGrasperServo, .1, 0);//Open close
+        topRightGrasper = new SpecificHardware.SingleGlyphGrasper(rightTopGrasperServo, .8, 1);
         bottomLeftGrasper = new SpecificHardware.SingleGlyphGrasper(leftBottomGrasperServo, .8, 1);
         bottomRightGrasper  = new SpecificHardware.SingleGlyphGrasper(rightBottomGrasperServo, .1, 0);//
 
@@ -112,6 +114,10 @@ public class WestCoastHardware {
                         glyphCollectorMaxHeight, glyphCollectorTicksPerRotation,
                         glyphCollectorSpoolDiameter);
         //motor, leftGrasper, rightGrasper, maxHeight, ticksPerRotation, spoolDiameter.
+
+        revIMU = new Sensors.RevIMU(imu);
+        navx = new Sensors.Navx(navX);
+        motoG = new Sensors.Phone();
     }
     private double glyphCollectorMaxHeight = 30;
     private double glyphCollectorTicksPerRotation = 1220;
@@ -132,4 +138,7 @@ public class WestCoastHardware {
 
     public SpecificHardware.GlyphCollector glyphCollector;
 
+    public Sensors.RevIMU revIMU;
+    public Sensors.Navx navx;
+    public Sensors.Phone motoG;
 }

@@ -27,7 +27,8 @@ public class SpecificHardware {
         }
         public boolean lower () {
             this.servo.setPosition(this.down);
-            return true;
+            if(Math.abs(this.servo.getPosition()-this.down) < .05) return true;
+            return false;
         }
         public boolean raise () {
             this.servo.setPosition(this.up);
@@ -55,8 +56,8 @@ public class SpecificHardware {
         double motorEncoderValue = getCurrentMotorPosition();
 
         double maximumHeight;
-        double ticksPerRotation;
-        double spoolDiameter;
+        double ticksPerRotation = 1;
+        double spoolDiameter = 1;
         private double spoolCircumference = spoolDiameter * Math.PI;
         private double thirdHeight = maximumHeight/3;
         private double halfHeight = maximumHeight/2;
@@ -75,7 +76,7 @@ public class SpecificHardware {
             this.ticksPerRotation = ticksPerRotation;
             this.spoolDiameter = spoolDiameter;
         }
-        private double getCurrentMotorPosition () {
+        public double getCurrentMotorPosition () {
             if (!(this.motor == null)) {
                 return this.motor.getCurrentPosition();
             }

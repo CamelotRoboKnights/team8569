@@ -57,12 +57,12 @@ public class WestCoastClass {
         public boolean driveBasedOnEncoders(double distance, int direction){
 
             boolean returnValue;
-            double currentEncoder = leftMotorEncoder;
+            double currentEncoder = getLeftCurrentMotorPosition();
             if(firstTime) {
                 firstTime = false;
                 startEncoder = currentEncoder;
             }
-            double distanceTraveled = ((Math.abs(currentEncoder  - startEncoder) / ticksPerRotation) * centerWheel.circumference);// need to subtract start encoder
+            double distanceTraveled = ((Math.abs(currentEncoder  - startEncoder) / ticksPerRotation) * centerWheel.circumference);
             if (distanceTraveled > distance) {//If I have gone the distance I want stop moving
                 this.drive(0,0);
                 firstTime = true;
@@ -70,7 +70,7 @@ public class WestCoastClass {
             }
             else {//Otherwise keep going
                 returnValue = false;
-                this.drive(.5*direction, .5*direction);
+                this.drive(.01*direction, .01*direction);
             }
 
             return returnValue;
@@ -84,19 +84,18 @@ public class WestCoastClass {
             double headingDiffernceScalled = headingDifference * headingScaler;//The scaled value that is used for the motor power
             headingDiffernceScalled = Range.clip(headingDiffernceScalled, -1, 1);//Making sure that the number is within a reasonable motor power
 
-            if(headingDiffernceScalled < .09 && headingDiffernceScalled > 0){//making sure the motor power is not so low that the robot wont move
-                headingDiffernceScalled = .09;
+            if(headingDiffernceScalled < .01 && headingDiffernceScalled > 0){//making sure the motor power is not so low that the robot wont move
+                headingDiffernceScalled = .01;
             }
-            else if(Math.abs(headingDiffernceScalled) < .09 && headingDiffernceScalled < 0){//making sure the motor power is not so low that the robot wont move
-                headingDiffernceScalled = -.09;
+            else if(Math.abs(headingDiffernceScalled) < .01 && headingDiffernceScalled < 0){//making sure the motor power is not so low that the robot wont move
+                headingDiffernceScalled = -.01;
             }
-            else{
-            }
-            if (1 >= Math.abs(headingDifference)) {//If it is within 2 degrees I am done
+
+            if (.5 >= Math.abs(headingDifference)) {//If it is within 2 degrees I am done
                 this.drive(0,0);
                 returnValue = true;
             } else {//Otherwise it isn't done
-                drive(-headingDiffernceScalled, headingDiffernceScalled);//My method to run the motors
+                drive(headingDiffernceScalled, -headingDiffernceScalled);//My method to run the motors
                 returnValue = false;
             }
             return returnValue;

@@ -4,41 +4,41 @@ package org.firstinspires.ftc.teamcode.team.Merlin1718.WestCoast;
 
 
 
-        import android.hardware.TriggerEventListener;
+import android.hardware.TriggerEventListener;
 
-        import com.qualcomm.robotcore.eventloop.SyncdDevice;
-        import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
-        import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.eventloop.SyncdDevice;
+import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
-        import java.sql.Driver;
-        import com.qualcomm.robotcore.eventloop.opmode.OpMode;
-        import com.qualcomm.robotcore.hardware.ColorSensor;
-        import com.qualcomm.robotcore.hardware.DcMotor;
-        import com.qualcomm.robotcore.hardware.Servo;
-        import com.qualcomm.robotcore.util.Range;
+import java.sql.Driver;
+import com.qualcomm.robotcore.eventloop.opmode.OpMode;
+import com.qualcomm.robotcore.hardware.ColorSensor;
+import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.Servo;
+import com.qualcomm.robotcore.util.Range;
 
-        import org.firstinspires.ftc.robotcore.external.ClassFactory;
-        import org.firstinspires.ftc.robotcore.external.matrices.OpenGLMatrix;
-        import org.firstinspires.ftc.robotcore.external.matrices.VectorF;
-        import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
-        import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
-        import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
-        import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
-        import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
-        import org.firstinspires.ftc.robotcore.external.navigation.RelicRecoveryVuMark;
-        import org.firstinspires.ftc.robotcore.external.navigation.VuMarkInstanceId;
-        import org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocalizer;
-        import org.firstinspires.ftc.robotcore.external.navigation.VuforiaTrackable;
-        import org.firstinspires.ftc.robotcore.external.navigation.VuforiaTrackableDefaultListener;
-        import org.firstinspires.ftc.robotcore.external.navigation.VuforiaTrackables;
+import org.firstinspires.ftc.robotcore.external.ClassFactory;
+import org.firstinspires.ftc.robotcore.external.matrices.OpenGLMatrix;
+import org.firstinspires.ftc.robotcore.external.matrices.VectorF;
+import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
+import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
+import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
+import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
+import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
+import org.firstinspires.ftc.robotcore.external.navigation.RelicRecoveryVuMark;
+import org.firstinspires.ftc.robotcore.external.navigation.VuMarkInstanceId;
+import org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocalizer;
+import org.firstinspires.ftc.robotcore.external.navigation.VuforiaTrackable;
+import org.firstinspires.ftc.robotcore.external.navigation.VuforiaTrackableDefaultListener;
+import org.firstinspires.ftc.robotcore.external.navigation.VuforiaTrackables;
 
-        import java.io.StringWriter;
-        import static java.lang.Boolean.FALSE;
-        import static java.lang.Boolean.TRUE;
+import java.io.StringWriter;
+import static java.lang.Boolean.FALSE;
+import static java.lang.Boolean.TRUE;
 
-@Autonomous(name = "WestCoastRedC", group = "Cardinal")
+@Autonomous(name = "Case Test", group = "Cardinal")
 //@Disabled //Uncomment this if it is not wanted on the phone
-public class WestCoastRedC extends OpMode {
+public class IndivigualCaseTest extends OpMode {
 
     public WestCoastHardware robot = new WestCoastHardware();//The hardware map needs to be the hardware map of the robot we are using
 
@@ -66,14 +66,14 @@ public class WestCoastRedC extends OpMode {
     private double spinRightToKnockOffRightJewel = 7;
     private double spinLeftToKnockOffLeftJewel  = -7;
     private double driveDistanceToRightColumn = 24;//
-    private double driveDistanceToCenterColumn = 5;// 30
+    private double driveDistanceToCenterColumn = 10000;// 30
     private double driveDistanceToLeftColumn = 36;//36
     private double driveForwardToCryptobox = 10;
     private double driveAwayFromCryptobox = 5;//2
 
 
 
-    private String currentCase = "DropSorter";
+    private String currentCase = "ToCenterColumn";
     private boolean redJewel;
     private String column = "null";
     @Override
@@ -82,7 +82,6 @@ public class WestCoastRedC extends OpMode {
         telemetry.addData("CurrentCase", currentCase);
         telemetry.addData("jewel", redJewel);
         telemetry.addData("colum", column);
-        telemetry.addData("power", robot.westCoast.leftMotor.getPower());
         switch (currentCase){
             case "DropSorter":
                 boolean doneYet;
@@ -115,7 +114,7 @@ public class WestCoastRedC extends OpMode {
                     currentCase = "RaiseSorter";
                 }
                 break;
-                    //raise sorter
+            //raise sorter
             case "RaiseSorter":
                 doneYet = robot.jewelSorter.raise();
                 if(doneYet){
@@ -171,14 +170,14 @@ public class WestCoastRedC extends OpMode {
                     currentCase = "DriveForward2";
                 }
                 break;
-                    //drive forward to make shure glyph is in collumn
+            //drive forward to make shure glyph is in collumn
             case "DriveForward2":
                 doneYet = robot.westCoast.driveBasedOnEncoders(2, 1);
                 if(doneYet){
                     currentCase = "DriveBack";
                 }
                 break;
-                    //back up
+            //back up
             case "DriveBack":
                 doneYet = robot.westCoast.driveBasedOnEncoders(driveAwayFromCryptobox, -1);
                 if(doneYet){
