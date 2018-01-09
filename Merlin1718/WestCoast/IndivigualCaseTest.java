@@ -4,37 +4,8 @@ package org.firstinspires.ftc.teamcode.team.Merlin1718.WestCoast;
 
 
 
-import android.hardware.TriggerEventListener;
-
-import com.qualcomm.robotcore.eventloop.SyncdDevice;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
-import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-
-import java.sql.Driver;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
-import com.qualcomm.robotcore.hardware.ColorSensor;
-import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.Servo;
-import com.qualcomm.robotcore.util.Range;
-
-import org.firstinspires.ftc.robotcore.external.ClassFactory;
-import org.firstinspires.ftc.robotcore.external.matrices.OpenGLMatrix;
-import org.firstinspires.ftc.robotcore.external.matrices.VectorF;
-import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
-import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
-import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
-import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
-import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
-import org.firstinspires.ftc.robotcore.external.navigation.RelicRecoveryVuMark;
-import org.firstinspires.ftc.robotcore.external.navigation.VuMarkInstanceId;
-import org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocalizer;
-import org.firstinspires.ftc.robotcore.external.navigation.VuforiaTrackable;
-import org.firstinspires.ftc.robotcore.external.navigation.VuforiaTrackableDefaultListener;
-import org.firstinspires.ftc.robotcore.external.navigation.VuforiaTrackables;
-
-import java.io.StringWriter;
-import static java.lang.Boolean.FALSE;
-import static java.lang.Boolean.TRUE;
 
 @Autonomous(name = "Case Test", group = "Cardinal")
 //@Disabled //Uncomment this if it is not wanted on the phone
@@ -83,14 +54,14 @@ public class IndivigualCaseTest extends OpMode {
         telemetry.addData("jewel", redJewel);
         telemetry.addData("colum", column);
         switch (currentCase){
-            case "DropSorter":
+            case "DropSorter": //Drops the sorter in preperation to sort jewls
                 boolean doneYet;
                 doneYet = robot.jewelSorter.lower();
                 if(doneYet){
                     currentCase = "IDCryptographPicAndJewelColor";
                 }
                 break;
-            case "IDCryptographPicAndJewelColor":
+            case "IDCryptographPicAndJewelColor":  //determins color of jewl closest to cryptobox
                 redJewel = robot.jewelSorter.isRed();
                 column = robot.motoG.key();
                 if(!column.equals("null")){

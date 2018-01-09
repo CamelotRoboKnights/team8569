@@ -1,5 +1,24 @@
+/**
+ * This class contains the objects that are specific to this years game
+ * It contains a Jewel Sorter and a Glyph Collector
+ *
+ * The Jewel Sorter contains a color sensor and a servo. It can raise and lower the servo as well as
+ *      determine the jewel color by determining if there is more red or blue being sensed
+ *
+ * The Glyph Collector contains two glyph layers and a motor.
+ *
+ * Each layer contains two glyph graspers which can open, close, or alternate their states (open or
+ *      close depending on the current state)
+ *
+ * Each glyph grasper can open and close to values that are given to it
+ *
+ */
+
+
+
+
+
 package org.firstinspires.ftc.teamcode.team.Merlin1718.WestCoast;
-import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 
 import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DcMotor;
@@ -7,7 +26,6 @@ import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.Range;
 
-import org.opencv.core.Mat;
 
 
 public class SpecificHardware {
@@ -16,8 +34,8 @@ public class SpecificHardware {
         Servo servo;
         double up;
         double down;
-        double redJewelThreshold = .5;
-        double blueJewelThreshold = .5;
+        double redCounter = 0;
+        double blueCounter = 0;
 
         JewelSorter (ColorSensor color, Servo servo, double up, double down){
             this.color = color;
@@ -27,8 +45,7 @@ public class SpecificHardware {
         }
         public boolean lower () {
             this.servo.setPosition(this.down);
-            if(Math.abs(this.servo.getPosition()-this.down) < .05) return true;
-            return false;
+            return Math.abs(this.servo.getPosition() - this.down) <= .01;
         }
         public boolean raise () {
             this.servo.setPosition(this.up);
@@ -39,6 +56,15 @@ public class SpecificHardware {
             else if (this.color.blue() > this.color.red()) return "blue";
             return "null";
         }
+        public String auto () {
+            String color = this.jewelColor();
+            if(color.equals("red")) redCounter++;
+            else blueCounter++;
+
+            if(redCounter > 30) return "red";
+            else if (blueCounter > 30) return "blue";
+            else return "null";
+        }
         public boolean isBlue () {
             return this.color.blue() > this.color.red();
         }
@@ -46,6 +72,10 @@ public class SpecificHardware {
             return this.color.red() > this.color.blue();
         }
     }
+
+
+
+
     public static class GlyphCollector {
         DcMotor motor;
 
@@ -53,7 +83,6 @@ public class SpecificHardware {
         GlyphGrasperLayer topGrasper;
         GlyphGrasperLayer bottomGrasper;
 
-        double motorEncoderValue = getCurrentMotorPosition();
 
         double maximumHeight;
         double ticksPerRotation = 1;
@@ -65,7 +94,7 @@ public class SpecificHardware {
 
         private boolean raising = false;
 
-        double currentHeight = motorEncoderValue/ticksPerRotation*spoolCircumference;
+        double currentHeight = getCurrentMotorPosition();
 
         GlyphCollector (DcMotor motor, GlyphGrasperLayer topGrasper, GlyphGrasperLayer bottomGrasper,
                         double maximumHeight, double ticksPerRotation, double spoolDiameter) {
@@ -78,7 +107,7 @@ public class SpecificHardware {
         }
         public double getCurrentMotorPosition () {
             if (!(this.motor == null)) {
-                return this.motor.getCurrentPosition();
+                return this.motor.getCurrentPosition()/this.ticksPerRotation*this.spoolCircumference;
             }
             else return 0;
         }

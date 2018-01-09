@@ -1,3 +1,10 @@
+/**
+ * This class contains the objects for all the sensors. It has objects for the phone, the NavX
+ * sensor, and the built in Rev IMU.
+ *
+ */
+
+
 package org.firstinspires.ftc.teamcode.team.Merlin1718.WestCoast;
 
 import com.qualcomm.hardware.bosch.BNO055IMU;
@@ -10,14 +17,10 @@ import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
 import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
 import org.firstinspires.ftc.robotcore.external.navigation.RelicRecoveryVuMark;
-import org.firstinspires.ftc.robotcore.external.navigation.VuMarkInstanceId;
 import org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocalizer;
 import org.firstinspires.ftc.robotcore.external.navigation.VuforiaTrackable;
 import org.firstinspires.ftc.robotcore.external.navigation.VuforiaTrackables;
 
-/**
- * Created by christopherradcliffe on 1/4/18.
- */
 
 public class Sensors {
     public static class Phone {
@@ -61,8 +64,6 @@ public class Sensors {
             }
 
         }
-
-
 
     }
     public static class Navx {

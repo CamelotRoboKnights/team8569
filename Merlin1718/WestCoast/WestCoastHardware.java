@@ -1,6 +1,5 @@
-package org.firstinspires.ftc.teamcode.team.Merlin1718.WestCoast;
 
-import android.widget.GridLayout;
+package org.firstinspires.ftc.teamcode.team.Merlin1718.WestCoast;
 
 import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.hardware.bosch.JustLoggingAccelerationIntegrator;
@@ -13,7 +12,6 @@ import org.firstinspires.ftc.robotcore.external.navigation.Acceleration;
 import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
 import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.Servo;
-import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 
 
@@ -84,7 +82,7 @@ public class WestCoastHardware {
 
 
 
-        motorR.setDirection(DcMotorSimple.Direction.FORWARD);//Sets the motor power to positive because duh.
+        motorR.setDirection(DcMotorSimple.Direction.REVERSE);//Sets the motor power to positive because duh.
         motorL.setDirection(DcMotorSimple.Direction.REVERSE);//Sets the motor power as positive because duh.
         glyph.setDirection(DcMotorSimple.Direction.REVERSE);
 
@@ -95,7 +93,7 @@ public class WestCoastHardware {
         motorR.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         motorL.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         glyph.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        
+
 
 
         westCoast = new WestCoastClass.WestCoastDrive(motorL, motorR);
@@ -103,9 +101,9 @@ public class WestCoastHardware {
         jewelSorter = new SpecificHardware.JewelSorter(colorSensor, sorter, .8, .1);// Up down
 
         topLeftGrasper = new SpecificHardware.SingleGlyphGrasper(leftTopGrasperServo, .1, 0);//Open close
-        topRightGrasper = new SpecificHardware.SingleGlyphGrasper(rightTopGrasperServo, .8, 1);
-        bottomLeftGrasper = new SpecificHardware.SingleGlyphGrasper(leftBottomGrasperServo, .8, 1);
-        bottomRightGrasper  = new SpecificHardware.SingleGlyphGrasper(rightBottomGrasperServo, .1, 0);//
+        topRightGrasper = new SpecificHardware.SingleGlyphGrasper(rightTopGrasperServo, .8, .9);
+        bottomLeftGrasper = new SpecificHardware.SingleGlyphGrasper(leftBottomGrasperServo, .8, .9);
+        bottomRightGrasper  = new SpecificHardware.SingleGlyphGrasper(rightBottomGrasperServo, .1, 0);
 
         topGlyphLayer = new SpecificHardware.GlyphGrasperLayer(topLeftGrasper, topRightGrasper);
         bottomGlyphLayer = new SpecificHardware.GlyphGrasperLayer(bottomLeftGrasper, bottomRightGrasper);
