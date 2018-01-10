@@ -74,8 +74,6 @@ public class SpecificHardware {
     }
 
 
-
-
     public static class GlyphCollector {
         DcMotor motor;
 

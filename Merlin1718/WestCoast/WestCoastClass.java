@@ -72,7 +72,7 @@ public class WestCoastClass {
 
         public void teleOp (Gamepad g) {
             if(Math.abs(g.left_stick_y) > .01 || Math.abs(g.left_stick_x) > .01) this.arcadeJoystick(-g.left_stick_y, g.left_stick_x, 1);
-            else if (Math.abs(g.right_stick_y) > .01 || Math.abs(g.right_stick_x) > .01) this.arcadeJoystick(-g.left_stick_y, g.right_stick_x, .25);
+            else if (Math.abs(g.right_stick_y) > .01 || Math.abs(g.right_stick_x) > .01) this.arcadeJoystick(-g.left_stick_y, g.right_stick_x, .5);
             else drive(0,0);
         }
             // this makes the encoders 0 so our measurments dont get messed up
@@ -127,13 +127,6 @@ public class WestCoastClass {
             return returnValue;
         }
 
-    }
-    public static class Wheel {
-        double radius;
-        double circumference =  2*Math.PI*radius;
-        Wheel (double radius) {
-            this.radius = radius;
-        }
     }
 
 }

@@ -25,8 +25,8 @@ public class WestCoastTeleOp extends OpMode {
 
     @Override
     public void loop() {//This runs while opmode is active
-        robot.westCoast.teleOp(gamepad1); //Divetrain is controlled by gamepad1
-        robot.glyphCollector.teleOp(gamepad2); //Glyph collector is controlled by gamepad2
+        robot.westCoast.teleOp(gamepad1);
+        robot.glyphCollector.teleOp(gamepad2);
     }
 
     @Override
