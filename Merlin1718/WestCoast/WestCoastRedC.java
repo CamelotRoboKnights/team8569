@@ -57,19 +57,17 @@ public class WestCoastRedC extends OpMode {
     // distance of variables
 
 
-    double versionNumber = 50;
+    double versionNumber = 97;
 
 
     private String color = "red";
-    private double driveForwardToKnockDistance;
-    private double driveBackToKnockDistance;
     private double spinRightToKnockOffRightJewel = 7;
     private double spinLeftToKnockOffLeftJewel  = -7;
     private double driveDistanceToRightColumn = 24;//
     private double driveDistanceToCenterColumn = 5;// 30
     private double driveDistanceToLeftColumn = 36;//36
     private double driveForwardToCryptobox = 10;
-    private double driveAwayFromCryptobox = 5;//2
+    private double driveAwayFromCryptobox = 5;
 
 
 

@@ -1,8 +1,7 @@
 /**
  * This is the teleOp for testing the robot as well as demoing our robot. It provides a few extra
  * fun controls to entertain the audience that are unnecessary during the actual competition. It
- * also prints a lot more values which helps with debugging but also makes the robot response time
- * slower.
+ * also prints a lot more values which helps with debugging.
  */
 
 package org.firstinspires.ftc.teamcode.team.Merlin1718.WestCoast;

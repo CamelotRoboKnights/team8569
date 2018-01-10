@@ -9,9 +9,11 @@ public class HolonomicClass {
     private DcMotor frontRightMotor;
     private DcMotor backRightMotor;
     private DcMotor backLeftMotor;
+
     private double ticksPerRotation;
     private double radius;
     private double circumference = 2*Math.PI*radius;
+
     HolonomicClass(DcMotor frontLeftMotor, DcMotor frontRightMotor, DcMotor backRightMotor,
                    DcMotor backLeftMotor, double ticksPerRotation, double radius){
         this.frontLeftMotor = frontLeftMotor;

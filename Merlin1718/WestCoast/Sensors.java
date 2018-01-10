@@ -50,7 +50,7 @@ public class Sensors {
             relicTrackables.activate();
         }
 
-        //finds out witch vuMark you are seeing
+        //finds out which vuMark you are seeing
         public String key (){
 
             RelicRecoveryVuMark vuMark = RelicRecoveryVuMark.from(relicTemplate);
