@@ -65,13 +65,13 @@ public class WestCoastClass {
         }
 
         public void arcadeJoystick (double stick_y, double stick_x, double speed) {
-            double leftMotorPower = stick_y + stick_x;
-            double rightMotorPower = stick_y - stick_x;
+            double leftMotorPower = Range.clip(stick_y + stick_x, -1, 1);
+            double rightMotorPower = Range.clip(stick_y - stick_x, -1, 1);
             this.drive(leftMotorPower * speed, rightMotorPower * speed);
         }
 
         public void teleOp (Gamepad g) {
-            if(Math.abs(g.left_stick_y) > .01 || Math.abs(g.left_stick_x) > .01) this.arcadeJoystick(-g.left_stick_y, g.left_stick_x, 1);
+            if(Math.abs(g.left_stick_y) > .01 || Math.abs(g.left_stick_x) > .01) this.arcadeJoystick(-g.left_stick_y, Math.pow(g.left_stick_x, 3), 1);
             else if (Math.abs(g.right_stick_y) > .01 || Math.abs(g.right_stick_x) > .01) this.arcadeJoystick(-g.left_stick_y, g.right_stick_x, .5);
             else drive(0,0);
         }
@@ -106,7 +106,7 @@ public class WestCoastClass {
         boolean turnToGyroHeading(double targetHeading, double currentHeading) {//Working and will turn the robot to a gyro heading within 2degrees
             boolean returnValue;//The value the method will return
             double headingDifference = targetHeading - currentHeading;//How far the robot is from its target heading
-            double headingScaler = .003;//The scalier that edits how much the speed is affect
+            double headingScaler = .001;//The scalier that edits how much the speed is affect
             double headingDiffernceScalled = headingDifference * headingScaler;//The scaled value that is used for the motor power
             headingDiffernceScalled = Range.clip(headingDiffernceScalled, -1, 1);//Making sure that the number is within a reasonable motor power
 

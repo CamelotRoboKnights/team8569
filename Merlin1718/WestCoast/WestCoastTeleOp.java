@@ -14,7 +14,11 @@ public class WestCoastTeleOp extends OpMode {
 
     public WestCoastHardware robot = new WestCoastHardware();//The hardware map needs to be the hardware map of the robot we are using
 
-    public void init() {robot.init(hardwareMap);}
+    public void init() {
+        robot.init(hardwareMap);
+        robot.glyphCollector.topGrasper.close();
+        robot.glyphCollector.bottomGrasper.open();
+    }
 
     @Override
     public void init_loop() {}

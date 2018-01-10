@@ -1,40 +1,8 @@
 package org.firstinspires.ftc.teamcode.team.Merlin1718.WestCoast;
 
 
-
-
-
-        import android.hardware.TriggerEventListener;
-
-        import com.qualcomm.robotcore.eventloop.SyncdDevice;
         import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
-        import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-
-        import java.sql.Driver;
         import com.qualcomm.robotcore.eventloop.opmode.OpMode;
-        import com.qualcomm.robotcore.hardware.ColorSensor;
-        import com.qualcomm.robotcore.hardware.DcMotor;
-        import com.qualcomm.robotcore.hardware.Servo;
-        import com.qualcomm.robotcore.util.Range;
-
-        import org.firstinspires.ftc.robotcore.external.ClassFactory;
-        import org.firstinspires.ftc.robotcore.external.matrices.OpenGLMatrix;
-        import org.firstinspires.ftc.robotcore.external.matrices.VectorF;
-        import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
-        import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
-        import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
-        import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
-        import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
-        import org.firstinspires.ftc.robotcore.external.navigation.RelicRecoveryVuMark;
-        import org.firstinspires.ftc.robotcore.external.navigation.VuMarkInstanceId;
-        import org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocalizer;
-        import org.firstinspires.ftc.robotcore.external.navigation.VuforiaTrackable;
-        import org.firstinspires.ftc.robotcore.external.navigation.VuforiaTrackableDefaultListener;
-        import org.firstinspires.ftc.robotcore.external.navigation.VuforiaTrackables;
-
-        import java.io.StringWriter;
-        import static java.lang.Boolean.FALSE;
-        import static java.lang.Boolean.TRUE;
 
 @Autonomous(name = "WestCoastRedC", group = "Cardinal")
 //@Disabled //Uncomment this if it is not wanted on the phone
@@ -64,7 +32,7 @@ public class WestCoastRedC extends OpMode {
     private double spinRightToKnockOffRightJewel = 7;
     private double spinLeftToKnockOffLeftJewel  = -7;
     private double driveDistanceToRightColumn = 24;//
-    private double driveDistanceToCenterColumn = 5;// 30
+    private double driveDistanceToCenterColumn = 30;// 30
     private double driveDistanceToLeftColumn = 36;//36
     private double driveForwardToCryptobox = 10;
     private double driveAwayFromCryptobox = 5;
@@ -141,7 +109,6 @@ public class WestCoastRedC extends OpMode {
                 doneYet = robot.westCoast.driveBasedOnEncoders(driveDistanceToCenterColumn, 1);
                 if(doneYet){
                     currentCase = "SpinTo90";
-                    currentCase = "Done";
                 }
                 break;
 
@@ -153,8 +120,8 @@ public class WestCoastRedC extends OpMode {
                 break;
 
             case "SpinTo90": //turn 90% to face cryptobox
-                doneYet = robot.westCoast.turnToGyroHeading(90, robot.navx.currentOrientation);
-                telemetry.addData("Current Orientation", robot.navx.currentOrientation);
+                doneYet = robot.westCoast.turnToGyroHeading(90, robot.navx.getCurrentOrientation());
+                telemetry.addData("Current Orientation", robot.navx.getCurrentOrientation());
                 if(doneYet){
                     currentCase = "DriveForward";
                 }

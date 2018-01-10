@@ -102,8 +102,8 @@ public class WestCoastHardware {
 
         topLeftGrasper = new SpecificHardware.SingleGlyphGrasper(leftTopGrasperServo, .1, 0);//Open close
         topRightGrasper = new SpecificHardware.SingleGlyphGrasper(rightTopGrasperServo, .8, .9);
-        bottomLeftGrasper = new SpecificHardware.SingleGlyphGrasper(leftBottomGrasperServo, .8, .9);
-        bottomRightGrasper  = new SpecificHardware.SingleGlyphGrasper(rightBottomGrasperServo, .1, 0);
+        bottomLeftGrasper = new SpecificHardware.SingleGlyphGrasper(leftBottomGrasperServo, .8, 1);
+        bottomRightGrasper= new SpecificHardware.SingleGlyphGrasper(rightBottomGrasperServo, .1, 0);
 
         topGlyphLayer = new SpecificHardware.GlyphGrasperLayer(topLeftGrasper, topRightGrasper);
         bottomGlyphLayer = new SpecificHardware.GlyphGrasperLayer(bottomLeftGrasper, bottomRightGrasper);
@@ -117,7 +117,7 @@ public class WestCoastHardware {
         navx = new Sensors.Navx(navX);
         motoG = new Sensors.Phone();
     }
-    private double glyphCollectorMaxHeight = 30;
+    private double glyphCollectorMaxHeight = 15;
     private double glyphCollectorTicksPerRotation = 1220;
     private double glyphCollectorSpoolDiameter = 1;
 
