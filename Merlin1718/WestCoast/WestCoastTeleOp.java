@@ -17,7 +17,7 @@ public class WestCoastTeleOp extends OpMode {
     public void init() {robot.init(hardwareMap);}
 
     @Override
-    public void init_loop() { }
+    public void init_loop() {}
 
     @Override
     public void start() {}//This runs when the start button is pressed

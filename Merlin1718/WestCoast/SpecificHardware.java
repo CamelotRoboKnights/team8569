@@ -126,14 +126,15 @@ public class SpecificHardware {
             this.motor.setPower(Range.clip(raiseValue,-1,1));
         }
         double raiseingToValue;
+
         public void teleRaise (Gamepad g) {
             if(this.currentHeight >= 0 && Math.abs(g.left_stick_y) > .01 &&
-                    this.currentHeight <= maximumHeight)  this.raise(-g.left_stick_y);
+                    this.currentHeight <= maximumHeight)  this.raise(-g.left_stick_y/4);
 
             else if (-g.left_stick_y > .01 && this.currentHeight <= maximumHeight)
-                this.raise(-g.left_stick_y);
+                this.raise(-g.left_stick_y/4);
 
-            else if (-g.left_stick_y < -.01 && this.currentHeight >= 0) this.raise(-g.left_stick_y);
+            else if (-g.left_stick_y < -.01 && this.currentHeight >= 0) this.raise(-g.left_stick_y/4);
 
             else raise(0);
         }
@@ -184,13 +185,13 @@ public class SpecificHardware {
         }
         public void teleOp (Gamepad g) {
 
-//            if (!this.raising){
-//                this.teleRaise(g);
-//                this.teleRaiseToPosition(g);
-//            } else {
-//                raiseToValue(raiseingToValue);
-//            }
-            this.raise(-g.right_stick_y/4);
+            if (!this.raising){
+                this.teleRaise(g);
+                this.teleRaiseToPosition(g);
+            } else {
+                raiseToValue(raiseingToValue);
+            }
+            //this.raise(-g.right_stick_y/4);
             this.teleTopLayer(g);
             this.teleBottomLayer(g);
 
