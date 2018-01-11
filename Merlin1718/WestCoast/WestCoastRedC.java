@@ -1,8 +1,8 @@
 package org.firstinspires.ftc.teamcode.team.Merlin1718.WestCoast;
 
 
-        import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
-        import com.qualcomm.robotcore.eventloop.opmode.OpMode;
+import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 
 @Autonomous(name = "WestCoastRedC", group = "Cardinal")
 //@Disabled //Uncomment this if it is not wanted on the phone
@@ -31,10 +31,10 @@ public class WestCoastRedC extends OpMode {
     private String color = "red";
     private double spinRightToKnockOffRightJewel = 7;
     private double spinLeftToKnockOffLeftJewel  = -7;
-    private double driveDistanceToRightColumn = 24;//
-    private double driveDistanceToCenterColumn = 30;// 30
-    private double driveDistanceToLeftColumn = 36;//36
-    private double driveForwardToCryptobox = 10;
+    private double driveDistanceToRightColumn = 25;//
+    private double driveDistanceToCenterColumn = 31;// 30
+    private double driveDistanceToLeftColumn = 39;//36
+    private double driveForwardToCryptobox = 8;
     private double driveAwayFromCryptobox = 5;
 
 
@@ -96,7 +96,7 @@ public class WestCoastRedC extends OpMode {
                 break;
 
             case "ToRightColumn": //move to right collumn
-                doneYet = robot.westCoast.driveBasedOnEncoders(driveDistanceToRightColumn, 1);
+                doneYet = robot.westCoast.driveBasedOnEncodersAndGyro(driveDistanceToRightColumn, 1, 0, robot.navx.getCurrentOrientation());//distance, direction, targetHeading, currentHeading
                 telemetry.addData("start: ", robot.westCoast.startEncoder);
                 telemetry.addData("current: ", robot.westCoast.getLeftCurrentMotorPosition());
                 if(doneYet){
@@ -106,14 +106,14 @@ public class WestCoastRedC extends OpMode {
                 break;
 
             case "ToCenterColumn": //move to center column
-                doneYet = robot.westCoast.driveBasedOnEncoders(driveDistanceToCenterColumn, 1);
+                doneYet = robot.westCoast.driveBasedOnEncodersAndGyro(driveDistanceToCenterColumn, 10, 0, robot.navx.getCurrentOrientation());
                 if(doneYet){
                     currentCase = "SpinTo90";
                 }
                 break;
 
             case "ToLeftColumn": //move to left column
-                doneYet = robot.westCoast.driveBasedOnEncoders(driveDistanceToLeftColumn, 1);
+                doneYet = robot.westCoast.driveBasedOnEncodersAndGyro(driveDistanceToLeftColumn, 1, 0, robot.navx.getCurrentOrientation());
                 if(doneYet){
                     currentCase = "SpinTo90";
                 }
@@ -123,13 +123,6 @@ public class WestCoastRedC extends OpMode {
                 doneYet = robot.westCoast.turnToGyroHeading(90, robot.navx.getCurrentOrientation());
                 telemetry.addData("Current Orientation", robot.navx.getCurrentOrientation());
                 if(doneYet){
-                    currentCase = "DriveForward";
-                }
-                break;
-
-            case "DriveForward": //dive forward twards cryptobox
-                doneYet = robot.westCoast.driveBasedOnEncoders(driveForwardToCryptobox, 1);
-                if(doneYet){
                     currentCase = "ReleaseGripper";
                 }
                 break;
@@ -137,17 +130,16 @@ public class WestCoastRedC extends OpMode {
                 robot.glyphCollector.topGrasper.open();
                 doneYet = true;
                 if(doneYet){
-                    currentCase = "DriveForward2";
+                    currentCase = "DriveForward";
                 }
                 break;
-                    //drive backwards then forward to make shure glyph is in collumn
-            case "DriveForward2":
-                doneYet = robot.westCoast.driveBasedOnEncoders(2, 1);
+            case "DriveForward": //dive forward twards cryptobox
+                doneYet = robot.westCoast.driveBasedOnEncodersAndGyro(driveForwardToCryptobox, 1, 90, robot.navx.getCurrentOrientation()) || time();
                 if(doneYet){
                     currentCase = "DriveBack";
                 }
                 break;
-                    //back up
+                         //back up
             case "DriveBack":
                 doneYet = robot.westCoast.driveBasedOnEncoders(driveAwayFromCryptobox, -1);
                 if(doneYet){
@@ -186,5 +178,18 @@ public class WestCoastRedC extends OpMode {
                 return "";
         }
     }
+    long startTime = 0;
+    boolean firstTime = true;
+    private boolean time (){
+        if(firstTime){
+            firstTime = false;
+            startTime = System.currentTimeMillis();
+        }
+        long duration = (System.currentTimeMillis()-startTime)/1000;
+        if(duration > 2) {
+            return true;
+        }
+        else return false;
 
+    }
 }

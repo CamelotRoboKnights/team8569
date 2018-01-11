@@ -39,12 +39,12 @@ public class IndivigualCaseTest extends OpMode {
     private double driveDistanceToRightColumn = 24;//
     private double driveDistanceToCenterColumn = 10000;// 30
     private double driveDistanceToLeftColumn = 36;//36
-    private double driveForwardToCryptobox = 10;
+    private double driveForwardToCryptobox = 8;
     private double driveAwayFromCryptobox = 5;//2
 
 
 
-    private String currentCase = "ToCenterColumn";
+    private String currentCase = "ToLeftColumn";
     private boolean redJewel;
     private String column = "null";
     @Override
@@ -100,14 +100,14 @@ public class IndivigualCaseTest extends OpMode {
                 break;
 
             case "ToRightColumn":
-                doneYet = robot.westCoast.driveBasedOnEncoders(driveDistanceToRightColumn, 1);
+                doneYet = robot.westCoast.driveBasedOnEncodersAndGyro(driveDistanceToRightColumn, 1, 0, robot.navx.getCurrentOrientation());
                 if(doneYet){
                     currentCase = "SpinTo90";
                 }
                 break;
 
             case "ToCenterColumn":
-                doneYet = robot.westCoast.driveBasedOnEncoders(driveDistanceToCenterColumn, 1);
+                doneYet = robot.westCoast.driveBasedOnEncodersAndGyro(driveDistanceToCenterColumn, 1, 0, robot.navx.getCurrentOrientation());
                 if(doneYet){
                     currentCase = "SpinTo90";
                     currentCase = "Done";
@@ -115,7 +115,8 @@ public class IndivigualCaseTest extends OpMode {
                 break;
 
             case "ToLeftColumn":
-                doneYet = robot.westCoast.driveBasedOnEncoders(driveDistanceToLeftColumn, 1);
+                robot.westCoast.gyroStraightDrive(robot.navx.getCurrentOrientation(), 0, 1);
+                doneYet = false;
                 if(doneYet){
                     currentCase = "SpinTo90";
                 }
@@ -129,7 +130,7 @@ public class IndivigualCaseTest extends OpMode {
                 break;
 
             case "DriveForward":
-                doneYet = robot.westCoast.driveBasedOnEncoders(driveForwardToCryptobox, 1);
+                doneYet = robot.westCoast.driveBasedOnEncodersAndGyro(driveForwardToCryptobox, 1, 90, robot.navx.getCurrentOrientation());
                 if(doneYet){
                     currentCase = "ReleaseGripper";
                 }
@@ -143,14 +144,14 @@ public class IndivigualCaseTest extends OpMode {
                 break;
             //drive forward to make shure glyph is in collumn
             case "DriveForward2":
-                doneYet = robot.westCoast.driveBasedOnEncoders(2, 1);
+                doneYet = robot.westCoast.driveBasedOnEncodersAndGyro(2, 1, 90, robot.navx.getCurrentOrientation());
                 if(doneYet){
                     currentCase = "DriveBack";
                 }
                 break;
             //back up
             case "DriveBack":
-                doneYet = robot.westCoast.driveBasedOnEncoders(driveAwayFromCryptobox, -1);
+                doneYet = robot.westCoast.driveBasedOnEncodersAndGyro(driveAwayFromCryptobox, -1, 90, robot.navx.getCurrentOrientation());
                 if(doneYet){
                     currentCase = "End";
                 }

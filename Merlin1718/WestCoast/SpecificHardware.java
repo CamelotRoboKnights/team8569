@@ -87,7 +87,6 @@ public class SpecificHardware {
         double spoolDiameter = 1;
         private double spoolCircumference = spoolDiameter * Math.PI;
         private double thirdHeight = maximumHeight/3;
-        private double halfHeight = maximumHeight/2;
         private double twoThirdsHeight = thirdHeight*2;
 
         private boolean raising = false;
@@ -187,9 +186,9 @@ public class SpecificHardware {
 
             if (!this.raising){
                 this.teleRaise(g);
-                this.teleRaiseToPosition(g);
+                //this.teleRaiseToPosition(g);
             } else {
-                raiseToValue(raiseingToValue);
+                //raiseToValue(raiseingToValue);
             }
             //this.raise(-g.right_stick_y/4);
             this.teleTopLayer(g);

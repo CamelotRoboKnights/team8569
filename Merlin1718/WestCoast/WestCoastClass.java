@@ -80,6 +80,28 @@ public class WestCoastClass {
 
         boolean firstTime = true;
         double startEncoder = 0;
+        public boolean driveBasedOnEncodersAndGyro(double distance, int direction, double targetOrientation, double currentOrientation){
+
+            boolean returnValue;
+            double currentEncoder = getLeftCurrentMotorPosition();
+            if(firstTime) {
+                firstTime = false;
+                startEncoder = currentEncoder;
+            }
+            double distanceTraveled = ((Math.abs(currentEncoder  - startEncoder)));
+            if (distanceTraveled > distance) {//If I have gone the distance I want stop moving
+                this.drive(0,0);
+                firstTime = true;
+                returnValue = true;
+            }
+            else {//Otherwise keep going
+                returnValue = false;
+                this.gyroStraightDrive(currentOrientation, targetOrientation, direction, .3);
+            }
+
+            return returnValue;
+
+        }
         public boolean driveBasedOnEncoders(double distance, int direction){
 
             boolean returnValue;
@@ -96,7 +118,7 @@ public class WestCoastClass {
             }
             else {//Otherwise keep going
                 returnValue = false;
-                this.drive(.1*direction, .1*direction);
+                this.drive(.2*direction, .2*direction);
             }
 
             return returnValue;
@@ -106,18 +128,18 @@ public class WestCoastClass {
         boolean turnToGyroHeading(double targetHeading, double currentHeading) {//Working and will turn the robot to a gyro heading within 2degrees
             boolean returnValue;//The value the method will return
             double headingDifference = targetHeading - currentHeading;//How far the robot is from its target heading
-            double headingScaler = .001;//The scalier that edits how much the speed is affect
+            double headingScaler = .007;//The scalier that edits how much the speed is affect
             double headingDiffernceScalled = headingDifference * headingScaler;//The scaled value that is used for the motor power
             headingDiffernceScalled = Range.clip(headingDiffernceScalled, -1, 1);//Making sure that the number is within a reasonable motor power
 
-            if(headingDiffernceScalled < .01 && headingDiffernceScalled > 0){//making sure the motor power is not so low that the robot wont move
-                headingDiffernceScalled = .02;
+            if(headingDiffernceScalled < .1 && headingDiffernceScalled > 0){//making sure the motor power is not so low that the robot wont move
+                headingDiffernceScalled = .1;
             }
-            else if(Math.abs(headingDiffernceScalled) < .01 && headingDiffernceScalled < 0){//making sure the motor power is not so low that the robot wont move
-                headingDiffernceScalled = -.02;
+            else if(Math.abs(headingDiffernceScalled) < .1 && headingDiffernceScalled < 0){//making sure the motor power is not so low that the robot wont move
+                headingDiffernceScalled = -.1;
             }
 
-            if (.5 >= Math.abs(headingDifference)) {//If it is within 2 degrees I am done
+            if (1 >= Math.abs(headingDifference)) {//If it is within 2 degrees I am done
                 this.drive(0,0);
                 returnValue = true;
             } else {//Otherwise it isn't done
@@ -127,6 +149,50 @@ public class WestCoastClass {
             return returnValue;
         }
 
+        void gyroStraightDrive(double currentOrientation, double targetOrientation, double direction, double speed){
+            double headingDifference = targetOrientation-currentOrientation;
+            double scaler = .01;
+            double leftMotorPower;
+            double rightMotorPower;
+            if(direction>0){
+                leftMotorPower = speed+headingDifference*scaler*direction;
+                rightMotorPower = speed-headingDifference*scaler*direction;
+            } else {
+                leftMotorPower = speed-headingDifference*scaler*direction;
+                rightMotorPower = speed+headingDifference*scaler*direction;
+            }
+            this.drive(leftMotorPower, rightMotorPower);
+
+        }
+        public boolean betterDriveBasedOnEncodersAndGyro(double distance, double targetOrientation, double currentOrientation){
+
+            boolean returnValue;
+            double currentEncoder = (getLeftCurrentMotorPosition() + getRightCurrentMotorPosition())/2;
+            if(firstTime) {
+                firstTime = false;
+                startEncoder = currentEncoder;
+            }
+            double distanceTraveled = currentEncoder - startEncoder;
+            double scalar = .1;
+            double speed = Range.clip(distanceTraveled*scalar, -1, 1);
+            int direction;
+            if (distanceTraveled>0) direction = 1;
+            else direction = -1;
+            if (Math.abs(distanceTraveled - distance) > .5) {//If I have gone the distance I want stop moving
+                this.drive(0,0);
+                firstTime = true;
+                returnValue = true;
+            }
+            else {//Otherwise keep going
+                returnValue = false;
+                this.gyroStraightDrive(currentOrientation, targetOrientation, direction, speed);
+            }
+
+            return returnValue;
+
+        }
+
     }
+
 
 }
