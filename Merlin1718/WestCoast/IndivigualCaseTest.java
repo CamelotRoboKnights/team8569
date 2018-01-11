@@ -37,7 +37,7 @@ public class IndivigualCaseTest extends OpMode {
     private double spinRightToKnockOffRightJewel = 7;
     private double spinLeftToKnockOffLeftJewel  = -7;
     private double driveDistanceToRightColumn = 24;//
-    private double driveDistanceToCenterColumn = 10000;// 30
+    private double driveDistanceToCenterColumn = 30;// 30
     private double driveDistanceToLeftColumn = 36;//36
     private double driveForwardToCryptobox = 8;
     private double driveAwayFromCryptobox = 5;//2
@@ -115,7 +115,7 @@ public class IndivigualCaseTest extends OpMode {
                 break;
 
             case "ToLeftColumn":
-                robot.westCoast.gyroStraightDrive(robot.navx.getCurrentOrientation(), 0, 1);
+                robot.westCoast.betterDriveBasedOnEncodersAndGyro(driveDistanceToLeftColumn, 0, robot.navx.getCurrentOrientation());
                 doneYet = false;
                 if(doneYet){
                     currentCase = "SpinTo90";

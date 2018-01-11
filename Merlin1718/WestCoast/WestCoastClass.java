@@ -71,8 +71,8 @@ public class WestCoastClass {
         }
 
         public void teleOp (Gamepad g) {
-            if(Math.abs(g.left_stick_y) > .01 || Math.abs(g.left_stick_x) > .01) this.arcadeJoystick(-g.left_stick_y, Math.pow(g.left_stick_x, 3), 1);
-            else if (Math.abs(g.right_stick_y) > .01 || Math.abs(g.right_stick_x) > .01) this.arcadeJoystick(-g.left_stick_y, g.right_stick_x, .5);
+            if(Math.abs(g.left_stick_y) > .01 || Math.abs(g.left_stick_x) > .01) this.arcadeJoystick(Math.pow(-g.left_stick_y,3), Math.pow(g.left_stick_x, 3)/2, 1);
+            else if (Math.abs(g.right_stick_y) > .01 || Math.abs(g.right_stick_x) > .01) this.arcadeJoystick(Math.pow(-g.right_stick_y, 3), Math.pow(g.right_stick_x, 3)/2, .5);
             else drive(0,0);
         }
             // this makes the encoders 0 so our measurments dont get messed up

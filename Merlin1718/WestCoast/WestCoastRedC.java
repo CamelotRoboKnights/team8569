@@ -31,9 +31,9 @@ public class WestCoastRedC extends OpMode {
     private String color = "red";
     private double spinRightToKnockOffRightJewel = 7;
     private double spinLeftToKnockOffLeftJewel  = -7;
-    private double driveDistanceToRightColumn = 25;//
+    private double driveDistanceToRightColumn = 24;//
     private double driveDistanceToCenterColumn = 31;// 30
-    private double driveDistanceToLeftColumn = 39;//36
+    private double driveDistanceToLeftColumn = 38;//36
     private double driveForwardToCryptobox = 8;
     private double driveAwayFromCryptobox = 5;
 
@@ -106,7 +106,7 @@ public class WestCoastRedC extends OpMode {
                 break;
 
             case "ToCenterColumn": //move to center column
-                doneYet = robot.westCoast.driveBasedOnEncodersAndGyro(driveDistanceToCenterColumn, 10, 0, robot.navx.getCurrentOrientation());
+                doneYet = robot.westCoast.driveBasedOnEncodersAndGyro(driveDistanceToCenterColumn, 1, 0, robot.navx.getCurrentOrientation());
                 if(doneYet){
                     currentCase = "SpinTo90";
                 }
@@ -141,6 +141,18 @@ public class WestCoastRedC extends OpMode {
                 break;
                          //back up
             case "DriveBack":
+                doneYet = robot.westCoast.driveBasedOnEncoders(driveAwayFromCryptobox, -1);
+                if(doneYet){
+                    currentCase = "DriveForward2";
+                }
+                break;
+            case "DriveForward2":
+                doneYet = robot.westCoast.driveBasedOnEncodersAndGyro(driveAwayFromCryptobox+1, 1, 90, robot.navx.getCurrentOrientation()) || time();
+                if(doneYet){
+                    currentCase = "DriveBack2";
+                }
+                break;
+            case "DriveBack2":
                 doneYet = robot.westCoast.driveBasedOnEncoders(driveAwayFromCryptobox, -1);
                 if(doneYet){
                     currentCase = "End";
@@ -187,6 +199,7 @@ public class WestCoastRedC extends OpMode {
         }
         long duration = (System.currentTimeMillis()-startTime)/1000;
         if(duration > 2) {
+            firstTime = true;
             return true;
         }
         else return false;
