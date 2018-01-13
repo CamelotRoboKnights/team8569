@@ -117,7 +117,7 @@ public class WestCoastHardware {
         navx = new Sensors.Navx(navX);
         motoG = new Sensors.Phone();
     }
-    private double glyphCollectorMaxHeight = 15;
+    private double glyphCollectorMaxHeight = 16;
     private double glyphCollectorTicksPerRotation = 1220;
     private double glyphCollectorSpoolDiameter = 1;
 

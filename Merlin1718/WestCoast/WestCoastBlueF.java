@@ -32,9 +32,9 @@ public class WestCoastBlueF extends OpMode {
     private double spinRightToKnockOffRightJewel = 7;
     private double spinLeftToKnockOffLeftJewel  = -7;
     private double driveOffBalancePad = 21;
-    private double driveDistanceToRightColumn = 3;//4
-    private double driveDistanceToCenterColumn = 9;// 10
-    private double driveDistanceToLeftColumn = 15;//17
+    private double driveDistanceToRightColumn = 15;//14
+    private double driveDistanceToCenterColumn = 7;// 10
+    private double driveDistanceToLeftColumn = 0;//4
     private double driveForwardToCryptobox = 8;
     private double driveAwayFromCryptobox = 5;//7
 
@@ -121,7 +121,7 @@ public class WestCoastBlueF extends OpMode {
                 //telemetry.addData("start: ", robot.westCoast.startEncoder);
                 //telemetry.addData("current: ", robot.westCoast.getLeftCurrentMotorPosition());
                 if(doneYet){
-                    currentCase = "SpinTo180";
+                    currentCase = "SpinTo-170";
 
                 }
                 break;
@@ -129,7 +129,7 @@ public class WestCoastBlueF extends OpMode {
             case "ToCenterColumn": //move to center column
                 doneYet = robot.westCoast.driveBasedOnEncodersAndGyro(driveDistanceToCenterColumn, 1, -90, robot.navx.getCurrentOrientation());
                 if(doneYet){
-                    currentCase = "SpinTo180";
+                    currentCase = "SpinTo-170";
                 }
                 break;
 
@@ -155,7 +155,8 @@ public class WestCoastBlueF extends OpMode {
                 }
                 break;
             case "DriveForward": //dive forward twards cryptobox
-                doneYet = robot.westCoast.driveBasedOnEncodersAndGyro(driveForwardToCryptobox, 1, -170, robot.navx.getCurrentOrientation()) || time();
+                doneYet = robot.westCoast.driveBasedOnEncodersAndGyro(driveForwardToCryptobox, 1, -173, robot.navx.getCurrentOrientation()) || time();
+                //doneYet = robot.westCoast.driveBasedOnEncoders(driveForwardToCryptobox, 1) || time();
                 if(doneYet){
                     currentCase = "DriveBack";
                 }
@@ -168,7 +169,8 @@ public class WestCoastBlueF extends OpMode {
                 }
                 break;
             case "DriveForward2":
-                doneYet = robot.westCoast.driveBasedOnEncodersAndGyro(driveAwayFromCryptobox+2, 1, 170, robot.navx.getCurrentOrientation()) || time();
+                //doneYet = robot.westCoast.driveBasedOnEncodersAndGyro(driveAwayFromCryptobox+2, 1, -175, robot.navx.getCurrentOrientation()) || time();
+                doneYet = robot.westCoast.driveBasedOnEncoders(driveForwardToCryptobox+2, 1) || time();
                 if(doneYet){
                     currentCase = "DriveBack2";
                 }
