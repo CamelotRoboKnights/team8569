@@ -149,7 +149,7 @@ public class WestCoastClass {
             return returnValue;
         }
 
-        void gyroStraightDrive(double currentOrientation, double targetOrientation, double direction, double speed){
+        void gyroStraightDrive(double currentOrientation, double targetOrientation, int direction, double speed){
             double headingDifference = targetOrientation-currentOrientation;
             double scaler = .01;
             double leftMotorPower;
@@ -158,8 +158,8 @@ public class WestCoastClass {
                 leftMotorPower = speed+headingDifference*scaler*direction;
                 rightMotorPower = speed-headingDifference*scaler*direction;
             } else {
-                leftMotorPower = speed-headingDifference*scaler*direction;
-                rightMotorPower = speed+headingDifference*scaler*direction;
+                leftMotorPower = (speed-headingDifference*scaler)*direction;
+                rightMotorPower = (speed+headingDifference*scaler)*direction;
             }
             this.drive(leftMotorPower, rightMotorPower);
 

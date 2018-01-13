@@ -25,10 +25,10 @@ public class WestCoastBlueC extends OpMode {
     // distance of variables
 
 
-    double versionNumber = 101;
+    double versionNumber = 102;
 
 
-    private String color = "red";
+    private String color = "blue";
     private double spinRightToKnockOffRightJewel = 7;
     private double spinLeftToKnockOffLeftJewel  = -7;
     private double driveDistanceToRightColumn = 24;//
@@ -96,7 +96,7 @@ public class WestCoastBlueC extends OpMode {
                 break;
 
             case "ToRightColumn": //move to right collumn
-                doneYet = robot.westCoast.driveBasedOnEncodersAndGyro(driveDistanceToRightColumn, 1, 0, robot.navx.getCurrentOrientation());//distance, direction, targetHeading, currentHeading
+                doneYet = robot.westCoast.driveBasedOnEncodersAndGyro(driveDistanceToRightColumn, -1, 0, robot.navx.getCurrentOrientation());//distance, direction, targetHeading, currentHeading
                 telemetry.addData("start: ", robot.westCoast.startEncoder);
                 telemetry.addData("current: ", robot.westCoast.getLeftCurrentMotorPosition());
                 if(doneYet){
@@ -106,14 +106,14 @@ public class WestCoastBlueC extends OpMode {
                 break;
 
             case "ToCenterColumn": //move to center column
-                doneYet = robot.westCoast.driveBasedOnEncodersAndGyro(driveDistanceToCenterColumn, 1, 0, robot.navx.getCurrentOrientation());
+                doneYet = robot.westCoast.driveBasedOnEncodersAndGyro(driveDistanceToCenterColumn, -1, 0, robot.navx.getCurrentOrientation());
                 if(doneYet){
                     currentCase = "SpinTo90";
                 }
                 break;
 
             case "ToLeftColumn": //move to left column
-                doneYet = robot.westCoast.driveBasedOnEncodersAndGyro(driveDistanceToLeftColumn, 1, 0, robot.navx.getCurrentOrientation());
+                doneYet = robot.westCoast.driveBasedOnEncodersAndGyro(driveDistanceToLeftColumn, -1, 0, robot.navx.getCurrentOrientation());
                 if(doneYet){
                     currentCase = "SpinTo90";
                 }
