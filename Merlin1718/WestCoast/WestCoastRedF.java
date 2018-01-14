@@ -214,18 +214,15 @@ public class WestCoastRedF extends OpMode {
     long startTime = 0;
     boolean firstTime = true;
     private boolean time (){
+        long duration = (System.currentTimeMillis()-startTime)/1000;
         if(firstTime){
             firstTime = false;
             startTime = System.currentTimeMillis();
-        }
-        telemetry.addData("startTime", startTime);
-        long duration = (System.currentTimeMillis()-startTime)/1000;
-        if(duration > 2) {
+        } else if(duration > 2) {
             firstTime = true;
-            telemetry.addData("startTime in duration", startTime);
             return true;
         }
-        else return false;
+        return false;
 
     }
 }
