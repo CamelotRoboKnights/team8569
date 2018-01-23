@@ -83,7 +83,7 @@ public class WestCoastHardware {
 
 
         motorR.setDirection(DcMotorSimple.Direction.REVERSE);//Sets the motor power to positive because duh.
-        motorL.setDirection(DcMotorSimple.Direction.REVERSE);//Sets the motor power as positive because duh.
+        motorL.setDirection(DcMotorSimple.Direction.FORWARD);//Sets the motor power as positive because duh.
         glyph.setDirection(DcMotorSimple.Direction.REVERSE);
 
         motorR.setPower(0);//Sets the power to 0 so motors don't move
@@ -100,10 +100,10 @@ public class WestCoastHardware {
 
         jewelSorter = new SpecificHardware.JewelSorter(colorSensor, sorter, .8, .1);// Up down
 
-        topLeftGrasper = new SpecificHardware.SingleGlyphGrasper(leftTopGrasperServo, .1, 0);//Open close
-        topRightGrasper = new SpecificHardware.SingleGlyphGrasper(rightTopGrasperServo, .8, .9);
-        bottomLeftGrasper = new SpecificHardware.SingleGlyphGrasper(leftBottomGrasperServo, .8, 1);
-        bottomRightGrasper= new SpecificHardware.SingleGlyphGrasper(rightBottomGrasperServo, .1, 0);
+        topLeftGrasper = new SpecificHardware.SingleGlyphGrasper(leftTopGrasperServo, .15, 0);//Open close
+        topRightGrasper = new SpecificHardware.SingleGlyphGrasper(rightTopGrasperServo, .75, 1);
+        bottomLeftGrasper = new SpecificHardware.SingleGlyphGrasper(leftBottomGrasperServo, 0, .2);
+        bottomRightGrasper= new SpecificHardware.SingleGlyphGrasper(rightBottomGrasperServo, 1, .8);
 
         topGlyphLayer = new SpecificHardware.GlyphGrasperLayer(topLeftGrasper, topRightGrasper);
         bottomGlyphLayer = new SpecificHardware.GlyphGrasperLayer(bottomLeftGrasper, bottomRightGrasper);

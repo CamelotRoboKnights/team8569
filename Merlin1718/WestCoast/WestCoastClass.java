@@ -58,29 +58,32 @@ public class WestCoastClass {
             }
             else return -8569;
         }
-
-        public void drive (double leftMotorPower, double rightMotorPower) {
-            this.leftMotor.setPower(Range.clip(leftMotorPower, -1, 1));
-            this.rightMotor.setPower(Range.clip(rightMotorPower, -1, 1));
+        public void drive (double leftMotorPower, double rightMotorPower, boolean isFront) {
+            if(isFront) {
+                this.leftMotor.setPower(Range.clip(leftMotorPower, -1, 1));
+                this.rightMotor.setPower(Range.clip(rightMotorPower, -1, 1));
+            } else {
+                this.leftMotor.setPower(Range.clip(rightMotorPower, -1, 1));
+                this.rightMotor.setPower(Range.clip(leftMotorPower, -1, 1));
+            }
         }
 
-        public void arcadeJoystick (double stick_y, double stick_x, double speed) {
+        public void arcadeJoystick (double stick_y, double stick_x, double speed, boolean isFront) {
             double leftMotorPower = Range.clip(stick_y + stick_x, -1, 1);
             double rightMotorPower = Range.clip(stick_y - stick_x, -1, 1);
-            this.drive(leftMotorPower * speed, rightMotorPower * speed);
+            this.drive(leftMotorPower * speed, rightMotorPower * speed, isFront);
         }
 
         public void teleOp (Gamepad g) {
-            if(Math.abs(g.left_stick_y) > .01 || Math.abs(g.left_stick_x) > .01) this.arcadeJoystick(Math.pow(-g.left_stick_y,3), Math.pow(g.left_stick_x, 3)/2, 1);
-            else if (Math.abs(g.right_stick_y) > .01 || Math.abs(g.right_stick_x) > .01) this.arcadeJoystick(Math.pow(-g.right_stick_y, 3), Math.pow(g.right_stick_x, 3)/2, .5);
-            else drive(0,0);
+            if(Math.abs(g.left_stick_y) > .01 || Math.abs(g.left_stick_x) > .01) this.arcadeJoystick(Math.pow(-g.left_stick_y,3), Math.pow(g.left_stick_x, 3)/2, 1, true);
+            else if (Math.abs(g.right_stick_y) > .01 || Math.abs(g.right_stick_x) > .01) this.arcadeJoystick(Math.pow(-g.right_stick_y, 3), Math.pow(g.right_stick_x, 3)/2, .5, true);
+            else drive(0,0, true);
         }
-            // this makes the encoders 0 so our measurments dont get messed up
 
 
         boolean firstTime = true;
         double startEncoder = 0;
-        public boolean driveBasedOnEncodersAndGyro(double distance, int direction, double targetOrientation, double currentOrientation){
+        public boolean driveBasedOnEncodersAndGyro(double distance, int direction, boolean isFront, double targetOrientation, double currentOrientation){
 
             boolean returnValue;
             double currentEncoder = getLeftCurrentMotorPosition();
@@ -90,19 +93,19 @@ public class WestCoastClass {
             }
             double distanceTraveled = ((Math.abs(currentEncoder  - startEncoder)));
             if (distanceTraveled > distance) {//If I have gone the distance I want stop moving
-                this.drive(0,0);
+                this.drive(0,0, isFront);
                 firstTime = true;
                 returnValue = true;
             }
             else {//Otherwise keep going
                 returnValue = false;
-                this.gyroStraightDrive(currentOrientation, targetOrientation, direction, .3);
+                this.gyroStraightDrive(.3, direction, isFront, targetOrientation, currentOrientation);
             }
 
             return returnValue;
 
         }
-        public boolean driveBasedOnEncoders(double distance, int direction){
+        public boolean driveBasedOnEncoders(double distance, int direction, boolean isFront){
 
             boolean returnValue;
             double currentEncoder = getLeftCurrentMotorPosition();
@@ -112,20 +115,20 @@ public class WestCoastClass {
             }
             double distanceTraveled = ((Math.abs(currentEncoder  - startEncoder)));
             if (distanceTraveled > distance) {//If I have gone the distance I want stop moving
-                this.drive(0,0);
+                this.drive(0,0, isFront);
                 firstTime = true;
                 returnValue = true;
             }
             else {//Otherwise keep going
                 returnValue = false;
-                this.drive(.2*direction, .2*direction);
+                this.drive(.2*direction, .2*direction, isFront);
             }
 
             return returnValue;
 
         }
 
-        boolean turnToGyroHeading(double targetHeading, double currentHeading) {//Working and will turn the robot to a gyro heading within 2degrees
+        boolean turnToGyroHeading(boolean isFront, double targetHeading, double currentHeading) {//Working and will turn the robot to a gyro heading within 2degrees
             boolean returnValue;//The value the method will return
             double headingDifference = targetHeading - currentHeading;//How far the robot is from its target heading
             double headingScaler = .007;//The scalier that edits how much the speed is affect
@@ -140,16 +143,16 @@ public class WestCoastClass {
             }
 
             if (1 >= Math.abs(headingDifference)) {//If it is within 2 degrees I am done
-                this.drive(0,0);
+                this.drive(0,0, isFront);
                 returnValue = true;
             } else {//Otherwise it isn't done
-                drive(headingDiffernceScalled, -headingDiffernceScalled);//My method to run the motors
+                drive(headingDiffernceScalled, -headingDiffernceScalled, isFront);//My method to run the motors
                 returnValue = false;
             }
             return returnValue;
         }
 
-        void gyroStraightDrive(double currentOrientation, double targetOrientation, int direction, double speed){
+        void gyroStraightDrive(double speed, int direction, boolean isFront, double targetOrientation, double currentOrientation){
             double headingDifference = targetOrientation-currentOrientation;
             double scaler = .01;
             double leftMotorPower;
@@ -161,10 +164,10 @@ public class WestCoastClass {
                 leftMotorPower = (speed-headingDifference*scaler)*direction;
                 rightMotorPower = (speed+headingDifference*scaler)*direction;
             }
-            this.drive(leftMotorPower, rightMotorPower);
+            this.drive(leftMotorPower, rightMotorPower, isFront);
 
         }
-        public boolean betterDriveBasedOnEncodersAndGyro(double distance, double targetOrientation, double currentOrientation){
+        public boolean betterDriveBasedOnEncodersAndGyro(double distance, boolean isFront, double targetOrientation, double currentOrientation){
 
             boolean returnValue;
             double currentEncoder = (getLeftCurrentMotorPosition() + getRightCurrentMotorPosition())/2;
@@ -179,13 +182,13 @@ public class WestCoastClass {
             if (distanceTraveled>0) direction = 1;
             else direction = -1;
             if (Math.abs(distanceTraveled - distance) > .5) {//If I have gone the distance I want stop moving
-                this.drive(0,0);
+                this.drive(0,0, isFront);
                 firstTime = true;
                 returnValue = true;
             }
             else {//Otherwise keep going
                 returnValue = false;
-                this.gyroStraightDrive(currentOrientation, targetOrientation, direction, speed);
+                this.gyroStraightDrive(speed, direction, isFront, targetOrientation, currentOrientation);
             }
 
             return returnValue;

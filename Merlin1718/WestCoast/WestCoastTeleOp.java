@@ -18,6 +18,7 @@ public class WestCoastTeleOp extends OpMode {
         robot.init(hardwareMap);
         robot.glyphCollector.topGrasper.close();
         robot.glyphCollector.bottomGrasper.open();
+        robot.jewelSorter.raise();
     }
 
     @Override

@@ -91,7 +91,6 @@ public class SpecificHardware {
 
         private boolean raising = false;
 
-        double currentHeight = getCurrentMotorPosition();
 
         GlyphCollector (DcMotor motor, GlyphGrasperLayer topGrasper, GlyphGrasperLayer bottomGrasper,
                         double maximumHeight, double ticksPerRotation, double spoolDiameter) {
@@ -108,12 +107,13 @@ public class SpecificHardware {
             }
             else return 0;
         }
+        public double raiseingToValue  = 0;
         public boolean raiseToValue (double targetHeight) {//give a given height
             this.raising = true;
-            this.raiseToValue(targetHeight);
-            double difference = (targetHeight - currentHeight);//find the difference in inches
-            double scalar = .5;//the scale value to determine motor speed
-            this.motor.setPower(Range.clip(difference * scalar, -1, 1));
+            this.raiseingToValue = targetHeight;
+            double difference = (targetHeight - getCurrentMotorPosition());//find the difference in inches
+            double scalar = .25;//the scale value to determine motor speed
+            this.raise(difference * scalar);
             if(Math.abs(difference) <= .1) {
                 this.motor.setPower(0);
                 this.raising = false;
@@ -121,34 +121,34 @@ public class SpecificHardware {
             }
             return false;
         }
+
         public void raise (double raiseValue) {
             this.motor.setPower(Range.clip(raiseValue,-1,1));
         }
-        double raiseingToValue;
 
         public void teleRaise (Gamepad g) {
-            if(this.currentHeight >= 0 && Math.abs(g.left_stick_y) > .01 &&
-                    this.currentHeight <= maximumHeight)  this.raise(-g.left_stick_y/4);
+            if(this.getCurrentMotorPosition() >= 0 && Math.abs(g.left_stick_y) > .01 &&
+                    this.getCurrentMotorPosition() <= maximumHeight)  this.raise(-g.left_stick_y/4);
 
-            else if (-g.left_stick_y > .01 && this.currentHeight <= maximumHeight)
+            else if (-g.left_stick_y > .01 && this.getCurrentMotorPosition() <= maximumHeight)
                 this.raise(-g.left_stick_y/4);
 
-            else if (-g.left_stick_y < -.01 && this.currentHeight >= 0) this.raise(-g.left_stick_y/4);
+            else if (-g.left_stick_y < -.01 && this.getCurrentMotorPosition() >= 0) this.raise(-g.left_stick_y/4);
 
             else raise(0);
         }
         public void teleRaiseToPosition (Gamepad g){
-            if(currentHeight < thirdHeight -1) {//
+            if(getCurrentMotorPosition() < thirdHeight -1) {//
                 if(g.dpad_up){
                     raiseToValue(thirdHeight);
                 }
-            } else if (currentHeight < twoThirdsHeight-1) {
+            } else if (getCurrentMotorPosition() < twoThirdsHeight-1) {
                 if(g.dpad_up){
                     raiseToValue(twoThirdsHeight);
                 } else if (g.dpad_down) {
                     raiseToValue(0);
                 }
-            } else if (currentHeight < maximumHeight - 1) {
+            } else if (getCurrentMotorPosition() < maximumHeight - 1) {
                 if(g.dpad_up){
                     raiseToValue(maximumHeight);
                 } else if (g.dpad_down) {
@@ -162,22 +162,20 @@ public class SpecificHardware {
         }
 
         boolean topPressed;
-
         public void teleTopLayer (Gamepad g) {
-            if(g.y && !topPressed){
+            if(g.left_trigger > .5 && !topPressed){
                 topPressed = true;
-            } else if (!g.y && topPressed){
+            } else if (!(g.left_trigger > .5) && topPressed){
                 topPressed = false;
                 topGrasper.alternateState();
             }
         }
 
         boolean bottomPressed;
-
         public void teleBottomLayer (Gamepad g) {
-            if(g.a && !bottomPressed){
+            if(g.right_trigger > .5 && !bottomPressed){
                 bottomPressed = true;
-            } else if (!g.a && bottomPressed){
+            } else if (!(g.right_trigger > .5) && bottomPressed){
                 bottomPressed = false;
                 bottomGrasper.alternateState();
             }
@@ -186,11 +184,10 @@ public class SpecificHardware {
 
             if (!this.raising){
                 this.teleRaise(g);
-                //this.teleRaiseToPosition(g);
+                this.teleRaiseToPosition(g);
             } else {
-                //raiseToValue(raiseingToValue);
+                raiseToValue(raiseingToValue);
             }
-            //this.raise(-g.right_stick_y/4);
             this.teleTopLayer(g);
             this.teleBottomLayer(g);
 
