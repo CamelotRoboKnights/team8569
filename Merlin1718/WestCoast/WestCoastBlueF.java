@@ -182,6 +182,12 @@ public class WestCoastBlueF extends OpMode {
                 }
                 break;
             case "DriveBack2":
+                doneYet = robot.westCoast.driveBasedOnEncoders(1, -1, true);
+                if(doneYet){
+                    currentCase = "DriveBack3";
+                }
+                break;
+            case "DriveBack3":
                 doneYet = robot.westCoast.driveBasedOnEncoders(4, -1, true);
                 if(doneYet){
                     currentCase = "End";

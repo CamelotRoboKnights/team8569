@@ -154,12 +154,17 @@ public class WestCoastBlueC extends OpMode {
                 }
                 break;
             case "DriveBack2":
-                doneYet = robot.westCoast.driveBasedOnEncodersAndGyro(driveAwayFromCryptobox, -1, true, 90, currentAngle);
+                doneYet = robot.westCoast.driveBasedOnEncoders(1, -1, true);
+                if(doneYet){
+                    currentCase = "DriveBack3";
+                }
+                break;
+            case "DriveBack3":
+                doneYet = robot.westCoast.driveBasedOnEncoders(4, -1, true);
                 if(doneYet){
                     currentCase = "End";
                 }
-                break;
-            case "End":
+                break;            case "End":
                 robot.westCoast.drive(0,0, true);
                 break;
             default:

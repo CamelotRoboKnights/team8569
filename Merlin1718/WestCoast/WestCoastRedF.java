@@ -34,7 +34,7 @@ public class WestCoastRedF extends OpMode {
     private double driveOffBalancePad = 21;
     private double driveDistanceToRightColumn = 3;//4
     private double driveDistanceToCenterColumn = 9;// 10
-    private double driveDistanceToLeftColumn = 18;//36
+    private double driveDistanceToLeftColumn = 15;//36
     private double driveForwardToCryptobox = 8;
     private double driveAwayFromCryptobox = 5;//7
 
@@ -175,7 +175,13 @@ public class WestCoastRedF extends OpMode {
                 }
                 break;
             case "DriveBack2":
-                doneYet = robot.westCoast.driveBasedOnEncoders(driveAwayFromCryptobox, -1, true);
+                doneYet = robot.westCoast.driveBasedOnEncoders(1, -1, true);
+                if(doneYet){
+                    currentCase = "DriveBack3";
+                }
+                break;
+            case "DriveBack3":
+                doneYet = robot.westCoast.driveBasedOnEncoders(4, -1, true);
                 if(doneYet){
                     currentCase = "End";
                 }
