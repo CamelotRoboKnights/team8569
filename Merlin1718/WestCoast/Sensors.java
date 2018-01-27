@@ -88,7 +88,7 @@ public class Sensors {
         public double getCurrentOrientation () {
             if(!(imu == null)) {
                 Orientation imuAngularOrientation = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
-                return imuAngularOrientation.firstAngle;
+                return -imuAngularOrientation.firstAngle;
             } else return 0;
         }
     }
