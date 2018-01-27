@@ -164,7 +164,8 @@ public class WestCoastBlueC extends OpMode {
                 if(doneYet){
                     currentCase = "End";
                 }
-                break;            case "End":
+                break;
+            case "End":
                 robot.westCoast.drive(0,0, true);
                 break;
             default:

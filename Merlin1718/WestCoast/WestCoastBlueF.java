@@ -34,7 +34,7 @@ public class WestCoastBlueF extends OpMode {
     private double driveOffBalancePad = 21;
     private double driveDistanceToRightColumn = 15;//14
     private double driveDistanceToCenterColumn = 7;// 10
-    private double driveDistanceToLeftColumn = 0;//4
+    private double driveDistanceToLeftColumn = 1;//4
     private double driveForwardToCryptobox = 8;
     private double driveAwayFromCryptobox = 5;//7
 
