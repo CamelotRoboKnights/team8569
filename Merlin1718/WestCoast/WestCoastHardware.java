@@ -82,8 +82,8 @@ public class WestCoastHardware {
 
 
 
-        motorR.setDirection(DcMotorSimple.Direction.REVERSE);//Sets the motor power to positive because duh.
-        motorL.setDirection(DcMotorSimple.Direction.FORWARD);//Sets the motor power as positive because duh.
+        motorR.setDirection(DcMotorSimple.Direction.FORWARD);//Sets the motor power to positive because duh.
+        motorL.setDirection(DcMotorSimple.Direction.REVERSE);//Sets the motor power as positive because duh.
         glyph.setDirection(DcMotorSimple.Direction.REVERSE);
 
         motorR.setPower(0);//Sets the power to 0 so motors don't move
@@ -100,10 +100,10 @@ public class WestCoastHardware {
 
         jewelSorter = new SpecificHardware.JewelSorter(colorSensor, sorter, .8, .1);// Up down
 
-        topLeftGrasper = new SpecificHardware.SingleGlyphGrasper(leftTopGrasperServo, .15, 0);//Open close
-        topRightGrasper = new SpecificHardware.SingleGlyphGrasper(rightTopGrasperServo, .75, 1);
-        bottomLeftGrasper = new SpecificHardware.SingleGlyphGrasper(leftBottomGrasperServo, 0, .2);
-        bottomRightGrasper= new SpecificHardware.SingleGlyphGrasper(rightBottomGrasperServo, 1, .8);
+        topLeftGrasper = new SpecificHardware.BetterServo(leftTopGrasperServo, .15, 0);//Open close
+        topRightGrasper = new SpecificHardware.BetterServo(rightTopGrasperServo, .75, 1);
+        bottomLeftGrasper = new SpecificHardware.BetterServo(leftBottomGrasperServo, .2, 0);
+        bottomRightGrasper= new SpecificHardware.BetterServo(rightBottomGrasperServo, .8, 1);
 
         topGlyphLayer = new SpecificHardware.GlyphGrasperLayer(topLeftGrasper, topRightGrasper);
         bottomGlyphLayer = new SpecificHardware.GlyphGrasperLayer(bottomLeftGrasper, bottomRightGrasper);
@@ -126,10 +126,10 @@ public class WestCoastHardware {
 
     public SpecificHardware.JewelSorter jewelSorter;
 
-    private SpecificHardware.SingleGlyphGrasper topLeftGrasper;
-    private SpecificHardware.SingleGlyphGrasper topRightGrasper;
-    private SpecificHardware.SingleGlyphGrasper bottomLeftGrasper;
-    private SpecificHardware.SingleGlyphGrasper bottomRightGrasper;
+    private SpecificHardware.BetterServo topLeftGrasper;
+    private SpecificHardware.BetterServo topRightGrasper;
+    private SpecificHardware.BetterServo bottomLeftGrasper;
+    private SpecificHardware.BetterServo bottomRightGrasper;
 
     private SpecificHardware.GlyphGrasperLayer topGlyphLayer;
     private SpecificHardware.GlyphGrasperLayer bottomGlyphLayer;

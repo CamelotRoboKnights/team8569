@@ -14,7 +14,7 @@ public class WestCoastRedF extends OpMode {
         robot.init(hardwareMap);
         robot.motoG.initCamera();
         robot.glyphCollector.topGrasper.close();
-        robot.glyphCollector.bottomGrasper.open();
+        robot.glyphCollector.bottomGrasper.close();
         ;//Initializing everything needed
     }
     @Override
@@ -148,7 +148,7 @@ public class WestCoastRedF extends OpMode {
                 }
                 break;
             case "ReleaseGripper": //release glyph
-                robot.glyphCollector.topGrasper.open();
+                robot.glyphCollector.bottomGrasper.open();
                 doneYet = true;
                 if(doneYet){
                     currentCase = "DriveForward";

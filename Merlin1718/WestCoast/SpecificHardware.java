@@ -85,36 +85,41 @@ public class SpecificHardware {
         double maximumHeight;
         double ticksPerRotation = 1;
         double spoolDiameter = 1;
-        private double spoolCircumference = spoolDiameter * Math.PI;
-        private double thirdHeight = maximumHeight/3;
-        private double twoThirdsHeight = thirdHeight*2;
+        private double spoolCircumference;
+        private double thirdHeight;
+        private double twoThirdsHeight;
 
         private boolean raising = false;
 
 
-        GlyphCollector (DcMotor motor, GlyphGrasperLayer topGrasper, GlyphGrasperLayer bottomGrasper,
-                        double maximumHeight, double ticksPerRotation, double spoolDiameter) {
+        GlyphCollector(DcMotor motor, GlyphGrasperLayer topGrasper, GlyphGrasperLayer bottomGrasper,
+                       double maximumHeight, double ticksPerRotation, double spoolDiameter) {
             this.motor = motor;
             this.topGrasper = topGrasper;
             this.bottomGrasper = bottomGrasper;
             this.maximumHeight = maximumHeight;
             this.ticksPerRotation = ticksPerRotation;
             this.spoolDiameter = spoolDiameter;
+            this.spoolCircumference = spoolDiameter * Math.PI;
+            this.thirdHeight = maximumHeight / 3;
+            this.twoThirdsHeight = thirdHeight * 2;
         }
-        public double getCurrentMotorPosition () {
+
+        public double getCurrentMotorPosition() {
             if (!(this.motor == null)) {
-                return this.motor.getCurrentPosition()/this.ticksPerRotation*this.spoolCircumference;
-            }
-            else return 0;
+                return this.motor.getCurrentPosition() / this.ticksPerRotation * this.spoolCircumference;
+            } else return 0;
         }
-        public double raiseingToValue  = 0;
-        public boolean raiseToValue (double targetHeight) {//give a given height
+
+        public double raiseingToValue = 0;
+
+        public boolean raiseToValue(double targetHeight) {//give a given height
             this.raising = true;
             this.raiseingToValue = targetHeight;
             double difference = (targetHeight - getCurrentMotorPosition());//find the difference in inches
             double scalar = .25;//the scale value to determine motor speed
             this.raise(difference * scalar);
-            if(Math.abs(difference) <= .1) {
+            if (Math.abs(difference) <= .1) {
                 this.motor.setPower(0);
                 this.raising = false;
                 return true;
@@ -122,67 +127,60 @@ public class SpecificHardware {
             return false;
         }
 
-        public void raise (double raiseValue) {
-            this.motor.setPower(Range.clip(raiseValue,-1,1));
+        public void raise(double raiseValue) {
+            this.motor.setPower(Range.clip(raiseValue, -1, 1));
         }
 
-        public void teleRaise (Gamepad g) {
-            if(this.getCurrentMotorPosition() >= 0 && Math.abs(g.left_stick_y) > .01 &&
-                    this.getCurrentMotorPosition() <= maximumHeight)  this.raise(-g.left_stick_y/4);
+        public void teleRaise(Gamepad g) {
+            if (this.getCurrentMotorPosition() >= 0 && Math.abs(g.left_stick_y) > .01 &&
+                    this.getCurrentMotorPosition() <= maximumHeight)
+                this.raise(-g.left_stick_y / 4);
 
             else if (-g.left_stick_y > .01 && this.getCurrentMotorPosition() <= maximumHeight)
-                this.raise(-g.left_stick_y/4);
+                this.raise(-g.left_stick_y / 4);
 
-            else if (-g.left_stick_y < -.01 && this.getCurrentMotorPosition() >= 0) this.raise(-g.left_stick_y/4);
+            else if (-g.left_stick_y < -.01 && this.getCurrentMotorPosition() >= 0)
+                this.raise(-g.left_stick_y / 4);
 
             else raise(0);
+            this.closeWhenLow();
         }
-        public void teleRaiseToPosition (Gamepad g){
-            if(getCurrentMotorPosition() < thirdHeight -1) {//
-                if(g.dpad_up){
-                    raiseToValue(thirdHeight);
-                }
-            } else if (getCurrentMotorPosition() < twoThirdsHeight-1) {
-                if(g.dpad_up){
-                    raiseToValue(twoThirdsHeight);
-                } else if (g.dpad_down) {
-                    raiseToValue(0);
-                }
-            } else if (getCurrentMotorPosition() < maximumHeight - 1) {
-                if(g.dpad_up){
-                    raiseToValue(maximumHeight);
-                } else if (g.dpad_down) {
-                    raiseToValue(thirdHeight);
-                }
-            }else {
-                if(g.dpad_down) {
-                    raiseToValue(twoThirdsHeight);
-                }
+
+        public void teleRaiseToPosition(Gamepad g) {
+            if (g.a) {
+                this.raiseToValue(thirdHeight);
+            } else if (g.x) {
+                this.raiseToValue(twoThirdsHeight);
+            } else if (g.y) {
+                this.raiseToValue(maximumHeight);
             }
         }
 
         boolean topPressed;
-        public void teleTopLayer (Gamepad g) {
-            if(g.left_trigger > .5 && !topPressed){
+
+        public void teleTopLayer(Gamepad g) {
+            if (g.left_trigger > .5 && !topPressed) {
                 topPressed = true;
-            } else if (!(g.left_trigger > .5) && topPressed){
+            } else if (!(g.left_trigger > .5) && topPressed) {
                 topPressed = false;
                 topGrasper.alternateState();
             }
         }
 
         boolean bottomPressed;
-        public void teleBottomLayer (Gamepad g) {
-            if(g.right_trigger > .5 && !bottomPressed){
+
+        public void teleBottomLayer(Gamepad g) {
+            if (g.right_trigger > .5 && !bottomPressed) {
                 bottomPressed = true;
-            } else if (!(g.right_trigger > .5) && bottomPressed){
+            } else if (!(g.right_trigger > .5) && bottomPressed) {
                 bottomPressed = false;
                 bottomGrasper.alternateState();
             }
         }
-        public void teleOp (Gamepad g) {
 
-            if (!this.raising){
+        public void teleOp(Gamepad g) {
+
+            if (!this.raising) {
                 this.teleRaise(g);
                 this.teleRaiseToPosition(g);
             } else {
@@ -193,15 +191,22 @@ public class SpecificHardware {
 
         }
 
+        public void closeWhenLow() {
+            if (this.motor.getPower() < 0 && this.getCurrentMotorPosition() < 5 && this.getCurrentMotorPosition() > 4.5) {
+                this.bottomGrasper.close();
+            } else if (this.motor.getPower() < 0 && this.getCurrentMotorPosition() < 4.5 && this.getCurrentMotorPosition() > 4) {
+                this.bottomGrasper.open();
+            }
+
+        }
     }
 
 
-
     public static class GlyphGrasperLayer {
-        SingleGlyphGrasper leftGrasper;
-        SingleGlyphGrasper rightGrasper;
+        BetterServo leftGrasper;
+        BetterServo rightGrasper;
         boolean open;
-        GlyphGrasperLayer (SingleGlyphGrasper leftGrasper, SingleGlyphGrasper rightGrasper){
+        GlyphGrasperLayer (BetterServo leftGrasper, BetterServo rightGrasper){
             this.leftGrasper = leftGrasper;
             this.rightGrasper = rightGrasper;
         }
@@ -223,11 +228,11 @@ public class SpecificHardware {
             }
         }
     }
-    public static class SingleGlyphGrasper {
+    public static class BetterServo {
         Servo servo;
         double openValue;
         double closeValue;
-        SingleGlyphGrasper (Servo servo, double openValue, double closeValue) {
+        BetterServo (Servo servo, double openValue, double closeValue) {
             this.servo = servo;
             this.closeValue = closeValue;
             this.openValue = openValue;
@@ -237,6 +242,43 @@ public class SpecificHardware {
         }
         public void close () {
             this.servo.setPosition(closeValue);
+        }
+    }
+    public static class RelicClawAndArm {
+        DcMotor motor;
+        double ticksPerRotation;
+        BetterServo claw;
+        BetterServo armServo;
+        double setPosition = 0;
+        RelicClawAndArm (DcMotor motor, double ticksPerRotation, BetterServo claw, BetterServo armServo){
+            this.motor = motor;
+            this.ticksPerRotation = ticksPerRotation;
+            this.claw = claw;
+            this.armServo = armServo;
+        }
+        public void setMotorPower (double power) {
+            this.motor.setPower(Range.clip(power, -1, 1));
+        }
+        public double getPosition () { //0-180 = 0=1
+            return motor.getCurrentPosition()/ticksPerRotation*360/180;
+        }
+
+        public void setToPosition (double position) {
+            double difference = getPosition()-position;
+            double differenceScalar = 1;
+            this.setMotorPower(difference * differenceScalar);
+        }
+        public void teleOp() {
+
+        }
+        public void start(){
+            setPosition = .2;
+            this.setToPosition(setPosition);
+            this.claw.open();
+            this.armServo.open();
+        }
+        public void init(){
+
         }
     }
 }

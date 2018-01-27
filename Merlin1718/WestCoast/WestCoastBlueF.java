@@ -14,7 +14,7 @@ public class WestCoastBlueF extends OpMode {
         robot.init(hardwareMap);
         robot.motoG.initCamera();
         robot.glyphCollector.topGrasper.close();
-        robot.glyphCollector.bottomGrasper.open();
+        robot.glyphCollector.bottomGrasper.close();
         ;//Initializing everything needed
     }
     @Override
@@ -52,6 +52,7 @@ public class WestCoastBlueF extends OpMode {
         telemetry.addData("power", robot.westCoast.leftMotor.getPower());
         telemetry.addData("startTime", startTime);
         telemetry.addData("duration", (System.currentTimeMillis()-startTime)/1000);
+        telemetry.addData("revIMU", robot.revIMU.getCurrentOrientation());
         switch (currentCase){
             case "DropSorter": //lower sorter to sort jewel
                 boolean doneYet;
@@ -82,6 +83,7 @@ public class WestCoastBlueF extends OpMode {
                 doneYet = robot.westCoast.turnToGyroHeading(true, spinLeftToKnockOffLeftJewel, robot.navx.getCurrentOrientation());
                 if(doneYet){
                     currentCase = "RaiseSorter";
+
                 }
                 break;
             //raise sorter
@@ -135,13 +137,15 @@ public class WestCoastBlueF extends OpMode {
 
             case "ToLeftColumn": //move to left column
                 doneYet = robot.westCoast.driveBasedOnEncodersAndGyro(driveDistanceToLeftColumn, 1, true, -90, robot.navx.getCurrentOrientation());
+                telemetry.addData("angle", robot.navx.getCurrentOrientation());
                 if(doneYet){
                     currentCase = "SpinTo-170";
                 }
                 break;
 
             case "SpinTo-170": //turn -179% to face cryptobox
-                doneYet = robot.westCoast.turnToGyroHeading(false, 0, robot.revIMU.getCurrentOrientation());
+                doneYet = robot.westCoast.turnToGyroHeading(true, -180, robot.navx.getCurrentOrientation());
+                telemetry.addData("navx orientation", robot.navx.getCurrentOrientation());
                 if(doneYet){
                     currentCase = "ReleaseGripper";
                 }
@@ -154,7 +158,9 @@ public class WestCoastBlueF extends OpMode {
                 }
                 break;
             case "DriveForward": //dive forward twards cryptobox
-                doneYet = robot.westCoast.driveBasedOnEncodersAndGyro(driveForwardToCryptobox, 1, false, 0, robot.revIMU.getCurrentOrientation()) || time();
+                doneYet = robot.westCoast.driveBasedOnEncodersAndGyro(driveForwardToCryptobox, 1, true, -180, robot.navx.getCurrentOrientation()) || time();
+                telemetry.addData("navx orientation", robot.navx.getCurrentOrientation());
+
                 //doneYet = robot.westCoast.driveBasedOnEncoders(driveForwardToCryptobox, 1) || time();
                 if(doneYet){
                     currentCase = "DriveBack";

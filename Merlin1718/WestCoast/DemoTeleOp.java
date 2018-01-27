@@ -43,6 +43,7 @@ public class DemoTeleOp extends OpMode {
         telemetry.addData("Red?: ", robot.jewelSorter.isRed());
         telemetry.addData("color", robot.jewelSorter.jewelColor());
         telemetry.addData("height", robot.glyphCollector.getCurrentMotorPosition());
+        telemetry.addData("target height", robot.glyphCollector.raiseingToValue);
         telemetry.addData("angle", robot.navx.getCurrentOrientation());
         telemetry.addData("leftMotor", robot.westCoast.getLeftCurrentMotorPosition());
         telemetry.addData("rightMotor,", robot.westCoast.getRightCurrentMotorPosition());

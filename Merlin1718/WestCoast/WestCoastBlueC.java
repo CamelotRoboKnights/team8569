@@ -14,7 +14,7 @@ public class WestCoastBlueC extends OpMode {
         robot.init(hardwareMap);
         robot.motoG.initCamera();
         robot.glyphCollector.topGrasper.close();
-        robot.glyphCollector.bottomGrasper.open();
+        robot.glyphCollector.bottomGrasper.close();
         ;//Initializing everything needed
     }
     @Override
@@ -25,7 +25,7 @@ public class WestCoastBlueC extends OpMode {
     // distance of variables
 
 
-    double versionNumber = 102;
+    double versionNumber = 103;
 
 
     private String color = "blue";
@@ -34,7 +34,7 @@ public class WestCoastBlueC extends OpMode {
     private double driveDistanceToRightColumn = 38;//36
     private double driveDistanceToCenterColumn = 31;// 30
     private double driveDistanceToLeftColumn = 24;//
-    private double driveForwardToCryptobox = 8;
+    private double driveForwardToCryptobox = 10;//9
     private double driveAwayFromCryptobox = 5;
 
 
@@ -127,7 +127,7 @@ public class WestCoastBlueC extends OpMode {
                 }
                 break;
             case "ReleaseGripper": //release glyph
-                robot.glyphCollector.topGrasper.open();
+                robot.glyphCollector.bottomGrasper.open();
                 doneYet = true;
                 if(doneYet){
                     currentCase = "DriveForward";
@@ -141,19 +141,19 @@ public class WestCoastBlueC extends OpMode {
                 break;
             //back up
             case "DriveBack":
-                doneYet = robot.westCoast.driveBasedOnEncoders(driveAwayFromCryptobox, -1, true);
+                doneYet = robot.westCoast.driveBasedOnEncodersAndGyro(driveAwayFromCryptobox, -1, true, 90, robot.navx.getCurrentOrientation());
                 if(doneYet){
                     currentCase = "DriveForward2";
                 }
                 break;
             case "DriveForward2":
-                doneYet = robot.westCoast.driveBasedOnEncodersAndGyro(driveAwayFromCryptobox+1, 1, true, 90, robot.navx.getCurrentOrientation()) || time();
+                doneYet = robot.westCoast.driveBasedOnEncodersAndGyro(driveAwayFromCryptobox+3, 1, true, 90, robot.navx.getCurrentOrientation()) || time();
                 if(doneYet){
                     currentCase = "DriveBack2";
                 }
                 break;
             case "DriveBack2":
-                doneYet = robot.westCoast.driveBasedOnEncoders(driveAwayFromCryptobox, -1, true);
+                doneYet = robot.westCoast.driveBasedOnEncodersAndGyro(driveAwayFromCryptobox, -1, true, 90, robot.navx.getCurrentOrientation());
                 if(doneYet){
                     currentCase = "End";
                 }

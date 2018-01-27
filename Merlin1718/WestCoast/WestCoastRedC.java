@@ -14,7 +14,7 @@ public class WestCoastRedC extends OpMode {
         robot.init(hardwareMap);
         robot.motoG.initCamera();
         robot.glyphCollector.topGrasper.close();
-        robot.glyphCollector.bottomGrasper.open();
+        robot.glyphCollector.bottomGrasper.close();
         ;//Initializing everything needed
     }
     @Override
@@ -114,6 +114,7 @@ public class WestCoastRedC extends OpMode {
 
             case "ToLeftColumn": //move to left column
                 doneYet = robot.westCoast.driveBasedOnEncodersAndGyro(driveDistanceToLeftColumn, 1, true, 0, robot.navx.getCurrentOrientation());
+                telemetry.addData("angle", robot.navx.getCurrentOrientation());
                 if(doneYet){
                     currentCase = "SpinTo90";
                 }
@@ -127,7 +128,7 @@ public class WestCoastRedC extends OpMode {
                 }
                 break;
             case "ReleaseGripper": //release glyph
-                robot.glyphCollector.topGrasper.open();
+                robot.glyphCollector.bottomGrasper.open();
                 doneYet = true;
                 if(doneYet){
                     currentCase = "DriveForward";

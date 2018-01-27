@@ -40,7 +40,7 @@ public class WestCoastClass {
         DcMotor rightMotor;
         double radius = 2;
         double circumference = 2*Math.PI*radius;
-        double ticksPerRotation = 560;
+        double ticksPerRotation = 1220;
 
         WestCoastDrive (DcMotor leftMotor, DcMotor rightMotor){
             this.leftMotor = leftMotor;
@@ -121,7 +121,7 @@ public class WestCoastClass {
             }
             else {//Otherwise keep going
                 returnValue = false;
-                this.drive(.2*direction, .2*direction, isFront);
+                this.drive(.4*direction, .4*direction, isFront);
             }
 
             return returnValue;
@@ -131,15 +131,20 @@ public class WestCoastClass {
         boolean turnToGyroHeading(boolean isFront, double targetHeading, double currentHeading) {//Working and will turn the robot to a gyro heading within 2degrees
             boolean returnValue;//The value the method will return
             double headingDifference = targetHeading - currentHeading;//How far the robot is from its target heading
-            double headingScaler = .007;//The scalier that edits how much the speed is affect
+            if (headingDifference > 180){
+                headingDifference = headingDifference - 360;
+            } else if (headingDifference < -180) {
+                headingDifference = headingDifference + 360;
+            }
+            double headingScaler = .02;//The scalier that edits how much the speed is affect
             double headingDiffernceScalled = headingDifference * headingScaler;//The scaled value that is used for the motor power
             headingDiffernceScalled = Range.clip(headingDiffernceScalled, -1, 1);//Making sure that the number is within a reasonable motor power
 
-            if(headingDiffernceScalled < .1 && headingDiffernceScalled > 0){//making sure the motor power is not so low that the robot wont move
-                headingDiffernceScalled = .1;
+            if(headingDiffernceScalled < .15 && headingDiffernceScalled > 0){//making sure the motor power is not so low that the robot wont move
+                headingDiffernceScalled = .15;
             }
-            else if(Math.abs(headingDiffernceScalled) < .1 && headingDiffernceScalled < 0){//making sure the motor power is not so low that the robot wont move
-                headingDiffernceScalled = -.1;
+            else if(Math.abs(headingDiffernceScalled) < .15 && headingDiffernceScalled < 0){//making sure the motor power is not so low that the robot wont move
+                headingDiffernceScalled = -.15;
             }
 
             if (1 >= Math.abs(headingDifference)) {//If it is within 2 degrees I am done
