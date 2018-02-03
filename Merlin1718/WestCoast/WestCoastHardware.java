@@ -97,11 +97,14 @@ public class WestCoastHardware {
         motorR.setPower(0);//Sets the power to 0 so motors don't move
         motorL.setPower(0);
         glyph.setPower(0);
+        relicMotor.setPower(0);
+
+
 
         motorR.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         motorL.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         glyph.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-
+        relicMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
 
         westCoast = new WestCoastClass.WestCoastDrive(motorL, motorR);
