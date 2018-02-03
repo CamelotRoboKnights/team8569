@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.team.Merlin1617.Merlin3;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 
 import org.firstinspires.ftc.teamcode.team.Merlin1617.Merlin3.Merlin3AutoMethods;
 
@@ -17,6 +18,7 @@ import org.firstinspires.ftc.teamcode.team.Merlin1617.Merlin3.Merlin3AutoMethods
  *
  */
 @Autonomous(name = "Blue LCorner", group = "Merlin3")
+@Disabled
 public class Blue2LaunchCorner extends Merlin3AutoMethods {
 
 

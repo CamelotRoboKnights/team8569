@@ -9,6 +9,7 @@ import org.lasarobotics.vision.opmode.extensions.CameraControlExtension;
 import org.lasarobotics.vision.util.ScreenOrientation;
 import org.opencv.core.Size;
 import com.qualcomm.hardware.*;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.hardware.HardwareDevice;
 
 /**
@@ -23,7 +24,7 @@ import com.qualcomm.robotcore.hardware.HardwareDevice;
  */
 
 @Autonomous(name = "New Vision", group = "Merlin3")
-
+@Disabled
 public class NewVisionSample extends VisionOpMode {
 
     @Override
