@@ -247,9 +247,9 @@ public class SpecificHardware {
     public static class RelicClawAndArm {
         DcMotor motor;
         double ticksPerRotation;
+        double currentTargetPosition = 0;
         BetterServo claw;
         BetterServo armServo;
-        double setPosition = 0;
         RelicClawAndArm (DcMotor motor, double ticksPerRotation, BetterServo claw, BetterServo armServo){
             this.motor = motor;
             this.ticksPerRotation = ticksPerRotation;
@@ -263,22 +263,44 @@ public class SpecificHardware {
             return motor.getCurrentPosition()/ticksPerRotation*360/180;
         }
 
+        private double lastError = 0;
         public void setToPosition (double position) {
+            currentTargetPosition = position;
             double difference = getPosition()-position;
-            double differenceScalar = 1;
+            double differenceScalar = .75;
+            lastError = difference;
+            double lastErrorScalar = .25;
+            double motorPower = difference*differenceScalar+lastError*lastErrorScalar;
             this.setMotorPower(difference * differenceScalar);
         }
-        public void teleOp() {
-
+        public void teleOp(Gamepad g) {
+            this.teleClaw(g.a);
+            this.teleArm(-g.right_stick_y);
         }
-        public void start(){
-            setPosition = .2;
-            this.setToPosition(setPosition);
-            this.claw.open();
-            this.armServo.open();
-        }
-        public void init(){
 
+        boolean open = false;
+        boolean isPressed;
+
+        public void teleArm (double joyValue) {
+            this.setToPosition(Range.clip(this.currentTargetPosition + (joyValue)*.05, 0, 1));
+            if(currentTargetPosition > .2) {
+                this.armServo.open();
+            } else {
+                this.armServo.close();
+            }
+        }
+        public void teleClaw(boolean pressed) {
+            if (pressed && !isPressed) {
+                isPressed = true;
+            } else if (!pressed && isPressed) {
+                isPressed = false;
+                open = !open;
+            }
+            if(open){
+                this.claw.open();
+            } else {
+                this.claw.close();
+            }
         }
     }
 }

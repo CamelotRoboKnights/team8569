@@ -32,6 +32,7 @@ public class DemoTeleOp extends OpMode {
     public void loop() {//This runs while opmode is active
         robot.westCoast.teleOp(gamepad1);
         robot.glyphCollector.teleOp(gamepad2);
+        robot.relic.teleOp(gamepad2);
         if(gamepad1.b){
             robot.jewelSorter.raise();
         }
@@ -54,6 +55,9 @@ public class DemoTeleOp extends OpMode {
         telemetry.addData("rev first angle: ", robot.revIMU.getCurrentOrientation());
         telemetry.addData("rev second angle: ", robot.revIMU.imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES).secondAngle);
         telemetry.addData("rev third angle: ", robot.revIMU.imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES).thirdAngle);
+        telemetry.addData("relic position", robot.relic.getPosition());
+        telemetry.addData("relic target", robot.relic.currentTargetPosition);
+        telemetry.addData("gamepad", gamepad2.right_stick_y);
         telemetry.update();
     }
 

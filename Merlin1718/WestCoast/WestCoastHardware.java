@@ -19,11 +19,14 @@ public class WestCoastHardware {
 
     public DcMotor  motorR    = null;
     public DcMotor  motorL    = null;
+    public DcMotor relicMotor = null;
     private DcMotor  glyph    = null;
     private Servo leftTopGrasperServo = null;
     private Servo rightTopGrasperServo = null;
     private Servo leftBottomGrasperServo = null;
     private Servo rightBottomGrasperServo = null;
+    private Servo clawServo = null;
+    private Servo armServo = null;
 
     private Servo sorter = null;
     private ColorSensor colorSensor = null;
@@ -52,10 +55,14 @@ public class WestCoastHardware {
         motorR  = hwMap.dcMotor.get("motorR");//Finds the Right motor in the hardware map
         motorL  = hwMap.dcMotor.get("motorL");//Finds the Left motor in the hardware map
         glyph = hwMap.dcMotor.get("glyph");
+        relicMotor = hwMap.dcMotor.get("relic");
         leftTopGrasperServo = hwMap.servo.get("leftTopGrasper");
         rightTopGrasperServo = hwMap.servo.get("rightTopGrasper");
         leftBottomGrasperServo = hwMap.servo.get("leftBottomGrasper");
         rightBottomGrasperServo = hwMap.servo.get("rightBottomGrasper");
+        clawServo = hwMap.servo.get("claw");
+        armServo = hwMap.servo.get("arm");
+
         sorter = hwMap.servo.get("sorter");
         colorSensor = hwMap.get(ColorSensor.class, "color");
         navX = hwMap.get(NavxMicroNavigationSensor.class, "navx");
@@ -85,6 +92,7 @@ public class WestCoastHardware {
         motorR.setDirection(DcMotorSimple.Direction.FORWARD);//Sets the motor power to positive because duh.
         motorL.setDirection(DcMotorSimple.Direction.REVERSE);//Sets the motor power as positive because duh.
         glyph.setDirection(DcMotorSimple.Direction.REVERSE);
+        relicMotor.setDirection(DcMotorSimple.Direction.FORWARD);
 
         motorR.setPower(0);//Sets the power to 0 so motors don't move
         motorL.setPower(0);
@@ -116,6 +124,11 @@ public class WestCoastHardware {
         revIMU = new Sensors.RevIMU(imu);
         navx = new Sensors.Navx(navX);
         motoG = new Sensors.Phone();
+
+
+        relicArm = new SpecificHardware.BetterServo(armServo, 0, 1);//open close;
+        relicClaw = new SpecificHardware.BetterServo(clawServo, 0, 1);
+        relic = new SpecificHardware.RelicClawAndArm(relicMotor, 1680, relicClaw, relicArm);
     }
     private double glyphCollectorMaxHeight = 16;
     private double glyphCollectorTicksPerRotation = 1220;
@@ -130,6 +143,8 @@ public class WestCoastHardware {
     private SpecificHardware.BetterServo topRightGrasper;
     private SpecificHardware.BetterServo bottomLeftGrasper;
     private SpecificHardware.BetterServo bottomRightGrasper;
+    private SpecificHardware.BetterServo relicArm;
+    private SpecificHardware.BetterServo relicClaw;
 
     private SpecificHardware.GlyphGrasperLayer topGlyphLayer;
     private SpecificHardware.GlyphGrasperLayer bottomGlyphLayer;
@@ -139,4 +154,6 @@ public class WestCoastHardware {
     public Sensors.RevIMU revIMU;
     public Sensors.Navx navx;
     public Sensors.Phone motoG;
+
+    public SpecificHardware.RelicClawAndArm relic;
 }
