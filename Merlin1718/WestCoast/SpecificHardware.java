@@ -264,14 +264,22 @@ public class SpecificHardware {
         }
 
         private double lastError = 0;
+        private double integral = 0;
         public void setToPosition (double position) {
-            currentTargetPosition = position;
-            double difference = getPosition()-position;
-            double differenceScalar = .75;
+
+            double difference = position-getPosition();
+            double differenceScalar = 1;
+
+            integral = integral + difference;
+            double integralScalar = 1;
+
+            double derivative = difference - lastError;
+            double derivativeScalar = 1;
+
             lastError = difference;
-            double lastErrorScalar = .25;
-            double motorPower = difference*differenceScalar+lastError*lastErrorScalar;
-            this.setMotorPower(difference * differenceScalar);
+
+            double motorPower = difference*differenceScalar+integral*integralScalar+derivative*derivativeScalar;
+            this.setMotorPower(motorPower);
         }
         public void teleOp(Gamepad g) {
             this.teleClaw(g.a);
@@ -280,6 +288,7 @@ public class SpecificHardware {
 
         boolean open = false;
         boolean isPressed;
+
 
         public void teleArm (double joyValue) {
             this.setToPosition(Range.clip(this.currentTargetPosition + (joyValue)*.05, 0, 1));

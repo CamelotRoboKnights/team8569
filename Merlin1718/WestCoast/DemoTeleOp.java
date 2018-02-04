@@ -39,6 +39,13 @@ public class DemoTeleOp extends OpMode {
         if(gamepad1.x) {
             robot.jewelSorter.lower();//up and down are flipped
         }
+
+        //        if(gamepad2.left_trigger > .01) {
+//            robot.relic.motor.setPower(gamepad2.left_trigger/2);
+//        } else if (gamepad2.right_trigger > .01) {
+//            robot.relic.motor.setPower(-gamepad2.right_trigger);
+//        } else {robot.relic.motor.setPower(0);}
+
         telemetry.addData("version", 20);
         telemetry.addData("Blue?: ", robot.jewelSorter.isBlue());
         telemetry.addData("Red?: ", robot.jewelSorter.isRed());
