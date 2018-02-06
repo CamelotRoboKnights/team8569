@@ -9,6 +9,7 @@ package org.firstinspires.ftc.teamcode.team.Merlin1718.WestCoast;
 
 import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.hardware.kauailabs.NavxMicroNavigationSensor;
+import com.vuforia.CameraDevice;
 
 import org.firstinspires.ftc.robotcore.external.ClassFactory;
 import org.firstinspires.ftc.robotcore.external.matrices.OpenGLMatrix;
@@ -31,7 +32,7 @@ public class Sensors {
         VuforiaLocalizer vuforia;
         VuforiaTrackables relicTrackables;
         VuforiaTrackable relicTemplate;
-
+        CameraDevice cameraDevice;
 
         //initializes camera
         public void initCamera() {
@@ -48,6 +49,7 @@ public class Sensors {
             relicTemplate = relicTrackables.get(0);
 
             relicTrackables.activate();
+            this.cameraDevice.getInstance().setFlashTorchMode(true);
         }
 
         //finds out which vuMark you are seeing

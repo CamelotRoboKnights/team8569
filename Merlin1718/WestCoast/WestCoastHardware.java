@@ -129,7 +129,7 @@ public class WestCoastHardware {
         motoG = new Sensors.Phone();
 
 
-        relicArm = new SpecificHardware.BetterServo(armServo, 0, 1);//open close;
+        relicArm = new SpecificHardware.BetterServo(armServo, 1, 0);//open close;
         relicClaw = new SpecificHardware.BetterServo(clawServo, 0, 1);
         relic = new SpecificHardware.RelicClawAndArm(relicMotor, 1680, relicClaw, relicArm);
     }

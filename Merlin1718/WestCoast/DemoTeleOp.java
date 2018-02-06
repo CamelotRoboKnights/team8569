@@ -40,7 +40,7 @@ public class DemoTeleOp extends OpMode {
             robot.jewelSorter.lower();//up and down are flipped
         }
 
-        //        if(gamepad2.left_trigger > .01) {
+//        if(gamepad2.left_trigger > .01) {
 //            robot.relic.motor.setPower(gamepad2.left_trigger/2);
 //        } else if (gamepad2.right_trigger > .01) {
 //            robot.relic.motor.setPower(-gamepad2.right_trigger);

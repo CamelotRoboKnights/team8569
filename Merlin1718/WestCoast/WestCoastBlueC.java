@@ -35,10 +35,13 @@ public class WestCoastBlueC extends OpMode {
     private double driveDistanceToCenterColumn = 31;// 30
     private double driveDistanceToLeftColumn = 24;//
     private double driveForwardToCryptobox = 10;//9
-    private double driveAwayFromCryptobox = 5;
+    private double driveAwayFromCryptobox = 8;
+
+    double angle=-90;
+    double angleDirrection = -1;
 
 
-
+    String lowerCase = "Spin180AwayFromCryptobox";
     private String currentCase = "DropSorter";
     private String redJewel;
     private String column = "null";
@@ -144,24 +147,49 @@ public class WestCoastBlueC extends OpMode {
             case "DriveBack":
                 doneYet = robot.westCoast.driveBasedOnEncodersAndGyro(driveAwayFromCryptobox, -1, true, 90, currentAngle);
                 if(doneYet){
-                    currentCase = "DriveForward2";
+                    currentCase = "RaiseGlyphCollectorAndOtherCases";
                 }
                 break;
-            case "DriveForward2":
-                doneYet = robot.westCoast.driveBasedOnEncodersAndGyro(driveAwayFromCryptobox+3, 1, true, 90, currentAngle) || time();
-                if(doneYet){
-                    currentCase = "DriveBack2";
+            case "RaiseGlyphCollectorAndOtherCases":
+                boolean lowerCasesDone = false;
+                boolean doneRaising = robot.glyphCollector.raiseToValue(robot.glyphCollector.thirdHeight);
+                telemetry.addData("CurrentLowerCase", lowerCase);
+                telemetry.addData("Height", robot.glyphCollector.getCurrentMotorPosition());
+                boolean thisLowerCaseDone;
+                switch (lowerCase) {
+                    case "Spin180AwayFromCryptobox":
+                        thisLowerCaseDone = robot.westCoast.turnToGyroHeading(true, -90, currentAngle);
+                        if (thisLowerCaseDone) {
+                            lowerCase = "DriveBackAndBumpGlyph";
+                        }
+                        break;
+                    case "DriveBackAndBumpGlyph":
+                        thisLowerCaseDone = robot.westCoast.driveBasedOnEncodersAndGyro(7, -1, true, -90, currentAngle);
+                        if(thisLowerCaseDone){
+                            lowerCase = "End";
+                        }
+                        break;
+                    case "End":
+                        robot.westCoast.drive(0,0, true);
+                        lowerCasesDone = true;
+                        break;
+                }
+                if(lowerCasesDone && doneRaising) {
+                    currentCase = "DriveForwardToGlyphPit";
                 }
                 break;
-            case "DriveBack2":
-                doneYet = robot.westCoast.driveBasedOnEncoders(1, -1, true);
-                if(doneYet){
-                    currentCase = "DriveBack3";
+            case "DriveForwardToGlyphPit":
+                if(angle > -85) {
+                    angleDirrection = -1;
                 }
-                break;
-            case "DriveBack3":
-                doneYet = robot.westCoast.driveBasedOnEncoders(4, -1, true);
-                if(doneYet){
+                else if (angle < -95) {
+                    angleDirrection = 1;
+                }
+                angle = angle + angleDirrection;
+                doneYet = robot.westCoast.driveBasedOnEncodersAndGyro(45, 1, true, angle, currentAngle);
+                if(doneYet) {
+                    robot.glyphCollector.topGrasper.close();
+                    robot.glyphCollector.bottomGrasper.close();
                     currentCase = "End";
                 }
                 break;

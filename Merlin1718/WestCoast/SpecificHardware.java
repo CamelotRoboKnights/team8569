@@ -86,8 +86,8 @@ public class SpecificHardware {
         double ticksPerRotation = 1;
         double spoolDiameter = 1;
         private double spoolCircumference;
-        private double thirdHeight;
-        private double twoThirdsHeight;
+        public double thirdHeight;
+        public double twoThirdsHeight;
 
         private boolean raising = false;
 
@@ -267,14 +267,15 @@ public class SpecificHardware {
         private double integral = 0;
         public void setToPosition (double position) {
 
+            currentTargetPosition = position;
             double difference = position-getPosition();
-            double differenceScalar = 1;
+            double differenceScalar = .2;//5;//7;
 
             integral = integral + difference;
-            double integralScalar = 1;
+            double integralScalar = 0;//.2;//.25;
 
             double derivative = difference - lastError;
-            double derivativeScalar = 1;
+            double derivativeScalar = .05;//.2;//.25;
 
             lastError = difference;
 
@@ -282,7 +283,7 @@ public class SpecificHardware {
             this.setMotorPower(motorPower);
         }
         public void teleOp(Gamepad g) {
-            this.teleClaw(g.a);
+            this.teleClaw(g.b);
             this.teleArm(-g.right_stick_y);
         }
 
@@ -292,11 +293,7 @@ public class SpecificHardware {
 
         public void teleArm (double joyValue) {
             this.setToPosition(Range.clip(this.currentTargetPosition + (joyValue)*.05, 0, 1));
-            if(currentTargetPosition > .2) {
-                this.armServo.open();
-            } else {
-                this.armServo.close();
-            }
+            this.armServo.open();
         }
         public void teleClaw(boolean pressed) {
             if (pressed && !isPressed) {
