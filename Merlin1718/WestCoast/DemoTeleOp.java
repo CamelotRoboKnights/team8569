@@ -33,6 +33,7 @@ public class DemoTeleOp extends OpMode {
         robot.westCoast.teleOp(gamepad1);
         robot.glyphCollector.teleOp(gamepad2);
         robot.relic.teleOp(gamepad2);
+
         if(gamepad1.b){
             robot.jewelSorter.raise();
         }
