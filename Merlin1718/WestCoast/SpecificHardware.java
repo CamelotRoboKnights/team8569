@@ -203,7 +203,6 @@ public class SpecificHardware {
             } else if (this.motor.getPower() < 0 && this.getCurrentMotorPosition() < 4.5 && this.getCurrentMotorPosition() > 4) {
                 this.bottomGrasper.open();
             }
-
         }
     }
 
@@ -263,18 +262,18 @@ public class SpecificHardware {
     public static class RelicClawAndArm {
         DcMotor motor;
         double ticksPerRotation;
-        double currentTargetPosition = 0;
         double maximumDistance;
         private double spoolCircumferenceRelic;
         BetterServo claw;
         BetterServo armServo;
 
-        RelicClawAndArm(DcMotor motor, double ticksPerRotation, BetterServo claw, BetterServo armServo, double maximumHeight) {
+        RelicClawAndArm(DcMotor motor, double ticksPerRotation, BetterServo claw, BetterServo armServo, double maximumDistance, double spoolDiameter) {
             this.motor = motor;
             this.ticksPerRotation = ticksPerRotation;
             this.claw = claw;
             this.armServo = armServo;
             this.maximumDistance = maximumDistance;
+            this.spoolCircumferenceRelic = spoolDiameter*Math.PI;
 
         }
 
@@ -282,11 +281,7 @@ public class SpecificHardware {
             this.motor.setPower(Range.clip(power, -1, 1));
         }
 
-        public double getPosition() { //0-180 = 0=1
-            return motor.getCurrentPosition() / ticksPerRotation * 360 / 180;
-        }
-
-        public double getCurrentMotorPositionRelic() {
+        public double getCurrentMotorPosition() {
             if (!(this.motor == null)) {
                 return this.motor.getCurrentPosition() / this.ticksPerRotation * this.spoolCircumferenceRelic;
             } else return 0;
@@ -296,17 +291,14 @@ public class SpecificHardware {
             this.motor.setPower(Range.clip(raiseValue, -1, 1));
         }
 
-        public void teleExtend(Gamepad g) {
-            if (this.getCurrentMotorPositionRelic() >= 0 && Math.abs(g.right_stick_y) > .01 &&
-                    this.getCurrentMotorPositionRelic() <= maximumDistance)
-                this.extend(-g.right_stick_y / 4);
-
-            else if (-g.right_stick_y > .01 && this.getCurrentMotorPositionRelic() <= maximumDistance)
-                this.extend(-g.right_stick_y / 4);
-
-            else if (-g.right_stick_y < -.01 && this.getCurrentMotorPositionRelic() >= 0)
-                this.extend(-g.right_stick_y / 4);
-
+        public void teleExtend(double value) {
+            if (this.getCurrentMotorPosition() >= 0 && Math.abs(value) > .01 &&
+                    this.getCurrentMotorPosition() <= maximumDistance)
+                this.extend(value);
+            else if (value > .01 && this.getCurrentMotorPosition() <= maximumDistance)
+                this.extend(value);
+            else if (value < -.01 && this.getCurrentMotorPosition() >= 0)
+                this.extend(value);
             else extend(0);
 
         }
@@ -315,7 +307,7 @@ public class SpecificHardware {
         boolean isPressed;
 
 
-        public void teleRelicClaw(boolean pressed) {
+        public void teleRelicClawToggle(boolean pressed) {
             if (pressed && !isPressed) {
                 isPressed = true;
             } else if (!pressed && isPressed) {
@@ -328,85 +320,92 @@ public class SpecificHardware {
                 this.claw.close();
             }
         }
-
+        public void teleRelicClaw (boolean close, boolean open){
+            if(close) {
+                this.claw.close();
+            } else if (open) {
+                this.claw.open();
+            }
+        }
 
         public void teleOp(Gamepad g) {
-            this.teleRelicClaw(g.b);
+            this.teleRelicClaw(g.left_bumper, g.right_bumper);
             this.teleExtend(-g.right_stick_y);
+            this.armServo.open();
         }
     }
 
-        public static class OldRelicClawAndArm {
-            DcMotor motor;
-            double ticksPerRotation;
-            double currentTargetPosition = 0;
-            BetterServo claw;
-            BetterServo armServo;
+    public static class OldRelicClawAndArm {
+        DcMotor motor;
+        double ticksPerRotation;
+        double currentTargetPosition = 0;
+        BetterServo claw;
+        BetterServo armServo;
 
-            RelicClawAndArm(DcMotor motor, double ticksPerRotation, BetterServo claw, BetterServo armServo) {
-                this.motor = motor;
-                this.ticksPerRotation = ticksPerRotation;
-                this.claw = claw;
-                this.armServo = armServo;
+        OldRelicClawAndArm(DcMotor motor, double ticksPerRotation, BetterServo claw, BetterServo armServo) {
+            this.motor = motor;
+            this.ticksPerRotation = ticksPerRotation;
+            this.claw = claw;
+            this.armServo = armServo;
+        }
+
+        public void setMotorPower(double power) {
+            this.motor.setPower(Range.clip(power, -1, 1));
+        }
+
+        public double getPosition() { //0-180 = 0=1
+            return motor.getCurrentPosition() / ticksPerRotation * 360 / 180;
+        }
+
+        private double lastError = 0;
+        private double integral = 0;
+
+        public void setToPosition(double position) {
+
+            currentTargetPosition = position;
+            double difference = position - getPosition();
+            double differenceScalar = .2;//5;//7;
+
+            integral = integral + difference;
+            double integralScalar = 0;//.2;//.25;
+
+            double derivative = difference - lastError;
+            double derivativeScalar = .05;//.2;//.25;
+
+            lastError = difference;
+
+            double motorPower = difference * differenceScalar + integral * integralScalar + derivative * derivativeScalar;
+            this.setMotorPower(motorPower);
+        }
+
+        public void teleOp(Gamepad g) {
+            this.teleClaw(g.b);
+            this.teleArm(-g.right_stick_y);
+        }
+
+        boolean open = false;
+        boolean isPressed;
+
+
+        public void teleArm(double joyValue) {
+            this.setToPosition(Range.clip(this.currentTargetPosition + (joyValue) * .05, 0, 1));
+            this.armServo.open();
+        }
+
+        public void teleClaw(boolean pressed) {
+            if (pressed && !isPressed) {
+                isPressed = true;
+            } else if (!pressed && isPressed) {
+                isPressed = false;
+                open = !open;
             }
-
-            public void setMotorPower(double power) {
-                this.motor.setPower(Range.clip(power, -1, 1));
-            }
-
-            public double getPosition() { //0-180 = 0=1
-                return motor.getCurrentPosition() / ticksPerRotation * 360 / 180;
-            }
-
-            private double lastError = 0;
-            private double integral = 0;
-
-            public void setToPosition(double position) {
-
-                currentTargetPosition = position;
-                double difference = position - getPosition();
-                double differenceScalar = .2;//5;//7;
-
-                integral = integral + difference;
-                double integralScalar = 0;//.2;//.25;
-
-                double derivative = difference - lastError;
-                double derivativeScalar = .05;//.2;//.25;
-
-                lastError = difference;
-
-                double motorPower = difference * differenceScalar + integral * integralScalar + derivative * derivativeScalar;
-                this.setMotorPower(motorPower);
-            }
-
-            public void teleOp(Gamepad g) {
-                this.teleClaw(g.b);
-                this.teleArm(-g.right_stick_y);
-            }
-
-            boolean open = false;
-            boolean isPressed;
-
-
-            public void teleArm(double joyValue) {
-                this.setToPosition(Range.clip(this.currentTargetPosition + (joyValue) * .05, 0, 1));
-                this.armServo.open();
-            }
-
-            public void teleClaw(boolean pressed) {
-                if (pressed && !isPressed) {
-                    isPressed = true;
-                } else if (!pressed && isPressed) {
-                    isPressed = false;
-                    open = !open;
-                }
-                if (open) {
-                    this.claw.open();
-                } else {
-                    this.claw.close();
-                }
+            if (open) {
+                this.claw.open();
+            } else {
+                this.claw.close();
             }
         }
     }
+}
 
 

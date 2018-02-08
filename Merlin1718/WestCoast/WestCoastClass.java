@@ -74,9 +74,9 @@ public class WestCoastClass {
             this.drive(leftMotorPower * speed, rightMotorPower * speed, isFront);
         }
 
-        public void teleOp (Gamepad g) {
-            if(Math.abs(g.left_stick_y) > .01 || Math.abs(g.left_stick_x) > .01) this.arcadeJoystick(Math.pow(-g.left_stick_y,3), Math.pow(g.left_stick_x, 3)/2, 1, true);
-            else if (Math.abs(g.right_stick_y) > .01 || Math.abs(g.right_stick_x) > .01) this.arcadeJoystick(Math.pow(-g.right_stick_y, 3), Math.pow(g.right_stick_x, 3)/2, .5, true);
+        public void teleOp (Gamepad g, boolean direction) {
+            if(Math.abs(g.left_stick_y) > .01 || Math.abs(g.left_stick_x) > .01) this.arcadeJoystick(Math.pow(-g.left_stick_y,3), Math.pow(g.left_stick_x, 3)/2, 1, direction);
+            else if (Math.abs(g.right_stick_y) > .01 || Math.abs(g.right_stick_x) > .01) this.arcadeJoystick(Math.pow(-g.right_stick_y, 3), Math.pow(g.right_stick_x, 3)/2, .5, direction);
             else drive(0,0, true);
         }
 

@@ -131,7 +131,7 @@ public class WestCoastHardware {
 
         relicArm = new SpecificHardware.BetterServo(armServo, 1, 0);//open close;
         relicClaw = new SpecificHardware.BetterServo(clawServo, 0, 1);
-        relic = new SpecificHardware.RelicClawAndArm(relicMotor, 1680, relicClaw, relicArm);
+        relic = new SpecificHardware.RelicClawAndArm(relicMotor, glyphCollectorTicksPerRotation, relicClaw, relicArm, 32, 1);
     }
     private double glyphCollectorMaxHeight = 16;
     private double glyphCollectorTicksPerRotation = 1220;
