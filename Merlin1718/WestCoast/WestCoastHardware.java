@@ -92,7 +92,7 @@ public class WestCoastHardware {
         motorR.setDirection(DcMotorSimple.Direction.FORWARD);//Sets the motor power to positive because duh.
         motorL.setDirection(DcMotorSimple.Direction.REVERSE);//Sets the motor power as positive because duh.
         glyph.setDirection(DcMotorSimple.Direction.REVERSE);
-        relicMotor.setDirection(DcMotorSimple.Direction.FORWARD);
+        relicMotor.setDirection(DcMotorSimple.Direction.REVERSE);
 
         motorR.setPower(0);//Sets the power to 0 so motors don't move
         motorL.setPower(0);
@@ -131,7 +131,7 @@ public class WestCoastHardware {
 
         relicArm = new SpecificHardware.BetterServo(armServo, 1, 0);//open close;
         relicClaw = new SpecificHardware.BetterServo(clawServo, 0, 1);
-        relic = new SpecificHardware.RelicClawAndArm(relicMotor, glyphCollectorTicksPerRotation, relicClaw, relicArm, 32, 1);
+        relic = new SpecificHardware.RelicClawAndArm(relicMotor, glyphCollectorTicksPerRotation, relicClaw, relicArm, 28, .98);
     }
     private double glyphCollectorMaxHeight = 16;
     private double glyphCollectorTicksPerRotation = 1220;

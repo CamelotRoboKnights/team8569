@@ -69,9 +69,15 @@ public class WestCoastClass {
         }
 
         public void arcadeJoystick (double stick_y, double stick_x, double speed, boolean isFront) {
-            double leftMotorPower = Range.clip(stick_y + stick_x, -1, 1);
-            double rightMotorPower = Range.clip(stick_y - stick_x, -1, 1);
-            this.drive(leftMotorPower * speed, rightMotorPower * speed, isFront);
+            if(isFront) {
+                double leftMotorPower = Range.clip(stick_y + stick_x, -1, 1);
+                double rightMotorPower = Range.clip(stick_y - stick_x, -1, 1);
+                this.drive(leftMotorPower * speed, rightMotorPower * speed, true);
+            } else {
+                double leftMotorPower = Range.clip(-stick_y - stick_x, -1, 1);
+                double rightMotorPower = Range.clip(-stick_y + stick_x, -1, 1);
+                this.drive(leftMotorPower * speed, rightMotorPower * speed, true);
+            }
         }
 
         public void teleOp (Gamepad g, boolean direction) {

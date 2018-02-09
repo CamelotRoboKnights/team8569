@@ -266,6 +266,7 @@ public class SpecificHardware {
         private double spoolCircumferenceRelic;
         BetterServo claw;
         BetterServo armServo;
+        double armServoPosition;
 
         RelicClawAndArm(DcMotor motor, double ticksPerRotation, BetterServo claw, BetterServo armServo, double maximumDistance, double spoolDiameter) {
             this.motor = motor;
@@ -274,11 +275,8 @@ public class SpecificHardware {
             this.armServo = armServo;
             this.maximumDistance = maximumDistance;
             this.spoolCircumferenceRelic = spoolDiameter*Math.PI;
+            this.armServoPosition = this.armServo.openValue;
 
-        }
-
-        public void setMotorPower(double power) {
-            this.motor.setPower(Range.clip(power, -1, 1));
         }
 
         public double getCurrentMotorPosition() {
@@ -327,11 +325,20 @@ public class SpecificHardware {
                 this.claw.open();
             }
         }
-
+        public void teleAdjustableFlipper(boolean open, boolean close) {
+            if(open){
+                this.armServo.open();
+                //this.armServoPosition -= .05;
+            } else if (close) {
+                this.armServo.close();
+                //this.armServoPosition += .05;
+            }
+            //this.armServo.servo.setPosition(Range.clip(armServoPosition, 0, 1));
+        }
         public void teleOp(Gamepad g) {
             this.teleRelicClaw(g.left_bumper, g.right_bumper);
             this.teleExtend(-g.right_stick_y);
-            this.armServo.open();
+            this.teleAdjustableFlipper(g.x, g.b);
         }
     }
 
