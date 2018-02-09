@@ -31,8 +31,8 @@ public class WestCoastBlueCWithExtraGlyphs extends OpMode {
     private String color = "blue";
     private double spinRightToKnockOffRightJewel = 7;
     private double spinLeftToKnockOffLeftJewel  = -7;
-    private double driveDistanceToRightColumn = 38;//36
-    private double driveDistanceToCenterColumn = 31;// 30
+    private double driveDistanceToRightColumn = 36;//36
+    private double driveDistanceToCenterColumn = 29;// 30
     private double driveDistanceToLeftColumn = 24;//
     private double driveForwardToCryptobox = 10;//9
     private double driveAwayFromCryptobox = 8;
@@ -190,21 +190,74 @@ public class WestCoastBlueCWithExtraGlyphs extends OpMode {
                 if(doneYet) {
                     robot.glyphCollector.topGrasper.close();
                     robot.glyphCollector.bottomGrasper.close();
-                    currentCase = "End";
+                    currentCase = "Deliver";
                 }
                 break;
-
-            /*
-             *
-             * Next cases
-             *
-             * Raise while doing the rest to two thirds
-             * Drive Back at the heading to the middle
-             * When at the tip turn around facing cryptobox
-             * Drive and knock the glyph in.
-             *
-             *
-             */
+            case "Deliver":
+                lowerCasesDone = false;
+                doneRaising = robot.glyphCollector.raiseToValue(robot.glyphCollector.twoThirdsHeight);
+                telemetry.addData("CurrentLowerCase", lowerCase);
+                telemetry.addData("Height", robot.glyphCollector.getCurrentMotorPosition());
+                switch (lowerCase) {
+                    case "DriveBackToInFrontOfCryptobox":
+                        thisLowerCaseDone = robot.westCoast.driveBasedOnEncodersAndGyro(20, -1, true, -90, currentAngle);
+                        if(thisLowerCaseDone){
+                            lowerCase = "TurnToCryptobox";
+                        }
+                        break;
+                    case "TurnToCryptobox":
+                        thisLowerCaseDone = robot.westCoast.turnToGyroHeading(true, 90, currentAngle);
+                        if(thisLowerCaseDone) {
+                            lowerCase = "DriveIntoCryptoBox";
+                        }
+                        break;
+                    case "ReleaseGripper": //release glyph
+                        robot.glyphCollector.topGrasper.open();
+                        thisLowerCaseDone = true;
+                        if(thisLowerCaseDone){
+                            lowerCase = "DriveForward";
+                        }
+                        break;
+                    case "DriveIntoCryptoBox":
+                        thisLowerCaseDone = robot.westCoast.driveBasedOnEncodersAndGyro(5, 1, true, 90, currentAngle);
+                        if(thisLowerCaseDone){
+                            lowerCase = "TurnToCryptobox";
+                        }
+                        break;
+                    case "DriveBack":
+                        thisLowerCaseDone = robot.westCoast.driveBasedOnEncoders(driveAwayFromCryptobox, -1, true);
+                        if(thisLowerCaseDone){
+                            lowerCase = "DriveForward2";
+                        }
+                        break;
+                    case "DriveForward2":
+                        //doneYet = robot.westCoast.driveBasedOnEncodersAndGyro(driveAwayFromCryptobox+2, 1, -175, currentAngle) || time();
+                        thisLowerCaseDone = robot.westCoast.driveBasedOnEncoders(driveForwardToCryptobox+2, 1, true) || time();
+                        if(thisLowerCaseDone){
+                            lowerCase = "DriveBack2";
+                        }
+                        break;
+                    case "DriveBack2":
+                        thisLowerCaseDone = robot.westCoast.driveBasedOnEncoders(1, -1, true);
+                        if(thisLowerCaseDone){
+                            lowerCase = "DriveBack3";
+                        }
+                        break;
+                    case "DriveBack3":
+                        thisLowerCaseDone = robot.westCoast.driveBasedOnEncoders(4, -1, true);
+                        if(thisLowerCaseDone){
+                            lowerCase = "End";
+                        }
+                        break;
+                    case "End":
+                        robot.westCoast.drive(0,0, true);
+                        lowerCasesDone = true;
+                        break;
+                }
+                if(lowerCasesDone && doneRaising) {
+                    currentCase = "DriveForwardToGlyphPit";
+                }
+                break;
             case "End":
                 robot.westCoast.drive(0,0, true);
                 break;
