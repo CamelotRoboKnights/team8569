@@ -193,6 +193,18 @@ public class WestCoastBlueC extends OpMode {
                     currentCase = "End";
                 }
                 break;
+
+            /*
+             *
+             * Next cases
+             *
+             * Raise while doing the rest to two thirds
+             * Drive Back at the heading to the middle
+             * When at the tip turn around facing cryptobox
+             * Drive and knock the glyph in.
+             * 
+             *
+             */
             case "End":
                 robot.westCoast.drive(0,0, true);
                 break;
