@@ -31,8 +31,8 @@ public class WestCoastBlueC extends OpMode {
     private String color = "blue";
     private double spinRightToKnockOffRightJewel = 7;
     private double spinLeftToKnockOffLeftJewel  = -7;
-    private double driveDistanceToRightColumn = 38;//36
-    private double driveDistanceToCenterColumn = 31;// 30
+    private double driveDistanceToRightColumn = 36;//36
+    private double driveDistanceToCenterColumn = 29;// 30
     private double driveDistanceToLeftColumn = 24;//
     private double driveForwardToCryptobox = 10;//9
     private double driveAwayFromCryptobox = 8;

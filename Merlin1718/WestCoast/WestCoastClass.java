@@ -105,7 +105,7 @@ public class WestCoastClass {
             }
             else {//Otherwise keep going
                 returnValue = false;
-                this.gyroStraightDrive(.6, direction, isFront, targetOrientation, currentOrientation);
+                this.gyroStraightDrive(.45, direction, isFront, targetOrientation, currentOrientation);
             }
 
             return returnValue;
