@@ -4,9 +4,9 @@ package org.firstinspires.ftc.teamcode.team.Merlin1718.WestCoast;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 
-@Autonomous(name = "BlueC Xtra Glyph", group = "Cardinal")
+@Autonomous(name = "RedC Xtra Glyph", group = "Cardinal")
 //@Disabled //Uncomment this if it is not wanted on the phone
-public class WestCoastBlueCWithExtraGlyphs extends OpMode {
+public class WestCoastRedCWithExtraGlyphs extends OpMode {
 
     public WestCoastHardware robot = new WestCoastHardware();//The hardware map needs to be the hardware map of the robot we are using
 
@@ -28,14 +28,15 @@ public class WestCoastBlueCWithExtraGlyphs extends OpMode {
     double versionNumber = 103;
 
 
-    private String color = "blue";
+    private String color = "red";
     private double spinRightToKnockOffRightJewel = 7;
     private double spinLeftToKnockOffLeftJewel  = -7;
-    private double driveDistanceToRightColumn = 36;//36
-    private double driveDistanceToCenterColumn = 28;// 30
-    private double driveDistanceToLeftColumn = 23;//
-    private double driveForwardToCryptobox = 10;//9
-    private double driveAwayFromCryptobox = 8;
+    private double driveDistanceToRightColumn = 21;//
+    private double driveDistanceToCenterColumn = 29;//
+    private double driveDistanceToLeftColumn = 34;//38
+    private double driveForwardToCryptobox = 8;
+    private double driveAwayFromCryptobox = 5;
+
 
     double angle=-90;
     double angleDirrection = -1;
@@ -100,7 +101,7 @@ public class WestCoastBlueCWithExtraGlyphs extends OpMode {
                 break;
 
             case "ToRightColumn": //move to right collumn
-                doneYet = robot.westCoast.driveBasedOnEncodersAndGyro(driveDistanceToRightColumn, -1, true, 0, currentAngle);//distance, direction, targetHeading, currentHeading
+                doneYet = robot.westCoast.driveBasedOnEncodersAndGyro(driveDistanceToRightColumn, 1, true, 0, currentAngle);//distance, direction, targetHeading, currentHeading
                 telemetry.addData("start: ", robot.westCoast.startEncoder);
                 telemetry.addData("current: ", robot.westCoast.getLeftCurrentMotorPosition());
                 if(doneYet){
@@ -110,14 +111,14 @@ public class WestCoastBlueCWithExtraGlyphs extends OpMode {
                 break;
 
             case "ToCenterColumn": //move to center column
-                doneYet = robot.westCoast.driveBasedOnEncodersAndGyro(driveDistanceToCenterColumn, -1, true, 0, currentAngle);
+                doneYet = robot.westCoast.driveBasedOnEncodersAndGyro(driveDistanceToCenterColumn, 1, true, 0, currentAngle);
                 if(doneYet){
                     currentCase = "SpinTo90";
                 }
                 break;
 
             case "ToLeftColumn": //move to left column
-                doneYet = robot.westCoast.driveBasedOnEncodersAndGyro(driveDistanceToLeftColumn, -1, true, 0, currentAngle);
+                doneYet = robot.westCoast.driveBasedOnEncodersAndGyro(driveDistanceToLeftColumn, 1, true, 0, currentAngle);
                 if(doneYet){
                     currentCase = "SpinTo90";
                 }
