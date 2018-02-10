@@ -336,9 +336,9 @@ public class SpecificHardware {
             //this.armServo.servo.setPosition(Range.clip(armServoPosition, 0, 1));
         }
         public void teleOp(Gamepad g) {
-            this.teleRelicClaw(g.left_bumper, g.right_bumper);
+            this.teleRelicClaw( g.right_bumper, g.right_trigger > .1);
             this.teleExtend(-g.right_stick_y);
-            this.teleAdjustableFlipper(g.x, g.b);
+            this.teleAdjustableFlipper(g.left_bumper, g.left_trigger > .1);
         }
     }
 

@@ -191,6 +191,7 @@ public class WestCoastBlueCWithExtraGlyphs extends OpMode {
                     robot.glyphCollector.topGrasper.close();
                     robot.glyphCollector.bottomGrasper.close();
                     currentCase = "Deliver";
+                    lowerCase = "DriveBackToInFrontOfCryptobox";
                 }
                 break;
             case "Deliver":
@@ -255,7 +256,7 @@ public class WestCoastBlueCWithExtraGlyphs extends OpMode {
                         break;
                 }
                 if(lowerCasesDone && doneRaising) {
-                    currentCase = "DriveForwardToGlyphPit";
+                    currentCase = "End";
                 }
                 break;
             case "End":

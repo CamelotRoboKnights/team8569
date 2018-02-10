@@ -74,8 +74,8 @@ public class WestCoastClass {
                 double rightMotorPower = Range.clip(stick_y - stick_x, -1, 1);
                 this.drive(leftMotorPower * speed, rightMotorPower * speed, true);
             } else {
-                double leftMotorPower = Range.clip(-stick_y - stick_x, -1, 1);
-                double rightMotorPower = Range.clip(-stick_y + stick_x, -1, 1);
+                double leftMotorPower = Range.clip(-stick_y + stick_x, -1, 1);
+                double rightMotorPower = Range.clip(-stick_y - stick_x, -1, 1);
                 this.drive(leftMotorPower * speed, rightMotorPower * speed, true);
             }
         }
