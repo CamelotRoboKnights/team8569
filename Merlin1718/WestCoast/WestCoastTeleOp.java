@@ -27,12 +27,24 @@ public class WestCoastTeleOp extends OpMode {
     @Override
     public void start() {}//This runs when the start button is pressed
 
-
+    boolean isPressed = false;
+    boolean relic = false;
     @Override
     public void loop() {//This runs while opmode is active
-        robot.westCoast.teleOp(gamepad1, true);
-        robot.glyphCollector.teleOp(gamepad2);
-        robot.relic.teleOp(gamepad2);
+        boolean pressed = gamepad1.left_trigger > .9 && gamepad1.right_trigger > .9;
+        if (pressed && !isPressed) {
+            isPressed = true;
+        } else if (!pressed&& isPressed) {
+            isPressed = false;
+            relic = !relic;
+        }
+        if(!relic) {
+            robot.westCoast.teleOp(gamepad1, true);
+            robot.glyphCollector.teleOp(gamepad2);
+        } else {
+            robot.westCoast.teleOp(gamepad1, false);
+            robot.relic.teleOp(gamepad2);
+        }
     }
 
     @Override
