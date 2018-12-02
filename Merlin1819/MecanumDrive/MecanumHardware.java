@@ -29,10 +29,10 @@ public class MecanumHardware {
         hwMap = ahwMap;//Seting a reference for the hardware map
 
 
-        // Define and Initialize Motors
+        // Define and Initialize Motorsmap
         frontLeftMotor = hwMap.dcMotor.get("frontLeftMotor");//Finds the Front Left motor in the hardware map
         frontRightMotor  = hwMap.dcMotor.get("frontRightMotor");//Finds the Front Right motor in the hardware map
-        backLeftMotor = hwMap.dcMotor.get("backLeftMotor");//Finds the Back Left motor in the hardware map
+        backLeftMotor = hwMap.dcMotor.get("backLeftMotor");//Finds the Back Left motor in the hardware
         backRightMotor = hwMap.dcMotor.get("backRightMotor");//Finds the Back Right motor in the hardware map
 
 

@@ -35,12 +35,12 @@ import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.util.Range;
 
 public class WestCoastClass {
-    public static class WestCoastDrive {
-        DcMotor leftMotor;
-        DcMotor rightMotor;
-        double radius = 2;
-        double circumference = 2*Math.PI*radius;
-        double ticksPerRotation = 1220;
+        public static class WestCoastDrive {
+                DcMotor leftMotor;
+                DcMotor rightMotor;
+                double radius = 2;
+                double circumference = 2*Math.PI*radius;
+                double ticksPerRotation = 1220;
 
         WestCoastDrive (DcMotor leftMotor, DcMotor rightMotor){
             this.leftMotor = leftMotor;
@@ -79,7 +79,6 @@ public class WestCoastClass {
                 this.drive(leftMotorPower * speed, rightMotorPower * speed, true);
             }
         }
-
         public void teleOp (Gamepad g, boolean direction) {
             if(Math.abs(g.left_stick_y) > .01 || Math.abs(g.left_stick_x) > .01) this.arcadeJoystick(Math.pow(-g.left_stick_y,3), Math.pow(g.left_stick_x, 3)/2, 1, direction);
             else if (Math.abs(g.right_stick_y) > .01 || Math.abs(g.right_stick_x) > .01) this.arcadeJoystick(Math.pow(-g.right_stick_y, 3), Math.pow(g.right_stick_x, 3)/2, .5, direction);

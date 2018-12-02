@@ -21,17 +21,24 @@ public class ZigyT extends OpMode {
 
     HardwareK9Robo robot = new HardwareK9Robo();//The hardware map needs to be the hardware map of the robot we are using
 
-    public void init(){
+    public void init() {
         robot.init(hardwareMap);
     }
+
     double neck = 0;
     double mouth = 0;
     // upon int set mouth and neck to 0
 
     @Override
-    public void init_loop(){}
+    public void init_loop() {
+    }
+
     @Override
-    public void start(){}
+    public void start() {
+    }
+
     @Override
-    public void loop(){
+    public void loop() {
         // Write your code in here
+    }
+}
