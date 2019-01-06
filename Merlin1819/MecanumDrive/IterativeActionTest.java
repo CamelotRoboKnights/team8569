@@ -10,7 +10,7 @@ import org.firstinspires.ftc.teamcode.team.Merlin1819.api.iterative.IterativeSta
 
 import java.util.Objects;
 
-@Autonomous
+@Autonomous(name= "zigyapitest")
 public class IterativeActionTest extends IterativeActionOpMode
 {
     @Action

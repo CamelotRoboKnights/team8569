@@ -55,4 +55,16 @@ public abstract class AbstractRobot implements Robot
     {
         throw new UnsupportedOperationException();
     }
+
+    @Override
+    public void startMoving(float degrees, float power)
+    {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public void moveDistance(float degrees, float power)
+    {
+        throw new UnsupportedOperationException();
+    }
 }
