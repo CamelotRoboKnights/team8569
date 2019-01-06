@@ -41,9 +41,9 @@ public class MecanumRobot extends AbstractRobot
                 break;
             case RIGHT:
                 this.hardwareMap.getFrontLeftMotor().setPower(-power);
-                this.hardwareMap.getFrontRightMotor().setPower(-power);
-                this.hardwareMap.getBackLeftMotor().setPower(-power);
-                this.hardwareMap.getBackRightMotor().setPower(power);
+                this.hardwareMap.getFrontRightMotor().setPower(power);
+                this.hardwareMap.getBackLeftMotor().setPower(power);
+                this.hardwareMap.getBackRightMotor().setPower(-power);
                 break;
             default:
                 throw new IllegalArgumentException("Invalid direction.");
