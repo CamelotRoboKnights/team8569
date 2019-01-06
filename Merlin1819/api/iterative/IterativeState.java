@@ -85,6 +85,21 @@ public final class IterativeState
 
     /**
      *
+     * Restarts the action chain at
+     * the action that called it. Therefore,
+     * if an action has called this method, the
+     * next iteration this method will be executed again.
+     *
+     * @author Zigy Lim
+     * @since 1.0
+     */
+    public void restartFromMethod()
+    {
+        counter--;
+    }
+
+    /**
+     *
      * Returns the next linear operation of execution.
      * Note that this function could also act as a skipping
      * function, if you need to skip over an operation.

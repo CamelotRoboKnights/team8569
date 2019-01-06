@@ -70,7 +70,7 @@ public abstract class IterativeActionOpMode extends OpMode implements IterativeA
     }
 
     @Override
-    public IterativeState getIterativeState()
+    public final IterativeState getIterativeState()
     {
         return this.state;
     }
