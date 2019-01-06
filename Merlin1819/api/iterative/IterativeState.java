@@ -57,7 +57,7 @@ public final class IterativeState
 
     /**
      *
-     * This method restarts the series of actions, allowing for the action(s)
+     * Restarts the series of actions, allowing for the action(s)
      * to be repeated.
      *
      * @author Zigy Lim
@@ -66,6 +66,21 @@ public final class IterativeState
     public void restart()
     {
         this.counter = -1;
+    }
+
+    /**
+     *
+     * Skips over every action, meaning that this
+     * Action will end every other action, assuming
+     * that a call to {@link IterativeState#restart()}
+     * wasn't made.
+     *
+     * @author Zigy Lim
+     * @since 1.0
+     */
+    public void stop()
+    {
+        while (this.getNextAction() != null);
     }
 
     /**
