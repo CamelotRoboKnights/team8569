@@ -1,16 +1,17 @@
 package org.firstinspires.ftc.teamcode.team.Merlin1819.MecanumDrive;
 
 
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 //import org.firstinspires.ftc.teamcode.team.Merlin1718.WestCoast.WestCoastHardware;
-import org.firstinspires.ftc.teamcode.team.Merlin1718.HolonomicClass;
-import  org.firstinspires.ftc.teamcode.team.Merlin1819.MecanumDrive.MecanumHardware;
+//import org.firstinspires.ftc.teamcode.team.Merlin1718.HolonomicClass;
+
 /**
  * Created by Zachary Ireland on 11/24/2018.
  */
 
-@TeleOp(name = "MecanumTeleOp", group = "Cardinal")
+//@TeleOp(name = "MecanumTeleOp", group = "Cardinal")
 //@Disabled //Uncomment this if it is not wanted on the phone
 public class MecanumTeleOpTest extends OpMode {
 
@@ -25,7 +26,9 @@ public class MecanumTeleOpTest extends OpMode {
     }
 
     @Override
-    public void start() {
+    public void start()
+    {
+
     }//This runs when the start button is pressed
 
     //boolean isPressed = false;

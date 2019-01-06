@@ -45,8 +45,8 @@ public class MecanumClass {
         }
     }
 
-    public MecanumClass.JoyValues joyValues(Gamepad g) {
-        MecanumClass.JoyValues joyXYZ = new MecanumClass.JoyValues(0, 0, 0);
+    public JoyValues joyValues(Gamepad g) {
+        JoyValues joyXYZ = new JoyValues(0, 0, 0);
         //Set value x to the x axis on the left joystick if the value is above .01
         if (Math.abs(g.left_stick_x) > .01) {
             joyXYZ.x = g.left_stick_x;

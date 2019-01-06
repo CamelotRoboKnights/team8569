@@ -8,6 +8,12 @@ import com.qualcomm.robotcore.hardware.Gamepad;
 
 
 
+
+/**
+ * @deprecated this class has been deprecated
+ * due to its bad access OOP violations and
+ * null references without the {@link #init(HardwareMap)} method.
+ */
 public class MecanumHardware {
 
 
