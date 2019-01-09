@@ -25,7 +25,26 @@ import java.util.Comparator;
  */
 public abstract class IterativeActionOpMode extends OpMode implements IterativeActionPool
 {
+    /**
+     *
+     * The associated {@link IterativeState} object
+     * to provide for control with the state machine.
+     *
+     * @since 1.0
+     *
+     * @see #registered
+     */
     private IterativeState state;
+
+    /**
+     *
+     * A flag to indicate whether the actions associated
+     * with this {@link OpMode} have been initialized.
+     *
+     * @since 1.0
+     *
+     * @see #state
+     */
     private boolean registered;
 
     @Override
@@ -37,8 +56,8 @@ public abstract class IterativeActionOpMode extends OpMode implements IterativeA
 
     /**
      *
-     * creates a new instance of
-     * an Iterative Action OpMode.
+     * Constructs a new
+     * {@code IterativeActionOpMode}.
      * In general, this class will
      * not initialize members until
      * the init method is called.
@@ -236,7 +255,7 @@ public abstract class IterativeActionOpMode extends OpMode implements IterativeA
     public final void loop()
     {
 
-        if (!this.state.finished()) {
+        if (!this.state.isFinished()) {
             this.state.getNextAction().execute(this.state, this.hardwareMap);
         } else {
             this.requestOpModeStop();

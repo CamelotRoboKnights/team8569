@@ -13,12 +13,31 @@ package org.firstinspires.ftc.teamcode.team.Merlin1819.api.iterative;
  */
 public final class IterativeState
 {
+    /**
+     *
+     * The queue counter to determine
+     * which action will be returned
+     * to be executed next.
+     *
+     * @since 1.0
+     *
+     * @see #actions
+     */
     private int counter;
+
+    /**
+     *
+     * The actions to be executed in a (usually)
+     * linear fashion.
+     *
+     * @since 1.0
+     *
+     * @see #counter
+     */
     private IterativeAction[] actions;
 
     /**
-     * Creates an instance of the {@link IterativeAction} class
-     * that defines the state for a group of action(s) to be executed.
+     * Constructs a new {@code IterativeState}
      *
      * The constructor will throw an IllegalArgumentException
      * if a zero length or null array reference is passed.
@@ -40,17 +59,17 @@ public final class IterativeState
 
     /**
      *
-     * Returns if this operation is finished so that
+     * Returns if this operation is isFinished so that
      * a user of this class can define some type of shutdown
      * state.
      *
-     * @return is this operation finished.
+     * @return is this operation isFinished.
      *
      * @author Zigy Lim
      * @since 1.0
      *
      */
-    public boolean finished()
+    public boolean isFinished()
     {
         return (this.counter + 1 == this.actions.length);
     }
@@ -72,7 +91,7 @@ public final class IterativeState
      *
      * Skips over every action, meaning that this
      * Action will end every other action, assuming
-     * that a call to {@link IterativeState#restart()}
+     * that a call to {@link #restart()}
      * wasn't made.
      *
      * @author Zigy Lim
@@ -109,7 +128,7 @@ public final class IterativeState
      */
     public IterativeAction getNextAction()
     {
-        if (this.finished()) return null;
+        if (this.isFinished()) return null;
         else {
             return this.actions[++counter];
         }

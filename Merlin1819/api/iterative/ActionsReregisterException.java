@@ -18,13 +18,35 @@ import java.lang.RuntimeException;
  */
 public class ActionsReregisterException extends RuntimeException
 {
-    public ActionsReregisterException(String message)
-    {
-        super(message);
-    }
-
+    /**
+     *
+     * Constructs a new {@code ActionsReregisterException}
+     * object with an empty message.
+     *
+     * @author Zigy Lim
+     * @since 1.0
+     *
+     * @see #ActionsReregisterException(String)
+     */
     public ActionsReregisterException()
     {
         super();
+    }
+
+    /**
+     *
+     * Constructs a new {@code ActionsReregisterException}
+     * with the specified message.
+     *
+     * @author Zigy Lim
+     * @since 1.0
+     *
+     * @param message the specified message
+     *
+     * @see #ActionsReregisterException(String)
+     */
+    public ActionsReregisterException(String message)
+    {
+        super(message);
     }
 }

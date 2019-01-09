@@ -1,10 +1,11 @@
 package org.firstinspires.ftc.teamcode.team.Merlin1819.api.iterative;
 
 import com.qualcomm.robotcore.hardware.HardwareMap;
+import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 
 /**
  * Defines the means for an
- * iterative OpMode action
+ * iterative {@link OpMode} action
  * to be carried out.
  *
  * @author Zigy Lim

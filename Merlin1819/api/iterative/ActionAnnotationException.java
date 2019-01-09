@@ -15,11 +15,33 @@ package org.firstinspires.ftc.teamcode.team.Merlin1819.api.iterative;
  */
 public class ActionAnnotationException extends Exception
 {
+    /**
+     *
+     * Constructs a new {@code ActionAnnotationException}
+     * object with an empty message.
+     *
+     * @author Zigy Lim
+     * @since 1.0
+     *
+     * @see #ActionAnnotationException(String)
+     */
     public ActionAnnotationException()
     {
         super();
     }
 
+    /**
+     *
+     * Constructs a new {@code ActionAnnotationException}
+     * object with the specified message.
+     *
+     * @author Zigy Lim
+     * @since 1.0
+     *
+     * @param message the specified message
+     *
+     * @see #ActionAnnotationException()
+     */
     public ActionAnnotationException(String message)
     {
         super(message);
