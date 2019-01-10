@@ -9,6 +9,7 @@ import java.lang.RuntimeException;
  * some action(s) twice.
  *
  * @author Zigy Lim
+ *
  * @version 1.0
  * @since 1.0
  *
@@ -24,6 +25,7 @@ public class ActionsReregisterException extends RuntimeException
      * object with an empty message.
      *
      * @author Zigy Lim
+     *
      * @since 1.0
      *
      * @see #ActionsReregisterException(String)
@@ -39,6 +41,7 @@ public class ActionsReregisterException extends RuntimeException
      * with the specified message.
      *
      * @author Zigy Lim
+     *
      * @since 1.0
      *
      * @param message the specified message

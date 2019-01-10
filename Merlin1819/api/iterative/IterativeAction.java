@@ -9,6 +9,7 @@ import com.qualcomm.robotcore.eventloop.opmode.OpMode;
  * to be carried out.
  *
  * @author Zigy Lim
+ *
  * @version 1.0
  * @since 1.0
  *
@@ -24,6 +25,7 @@ public interface IterativeAction
      * @param map the hardware map associated with this event
      *
      * @author Zigy Lim
+     *
      * @since 1.0
      */
     void execute(IterativeState state, HardwareMap map);

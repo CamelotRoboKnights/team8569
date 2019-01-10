@@ -15,6 +15,7 @@ import java.util.Comparator;
  * Defines the behavior of a class that implements a linear set of operations.
  *
  * @author Zigy Lim
+ *
  * @version 1.0
  * @since 1.0
  *
@@ -29,6 +30,7 @@ public abstract class IterativeActionOpMode extends OpMode implements IterativeA
      *
      * The associated {@link IterativeState} object
      * to provide for control with the state machine.
+     *
      *
      * @since 1.0
      *
@@ -63,6 +65,7 @@ public abstract class IterativeActionOpMode extends OpMode implements IterativeA
      * the init method is called.
      *
      * @author Zigy Lim
+     *
      * @since 1.0
      */
     protected IterativeActionOpMode()
@@ -81,6 +84,7 @@ public abstract class IterativeActionOpMode extends OpMode implements IterativeA
      * will reset.
      *
      * @author Zigy Lim
+     *
      * @since 1.0
      */
     protected void initState()

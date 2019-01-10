@@ -7,6 +7,7 @@ package org.firstinspires.ftc.teamcode.team.Merlin1819.api.robot;
  * rotation, etc.
  *
  * @author Zigy Lim
+ *
  * @version 1.0
  * @since 1.0
  *
@@ -23,6 +24,7 @@ public interface Robot
      * right would assume strafing right, etc.
      *
      * @author Zigy Lim
+     *
      * @version 1.0
      * @since 1.0
      *
@@ -39,6 +41,7 @@ public interface Robot
      * a robot can rotate.
      *
      * @author Zigy Lim
+     *
      * @version 1.0
      * @since 1.0
      *
@@ -58,6 +61,7 @@ public interface Robot
      * @param power the power, from -1 to 1, that the robot will use.
      *
      * @author Zigy Lim
+     *
      * @since 1.0
      *
      * @see #stopMoving()
@@ -79,6 +83,7 @@ public interface Robot
      * @param power the power, from -1 to 1, that the robot will use
      *
      * @author Zigy Lim
+     *
      * @since 1.0
      *
      * @see #stopMoving()
@@ -92,6 +97,7 @@ public interface Robot
      * method {@link #startMoving}.
      *
      * @author Zigy Lim
+     *
      * @since 1.0
      *
      * @see #startMoving(MovementDirection, float)
@@ -109,6 +115,7 @@ public interface Robot
      * @param power the power that we will be using to rotate
      *
      * @author Zigy Lim
+     *
      * @since 1.0
      *
      * @see #stopRotating()
@@ -122,6 +129,7 @@ public interface Robot
      * method {@link #startRotating(RotationDirection, float)}.
      *
      * @author Zigy Lim
+     *
      * @since 1.0
      *
      * @see #startRotating(RotationDirection, float)
@@ -143,6 +151,7 @@ public interface Robot
      * @param meters the amount of meters to move the robot
      *
      * @author Zigy Lim
+     *
      * @since 1.0
      *
      * @see #startMoving(MovementDirection, float)
@@ -162,6 +171,7 @@ public interface Robot
      * @param meters the number of meters to move by
      *
      * @author Zigy Lim
+     *
      * @since 1.0
      *
      * @see #moveDistance(MovementDirection, float)
@@ -184,6 +194,7 @@ public interface Robot
      * @param degrees the number of degrees to move
      *
      * @author Zigy Lim
+     *
      * @since 1.0
      *
      * @see #startRotating(RotationDirection, float)
@@ -200,6 +211,7 @@ public interface Robot
      * @return the orientation.
      *
      * @author Zigy Lim
+     *
      * @since 1.0
      *
      * @see #gyroSupported()
@@ -216,6 +228,7 @@ public interface Robot
      * @return if encoders are supported.
      *
      * @author Zigy Lim
+     *
      * @since 1.0
      *
      * @see #moveDistance(MovementDirection, float)
@@ -234,6 +247,7 @@ public interface Robot
      * @return if the gyroscope is supported.
      *
      * @author Zigy Lim
+     *
      * @since 1.0
      *
      * @see #getOrientation()

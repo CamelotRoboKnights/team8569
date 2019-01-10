@@ -9,6 +9,7 @@ package org.firstinspires.ftc.teamcode.team.Merlin1819.api.iterative;
  * altered by the iterative state instance.
  *
  * @author Zigy Lim
+ *
  * @version 1.0
  * @since 1.0
  *
@@ -24,6 +25,7 @@ public interface IterativeActionPool
      * that are to be executed.
      *
      * @author Zigy Lim
+     *
      * @since 1.0
      */
     void registerActions();
@@ -34,6 +36,7 @@ public interface IterativeActionPool
      * @return the iterative state instance.
      *
      * @author Zigy Lim
+     *
      * @since 1.0
      */
     IterativeState getIterativeState();

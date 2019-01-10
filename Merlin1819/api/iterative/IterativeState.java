@@ -4,6 +4,7 @@ package org.firstinspires.ftc.teamcode.team.Merlin1819.api.iterative;
  * Defines the state of the state machine.
  *
  * @author Zigy Lim
+ *
  * @version 1.0
  * @since 1.0
  *
@@ -45,6 +46,7 @@ public final class IterativeState
      * @param actions the actions to be passed
      *
      * @author Zigy Lim
+     *
      * @since 1.0
      */
     public IterativeState(IterativeAction[] actions)
@@ -63,9 +65,10 @@ public final class IterativeState
      * a user of this class can define some type of shutdown
      * state.
      *
-     * @return is this operation isFinished.
+     * @return is this operation finished.
      *
      * @author Zigy Lim
+     *
      * @since 1.0
      *
      */
@@ -80,6 +83,7 @@ public final class IterativeState
      * to be repeated.
      *
      * @author Zigy Lim
+     *
      * @since 1.0
      */
     public void restart()
@@ -95,6 +99,7 @@ public final class IterativeState
      * wasn't made.
      *
      * @author Zigy Lim
+     *
      * @since 1.0
      */
     public void stop()
@@ -110,6 +115,7 @@ public final class IterativeState
      * next iteration this method will be executed again.
      *
      * @author Zigy Lim
+     *
      * @since 1.0
      */
     public void restartFromMethod()
@@ -123,8 +129,11 @@ public final class IterativeState
      * Note that this function could also act as a skipping
      * function, if you need to skip over an operation.
      *
-     * @author Zigy Lim
      * @return the next action if there is one.
+     *
+     * @author Zigy Lim
+     *
+     * @since 1.0
      */
     public IterativeAction getNextAction()
     {
@@ -143,6 +152,7 @@ public final class IterativeState
      * @param number the number of instructions to skip
      *
      * @author Zigy Lim
+     *
      * @since 1.0
      *
      * @see #getNextAction()

@@ -6,6 +6,7 @@ package org.firstinspires.ftc.teamcode.team.Merlin1819.api.iterative;
  * annotated with the {@link Action} annotation.
  *
  * @author Zigy Lim
+ *
  * @version 1.0
  * @since 1.0
  *
@@ -21,6 +22,7 @@ public class ActionAnnotationException extends Exception
      * object with an empty message.
      *
      * @author Zigy Lim
+     *
      * @since 1.0
      *
      * @see #ActionAnnotationException(String)
@@ -36,6 +38,7 @@ public class ActionAnnotationException extends Exception
      * object with the specified message.
      *
      * @author Zigy Lim
+     *
      * @since 1.0
      *
      * @param message the specified message

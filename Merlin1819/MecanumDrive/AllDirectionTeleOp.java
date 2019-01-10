@@ -5,8 +5,23 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.teamcode.team.Merlin1819.MecanumDrive.robot.MecanumHardwareMap;
 
-@TeleOp(name = "EtherTeleOp")
-public class EtherTeleOp extends OpMode
+/**
+ *
+ * An operational mode
+ * that allows the user to
+ * move within in current orientation
+ * any angle, from 0 to 360 degrees.
+ *
+ * @author Zigy Lim
+ * @author Zachary Ireland
+ *
+ * @since 1.1
+ * @version 1.0
+ *
+ * @see CardinalDirectionTeleOp
+ */
+@TeleOp(name = "AllDirectionTeleOp")
+public class AllDirectionTeleOp extends OpMode
 {
     private static final float MOVE_DEAD_ZONE = 0.2F,
                              ROTATE_DEAD_ZONE = 0.2F;
