@@ -16,7 +16,7 @@ import org.firstinspires.ftc.teamcode.team.Merlin1819.api.robot.Robot;
  *
  * @author Zigy Lim
  * @author Elijah Terry
- * @author Pete
+ * @author Pete Ryden
  *
  * @since 1.1
  * @version 1.0
