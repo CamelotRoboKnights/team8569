@@ -140,7 +140,8 @@ public interface Robot
      *
      * Moves the specified
      * direction a certain distance,
-     * specified in meters.
+     * specified in feet.
+     * Returns if this method has finished moving the robot.
      *
      * Note that if encoders are not supported
      * on this implementation then this method
@@ -148,7 +149,9 @@ public interface Robot
      *
      *
      * @param direction the direction to move the robot
-     * @param meters the amount of meters to move the robot
+     * @param feet the amount of meters to move the robot
+     *
+     * @return true if the method has finished moving the robot, false otherwise.
      *
      * @author Zigy Lim
      *
@@ -157,18 +160,22 @@ public interface Robot
      * @see #startMoving(MovementDirection, float)
      * @see #startMoving(float, float)
      */
-    void moveDistance(MovementDirection direction, float meters);
+    boolean moveDistance(MovementDirection direction, float feet);
 
     /**
      *
      * Moves the robot at the specified
      * number of degrees the specified distance.
+     * Returns if this method has finished moving the robot.
      *
      * In general, implementations that do not
      * support encoders will throw an exception.
      *
+     *
      * @param degrees the number of degrees to move by
-     * @param meters the number of meters to move by
+     * @param feet the number of meters to move by
+     *
+     * @return true if the method has finished moving the robot, false otherwise.
      *
      * @author Zigy Lim
      *
@@ -178,13 +185,14 @@ public interface Robot
      * @see #startMoving(float, float)
      * @see #startMoving(MovementDirection, float)
      */
-    void moveDistance(float degrees, float meters);
+    boolean moveDistance(float degrees, float feet);
 
     /**
      *
      * Rotates the specified
      * direction a certain distance,
      * specified in degrees.
+     * Returns if this method has finished rotating the robot.
      *
      * Note that if encoders are not supported
      * on this implementation then this method
@@ -193,6 +201,8 @@ public interface Robot
      * @param direction the direction to move, left or right
      * @param degrees the number of degrees to move
      *
+     * @return true if the method has finished rotating the robot, false otherwise.
+     *
      * @author Zigy Lim
      *
      * @since 1.0
@@ -200,7 +210,7 @@ public interface Robot
      * @see #startRotating(RotationDirection, float)
      * @see MovementDirection
      */
-    void rotateDistance(MovementDirection direction, float degrees);
+    boolean rotateDistance(RotationDirection direction, float degrees);
 
     /**
      *
@@ -233,7 +243,7 @@ public interface Robot
      *
      * @see #moveDistance(MovementDirection, float)
      * @see #moveDistance(float, float)
-     * @see #rotateDistance(MovementDirection, float)
+     * @see #rotateDistance(RotationDirection, float)
      */
     boolean encodersSupported();
 

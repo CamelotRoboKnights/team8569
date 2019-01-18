@@ -5,27 +5,84 @@ import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
 /**
- * @author Zigy Lim
- * @version 1.0
  *
- * This class provides a facility
+ * Provides a facility
  * for accessing the members of
  * a mecanum robot in a safe way.
+ *
+ * @author Zigy Lim
+ *
+ * @version 1.0
+ * @since 1.0
+ *
+ * @see MecanumIMU
+ * @see MecanumRobot
  */
 public final class MecanumHardwareMap
 {
+    /**
+     *
+     * Phone hardware component names.
+     *
+     * @since 1.0
+     *
+     * @see #getFrontLeftMotor()
+     * @see #getFrontRightMotor()
+     * @see #getBackLeftMotor()
+     * @see #getBackRightMotor()
+     */
     private static final String FRONT_LEFT_NAME = "frontLeftMotor",
                                FRONT_RIGHT_NAME = "frontRightMotor",
                                  BACK_LEFT_NAME = "backLeftMotor",
                                 BACK_RIGHT_NAME = "backRightMotor";
 
+    /**
+     *
+     * The default power level for the motors
+     * when they are initialized.
+     *
+     * @since 1.0
+     *
+     * @see #MecanumHardwareMap(HardwareMap)
+     */
     private static final float DEFAULT_POWER = 0F;
 
+    /**
+     *
+     * The default {@code DcMotor.RunMode} for
+     * the motors.
+     *
+     * @since 1.0
+     *
+     * @see #MecanumHardwareMap(HardwareMap)
+     */
     private static final DcMotor.RunMode DEFAULT_RUN_MODE = DcMotor.RunMode.RUN_USING_ENCODER;
 
+    /**
+     *
+     * The various {@link DcMotor} fields.
+     *
+     * @since 1.0
+     *
+     * @see #getFrontLeftMotor()
+     * @see #getFrontRightMotor()
+     * @see #getBackLeftMotor()
+     * @see #getBackRightMotor()
+     */
     private DcMotor frontLeftMotor, frontRightMotor,
                      backLeftMotor, backRightMotor;
 
+    /**
+     *
+     * The {@link MecanumIMU} for orientation
+     * detection.
+     */
+    private MecanumIMU mecanumIMU;
+
+    /**
+     *
+     * The {@link HardwareMap} for this {@code Robot}.
+     */
     private HardwareMap map;
 
     /**
@@ -44,6 +101,8 @@ public final class MecanumHardwareMap
         this.frontRightMotor = map.dcMotor.get(MecanumHardwareMap.FRONT_RIGHT_NAME);
         this.backLeftMotor   = map.dcMotor.get(MecanumHardwareMap.BACK_LEFT_NAME);
         this.backRightMotor  = map.dcMotor.get(MecanumHardwareMap.BACK_RIGHT_NAME);
+
+        //this.mecanumIMU = new MecanumIMU(map);
 
         this.frontLeftMotor.setPower(MecanumHardwareMap.DEFAULT_POWER);
         this.frontRightMotor.setPower(MecanumHardwareMap.DEFAULT_POWER);
@@ -108,4 +167,9 @@ public final class MecanumHardwareMap
     {
         return this.backRightMotor;
     }
+
+    /*public MecanumIMU getMecanumIMU()
+    {
+        return this.mecanumIMU;
+    } */
 }

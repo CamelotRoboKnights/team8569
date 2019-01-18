@@ -46,13 +46,13 @@ public abstract class AbstractRobot implements Robot
     }
 
     @Override
-    public void moveDistance(MovementDirection direction, float meters)
+    public boolean moveDistance(MovementDirection direction, float meters)
     {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    public void rotateDistance(MovementDirection direction, float degrees)
+    public boolean rotateDistance(RotationDirection direction, float degrees)
     {
         throw new UnsupportedOperationException();
     }
@@ -64,7 +64,7 @@ public abstract class AbstractRobot implements Robot
     }
 
     @Override
-    public void moveDistance(float degrees, float power)
+    public boolean moveDistance(float degrees, float power)
     {
         throw new UnsupportedOperationException();
     }
