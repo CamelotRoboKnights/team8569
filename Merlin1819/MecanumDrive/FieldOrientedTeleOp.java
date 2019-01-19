@@ -1,9 +1,11 @@
 package org.firstinspires.ftc.teamcode.team.Merlin1819.MecanumDrive;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
+import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.teamcode.team.Merlin1819.MecanumDrive.robot.MecanumIMU;
 
+@TeleOp(name = "FieldOrientedTeleOp")
 public class FieldOrientedTeleOp extends OpMode
 {
     private MecanumIMU imu;
