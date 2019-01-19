@@ -4,9 +4,7 @@ import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.hardware.bosch.JustLoggingAccelerationIntegrator;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
-import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
-import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
-import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
+import org.firstinspires.ftc.robotcore.external.navigation.*;
 
 /**
  *
@@ -59,6 +57,22 @@ public final class MecanumIMU
     private BNO055IMU imu;
 
     /**
+     *
+     * The last orientation from movement.
+     *
+     * @since 1.0
+     */
+    private Orientation lastOrientation;
+
+    /**
+     *
+     * The current angle;
+     *
+     * @since 1.0
+     */
+    private double currentAngle;
+
+    /**
      * Constructs a new {@code MacanumIMU}.
      * Throws an exception if an attempt
      * to pass a null
@@ -72,21 +86,42 @@ public final class MecanumIMU
             throw new NullPointerException("Cannot have a null HardwareMap - imu parameter.");
         } else {
             BNO055IMU.Parameters parameters = new BNO055IMU.Parameters();
-            parameters.angleUnit = BNO055IMU.AngleUnit.DEGREES;
+            parameters.angleUnit = BNO055IMU.AngleUnit.RADIANS;
             parameters.accelUnit = BNO055IMU.AccelUnit.METERS_PERSEC_PERSEC;
             parameters.calibrationDataFile = "BNO055IMUCalibration.json";
             parameters.loggingEnabled = true;
             parameters.loggingTag = "IMU";
             parameters.accelerationIntegrationAlgorithm = new JustLoggingAccelerationIntegrator();
-            imu = map.get(BNO055IMU.class, "imu");
-            imu.initialize(parameters);
+            this.imu = map.get(BNO055IMU.class, "imu");
+            this.imu.initialize(parameters);
+
+            this.lastOrientation = this.getOrientation();
+
+
         }
     }
 
-    public double getOrientation()
+    private Orientation getOrientation()
     {
-        return -this.imu.getAngularOrientation(MecanumIMU.AXES_REFERENCE,
-                                               MecanumIMU.AXES_ORDER,
-                                               MecanumIMU.ANGLE_UNIT).firstAngle;
+        return this.imu.getAngularOrientation(AxesReference.INTRINSIC,
+                AxesOrder.ZYX,
+                AngleUnit.DEGREES);
+    }
+
+    private void updateAngle()
+    {
+        double changeAngle = this.lastOrientation.firstAngle -
+                             this.getOrientation().firstAngle;
+
+        if (changeAngle < -180)
+            changeAngle += 360;
+        else if (changeAngle > 180)
+            changeAngle -= 360;
+    }
+
+    public double getAngle()
+    {
+        this.updateAngle();
+        return this.currentAngle;
     }
 }
