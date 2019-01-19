@@ -22,10 +22,11 @@ public final class MecanumHardwareMap
 {
     /**
      *
-     * Phone hardware component names.
+     * Phone wheel motor component names.
      *
      * @since 1.0
      *
+     * @see #MecanumHardwareMap(HardwareMap)
      * @see #getFrontLeftMotor()
      * @see #getFrontRightMotor()
      * @see #getBackLeftMotor()
@@ -71,6 +72,12 @@ public final class MecanumHardwareMap
      */
     private DcMotor frontLeftMotor, frontRightMotor,
                      backLeftMotor, backRightMotor;
+
+    /**
+     *
+     * These fields hold the motors that
+     */
+    private DcMotor curlArm, retractArm;
 
     /**
      *

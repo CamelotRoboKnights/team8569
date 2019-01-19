@@ -86,7 +86,7 @@ public final class MecanumIMU
             throw new NullPointerException("Cannot have a null HardwareMap - imu parameter.");
         } else {
             BNO055IMU.Parameters parameters = new BNO055IMU.Parameters();
-            parameters.angleUnit = BNO055IMU.AngleUnit.RADIANS;
+            parameters.angleUnit = BNO055IMU.AngleUnit.DEGREES;
             parameters.accelUnit = BNO055IMU.AccelUnit.METERS_PERSEC_PERSEC;
             parameters.calibrationDataFile = "BNO055IMUCalibration.json";
             parameters.loggingEnabled = true;
@@ -95,6 +95,7 @@ public final class MecanumIMU
             this.imu = map.get(BNO055IMU.class, "imu");
             this.imu.initialize(parameters);
 
+            this.currentAngle = 0;
             this.lastOrientation = this.getOrientation();
 
 
@@ -108,20 +109,25 @@ public final class MecanumIMU
                 AngleUnit.DEGREES);
     }
 
-    private void updateAngle()
+    public void updateAngle()
     {
         double changeAngle = this.lastOrientation.firstAngle -
                              this.getOrientation().firstAngle;
 
+        if (changeAngle == 0) return;
         if (changeAngle < -180)
             changeAngle += 360;
         else if (changeAngle > 180)
             changeAngle -= 360;
+
+        this.currentAngle += changeAngle;
+        this.lastOrientation = this.getOrientation();
     }
+
+
 
     public double getAngle()
     {
-        this.updateAngle();
         return this.currentAngle;
     }
 }
