@@ -3,17 +3,21 @@ package org.firstinspires.ftc.teamcode.team.Merlin1819.MecanumDrive;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
+import org.firstinspires.ftc.teamcode.team.Merlin1819.MecanumDrive.robot.MecanumHardwareMap;
 import org.firstinspires.ftc.teamcode.team.Merlin1819.MecanumDrive.robot.MecanumIMU;
+import org.firstinspires.ftc.teamcode.team.Merlin1819.MecanumDrive.robot.MecanumRobot;
 
 @TeleOp(name = "FieldOrientedTeleOp")
 public class FieldOrientedTeleOp extends OpMode
 {
     private MecanumIMU imu;
+    private MecanumHardwareMap hardwareMap;
 
     @Override
     public void init()
     {
-        this.imu = new MecanumIMU(this.hardwareMap);
+        this.imu = new MecanumIMU(super.hardwareMap);
+        this.hardwareMap = new MecanumHardwareMap(super.hardwareMap);
     }
 
     @Override
@@ -46,6 +50,19 @@ public class FieldOrientedTeleOp extends OpMode
             backRight  /= max;
         }
 
+        this.hardwareMap.getFrontLeftMotor().setPower(frontLeft);
+        this.hardwareMap.getFrontRightMotor().setPower(frontRight);
+        this.hardwareMap.getBackLeftMotor().setPower(backLeft);
+        this.hardwareMap.getBackRightMotor().setPower(backRight);
 
+    }
+
+    @Override
+    public void stop()
+    {
+        this.hardwareMap.getFrontLeftMotor().setPower(0);
+        this.hardwareMap.getFrontRightMotor().setPower(0);
+        this.hardwareMap.getBackLeftMotor().setPower(0);
+        this.hardwareMap.getBackRightMotor().setPower(0);
     }
 }
