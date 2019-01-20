@@ -24,7 +24,7 @@ public class FieldOrientedTeleOp extends OpMode
     public void loop()
     {
         this.imu.updateAngle();
-        
+
         this.telemetry.addData("Angle", this.imu.getAngle());
         double forward = -this.gamepad1.left_stick_y,
                 right  = this.gamepad1.left_stick_x,

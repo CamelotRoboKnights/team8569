@@ -39,6 +39,18 @@ public final class MecanumHardwareMap
 
     /**
      *
+     * Phone arm component motor names.
+     *
+     * @since 1.0
+     *
+     * @see #getRetractArmMotor()
+     * @see #getCurlArmMotor()
+     */
+    private static final String RETRACT_ARM_NAME = "retractArmMotor",
+                                   CURL_ARM_NAME = "curlArmMotor";
+
+    /**
+     *
      * The default power level for the motors
      * when they are initialized.
      *
@@ -77,7 +89,7 @@ public final class MecanumHardwareMap
      *
      * These fields hold the motors that
      */
-    private DcMotor curlArm, retractArm;
+    private DcMotor curlArmMotor, retractArmMotor;
 
     /**
      *
@@ -109,12 +121,18 @@ public final class MecanumHardwareMap
         this.backLeftMotor   = map.dcMotor.get(MecanumHardwareMap.BACK_LEFT_NAME);
         this.backRightMotor  = map.dcMotor.get(MecanumHardwareMap.BACK_RIGHT_NAME);
 
+        this.retractArmMotor = map.dcMotor.get(MecanumHardwareMap.RETRACT_ARM_NAME);
+        this.curlArmMotor    = map.dcMotor.get(MecanumHardwareMap.CURL_ARM_NAME);
+
         //this.mecanumIMU = new MecanumIMU(map);
 
         this.frontLeftMotor.setPower(MecanumHardwareMap.DEFAULT_POWER);
         this.frontRightMotor.setPower(MecanumHardwareMap.DEFAULT_POWER);
         this.backLeftMotor.setPower(MecanumHardwareMap.DEFAULT_POWER);
         this.backRightMotor.setPower(MecanumHardwareMap.DEFAULT_POWER);
+
+        this.retractArmMotor.setPower(MecanumHardwareMap.DEFAULT_POWER);
+        this.curlArmMotor.setPower(MecanumHardwareMap.DEFAULT_POWER);
 
         this.frontLeftMotor.setDirection(DcMotorSimple.Direction.REVERSE);
         this.frontRightMotor.setDirection(DcMotorSimple.Direction.FORWARD);
@@ -125,6 +143,9 @@ public final class MecanumHardwareMap
        this.frontRightMotor.setMode(MecanumHardwareMap.DEFAULT_RUN_MODE);
        this.backLeftMotor.setMode(MecanumHardwareMap.DEFAULT_RUN_MODE);
        this.backRightMotor.setMode(MecanumHardwareMap.DEFAULT_RUN_MODE);
+
+       this.retractArmMotor.setMode(MecanumHardwareMap.DEFAULT_RUN_MODE);
+       this.curlArmMotor.setMode(MecanumHardwareMap.DEFAULT_RUN_MODE);
     }
 
     /**
@@ -173,6 +194,15 @@ public final class MecanumHardwareMap
     public DcMotor getBackRightMotor()
     {
         return this.backRightMotor;
+    }
+
+    public DcMotor getRetractArmMotor() {
+        return this.retractArmMotor;
+    }
+
+    public DcMotor getCurlArmMotor()
+    {
+        return this.curlArmMotor;
     }
 
     /*public MecanumIMU getMecanumIMU()
