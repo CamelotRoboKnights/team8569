@@ -3,14 +3,14 @@ package org.firstinspires.ftc.teamcode.team.Merlin1819.api.iterative;
 /**
  *
  * Thrown if a method is incorrectly
- * annotated with the {@link Action} annotation.
+ * annotated with the {@link IterativeActionOpMode.Action} annotation.
  *
  * @author Zigy Lim
  *
  * @version 1.0
  * @since 1.0
  *
- * @see Action
+ * @see IterativeActionOpMode#
  * @see IterativeActionOpMode
  * @see IterativeActionPool
  */
@@ -27,7 +27,7 @@ public class ActionAnnotationException extends Exception
      *
      * @see #ActionAnnotationException(String)
      */
-    public ActionAnnotationException()
+     ActionAnnotationException()
     {
         super();
     }
@@ -37,15 +37,15 @@ public class ActionAnnotationException extends Exception
      * Constructs a new {@code ActionAnnotationException}
      * object with the specified message.
      *
+     * @param message the specified message
+     *
      * @author Zigy Lim
      *
      * @since 1.0
      *
-     * @param message the specified message
-     *
      * @see #ActionAnnotationException()
      */
-    public ActionAnnotationException(String message)
+     ActionAnnotationException(String message)
     {
         super(message);
     }

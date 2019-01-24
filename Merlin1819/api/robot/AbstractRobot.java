@@ -68,4 +68,10 @@ public abstract class AbstractRobot implements Robot
     {
         throw new UnsupportedOperationException();
     }
+
+    @Override
+    public <T extends RobotComponentController> T getRobotComponentController(Class<? extends T> clazz)
+    {
+        throw new UnsupportedOperationException();
+    }
 }

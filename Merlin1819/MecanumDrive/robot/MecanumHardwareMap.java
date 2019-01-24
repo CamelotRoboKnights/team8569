@@ -51,6 +51,16 @@ public final class MecanumHardwareMap
 
     /**
      *
+     * Phone collector component motor names.
+     *
+     * @since 1.0
+     *
+     * @see #getCollectorMotor()
+     */
+    private static final String COLLECTOR_NAME = "collectorMotor";
+
+    /**
+     *
      * The default power level for the motors
      * when they are initialized.
      *
@@ -73,6 +83,14 @@ public final class MecanumHardwareMap
 
     /**
      *
+     * The default {@link DcMotor.ZeroPowerBehavior} for all of the motors.
+     *
+     * @since 1.0
+     */
+    private static final DcMotor.ZeroPowerBehavior DEFAULT_POWER_BEHAVIOR = DcMotor.ZeroPowerBehavior.BRAKE;
+
+    /**
+     *
      * The various {@link DcMotor} fields.
      *
      * @since 1.0
@@ -90,6 +108,8 @@ public final class MecanumHardwareMap
      * These fields hold the motors that
      */
     private DcMotor curlArmMotor, retractArmMotor;
+
+    private DcMotor collectorMotor;
 
     /**
      *
@@ -116,36 +136,52 @@ public final class MecanumHardwareMap
     {
         this.map = map;
 
-        this.frontLeftMotor  = map.dcMotor.get(MecanumHardwareMap.FRONT_LEFT_NAME);
-        this.frontRightMotor = map.dcMotor.get(MecanumHardwareMap.FRONT_RIGHT_NAME);
-        this.backLeftMotor   = map.dcMotor.get(MecanumHardwareMap.BACK_LEFT_NAME);
-        this.backRightMotor  = map.dcMotor.get(MecanumHardwareMap.BACK_RIGHT_NAME);
+        this.frontLeftMotor  = map.dcMotor.get(FRONT_LEFT_NAME);
+        this.frontRightMotor = map.dcMotor.get(FRONT_RIGHT_NAME);
+        this.backLeftMotor   = map.dcMotor.get(BACK_LEFT_NAME);
+        this.backRightMotor  = map.dcMotor.get(BACK_RIGHT_NAME);
 
-        this.retractArmMotor = map.dcMotor.get(MecanumHardwareMap.RETRACT_ARM_NAME);
-        this.curlArmMotor    = map.dcMotor.get(MecanumHardwareMap.CURL_ARM_NAME);
+        this.retractArmMotor = map.dcMotor.get(RETRACT_ARM_NAME);
+        this.curlArmMotor    = map.dcMotor.get(CURL_ARM_NAME);
+
+        this.collectorMotor  = map.dcMotor.get(COLLECTOR_NAME);
 
         //this.mecanumIMU = new MecanumIMU(map);
 
-        this.frontLeftMotor.setPower(MecanumHardwareMap.DEFAULT_POWER);
-        this.frontRightMotor.setPower(MecanumHardwareMap.DEFAULT_POWER);
-        this.backLeftMotor.setPower(MecanumHardwareMap.DEFAULT_POWER);
-        this.backRightMotor.setPower(MecanumHardwareMap.DEFAULT_POWER);
+        this.frontLeftMotor.setPower(DEFAULT_POWER);
+        this.frontRightMotor.setPower(DEFAULT_POWER);
+        this.backLeftMotor.setPower(DEFAULT_POWER);
+        this.backRightMotor.setPower(DEFAULT_POWER);
 
-        this.retractArmMotor.setPower(MecanumHardwareMap.DEFAULT_POWER);
-        this.curlArmMotor.setPower(MecanumHardwareMap.DEFAULT_POWER);
+        this.retractArmMotor.setPower(DEFAULT_POWER);
+        this.curlArmMotor.setPower(DEFAULT_POWER);
+
+        this.collectorMotor.setPower(DEFAULT_POWER);
 
         this.frontLeftMotor.setDirection(DcMotorSimple.Direction.REVERSE);
         this.frontRightMotor.setDirection(DcMotorSimple.Direction.FORWARD);
         this.backLeftMotor.setDirection(DcMotorSimple.Direction.REVERSE);
         this.backRightMotor.setDirection(DcMotorSimple.Direction.FORWARD);
 
-       this.frontLeftMotor.setMode(MecanumHardwareMap.DEFAULT_RUN_MODE);
-       this.frontRightMotor.setMode(MecanumHardwareMap.DEFAULT_RUN_MODE);
-       this.backLeftMotor.setMode(MecanumHardwareMap.DEFAULT_RUN_MODE);
-       this.backRightMotor.setMode(MecanumHardwareMap.DEFAULT_RUN_MODE);
+       this.frontLeftMotor.setMode(DEFAULT_RUN_MODE);
+       this.frontRightMotor.setMode(DEFAULT_RUN_MODE);
+       this.backLeftMotor.setMode(DEFAULT_RUN_MODE);
+       this.backRightMotor.setMode(DEFAULT_RUN_MODE);
 
-       this.retractArmMotor.setMode(MecanumHardwareMap.DEFAULT_RUN_MODE);
-       this.curlArmMotor.setMode(MecanumHardwareMap.DEFAULT_RUN_MODE);
+       this.retractArmMotor.setMode(DEFAULT_RUN_MODE);
+       this.curlArmMotor.setMode(DEFAULT_RUN_MODE);
+
+       this.collectorMotor.setMode(DEFAULT_RUN_MODE);
+
+       this.frontLeftMotor.setZeroPowerBehavior(DEFAULT_POWER_BEHAVIOR);
+       this.frontRightMotor.setZeroPowerBehavior(DEFAULT_POWER_BEHAVIOR);
+       this.backLeftMotor.setZeroPowerBehavior(DEFAULT_POWER_BEHAVIOR);
+       this.backRightMotor.setZeroPowerBehavior(DEFAULT_POWER_BEHAVIOR);
+
+       this.retractArmMotor.setZeroPowerBehavior(DEFAULT_POWER_BEHAVIOR);
+       this.curlArmMotor.setZeroPowerBehavior(DEFAULT_POWER_BEHAVIOR);
+
+       this.collectorMotor.setZeroPowerBehavior(DEFAULT_POWER_BEHAVIOR);
     }
 
     /**
@@ -196,6 +232,10 @@ public final class MecanumHardwareMap
         return this.backRightMotor;
     }
 
+    /**
+     *
+     * @return
+     */
     public DcMotor getRetractArmMotor() {
         return this.retractArmMotor;
     }
@@ -204,6 +244,11 @@ public final class MecanumHardwareMap
     {
         return this.curlArmMotor;
     }
+
+    public DcMotor getCollectorMotor() {
+        return this.collectorMotor;
+    }
+
 
     /*public MecanumIMU getMecanumIMU()
     {

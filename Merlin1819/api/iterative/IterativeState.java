@@ -38,9 +38,29 @@ public final class IterativeState
     private IterativeAction[] actions;
 
     /**
-     * Constructs a new {@code IterativeState}
      *
-     * The constructor will throw an IllegalArgumentException
+     * Indicates whether the
+     * current action has been
+     * is completed or not.
+     *
+     * @since 1.0
+     */
+    private boolean isCompleted;
+
+    /**
+     *
+     * Indicates whether further
+     * actions are allowable within the <b>current</b> action to be
+     * done without an explicit override from
+     * {@link #setStateChangeAllowable(boolean)}.
+     *
+     * @since 1.0
+     */
+    private boolean isStateChangeAllowable;
+
+    /**
+     * Constructs a new {@code IterativeState}.
+     * The constructor will throw an {@link IllegalArgumentException}
      * if a zero length or null array reference is passed.
      *
      * @param actions the actions to be passed
@@ -56,14 +76,13 @@ public final class IterativeState
         } else {
             this.counter = -1;
             this.actions = actions;
+            this.isStateChangeAllowable = true;
         }
     }
 
     /**
      *
-     * Returns if this operation is isFinished so that
-     * a user of this class can define some type of shutdown
-     * state.
+     * Returns if this operation is finished.
      *
      * @return is this operation finished.
      *
@@ -81,6 +100,12 @@ public final class IterativeState
      *
      * Restarts the series of actions, allowing for the action(s)
      * to be repeated.
+     * <p>
+     * This method will throw a {@link StateChangeDisallowedException}
+     * if an attempt to call it twice without an explicit override from
+     * {@link #setStateChangeAllowable(boolean)}. The exception should
+     * not be caught.
+     * <p>
      *
      * @author Zigy Lim
      *
@@ -88,7 +113,10 @@ public final class IterativeState
      */
     public void restart()
     {
-        this.counter = -1;
+        if (this.isStateChangeAllowable) {
+            this.counter = -1;
+            this.setStateChangeAllowable(false);
+        } else throw new StateChangeDisallowedException();
     }
 
     /**
@@ -97,6 +125,12 @@ public final class IterativeState
      * Action will end every other action, assuming
      * that a call to {@link #restart()}
      * wasn't made.
+     * <p>
+     * This method will throw a {@link StateChangeDisallowedException}
+     * if an attempt to call it twice without an explicit override from
+     * {@link #setStateChangeAllowable(boolean)}. The exception should
+     * not be caught.
+     * <p>
      *
      * @author Zigy Lim
      *
@@ -104,7 +138,12 @@ public final class IterativeState
      */
     public void stop()
     {
-        while (this.getNextAction() != null);
+        if (this.isStateChangeAllowable) {
+            while (this.getNextAction() != null) {
+                this.setStateChangeAllowable(true);
+            }
+            this.setStateChangeAllowable(false);
+        } else throw new StateChangeDisallowedException();
     }
 
     /**
@@ -113,6 +152,12 @@ public final class IterativeState
      * the action that called it. Therefore,
      * if an action has called this method, the
      * next iteration this method will be executed again.
+     * <p>
+     * This method will throw a {@link StateChangeDisallowedException}
+     * if an attempt to call it twice without an explicit override from
+     * {@link #setStateChangeAllowable(boolean)}. The exception should
+     * not be caught.
+     * <p>
      *
      * @author Zigy Lim
      *
@@ -120,7 +165,10 @@ public final class IterativeState
      */
     public void restartFromMethod()
     {
-        counter--;
+        if (this.isStateChangeAllowable) {
+            counter--;
+            this.setStateChangeAllowable(false);
+        } else throw new StateChangeDisallowedException();
     }
 
     /**
@@ -128,6 +176,12 @@ public final class IterativeState
      * Returns the next linear operation of execution.
      * Note that this function could also act as a skipping
      * function, if you need to skip over an operation.
+     * <p>
+     * This method will throw a {@link StateChangeDisallowedException}
+     * if an attempt to call it twice without an explicit override from
+     * {@link #setStateChangeAllowable(boolean)}. The exception should
+     * not be caught.
+     * <p>
      *
      * @return the next action if there is one.
      *
@@ -137,8 +191,13 @@ public final class IterativeState
      */
     public IterativeAction getNextAction()
     {
-        if (this.isFinished()) return null;
-        else {
+        if (!this.isStateChangeAllowable)
+            throw new StateChangeDisallowedException();
+        else if (this.isFinished()) {
+            this.setStateChangeAllowable(false);
+            return null;
+        } else {
+            this.setStateChangeAllowable(false);
             return this.actions[++counter];
         }
     }
@@ -148,6 +207,12 @@ public final class IterativeState
      * Skips over a certain number of actions.
      * If an attempt to skip over zero or less actions
      * is made, this method will throw an exception.
+     * <p>
+     * This method will throw a {@link StateChangeDisallowedException}
+     * if an attempt to call it twice without an explicit override from
+     * {@link #setStateChangeAllowable(boolean)}. The exception should
+     * not be caught.
+     * <p>
      *
      * @param number the number of instructions to skip
      *
@@ -159,13 +224,105 @@ public final class IterativeState
      */
     public void skipActions(int number)
     {
-        if (number < 1) throw new IllegalArgumentException("Cannot skip below 1 actions.");
+        if (!this.isStateChangeAllowable)
+            throw new StateChangeDisallowedException();
+        else if (number < 1) throw new IllegalArgumentException("Cannot skip below 1 actions.");
         else if (this.actions.length - 1 < this.counter + number)
             throw new IllegalArgumentException("Cannot skip past actions.");
         else {
             for (int i = 0; i < number; i++) {
+                this.setStateChangeAllowable(true);
                 this.getNextAction();
             }
+
+            this.setStateChangeAllowable(false);
         }
+    }
+
+    /**
+     *
+     * Returns whether the <b> current </b> operation has finished.
+     * If it is not, the action will repeat over again until this
+     * method returns true.
+     *
+     * @return whether the <b> current </b> operation is completed.
+     *
+     * @author Zigy Lim
+     *
+     * @since 1.0
+     *
+     * @see #setCompleted(boolean)
+     */
+    public boolean isCompleted()
+    {
+        return this.isCompleted;
+    }
+
+    /**
+     *
+     * Sets the <b>current</b> operation to finished.
+     *
+     * <p>
+     * This method will throw a {@link StateChangeDisallowedException}
+     * if an attempt to call it twice without an explicit override from
+     * {@link #setStateChangeAllowable(boolean)}. The exception should
+     * not be caught.
+     * <p>
+     *
+     * @param isCompleted the boolean that sets if the <b>current</b> operation is completed.
+     *
+     * @author Zigy Lim
+     *
+     * @since 1.0
+     *
+     * @see #isCompleted()
+     */
+    public void setCompleted(boolean isCompleted)
+    {
+        if (this.isStateChangeAllowable) {
+            this.isCompleted = isCompleted;
+            this.setStateChangeAllowable(false);
+        } else throw new StateChangeDisallowedException();
+    }
+
+    /**
+     *
+     * Sets if a state change is allowable within the
+     * <b> current </b> action.
+     *
+     * @param isStateChangeAllowable whether a state change is allowable
+     *
+     * @author Zigy Lim
+     *
+     * @since 1.0
+     *
+     * @see #isStateChangeAllowable()
+     * @see #getNextAction()
+     * @see #skipActions(int)
+     * @see #restart()
+     * @see #restartFromMethod()
+     * @see #stop()
+     */
+    public void setStateChangeAllowable(boolean isStateChangeAllowable)
+    {
+        this.isStateChangeAllowable = isStateChangeAllowable;
+    }
+
+    /**
+     *
+     * Returns whether a state change within the <b> current </b>
+     * action is allowable.
+     *
+     * @return whether a state change within the <b> current </b> action is allowable.
+     *
+     * @author Zigy Lim
+     *
+     * @since 1.0
+     *
+     * @see #setStateChangeAllowable(boolean)
+     */
+    public boolean isStateChangeAllowable()
+    {
+        return this.isStateChangeAllowable;
     }
 }

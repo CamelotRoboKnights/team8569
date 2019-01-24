@@ -58,14 +58,6 @@ public final class MecanumIMU
 
     /**
      *
-     * The last orientation from movement.
-     *
-     * @since 1.0
-     */
-    private Orientation lastOrientation;
-
-    /**
-     *
      * The current angle;
      *
      * @since 1.0
@@ -96,9 +88,6 @@ public final class MecanumIMU
             this.imu.initialize(parameters);
 
             this.currentAngle = 0;
-            this.lastOrientation = this.getOrientation();
-
-
         }
     }
 
@@ -111,17 +100,9 @@ public final class MecanumIMU
 
     public void updateAngle()
     {
-        double changeAngle = this.lastOrientation.firstAngle -
-                             this.getOrientation().firstAngle;
-
-        if (changeAngle == 0) return;
-        if (changeAngle < -180)
-            changeAngle += 360;
-        else if (changeAngle > 180)
-            changeAngle -= 360;
-
-        this.currentAngle += changeAngle;
-        this.lastOrientation = this.getOrientation();
+        double currentAngle = this.getOrientation().firstAngle;
+        if (currentAngle < 0) currentAngle += 360;
+        this.currentAngle = currentAngle;
     }
 
 

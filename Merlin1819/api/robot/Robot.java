@@ -54,11 +54,30 @@ public interface Robot
 
     /**
      *
-     * Moves the robot continously
+     * Returns a robot controller of type T.
+     * Implementations that do not define extended
+     * functionality may return null or throw an exception.
+     *
+     * @param <T> the type of {@link RobotComponentController} returned.
+     * @param clazz the type of the {@link RobotComponentController}.
+     *
+     * @return a robot component controller.
+     *
+     * @author Zigy Lim
+     *
+     * @since 1.0
+     *
+     * @see RobotComponentController
+     */
+    <T extends RobotComponentController> T getRobotComponentController(Class<? extends T> clazz);
+
+    /**
+     *
+     * Moves the robot continuously
      * until the {@link #stopMoving()} method is called.
      *
      * @param direction The direction that the robot will move
-     * @param power the power, from -1 to 1, that the robot will use.
+     * @param power the power, from -1 to 1, that the robot will use
      *
      * @author Zigy Lim
      *

@@ -25,22 +25,33 @@ public class FieldOrientedTeleOp extends OpMode
     {
         this.imu.updateAngle();
 
-        this.telemetry.addData("Angle", this.imu.getAngle());
-        double forward = -this.gamepad1.left_stick_y,
-                right  = this.gamepad1.left_stick_x,
-                clockwise = (gamepad1.left_trigger >= gamepad1.right_trigger) ?
-                        gamepad1.left_trigger : -gamepad1.right_trigger,
+        final double leftStickY = this.gamepad1.left_stick_y,
+                     leftStickX = this.gamepad1.left_stick_x,
+                    leftTrigger = this.gamepad1.left_trigger,
+                   rightTrigger = this.gamepad1.right_trigger;
 
-                radians = Math.toRadians(this.imu.getAngle()),
-                temp =  forward * Math.cos(radians) + right * Math.sin(radians);
-
-        right = -forward * Math.sin(radians) + right * Math.sin(radians);
+        double forward = -leftStickY,
+                right  =  leftStickX,
+                clockwise = (leftTrigger >= rightTrigger) ?
+                             leftTrigger : -rightTrigger;
+        double degrees = this.imu.getAngle();
+        degrees = 360 - degrees; /* switch clockwise to counterclockwise */
+        double radians = Math.toRadians(degrees); /* conv 0-360 to 0-2 pi */
+        double  temp    =  forward * Math.cos(radians) + right * Math.sin(radians);
+                right   = -forward * Math.sin(radians) + right * Math.sin(radians);
         forward = temp;
 
-        double frontLeft = forward + clockwise + right,
+        this.telemetry.addData("Debug INFO", "leftStickX = " +
+                leftStickX + ", leftStickY = " + leftStickY +
+                ", leftTrigger = " + leftTrigger + ", rightTrigger = " +
+                rightTrigger + ", forward = " + forward + ", right = " +
+                right + ", clockwise = " + clockwise + ", degrees = " +
+                degrees);
+
+        double  frontLeft  = forward + clockwise + right,
                 frontRight = forward - clockwise - right,
-                backLeft = forward + clockwise - right,
-                backRight = forward - clockwise + right,
+                backLeft   = forward + clockwise - right,
+                backRight  = forward - clockwise + right,
                 max = Math.abs(frontLeft);
 
         if (frontRight > max) max = Math.abs(frontRight);

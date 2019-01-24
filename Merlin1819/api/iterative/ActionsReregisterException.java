@@ -30,7 +30,7 @@ public class ActionsReregisterException extends RuntimeException
      *
      * @see #ActionsReregisterException(String)
      */
-    public ActionsReregisterException()
+    ActionsReregisterException()
     {
         super();
     }
@@ -48,7 +48,7 @@ public class ActionsReregisterException extends RuntimeException
      *
      * @see #ActionsReregisterException(String)
      */
-    public ActionsReregisterException(String message)
+    ActionsReregisterException(String message)
     {
         super(message);
     }

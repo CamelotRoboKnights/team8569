@@ -3,6 +3,10 @@ package org.firstinspires.ftc.teamcode.team.Merlin1819.api.iterative;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
@@ -26,6 +30,46 @@ import java.util.Comparator;
  */
 public abstract class IterativeActionOpMode extends OpMode implements IterativeActionPool
 {
+    /**
+     * Defines the means for a subclass of
+     * {@link IterativeActionOpMode} to mark
+     * a method to be executed.
+     * Methods must have the signature
+     * <pre><b>void</b> (<b>IterativeState</b>, <b>HardwareMap</b>)</pre>
+     * or else an {@link ActionAnnotationException} will be thrown.
+     *
+     * @author Zigy Lim
+     *
+     * @version 1.0
+     * @since 1.0
+     *
+     * @see Action#order()
+     * @see IterativeActionOpMode
+     * @see IterativeState
+     * @see ActionAnnotationException
+     */
+    @Retention(RetentionPolicy.RUNTIME)
+    @Target(ElementType.METHOD)
+    protected @interface Action
+    {
+        /**
+         *
+         * Defines the order at which
+         * actions are executed, meaning
+         * that a method annotated with a value
+         * of zero will be executed before a value of one.
+         * If there are negative values, an {@link ActionAnnotationException}
+         * will be thrown.
+         *
+         * {@code IterativeActionOpMode}'s least ordered value can be at any
+         * non-negative number.
+         * @since 1.0
+         */
+        int order() default 0;
+    }
+
+
+
     /**
      *
      * The associated {@link IterativeState} object
@@ -70,7 +114,7 @@ public abstract class IterativeActionOpMode extends OpMode implements IterativeA
      */
     protected IterativeActionOpMode()
     {
-
+        this.registered = false;
     }
 
     /**
@@ -98,6 +142,19 @@ public abstract class IterativeActionOpMode extends OpMode implements IterativeA
         return this.state;
     }
 
+    /**
+     *
+     * Registers actions to be done. If
+     * an attempt to register methods twice is
+     * made, a {@link ActionsReregisterException}
+     * is thrown.
+     *
+     * @author Zigy Lim
+     *
+     * @since 1.0
+     *
+     * @see ActionsReregisterException
+     */
     @Override
     public void registerActions()
     {
@@ -112,114 +169,65 @@ public abstract class IterativeActionOpMode extends OpMode implements IterativeA
                 if (method.isAnnotationPresent(Action.class)) {
                     final Class<?>[] parameters = method.getParameterTypes();
 
-                    /*
-                     * Check if this method has the correct
-                     * parameters. If it doesn't, throw an
-                     * exception and report an error.
-                     */
                     if (!(parameters.length == 2 &&
                             parameters[0] == IterativeState.class &&
                             parameters[1] == HardwareMap.class)) {
                         try {
-                            throw new ActionAnnotationException("The method " + method.getName() +
-                                    " does not have the signature (IterativeState, HardwareMap).");
+                            throw new ActionAnnotationException(
+                                    "This method does not have the signature (IterativeState, HardwareMap).");
                         } catch (ActionAnnotationException e) {
                             e.printStackTrace();
                             error = true;
                         }
                     }
 
-                    /*
-                     * Otherwise, if this method is
-                     * abstract OR static, also
-                     * throw an exception.
-                     */
-                    else if (Modifier.isAbstract(method.getModifiers()) ||
+                    if (Modifier.isAbstract(method.getModifiers()) ||
                             Modifier.isStatic(method.getModifiers())) {
                         try {
-                            throw new ActionAnnotationException("The method " + method.getName() +
-                                    " cannot be abstract or static.");
+                            throw new ActionAnnotationException(
+                                    "This method cannot be abstract, static.");
                         } catch (ActionAnnotationException e) {
                             e.printStackTrace();
                             error = true;
                         }
                     }
 
-                    methods.add(method);
-                }
-            }
-
-            /*
-             * If there were no methods
-             * that were annotated, simply
-             * create an empty state.
-             */
-            if (methods.size() < 1) this.state = new IterativeState(new IterativeAction[0]);
-
-            /*
-             * Otherwise, if its size is
-             * one, check if it is correctly
-             * annotated with the default order
-             * value; if it is not, throw an exception.
-             */
-            else if (methods.size() == 1) {
-                final Method method = methods.get(0);
-                if (method.getAnnotation(Action.class).order() != -1) {
-                    try {
-                        throw new ActionAnnotationException("The method " + method.getName() +
-                        " needs the default order value.");
-                    } catch (ActionAnnotationException e) {
-                        e.printStackTrace();
-                        error = true;
-                    }
-                }
-            }
-
-            /*
-             * Otherwise, if the methods size
-             * is more than one, iterate through
-             * each method, and if it has the default
-             * value or a value that is not -1 and below zero,
-             * throw an exception.
-             */
-            else {
-                for (Method method: methods) {
-                    if (method.getAnnotation(Action.class).order() == -1) {
+                    if (!method.getReturnType().equals(Void.TYPE)) {
                         try {
-                            throw new ActionAnnotationException("The method " + method.getName() +
-                            " has the default annotation value even though multiple methods are present.");
-                        } catch (ActionAnnotationException e) {
-                            e.printStackTrace();
-                             error = true;
-                        }
-                    } else if (method.getAnnotation(Action.class).order() < 0) {
-                        try {
-                            throw new ActionAnnotationException("The method " + method.getName() +
-                            " has an invalid order value: " + method.getAnnotation(Action.class).order() + ".");
+                            throw new ActionAnnotationException("This must have a void return type.");
                         } catch (ActionAnnotationException e) {
                             e.printStackTrace();
                             error = true;
                         }
                     }
+
+                    if (method.getAnnotation(Action.class).order() < 0) {
+                        try {
+                            throw new ActionAnnotationException("The method " + method.getName() +
+                                    " has an invalid order value: " + method.getAnnotation(Action.class).order() + ".");
+                        } catch (ActionAnnotationException e) {
+                            e.printStackTrace();
+                            error = true;
+                        }
+                    }
+
+                    if (!error) {
+                        methods.add(method);
+                    }
                 }
             }
 
-            /*
-             * If there is an error, throw
-             * a runtime exception and exit
-             * to avoid further exceptions.
-             */
             if (error) {
                 throw new RuntimeException("There was an error while registering methods.");
             } else {
                 final ArrayList<IterativeAction> actions = new ArrayList<>();
 
                 /*
-                 * Sort the methods annotated orders
-                 * so that an order of zero is executed
-                 * before an order of one.
+                Natural order sorting, meaning that an order of zero will
+                come before an order of one.
                  */
                 Collections.sort(methods, new Comparator<Method>() {
+
                     @Override
                     public int compare(Method m1, Method m2) {
                         return m1.getAnnotation(Action.class).order() -
@@ -230,8 +238,8 @@ public abstract class IterativeActionOpMode extends OpMode implements IterativeA
                 for (final Method method: methods) {
 
                     /*
-                     * Wrap each methods reflective
-                     * invocation in an interface.
+                    Wrap each methods reflective
+                    invocation in the IterativeAction interface.
                      */
                     actions.add(new IterativeAction() {
 
@@ -246,10 +254,6 @@ public abstract class IterativeActionOpMode extends OpMode implements IterativeA
                     });
                 }
 
-                /*
-                 * Create a state based on
-                 * the list of actions.
-                 */
                 this.state = new IterativeState(actions.toArray(new IterativeAction[0]));
             }
         }
@@ -260,8 +264,17 @@ public abstract class IterativeActionOpMode extends OpMode implements IterativeA
     {
 
         if (!this.state.isFinished()) {
-            this.state.getNextAction().execute(this.state, this.hardwareMap);
-        } else {
+            this.state.setStateChangeAllowable(true);
+            final IterativeAction nextAction = this.state.getNextAction();
+            this.state.setStateChangeAllowable(true);
+            this.state.setCompleted(this.isCompletedByDefault());
+            this.state.setStateChangeAllowable(true);
+            nextAction.execute(this.state, this.hardwareMap);
+            if (!this.state.isCompleted()) {
+                this.state.setStateChangeAllowable(true);
+                this.state.restartFromMethod();
+            }
+        } else if (this.automaticallyStop()) {
             this.requestOpModeStop();
         }
     }
@@ -270,5 +283,43 @@ public abstract class IterativeActionOpMode extends OpMode implements IterativeA
     public final void stop()
     {
         this.state.restart();
+
+        this.state.setCompleted(this.isCompletedByDefault());
+    }
+
+    /**
+     * Returns if methods automatically complete on
+     * their own. If subclasses want custom behavior, they
+     * should override this class.
+     *
+     * @return if methods automatically complete on their own.
+     *
+     * @author Zigy Lim
+     *
+     * @since 1.0
+     *
+     * @see IterativeState#isCompleted()
+     */
+    protected boolean isCompletedByDefault()
+    {
+        return true;
+    }
+
+    /**
+     * Returns if the {@link OpMode} automatically
+     * stops when every operation is finished.
+     *
+     * @return if the {@link OpMode} automatically
+     * stops when every operation is finished.
+     *
+     * @author Zigy Lim
+     *
+     * @since 1.0
+     *
+     * @see #stop()
+     */
+    protected boolean automaticallyStop()
+    {
+        return true;
     }
 }
