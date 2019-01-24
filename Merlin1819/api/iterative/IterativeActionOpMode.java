@@ -60,9 +60,12 @@ public abstract class IterativeActionOpMode extends OpMode implements IterativeA
          * of zero will be executed before a value of one.
          * If there are negative values, an {@link ActionAnnotationException}
          * will be thrown.
-         *
          * {@code IterativeActionOpMode}'s least ordered value can be at any
          * non-negative number.
+         * The default value is zero.
+         *
+         * @author Zigy Lim
+         *
          * @since 1.0
          */
         int order() default 0;
