@@ -24,7 +24,12 @@ public class ScrimmageAutoTest extends IterativeActionOpMode
     @Action
     public void move(IterativeState state, HardwareMap map)
     {
-        if (this.robot.moveDistance(Robot.MovementDirection.FORWARD, 1)) state.stop();
-        else state.restart();
+        if (this.robot.moveDistance(Robot.MovementDirection.FORWARD, 500)) state.setCompleted(true);
+    }
+
+    @Override
+    protected boolean automaticallyCompleteActions()
+    {
+        return false;
     }
 }

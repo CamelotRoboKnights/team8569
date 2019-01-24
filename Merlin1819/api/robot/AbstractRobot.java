@@ -20,11 +20,11 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
  */
 public abstract class AbstractRobot implements Robot
 {
-    protected HardwareMap map;
+    protected HardwareMap hardwareMap;
 
-    protected AbstractRobot(HardwareMap map)
+    protected AbstractRobot(HardwareMap hardwareMap)
     {
-        this.map = map;
+        this.hardwareMap = hardwareMap;
     }
 
     @Override
@@ -71,6 +71,12 @@ public abstract class AbstractRobot implements Robot
 
     @Override
     public <T extends RobotComponentController> T getRobotComponentController(Class<? extends T> clazz)
+    {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public boolean hasRobotComponentController(Class<? extends RobotComponentController> clazz)
     {
         throw new UnsupportedOperationException();
     }

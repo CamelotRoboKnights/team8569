@@ -68,8 +68,27 @@ public interface Robot
      * @since 1.0
      *
      * @see RobotComponentController
+     * @see #hasRobotComponentController(Class)
      */
     <T extends RobotComponentController> T getRobotComponentController(Class<? extends T> clazz);
+
+    /**
+     *
+     * Returns whether this robot has the specified
+     * {@link RobotComponentController}.
+     *
+     * @param clazz the class for the specified {@link RobotComponentController}.
+     *
+     * @return whether the robot has the specified {@link RobotComponentController}.
+     *
+     * @author Zigy Lim
+     *
+     * @since 1.0
+     *
+     * @see RobotComponentController
+     * @see #getRobotComponentController(Class)
+     */
+    boolean hasRobotComponentController(Class<? extends RobotComponentController> clazz);
 
     /**
      *

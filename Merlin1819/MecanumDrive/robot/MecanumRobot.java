@@ -4,6 +4,7 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.teamcode.team.Merlin1819.api.robot.AbstractRobot;
 import org.firstinspires.ftc.teamcode.team.Merlin1819.api.robot.Robot;
+import org.firstinspires.ftc.teamcode.team.Merlin1819.api.robot.RobotComponentController;
 
 public class MecanumRobot extends AbstractRobot
 {
@@ -21,11 +22,14 @@ public class MecanumRobot extends AbstractRobot
 
     private double startEncoderPosition;
 
-    public MecanumRobot(HardwareMap map)
+    private ExtendedMecanumController controller;
+
+    public MecanumRobot(HardwareMap hardwareMap)
     {
-        super(map);
+        super(hardwareMap);
         this.finishedMoving = false;
         this.startEncoderPosition = 0;
+        this.controller = new ExtendedMecanumController(hardwareMap);
     }
 
     @Override
@@ -156,5 +160,20 @@ public class MecanumRobot extends AbstractRobot
     public boolean encodersSupported()
     {
         return true;
+    }
+
+    @Override
+    public <T extends RobotComponentController> T getRobotComponentController(Class<? extends T> clazz)
+    {
+        if (clazz.equals(ExtendedMecanumController.class)) {
+            return (T) this.controller;
+        } else return null;
+    }
+
+    @Override
+    public boolean hasRobotComponentController(Class<? extends RobotComponentController> clazz)
+    {
+        if (clazz.equals(ExtendedMecanumController.class)) return true;
+        else return false;
     }
 }

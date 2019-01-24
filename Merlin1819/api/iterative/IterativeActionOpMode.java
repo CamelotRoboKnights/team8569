@@ -270,7 +270,7 @@ public abstract class IterativeActionOpMode extends OpMode implements IterativeA
             this.state.setStateChangeAllowable(true);
             final IterativeAction nextAction = this.state.getNextAction();
             this.state.setStateChangeAllowable(true);
-            this.state.setCompleted(this.isCompletedByDefault());
+            this.state.setCompleted(this.automaticallyCompleteActions());
             this.state.setStateChangeAllowable(true);
             nextAction.execute(this.state, this.hardwareMap);
             if (!this.state.isCompleted()) {
@@ -287,7 +287,7 @@ public abstract class IterativeActionOpMode extends OpMode implements IterativeA
     {
         this.state.restart();
 
-        this.state.setCompleted(this.isCompletedByDefault());
+        this.state.setCompleted(this.automaticallyCompleteActions());
     }
 
     /**
@@ -303,7 +303,7 @@ public abstract class IterativeActionOpMode extends OpMode implements IterativeA
      *
      * @see IterativeState#isCompleted()
      */
-    protected boolean isCompletedByDefault()
+    protected boolean automaticallyCompleteActions()
     {
         return true;
     }

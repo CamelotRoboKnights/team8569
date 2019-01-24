@@ -33,4 +33,10 @@ public abstract class MecanumAutonomous extends IterativeActionOpMode
     public abstract void dropMarker(IterativeState state, HardwareMap map);
     public abstract void turn180(IterativeState state, HardwareMap map);
     public abstract void goForward7Feet(IterativeState state, HardwareMap map);
+
+    @Override
+    protected boolean isCompletedByDefault()
+    {
+        return false;
+    }
 }
