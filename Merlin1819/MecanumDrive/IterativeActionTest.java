@@ -38,7 +38,6 @@ public class IterativeActionTest extends IterativeActionOpMode
     {
         this.telemetry.addData("Pong", ++this.pong);
         this.telemetry.update();
-
-       // state.restart();
+        state.restart();
     }
 }

@@ -107,9 +107,9 @@ public abstract class IterativeActionOpMode extends OpMode implements IterativeA
      *
      * Constructs a new
      * {@code IterativeActionOpMode}.
-     * In general, this class will
+     * In general, this class should
      * not initialize members until
-     * the init method is called.
+     * the {@link #initState()} method is called.
      *
      * @author Zigy Lim
      *
@@ -188,7 +188,7 @@ public abstract class IterativeActionOpMode extends OpMode implements IterativeA
                             Modifier.isStatic(method.getModifiers())) {
                         try {
                             throw new ActionAnnotationException(
-                                    "This method cannot be abstract, static.");
+                                    "This method cannot be abstract or static.");
                         } catch (ActionAnnotationException e) {
                             e.printStackTrace();
                             error = true;
@@ -206,8 +206,9 @@ public abstract class IterativeActionOpMode extends OpMode implements IterativeA
 
                     if (method.getAnnotation(Action.class).order() < 0) {
                         try {
-                            throw new ActionAnnotationException("The method " + method.getName() +
-                                    " has an invalid order value: " + method.getAnnotation(Action.class).order() + ".");
+                            throw new ActionAnnotationException(
+                                    "This method has an invalid order value: " +
+                                            method.getAnnotation(Action.class).order() + ".");
                         } catch (ActionAnnotationException e) {
                             e.printStackTrace();
                             error = true;
@@ -265,17 +266,13 @@ public abstract class IterativeActionOpMode extends OpMode implements IterativeA
     @Override
     public final void loop()
     {
-
         if (!this.state.isFinished()) {
-            this.state.setStateChangeAllowable(true);
-            final IterativeAction nextAction = this.state.getNextAction();
-            this.state.setStateChangeAllowable(true);
             this.state.setCompleted(this.automaticallyCompleteActions());
-            this.state.setStateChangeAllowable(true);
-            nextAction.execute(this.state, this.hardwareMap);
+            this.state.getNextAction().execute(this.state, this.hardwareMap);
             if (!this.state.isCompleted()) {
-                this.state.setStateChangeAllowable(true);
-                this.state.restartFromMethod();
+                if (this.state.getCounter() > 0) {
+                    this.state.restartFromMethod();
+                }
             }
         } else if (this.automaticallyStop()) {
             this.requestOpModeStop();
@@ -286,16 +283,14 @@ public abstract class IterativeActionOpMode extends OpMode implements IterativeA
     public final void stop()
     {
         this.state.restart();
-
-        this.state.setCompleted(this.automaticallyCompleteActions());
     }
 
     /**
-     * Returns if methods automatically complete on
+     * Returns whether methods automatically complete on
      * their own. If subclasses want custom behavior, they
      * should override this class.
      *
-     * @return if methods automatically complete on their own.
+     * @return whether methods automatically complete on their own.
      *
      * @author Zigy Lim
      *
@@ -309,10 +304,11 @@ public abstract class IterativeActionOpMode extends OpMode implements IterativeA
     }
 
     /**
-     * Returns if the {@link OpMode} automatically
-     * stops when every operation is finished.
+     * Returns whether the {@link OpMode} automatically
+     * stops when every operation is finished. If subclasses
+     * want custom behavior, they should override this method.
      *
-     * @return if the {@link OpMode} automatically
+     * @return whether the {@link OpMode} automatically
      * stops when every operation is finished.
      *
      * @author Zigy Lim
@@ -323,6 +319,6 @@ public abstract class IterativeActionOpMode extends OpMode implements IterativeA
      */
     protected boolean automaticallyStop()
     {
-        return true;
+        return false;
     }
 }

@@ -10,8 +10,9 @@ package org.firstinspires.ftc.teamcode.team.Merlin1819.api.iterative;
  * @version 1.0
  * @since 1.0
  *
- * @see IterativeActionOpMode#
+ * @see IterativeActionOpMode.Action
  * @see IterativeActionOpMode
+ * @see IterativeActionOpMode#registerActions()
  * @see IterativeActionPool
  */
 public class ActionAnnotationException extends Exception

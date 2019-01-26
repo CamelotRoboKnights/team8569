@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode.team.Merlin1819.MecanumDrive.robot;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
+import com.qualcomm.robotcore.hardware.Servo;
 
 /**
  *
@@ -59,6 +60,10 @@ public final class MecanumHardwareMap
      */
     private static final String COLLECTOR_NAME = "collectorMotor";
 
+    private static final String STRING_NAME    = "stringMotor";
+
+    private static final String TUBE_NAME      = "tubeServo";
+
     /**
      *
      * The default power level for the motors
@@ -111,6 +116,10 @@ public final class MecanumHardwareMap
 
     private DcMotor collectorMotor;
 
+    private DcMotor stringMotor;
+
+    private Servo tubeServo;
+
     /**
      *
      * The {@link MecanumIMU} for orientation
@@ -146,6 +155,10 @@ public final class MecanumHardwareMap
 
         this.collectorMotor  = map.dcMotor.get(COLLECTOR_NAME);
 
+        this.stringMotor     = map.dcMotor.get(STRING_NAME);
+
+        this.tubeServo       = map.servo.get(TUBE_NAME);
+
         //this.mecanumIMU = new MecanumIMU(map);
 
         this.frontLeftMotor.setPower(DEFAULT_POWER);
@@ -157,6 +170,8 @@ public final class MecanumHardwareMap
         this.curlArmMotor.setPower(DEFAULT_POWER);
 
         this.collectorMotor.setPower(DEFAULT_POWER);
+
+        this.stringMotor.setPower(DEFAULT_POWER);
 
         this.frontLeftMotor.setDirection(DcMotorSimple.Direction.REVERSE);
         this.frontRightMotor.setDirection(DcMotorSimple.Direction.FORWARD);
@@ -172,6 +187,8 @@ public final class MecanumHardwareMap
        this.curlArmMotor.setMode(DEFAULT_RUN_MODE);
 
        this.collectorMotor.setMode(DEFAULT_RUN_MODE);
+
+       this.stringMotor.setMode(DEFAULT_RUN_MODE);
 
        this.frontLeftMotor.setZeroPowerBehavior(DEFAULT_POWER_BEHAVIOR);
        this.frontRightMotor.setZeroPowerBehavior(DEFAULT_POWER_BEHAVIOR);
@@ -247,6 +264,16 @@ public final class MecanumHardwareMap
 
     public DcMotor getCollectorMotor() {
         return this.collectorMotor;
+    }
+
+    public DcMotor getStringMotor()
+    {
+        return this.stringMotor;
+    }
+
+    public Servo getTubeServo()
+    {
+        return this.tubeServo;
     }
 
 

@@ -189,7 +189,7 @@ public interface Robot
      * @param direction the direction to move the robot
      * @param feet the amount of meters to move the robot
      *
-     * @return true if the method has finished moving the robot, false otherwise.
+     * @return whether the robot has finished moving.
      *
      * @author Zigy Lim
      *
@@ -213,7 +213,7 @@ public interface Robot
      * @param degrees the number of degrees to move by
      * @param feet the number of meters to move by
      *
-     * @return true if the method has finished moving the robot, false otherwise.
+     * @return whether the robot has finished moving.
      *
      * @author Zigy Lim
      *
@@ -239,7 +239,7 @@ public interface Robot
      * @param direction the direction to move, left or right
      * @param degrees the number of degrees to move
      *
-     * @return true if the method has finished rotating the robot, false otherwise.
+     * @return whether the robot has finished moving.
      *
      * @author Zigy Lim
      *
@@ -273,7 +273,7 @@ public interface Robot
      * some warning that encoders are not supported
      * by throwing an exception.
      *
-     * @return if encoders are supported.
+     * @return whether encoders are supported.
      *
      * @author Zigy Lim
      *
@@ -292,7 +292,7 @@ public interface Robot
      * some warning that encoders are not supported
      * by throwing an exception.
      *
-     * @return if the gyroscope is supported.
+     * @return whether the gyroscope is supported.
      *
      * @author Zigy Lim
      *

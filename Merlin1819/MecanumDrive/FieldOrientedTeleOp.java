@@ -35,10 +35,9 @@ public class FieldOrientedTeleOp extends OpMode
                 clockwise = (leftTrigger >= rightTrigger) ?
                              leftTrigger : -rightTrigger;
         double degrees = this.imu.getAngle();
-        degrees = 360 - degrees; /* switch clockwise to counterclockwise */
         double radians = Math.toRadians(degrees); /* conv 0-360 to 0-2 pi */
-        double  temp    =  forward * Math.cos(radians) + right * Math.sin(radians);
-                right   = -forward * Math.sin(radians) + right * Math.sin(radians);
+        double  temp   = forward * Math.cos(radians) - right * Math.sin(radians);
+                right  = forward * Math.sin(radians) + right * Math.cos(radians);
         forward = temp;
 
         this.telemetry.addData("Debug INFO", "leftStickX = " +
