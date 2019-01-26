@@ -99,8 +99,8 @@ public abstract class IterativeActionOpMode extends OpMode implements IterativeA
     @Override
     public final void init()
     {
-        if (!this.registered) registerActions();
-        initState();
+        if (!this.registered) this.registerActions();
+        this.initState();
     }
 
     /**

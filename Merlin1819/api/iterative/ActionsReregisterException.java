@@ -37,7 +37,7 @@ public class ActionsReregisterException extends RuntimeException
 
     /**
      *
-     * Constructs a new {@code ActionsReregisterException}
+     * Constructs a new {@code IterativeStateException}
      * with the specified message.
      *
      * @author Zigy Lim
@@ -46,7 +46,7 @@ public class ActionsReregisterException extends RuntimeException
      *
      * @param message the specified message
      *
-     * @see #ActionsReregisterException(String)
+     * @see #ActionsReregisterException()
      */
     ActionsReregisterException(String message)
     {
