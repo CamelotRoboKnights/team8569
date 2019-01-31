@@ -17,7 +17,7 @@ import java.lang.RuntimeException;
  * @see IterativeActionPool
  * @see IterativeState
  */
-public class ActionsReregisterException extends RuntimeException
+public class ActionsReregisterException extends ActionException
 {
     /**
      *

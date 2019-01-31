@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.team.Merlin1819.MecanumDrive.robot;
+package org.firstinspires.ftc.teamcode.team.Merlin1819.opmode.robot;
 
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
@@ -125,7 +125,7 @@ public final class MecanumHardwareMap
      * The {@link MecanumIMU} for orientation
      * detection.
      */
-    private MecanumIMU mecanumIMU;
+    private MecanumIMU mechanumIMU;
 
     /**
      *
@@ -159,7 +159,7 @@ public final class MecanumHardwareMap
 
         this.tubeServo       = map.servo.get(TUBE_NAME);
 
-        //this.mecanumIMU = new MecanumIMU(map);
+        //this.mechanumIMU = new MecanumIMU(map);
 
         this.frontLeftMotor.setPower(DEFAULT_POWER);
         this.frontRightMotor.setPower(DEFAULT_POWER);
@@ -279,6 +279,6 @@ public final class MecanumHardwareMap
 
     /*public MecanumIMU getMecanumIMU()
     {
-        return this.mecanumIMU;
+        return this.mechanumIMU;
     } */
 }

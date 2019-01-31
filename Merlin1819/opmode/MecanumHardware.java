@@ -1,12 +1,9 @@
-package org.firstinspires.ftc.teamcode.team.Merlin1819.MecanumDrive;
+package org.firstinspires.ftc.teamcode.team.Merlin1819.opmode;
 
 
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
-import com.qualcomm.robotcore.hardware.Gamepad;
-
-
 
 
 /**

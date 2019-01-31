@@ -15,7 +15,7 @@ package org.firstinspires.ftc.teamcode.team.Merlin1819.api.iterative;
  * @see IterativeActionOpMode#registerActions()
  * @see IterativeActionPool
  */
-public class ActionAnnotationException extends Exception
+public class ActionAnnotationException extends ActionException
 {
     /**
      *

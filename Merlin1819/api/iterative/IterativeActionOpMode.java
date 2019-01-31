@@ -177,9 +177,11 @@ public abstract class IterativeActionOpMode extends OpMode implements IterativeA
                             parameters[1] == HardwareMap.class)) {
                         try {
                             throw new ActionAnnotationException(
-                                    "This method does not have the signature (IterativeState, HardwareMap).");
+                                    "The method " + method.getName() +
+                                    " does not have the signature (IterativeState, HardwareMap).");
                         } catch (ActionAnnotationException e) {
-                            e.printStackTrace();
+                            this.telemetry.setAutoClear(false);
+                            this.telemetry.addLine(e.toString());
                             error = true;
                         }
                     }
@@ -188,18 +190,20 @@ public abstract class IterativeActionOpMode extends OpMode implements IterativeA
                             Modifier.isStatic(method.getModifiers())) {
                         try {
                             throw new ActionAnnotationException(
-                                    "This method cannot be abstract or static.");
+                                    "The method " + method.getName() +
+                                            " cannot be abstract or static.");
                         } catch (ActionAnnotationException e) {
-                            e.printStackTrace();
+                            this.telemetry.addLine(e.toString());
                             error = true;
                         }
                     }
 
                     if (!method.getReturnType().equals(Void.TYPE)) {
                         try {
-                            throw new ActionAnnotationException("This must have a void return type.");
+                            throw new ActionAnnotationException("The method " + method.getName() +
+                                    " must have a void return type.");
                         } catch (ActionAnnotationException e) {
-                            e.printStackTrace();
+                            this.telemetry.addLine(e.toString());
                             error = true;
                         }
                     }
@@ -207,10 +211,11 @@ public abstract class IterativeActionOpMode extends OpMode implements IterativeA
                     if (method.getAnnotation(Action.class).order() < 0) {
                         try {
                             throw new ActionAnnotationException(
-                                    "This method has an invalid order value: " +
+                                    "The method " + method.getName() +
+                                            " has an invalid order value: " +
                                             method.getAnnotation(Action.class).order() + ".");
                         } catch (ActionAnnotationException e) {
-                            e.printStackTrace();
+                            this.telemetry.addLine(e.toString());
                             error = true;
                         }
                     }
@@ -222,7 +227,9 @@ public abstract class IterativeActionOpMode extends OpMode implements IterativeA
             }
 
             if (error) {
-                throw new RuntimeException("There was an error while registering methods.");
+                this.telemetry.update();
+                this.telemetry.setAutoClear(true);
+                throw new InvalidActionRegisterException("There was an error while registering actions.");
             } else {
                 final ArrayList<IterativeAction> actions = new ArrayList<>();
 

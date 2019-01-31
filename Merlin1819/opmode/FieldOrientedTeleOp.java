@@ -1,11 +1,10 @@
-package org.firstinspires.ftc.teamcode.team.Merlin1819.MecanumDrive;
+package org.firstinspires.ftc.teamcode.team.Merlin1819.opmode;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
-import org.firstinspires.ftc.teamcode.team.Merlin1819.MecanumDrive.robot.MecanumHardwareMap;
-import org.firstinspires.ftc.teamcode.team.Merlin1819.MecanumDrive.robot.MecanumIMU;
-import org.firstinspires.ftc.teamcode.team.Merlin1819.MecanumDrive.robot.MecanumRobot;
+import org.firstinspires.ftc.teamcode.team.Merlin1819.opmode.robot.MecanumHardwareMap;
+import org.firstinspires.ftc.teamcode.team.Merlin1819.opmode.robot.MecanumIMU;
 
 @TeleOp(name = "FieldOrientedTeleOp")
 public class FieldOrientedTeleOp extends OpMode

@@ -1,10 +1,9 @@
-package org.firstinspires.ftc.teamcode.team.Merlin1819.MecanumDrive;
+package org.firstinspires.ftc.teamcode.team.Merlin1819.opmode;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
-import org.firstinspires.ftc.teamcode.team.Merlin1819.MecanumDrive.robot.MecanumRobot;
+import org.firstinspires.ftc.teamcode.team.Merlin1819.opmode.robot.MecanumRobot;
 import org.firstinspires.ftc.teamcode.team.Merlin1819.api.iterative.IterativeActionOpMode;
 import org.firstinspires.ftc.teamcode.team.Merlin1819.api.iterative.IterativeState;
 import org.firstinspires.ftc.teamcode.team.Merlin1819.api.robot.Robot;

@@ -1,8 +1,6 @@
-package org.firstinspires.ftc.teamcode.team.Merlin1819.MecanumDrive;
+package org.firstinspires.ftc.teamcode.team.Merlin1819.opmode;
 
 
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
-import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 //import org.firstinspires.ftc.teamcode.team.Merlin1718.WestCoast.WestCoastHardware;
 //import org.firstinspires.ftc.teamcode.team.Merlin1718.HolonomicClass;

@@ -1,19 +1,19 @@
-package org.firstinspires.ftc.teamcode.team.Merlin1819.MecanumDrive;
+package org.firstinspires.ftc.teamcode.team.Merlin1819.opmode;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
-import org.firstinspires.ftc.teamcode.team.Merlin1819.MecanumDrive.robot.MecanumHardwareMap;
-import org.firstinspires.ftc.teamcode.team.Merlin1819.MecanumDrive.robot.MecanumIMU;
+import org.firstinspires.ftc.teamcode.team.Merlin1819.opmode.robot.MecanumHardwareMap;
+import org.firstinspires.ftc.teamcode.team.Merlin1819.opmode.robot.MecanumIMU;
 
 @TeleOp(name = "MasterTeleOp")
 public class GunnerAndControllerTeleOp extends OpMode
 {
     private static final float GAMEPAD_DEAD_ZONE = 0.2F;
 
-    private static final float COLLECTOR_POWER = 1F;
+    private static final float COLLECTOR_POWER = 1;
 
-    private static final float SPEED_MULTIPLIER = 0.5F;
+    private static final float SPEED_MULTIPLIER = 1;
 
     private MecanumHardwareMap hardwareMap;
     private MecanumIMU imu;
@@ -100,5 +100,6 @@ public class GunnerAndControllerTeleOp extends OpMode
         this.hardwareMap.getBackLeftMotor().setPower(backLeft);
         this.hardwareMap.getBackRightMotor().setPower(backRight);
 
+        this.telemetry.addData("Encoder", this.hardwareMap.getRetractArmMotor().getCurrentPosition());
     }
 }

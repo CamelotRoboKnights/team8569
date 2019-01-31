@@ -1,9 +1,9 @@
-package org.firstinspires.ftc.teamcode.team.Merlin1819.MecanumDrive;
+package org.firstinspires.ftc.teamcode.team.Merlin1819.opmode;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
-import org.firstinspires.ftc.teamcode.team.Merlin1819.MecanumDrive.robot.MecanumRobot;
+import org.firstinspires.ftc.teamcode.team.Merlin1819.opmode.robot.MecanumRobot;
 
 import org.firstinspires.ftc.teamcode.team.Merlin1819.api.robot.Robot;
 
