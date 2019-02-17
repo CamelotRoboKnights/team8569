@@ -1,11 +1,13 @@
 package org.firstinspires.ftc.teamcode.team.Merlin1819.opmode;
 
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.teamcode.team.Merlin1819.opmode.robot.MecanumHardwareMap;
 
 @TeleOp(name = "GunnerTeleOp")
+@Disabled
 public class GunnerTeleOp extends OpMode
 {
     private static final float GAMEPAD_DEAD_ZONE = 0.2F;

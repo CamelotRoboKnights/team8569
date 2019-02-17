@@ -1,12 +1,14 @@
 package org.firstinspires.ftc.teamcode.team.Merlin1819.opmode;
 
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.teamcode.team.Merlin1819.opmode.robot.MecanumHardwareMap;
 import org.firstinspires.ftc.teamcode.team.Merlin1819.opmode.robot.MecanumIMU;
 
-@TeleOp(name = "FieldOrientedTeleOp")
+@TeleOp(name = "FieldOrientedTeleOp1")
+@Disabled
 public class FieldOrientedTeleOp extends OpMode
 {
     private MecanumIMU imu;

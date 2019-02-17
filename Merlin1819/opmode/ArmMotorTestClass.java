@@ -1,11 +1,13 @@
 package org.firstinspires.ftc.teamcode.team.Merlin1819.opmode;
 
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.teamcode.team.Merlin1819.opmode.robot.MecanumHardwareMap;
 
 @TeleOp(name = "ArmMotorTestZigy")
+@Disabled
 public class ArmMotorTestClass extends OpMode
 {
     private static final int MAX_TICK_COUNT = 5000;

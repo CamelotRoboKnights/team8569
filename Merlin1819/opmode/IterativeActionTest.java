@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.team.Merlin1819.opmode;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.teamcode.team.Merlin1819.api.iterative.IterativeActionOpMode;
@@ -16,6 +17,7 @@ import org.firstinspires.ftc.teamcode.team.Merlin1819.api.iterative.IterativeSta
  * @since 1.0
  */
 @Autonomous(name = "zigyapitest")
+@Disabled
 public class IterativeActionTest extends IterativeActionOpMode
 {
     private int ping,
