@@ -35,12 +35,12 @@ public class GunnerTeleOp extends OpMode
             this.hardwareMap.getRetractArmMotor().setPower(0);
         }
 
-        if (this.gamepad2.left_trigger >= GAMEPAD_DEAD_ZONE) {
-            this.hardwareMap.getCollectorMotor().setPower(COLLECTOR_POWER);
-        }  else if (this.gamepad2.right_trigger >= GAMEPAD_DEAD_ZONE) {
-            this.hardwareMap.getCollectorMotor().setPower(-COLLECTOR_POWER);
-        } else {
-            this.hardwareMap.getCollectorMotor().setPower(0);
-        }
+//        if (this.gamepad2.left_trigger >= GAMEPAD_DEAD_ZONE) {
+//            this.hardwareMap.getCollectorMotor().setPower(COLLECTOR_POWER);
+//        }  else if (this.gamepad2.right_trigger >= GAMEPAD_DEAD_ZONE) {
+//            this.hardwareMap.getCollectorMotor().setPower(-COLLECTOR_POWER);
+//        } else {
+//            this.hardwareMap.getCollectorMotor().setPower(0);
+//        }
     }
 }

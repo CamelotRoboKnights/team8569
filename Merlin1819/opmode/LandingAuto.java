@@ -35,7 +35,7 @@ public class LandingAuto extends IterativeActionOpMode
     public void setRunMode(IterativeState state, HardwareMap map)
     {
         this.hardwareMap.getRetractArmMotor().setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        this.hardwareMap.getStringMotor().setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        //this.hardwareMap.getStringMotor().setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
         this.hardwareMap.getFrontLeftMotor().setMode(DcMotor.RunMode.RUN_TO_POSITION);
         this.hardwareMap.getFrontRightMotor().setMode(DcMotor.RunMode.RUN_TO_POSITION);
@@ -46,8 +46,8 @@ public class LandingAuto extends IterativeActionOpMode
     @Action(order = 1)
     public void releasePin(IterativeState state, HardwareMap map)
     {
-        this.hardwareMap.getStringMotor().setTargetPosition(200);
-        this.hardwareMap.getStringMotor().setPower(0.5);
+        //this.hardwareMap.getStringMotor().setTargetPosition(200);
+        //this.hardwareMap.getStringMotor().setPower(0.5);
 
         this.hardwareMap.getFrontRightMotor().setTargetPosition(200);
         this.hardwareMap.getFrontRightMotor().setPower(0.5);
@@ -56,7 +56,7 @@ public class LandingAuto extends IterativeActionOpMode
     @Action(order = 2)
     public void printTelemetry(IterativeState state, HardwareMap map)
     {
-        this.telemetry.addData("StringMotor", this.hardwareMap.getStringMotor().getCurrentPosition());
+        //this.telemetry.addData("StringMotor", this.hardwareMap.getStringMotor().getCurrentPosition());
         this.telemetry.addData("Debug Info", this.hardwareMap.getFrontRightMotor().getCurrentPosition());
         this.telemetry.update();
         state.restartFromMethod();
@@ -93,6 +93,6 @@ public class LandingAuto extends IterativeActionOpMode
  //   @Action(order = 5)
     public void releaseTube(IterativeState state, HardwareMap map)
     {
-        this.hardwareMap.getTubeServo().setPosition(1);
+        this.hardwareMap.getCollectorServo().setPosition(1);
     }
 }

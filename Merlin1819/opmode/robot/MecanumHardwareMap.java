@@ -38,6 +38,7 @@ public final class MecanumHardwareMap
                                  BACK_LEFT_NAME = "backLeftMotor",
                                 BACK_RIGHT_NAME = "backRightMotor";
 
+    private static final String COLLECTOR_SERVO_NAME = "collectorServo";
     /**
      *
      * Phone arm component motor names.
@@ -48,7 +49,10 @@ public final class MecanumHardwareMap
      * @see #getCurlArmMotor()
      */
     private static final String RETRACT_ARM_NAME = "retractArmMotor",
-                                   CURL_ARM_NAME = "curlArmMotor";
+                                   CURL_ARM_NAME = "curlArmMotor",
+                                 LIFT_MOTOR_NAME = "liftMotor";
+
+    private static Servo collectorServo = null;
 
     /**
      *
@@ -56,13 +60,12 @@ public final class MecanumHardwareMap
      *
      * @since 1.0
      *
-     * @see #getCollectorMotor()
+     * @see #//getCollectorServo()
      */
-    private static final String COLLECTOR_NAME = "collectorMotor";
+   /* private static final String COLLECTOR_NAME = "collectorMotor";
 
     private static final String STRING_NAME    = "stringMotor";
-
-    private static final String TUBE_NAME      = "tubeServo";
+    */
 
     /**
      *
@@ -112,13 +115,12 @@ public final class MecanumHardwareMap
      *
      * These fields hold the motors that
      */
-    private DcMotor curlArmMotor, retractArmMotor;
+    private DcMotor curlArmMotor, retractArmMotor, liftMotor;
 
-    private DcMotor collectorMotor;
+    //private DcMotor collectorMotor;
 
-    private DcMotor stringMotor;
+    //private DcMotor stringMotor;
 
-    private Servo tubeServo;
 
     /**
      *
@@ -150,14 +152,17 @@ public final class MecanumHardwareMap
         this.backLeftMotor   = map.dcMotor.get(BACK_LEFT_NAME);
         this.backRightMotor  = map.dcMotor.get(BACK_RIGHT_NAME);
 
+        this.collectorServo = map.servo.get(COLLECTOR_SERVO_NAME);
+
         this.retractArmMotor = map.dcMotor.get(RETRACT_ARM_NAME);
         this.curlArmMotor    = map.dcMotor.get(CURL_ARM_NAME);
+        this.liftMotor       = map.dcMotor.get(LIFT_MOTOR_NAME);
 
-        this.collectorMotor  = map.dcMotor.get(COLLECTOR_NAME);
+        //this.collectorMotor  = map.dcMotor.get(COLLECTOR_SERVO_NAME);
 
-        this.stringMotor     = map.dcMotor.get(STRING_NAME);
+        //this.stringMotor     = map.dcMotor.get(STRING_NAME);
 
-        this.tubeServo       = map.servo.get(TUBE_NAME);
+        this.collectorServo       = map.servo.get(COLLECTOR_SERVO_NAME);
 
         //this.mechanumIMU = new MecanumIMU(map);
 
@@ -166,12 +171,13 @@ public final class MecanumHardwareMap
         this.backLeftMotor.setPower(DEFAULT_POWER);
         this.backRightMotor.setPower(DEFAULT_POWER);
 
-        this.retractArmMotor.setPower(DEFAULT_POWER);
         this.curlArmMotor.setPower(DEFAULT_POWER);
+        this.retractArmMotor.setPower(DEFAULT_POWER);
+        this.liftMotor.setPower(DEFAULT_POWER);
 
-        this.collectorMotor.setPower(DEFAULT_POWER);
+        //this.collectorMotor.setPower(DEFAULT_POWER);
 
-        this.stringMotor.setPower(DEFAULT_POWER);
+        //this.stringMotor.setPower(DEFAULT_POWER);
 
         this.frontLeftMotor.setDirection(DcMotorSimple.Direction.REVERSE);
         this.frontRightMotor.setDirection(DcMotorSimple.Direction.FORWARD);
@@ -185,10 +191,11 @@ public final class MecanumHardwareMap
 
        this.retractArmMotor.setMode(DEFAULT_RUN_MODE);
        this.curlArmMotor.setMode(DEFAULT_RUN_MODE);
+       this.liftMotor.setMode(DEFAULT_RUN_MODE);
 
-       this.collectorMotor.setMode(DEFAULT_RUN_MODE);
+       //this.collectorMotor.setMode(DEFAULT_RUN_MODE);
 
-       this.stringMotor.setMode(DEFAULT_RUN_MODE);
+       //this.stringMotor.setMode(DEFAULT_RUN_MODE);
 
        this.frontLeftMotor.setZeroPowerBehavior(DEFAULT_POWER_BEHAVIOR);
        this.frontRightMotor.setZeroPowerBehavior(DEFAULT_POWER_BEHAVIOR);
@@ -197,8 +204,9 @@ public final class MecanumHardwareMap
 
        this.retractArmMotor.setZeroPowerBehavior(DEFAULT_POWER_BEHAVIOR);
        this.curlArmMotor.setZeroPowerBehavior(DEFAULT_POWER_BEHAVIOR);
+       this.liftMotor.setZeroPowerBehavior(DEFAULT_POWER_BEHAVIOR);
 
-       this.collectorMotor.setZeroPowerBehavior(DEFAULT_POWER_BEHAVIOR);
+       //this.collectorMotor.setZeroPowerBehavior(DEFAULT_POWER_BEHAVIOR);
     }
 
     /**
@@ -262,18 +270,20 @@ public final class MecanumHardwareMap
         return this.curlArmMotor;
     }
 
-    public DcMotor getCollectorMotor() {
-        return this.collectorMotor;
+//    public DcMotor getCollectorMotor() {
+//        return this.collectorMotor;
+//    }
+
+
+    public DcMotor getLiftMotor()
+    {
+        return this.liftMotor;
     }
 
-    public DcMotor getStringMotor()
-    {
-        return this.stringMotor;
-    }
 
-    public Servo getTubeServo()
+    public Servo getCollectorServo()
     {
-        return this.tubeServo;
+        return this.collectorServo;
     }
 
 

@@ -2,11 +2,12 @@ package org.firstinspires.ftc.teamcode.team.Merlin1819.opmode;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.teamcode.team.Merlin1819.opmode.robot.MecanumHardwareMap;
 import org.firstinspires.ftc.teamcode.team.Merlin1819.opmode.robot.MecanumIMU;
 
-@TeleOp(name = "MasterTeleOp")
+@TeleOp(name = "MasterTeleOp1")
 public class GunnerAndControllerTeleOp extends OpMode
 {
     private static final float GAMEPAD_DEAD_ZONE = 0.2F;
@@ -17,7 +18,6 @@ public class GunnerAndControllerTeleOp extends OpMode
 
     private MecanumHardwareMap hardwareMap;
     private MecanumIMU imu;
-
     @Override
     public void init()
     {
@@ -28,11 +28,13 @@ public class GunnerAndControllerTeleOp extends OpMode
     @Override
     public void loop()
     {
-        /*
-        Gunner Section
-         */
+
+        //Gunner Section
+
+        //this controls the curl arm motor setting it based on the y axis of the
         if (Math.abs(this.gamepad2.left_stick_y) >= GAMEPAD_DEAD_ZONE) {
-            this.hardwareMap.getCurlArmMotor().setPower(-this.gamepad2.left_stick_y *SPEED_MULTIPLIER);
+            this.hardwareMap.getCurlArmMotor().setPower(-this.gamepad2.left_stick_y *SPEED_MULTIPLIER *
+                    Math.abs(this.gamepad2.left_stick_y));
         } else {
             this.hardwareMap.getCurlArmMotor().setPower(0);
         }
@@ -43,13 +45,20 @@ public class GunnerAndControllerTeleOp extends OpMode
             this.hardwareMap.getRetractArmMotor().setPower(0);
         }
 
-        if (this.gamepad2.left_trigger >= GAMEPAD_DEAD_ZONE) {
-            this.hardwareMap.getCollectorMotor().setPower(COLLECTOR_POWER);
-        }  else if (this.gamepad2.right_trigger >= GAMEPAD_DEAD_ZONE) {
-            this.hardwareMap.getCollectorMotor().setPower(-COLLECTOR_POWER);
+        Servo servo = this.hardwareMap.getCollectorServo();
+
+        boolean leftTriggerPressed = this.gamepad2.left_trigger >= GAMEPAD_DEAD_ZONE;
+        boolean rightTriggerPressed = this.gamepad2.right_trigger >= GAMEPAD_DEAD_ZONE;
+
+        if (leftTriggerPressed || rightTriggerPressed) {
+            servo.setDirection(leftTriggerPressed ? Servo.Direction.FORWARD : Servo.Direction.REVERSE);
+            servo.setPosition(1);
         } else {
-            this.hardwareMap.getCollectorMotor().setPower(0);
+            servo.setPosition(.5);
         }
+
+
+
 
         /*
         Field oriented section.
@@ -71,12 +80,12 @@ public class GunnerAndControllerTeleOp extends OpMode
         right  = forward * Math.sin(radians) + right * Math.cos(radians);
         forward = temp;
 
-        this.telemetry.addData("Debug INFO", "leftStickX = " +
+        /*this.telemetry.addData("Debug INFO", "leftStickX = " +
                 leftStickX + ", leftStickY = " + leftStickY +
                 ", leftTrigger = " + leftTrigger + ", rightTrigger = " +
                 rightTrigger + ", forward = " + forward + ", right = " +
                 right + ", clockwise = " + clockwise + ", degrees = " +
-                degrees);
+                degrees);*/
 
         double  frontLeft  = forward + clockwise + right,
                 frontRight = forward - clockwise - right,
@@ -100,6 +109,15 @@ public class GunnerAndControllerTeleOp extends OpMode
         this.hardwareMap.getBackLeftMotor().setPower(backLeft);
         this.hardwareMap.getBackRightMotor().setPower(backRight);
 
-        this.telemetry.addData("Encoder", this.hardwareMap.getRetractArmMotor().getCurrentPosition());
+        //this.telemetry.addData("Encoder", this.hardwareMap.getRetractArmMotor().getCurrentPosition());
+
+        //Driver controls for the lift.
+
+        if (Math.abs(this.gamepad1.right_stick_y) >= GAMEPAD_DEAD_ZONE) {
+            this.hardwareMap.getLiftMotor().setPower(this.gamepad1.right_stick_y);
+        } else {
+            this.hardwareMap.getLiftMotor().setPower(0);
+        }
+
     }
 }

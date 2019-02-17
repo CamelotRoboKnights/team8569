@@ -50,12 +50,12 @@ public class MecanumHardware {
         backRightMotor.setPower(0);
         backLeftMotor.setPower(0);
 
-
-
         frontLeftMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         frontRightMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         backLeftMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         backRightMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+
+
 
 
     }
