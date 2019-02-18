@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode.team.Merlin1819.opmode;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.Servo;
+import com.qualcomm.robotcore.hardware.ColorSensor;
 
 import org.firstinspires.ftc.teamcode.team.Merlin1819.opmode.robot.MecanumHardwareMap;
 import org.firstinspires.ftc.teamcode.team.Merlin1819.opmode.robot.MecanumIMU;
@@ -18,6 +19,7 @@ public class GunnerAndControllerTeleOp extends OpMode
 
     private MecanumHardwareMap hardwareMap;
     private MecanumIMU imu;
+
     @Override
     public void init()
     {
@@ -38,7 +40,7 @@ public class GunnerAndControllerTeleOp extends OpMode
         } else {
             this.hardwareMap.getCurlArmMotor().setPower(0);
         }
-        // this is where the driver controls the extention of the arm on the gunner right joystick.
+        // this is where the driver controls the extension of the arm on the gunner right joystick.
         if (Math.abs(this.gamepad2.right_stick_y) >= GAMEPAD_DEAD_ZONE) {
             this.hardwareMap.getRetractArmMotor().setPower(this.gamepad2.right_stick_y);
         } else {
@@ -51,7 +53,7 @@ public class GunnerAndControllerTeleOp extends OpMode
         boolean rightTriggerPressed = this.gamepad2.right_trigger >= GAMEPAD_DEAD_ZONE;
 
         if (leftTriggerPressed || rightTriggerPressed) {
-            servo.setDirection(leftTriggerPressed ? Servo.Direction.FORWARD : Servo.Direction.REVERSE);
+            servo.setDirection(leftTriggerPressed ? Servo.Direction.REVERSE : Servo.Direction.FORWARD);
             servo.setPosition(1);
         } else {
             servo.setPosition(.5);
@@ -119,11 +121,20 @@ public class GunnerAndControllerTeleOp extends OpMode
             this.hardwareMap.getLiftMotor().setPower(0);
         }
 
-        //Gyro reset button for the gunner because the Autonomous will so far statr off ceter and the driver control could be unaligned.
+        //Gyro reset button for the gunner because after Autonomous, the robot is not facing the right way
 
         if (this.gamepad1.y) {
 
         }
 
+        //color sensor telemetry
+        final ColorSensor sensor = this.hardwareMap.getColorSensor();
+        telemetry.addData("Red", sensor.red());
+        telemetry.addData("Green", sensor.green());
+        telemetry.addData("Blue", sensor.blue());
+        telemetry.addData("Alpha", sensor.alpha());
+        telemetry.addData("Combined", sensor.argb());
+        telemetry.addData("Combined Hex", "0x" + Integer.toHexString(sensor.argb()).toUpperCase());
+        telemetry.update();
     }
 }

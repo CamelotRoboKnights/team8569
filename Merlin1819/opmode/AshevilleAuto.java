@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.team.Merlin1819.opmode;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
@@ -10,6 +11,7 @@ import org.firstinspires.ftc.teamcode.team.Merlin1819.api.iterative.IterativeAct
 import org.firstinspires.ftc.teamcode.team.Merlin1819.api.iterative.IterativeState;
 import org.firstinspires.ftc.teamcode.team.Merlin1819.opmode.robot.MecanumIMU;
 
+@Disabled
 @Autonomous(name = "AshevilleAuto")
 public class AshevilleAuto extends OpMode {
 

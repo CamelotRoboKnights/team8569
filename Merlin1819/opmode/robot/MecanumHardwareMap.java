@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.team.Merlin1819.opmode.robot;
 
+import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
@@ -33,12 +34,13 @@ public final class MecanumHardwareMap
      * @see #getBackLeftMotor()
      * @see #getBackRightMotor()
      */
-    private static final String FRONT_LEFT_NAME = "frontLeftMotor",
-                               FRONT_RIGHT_NAME = "frontRightMotor",
-                                 BACK_LEFT_NAME = "backLeftMotor",
-                                BACK_RIGHT_NAME = "backRightMotor";
+    private static final String FRONT_LEFT_MOTOR_NAME = "frontLeftMotor",
+                               FRONT_RIGHT_MOTOR_NAME = "frontRightMotor",
+                                 BACK_LEFT_MOTOR_NAME = "backLeftMotor",
+                                BACK_RIGHT_MOTOR_NAME = "backRightMotor";
 
     private static final String COLLECTOR_SERVO_NAME = "collectorServo";
+
     /**
      *
      * Phone arm component motor names.
@@ -52,20 +54,8 @@ public final class MecanumHardwareMap
                                    CURL_ARM_NAME = "curlArmMotor",
                                  LIFT_MOTOR_NAME = "liftMotor";
 
-    private static Servo collectorServo = null;
-
-    /**
-     *
-     * Phone collector component motor names.
-     *
-     * @since 1.0
-     *
-     * @see #//getCollectorServo()
-     */
-   /* private static final String COLLECTOR_NAME = "collectorMotor";
-
-    private static final String STRING_NAME    = "stringMotor";
-    */
+    private static final String COLOR_SENSOR_NAME = "colorSensor";
+    private static final String MARKER_SERVO_NAME = "markerServo";
 
     /**
      *
@@ -117,10 +107,11 @@ public final class MecanumHardwareMap
      */
     private DcMotor curlArmMotor, retractArmMotor, liftMotor;
 
-    //private DcMotor collectorMotor;
+    private Servo collectorServo;
 
-    //private DcMotor stringMotor;
+    private Servo markerServo;
 
+    private ColorSensor colorSensor;
 
     /**
      *
@@ -147,22 +138,22 @@ public final class MecanumHardwareMap
     {
         this.map = map;
 
-        this.frontLeftMotor  = map.dcMotor.get(FRONT_LEFT_NAME);
-        this.frontRightMotor = map.dcMotor.get(FRONT_RIGHT_NAME);
-        this.backLeftMotor   = map.dcMotor.get(BACK_LEFT_NAME);
-        this.backRightMotor  = map.dcMotor.get(BACK_RIGHT_NAME);
+        this.frontLeftMotor  = map.dcMotor.get(FRONT_LEFT_MOTOR_NAME);
+        this.frontRightMotor = map.dcMotor.get(FRONT_RIGHT_MOTOR_NAME);
+        this.backLeftMotor   = map.dcMotor.get(BACK_LEFT_MOTOR_NAME);
+        this.backRightMotor  = map.dcMotor.get(BACK_RIGHT_MOTOR_NAME);
 
-        this.collectorServo = map.servo.get(COLLECTOR_SERVO_NAME);
+        this.collectorServo  = map.servo.get(COLLECTOR_SERVO_NAME);
 
         this.retractArmMotor = map.dcMotor.get(RETRACT_ARM_NAME);
         this.curlArmMotor    = map.dcMotor.get(CURL_ARM_NAME);
         this.liftMotor       = map.dcMotor.get(LIFT_MOTOR_NAME);
 
-        //this.collectorMotor  = map.dcMotor.get(COLLECTOR_SERVO_NAME);
+        this.markerServo     = map.servo.get(MARKER_SERVO_NAME);
 
-        //this.stringMotor     = map.dcMotor.get(STRING_NAME);
+        this.colorSensor     = map.colorSensor.get(COLOR_SENSOR_NAME);
 
-        this.collectorServo       = map.servo.get(COLLECTOR_SERVO_NAME);
+        this.collectorServo  = map.servo.get(COLLECTOR_SERVO_NAME);
 
         //this.mechanumIMU = new MecanumIMU(map);
 
@@ -175,9 +166,8 @@ public final class MecanumHardwareMap
         this.retractArmMotor.setPower(DEFAULT_POWER);
         this.liftMotor.setPower(DEFAULT_POWER);
 
-        //this.collectorMotor.setPower(DEFAULT_POWER);
-
-        //this.stringMotor.setPower(DEFAULT_POWER);
+        this.colorSensor = map.colorSensor.get(COLOR_SENSOR_NAME);
+        this.markerServo = map.servo.get(MARKER_SERVO_NAME);
 
         this.frontLeftMotor.setDirection(DcMotorSimple.Direction.REVERSE);
         this.frontRightMotor.setDirection(DcMotorSimple.Direction.FORWARD);
@@ -193,10 +183,6 @@ public final class MecanumHardwareMap
        this.curlArmMotor.setMode(DEFAULT_RUN_MODE);
        this.liftMotor.setMode(DEFAULT_RUN_MODE);
 
-       //this.collectorMotor.setMode(DEFAULT_RUN_MODE);
-
-       //this.stringMotor.setMode(DEFAULT_RUN_MODE);
-
        this.frontLeftMotor.setZeroPowerBehavior(DEFAULT_POWER_BEHAVIOR);
        this.frontRightMotor.setZeroPowerBehavior(DEFAULT_POWER_BEHAVIOR);
        this.backLeftMotor.setZeroPowerBehavior(DEFAULT_POWER_BEHAVIOR);
@@ -205,8 +191,6 @@ public final class MecanumHardwareMap
        this.retractArmMotor.setZeroPowerBehavior(DEFAULT_POWER_BEHAVIOR);
        this.curlArmMotor.setZeroPowerBehavior(DEFAULT_POWER_BEHAVIOR);
        this.liftMotor.setZeroPowerBehavior(DEFAULT_POWER_BEHAVIOR);
-
-       //this.collectorMotor.setZeroPowerBehavior(DEFAULT_POWER_BEHAVIOR);
     }
 
     /**
@@ -280,6 +264,14 @@ public final class MecanumHardwareMap
         return this.liftMotor;
     }
 
+    public ColorSensor getColorSensor()
+    {
+        return this.colorSensor;
+    }
+
+    public Servo getMarkerServo() {
+        return this.markerServo;
+    }
 
     public Servo getCollectorServo()
     {

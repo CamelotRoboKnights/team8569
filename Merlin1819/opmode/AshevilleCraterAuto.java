@@ -4,6 +4,7 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
+import com.qualcomm.robotcore.hardware.ColorSensor;
 
 import org.firstinspires.ftc.teamcode.team.Merlin1819.opmode.robot.MecanumHardwareMap;
 import org.firstinspires.ftc.teamcode.team.Merlin1819.api.iterative.IterativeActionOpMode;
@@ -15,6 +16,7 @@ public class AshevilleCraterAuto extends OpMode {
 
     private MecanumHardwareMap hardwareMap;
     private MecanumIMU imu;
+    private ColorSensor color;
     private long startTime;
     private long curTime;
     private long elapsedTime;
@@ -60,6 +62,11 @@ public class AshevilleCraterAuto extends OpMode {
             this.hardwareMap.getFrontLeftMotor().setPower(-.25);
             this.hardwareMap.getBackRightMotor().setPower(-.25);
             this.hardwareMap.getBackLeftMotor().setPower(.25);
+        }else if (elapsedTime < 16) {
+            this.hardwareMap.getFrontRightMotor().setPower(.75);
+            this.hardwareMap.getFrontLeftMotor().setPower(-.75);
+            this.hardwareMap.getBackRightMotor().setPower(-.75);
+            this.hardwareMap.getBackLeftMotor().setPower(.75);
         } else {
             this.hardwareMap.getFrontLeftMotor().setPower(0);
             this.hardwareMap.getFrontRightMotor().setPower(0);
