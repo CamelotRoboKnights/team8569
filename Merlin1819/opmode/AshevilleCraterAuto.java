@@ -10,8 +10,8 @@ import org.firstinspires.ftc.teamcode.team.Merlin1819.api.iterative.IterativeAct
 import org.firstinspires.ftc.teamcode.team.Merlin1819.api.iterative.IterativeState;
 import org.firstinspires.ftc.teamcode.team.Merlin1819.opmode.robot.MecanumIMU;
 
-@Autonomous(name = "AshevilleAuto")
-public class AshevilleAuto extends OpMode {
+@Autonomous(name = "AshevilleCraterAuto")
+public class AshevilleCraterAuto extends OpMode {
 
     private MecanumHardwareMap hardwareMap;
     private MecanumIMU imu;
@@ -55,7 +55,7 @@ public class AshevilleAuto extends OpMode {
             this.hardwareMap.getFrontRightMotor().setPower(.125);
             this.hardwareMap.getBackLeftMotor().setPower(.125);
             this.hardwareMap.getBackRightMotor().setPower(.125);
-        } else if (elapsedTime < 12.5) {
+        } else if (elapsedTime < 13) {
             this.hardwareMap.getFrontRightMotor().setPower(.25);
             this.hardwareMap.getFrontLeftMotor().setPower(-.25);
             this.hardwareMap.getBackRightMotor().setPower(-.25);

@@ -31,14 +31,14 @@ public class GunnerAndControllerTeleOp extends OpMode
 
         //Gunner Section
 
-        //this controls the curl arm motor setting it based on the y axis of the
+        //this controls the curl arm motor setting it based on the y axis of the left joy stick.
         if (Math.abs(this.gamepad2.left_stick_y) >= GAMEPAD_DEAD_ZONE) {
             this.hardwareMap.getCurlArmMotor().setPower(-this.gamepad2.left_stick_y *SPEED_MULTIPLIER *
                     Math.abs(this.gamepad2.left_stick_y));
         } else {
             this.hardwareMap.getCurlArmMotor().setPower(0);
         }
-
+        // this is where the driver controls the extention of the arm on the gunner right joystick.
         if (Math.abs(this.gamepad2.right_stick_y) >= GAMEPAD_DEAD_ZONE) {
             this.hardwareMap.getRetractArmMotor().setPower(this.gamepad2.right_stick_y);
         } else {
@@ -61,7 +61,7 @@ public class GunnerAndControllerTeleOp extends OpMode
 
 
         /*
-        Field oriented section.
+        Field oriented drive section.
          */
         this.imu.updateAngle();
 
@@ -111,12 +111,18 @@ public class GunnerAndControllerTeleOp extends OpMode
 
         //this.telemetry.addData("Encoder", this.hardwareMap.getRetractArmMotor().getCurrentPosition());
 
-        //Driver controls for the lift.
+        //Driver controls for the lift. The driver controls the lift because that makes lifting easier because the driv can do it with less coordination.
 
         if (Math.abs(this.gamepad1.right_stick_y) >= GAMEPAD_DEAD_ZONE) {
-            this.hardwareMap.getLiftMotor().setPower(this.gamepad1.right_stick_y);
+            this.hardwareMap.getLiftMotor().setPower(-this.gamepad1.right_stick_y);
         } else {
             this.hardwareMap.getLiftMotor().setPower(0);
+        }
+
+        //Gyro reset button for the gunner because the Autonomous will so far statr off ceter and the driver control could be unaligned.
+
+        if (this.gamepad1.y) {
+
         }
 
     }

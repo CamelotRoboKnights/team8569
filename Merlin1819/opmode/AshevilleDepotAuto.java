@@ -10,8 +10,8 @@ import org.firstinspires.ftc.teamcode.team.Merlin1819.api.iterative.IterativeAct
 import org.firstinspires.ftc.teamcode.team.Merlin1819.api.iterative.IterativeState;
 import org.firstinspires.ftc.teamcode.team.Merlin1819.opmode.robot.MecanumIMU;
 
-@Autonomous(name = "AshevilleAuto")
-public class AshevilleAuto extends OpMode {
+@Autonomous(name = "AshevilleDepotAuto")
+public class AshevilleDepotAuto extends OpMode {
 
     private MecanumHardwareMap hardwareMap;
     private MecanumIMU imu;
