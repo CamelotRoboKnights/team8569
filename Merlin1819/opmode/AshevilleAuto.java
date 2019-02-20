@@ -11,9 +11,7 @@ import org.firstinspires.ftc.teamcode.team.Merlin1819.api.iterative.IterativeAct
 import org.firstinspires.ftc.teamcode.team.Merlin1819.api.iterative.IterativeState;
 import org.firstinspires.ftc.teamcode.team.Merlin1819.opmode.robot.MecanumIMU;
 
-@Disabled
-@Autonomous(name = "AshevilleAuto")
-public class AshevilleAuto extends OpMode {
+public abstract class AshevilleAuto extends OpMode {
 
     private MecanumHardwareMap hardwareMap;
     private MecanumIMU imu;
@@ -76,35 +74,34 @@ public class AshevilleAuto extends OpMode {
         }
     }
 
-    void afterLanding() {
-    }
+    protected abstract void afterLanding();
 
-    void goForward(double power) {
+    protected final void goForward(double power) {
         this.hardwareMap.getFrontLeftMotor().setPower(power);
         this.hardwareMap.getFrontRightMotor().setPower(power);
         this.hardwareMap.getBackLeftMotor().setPower(power);
         this.hardwareMap.getBackRightMotor().setPower(power);
     }
-    void goLeft(double power) {
+    protected final void goLeft(double power) {
         this.hardwareMap.getFrontLeftMotor().setPower(power);
         this.hardwareMap.getFrontRightMotor().setPower(-power);
         this.hardwareMap.getBackLeftMotor().setPower(-power);
         this.hardwareMap.getBackRightMotor().setPower(power);
     }
-    void goRight(double power) {
+    protected final void goRight(double power) {
         this.hardwareMap.getFrontLeftMotor().setPower(-power);
         this.hardwareMap.getFrontRightMotor().setPower(power);
         this.hardwareMap.getBackLeftMotor().setPower(power);
         this.hardwareMap.getBackRightMotor().setPower(-power);
     }
-    void goBackward(double power) {
+    protected final void goBackward(double power) {
         this.hardwareMap.getFrontLeftMotor().setPower(-power);
         this.hardwareMap.getFrontRightMotor().setPower(-power);
         this.hardwareMap.getBackLeftMotor().setPower(-power);
         this.hardwareMap.getBackRightMotor().setPower(-power);
     }
 
-    void stopMotors() {
+    protected final void stopMotors() {
         this.hardwareMap.getFrontLeftMotor().setPower(0);
         this.hardwareMap.getFrontRightMotor().setPower(0);
         this.hardwareMap.getBackLeftMotor().setPower(0);

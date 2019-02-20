@@ -65,7 +65,11 @@ public class GunnerAndControllerTeleOp extends OpMode
         /*
         Field oriented drive section.
          */
-        this.imu.updateAngle();
+        //this.imu.updateAngle();
+
+        synchronized (this.imu) {
+            this.imu.updateAngle();
+        }
 
         final double leftStickY = this.gamepad1.left_stick_y,
                 leftStickX = this.gamepad1.left_stick_x,
@@ -124,17 +128,20 @@ public class GunnerAndControllerTeleOp extends OpMode
         //Gyro reset button for the gunner because after Autonomous, the robot is not facing the right way
 
         if (this.gamepad1.y) {
-
+            this.imu.initializeIMU();
+            this.telemetry.addData("Notification", "You reset the IMU angle.");
         }
+
+        this.telemetry.addData("Angle", this.imu.getAngle());
 
         //color sensor telemetry
         final ColorSensor sensor = this.hardwareMap.getColorSensor();
-        telemetry.addData("Red", sensor.red());
-        telemetry.addData("Green", sensor.green());
-        telemetry.addData("Blue", sensor.blue());
-        telemetry.addData("Alpha", sensor.alpha());
-        telemetry.addData("Combined", sensor.argb());
-        telemetry.addData("Combined Hex", "0x" + Integer.toHexString(sensor.argb()).toUpperCase());
-        telemetry.update();
+//        telemetry.addData("Red", sensor.red());
+//        telemetry.addData("Green", sensor.green());
+//        telemetry.addData("Blue", sensor.blue());
+//        telemetry.addData("Alpha", sensor.alpha());
+//        telemetry.addData("Combined", sensor.argb());
+//        telemetry.addData("Combined Hex", "0x" + Integer.toHexString(sensor.argb()).toUpperCase());
+          telemetry.update();
     }
 }
