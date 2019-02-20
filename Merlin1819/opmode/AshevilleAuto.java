@@ -19,56 +19,98 @@ public class AshevilleAuto extends OpMode {
     private MecanumIMU imu;
     private long startTime;
     private long curTime;
-    private long elapsedTime;
+    double elapsedTime;
+    private boolean motorShutdown;
     /*DcMotor liftMotor = this.hardwareMap.getLiftMotor();
     DcMotor frontRightMotor = this.hardwareMap.getFrontRightMotor();
     DcMotor frontLeftMotor = this.hardwareMap.getFrontLeftMotor();
     DcMotor backLeftMotor = this.hardwareMap.getBackLeftMotor();
     DcMotor backRightMotor = this.hardwareMap.getBackRightMotor();*/
 
+    static double DOWNTIME = 6;
+    static double FWDTIME = DOWNTIME + 2;
+    static double LEFTTIME = FWDTIME + 2;
+
     public void init() {
-
-
+        motorShutdown = false;
         this.hardwareMap = new MecanumHardwareMap(super.hardwareMap);
     }
 
     @Override
     public void start() {
-        startTime = System.currentTimeMillis() / 1000;
+        startTime = System.currentTimeMillis();
     }
 
 
     @Override
     public void loop() {
-        curTime = System.currentTimeMillis() / 1000;
-        elapsedTime = curTime - startTime;
+        curTime = System.currentTimeMillis();
+        elapsedTime = (curTime - startTime) / 1000;
 
         telemetry.addData("Start Time", startTime);
         telemetry.addData("Current Time", curTime);
         telemetry.addData("Elapsed Time", elapsedTime);
         telemetry.update();
 
-        if (elapsedTime < 9.5) {
+        if (elapsedTime < DOWNTIME) {
             this.hardwareMap.getLiftMotor().setPower(.5);
-        } else if (elapsedTime < 11) {
+        } else if (elapsedTime < FWDTIME) {
             this.hardwareMap.getLiftMotor().setPower(0);
 
-            this.hardwareMap.getFrontLeftMotor().setPower(.125);
-            this.hardwareMap.getFrontRightMotor().setPower(.125);
-            this.hardwareMap.getBackLeftMotor().setPower(.125);
-            this.hardwareMap.getBackRightMotor().setPower(.125);
-        } else if (elapsedTime < 12.5) {
-            this.hardwareMap.getFrontRightMotor().setPower(.25);
-            this.hardwareMap.getFrontLeftMotor().setPower(-.25);
-            this.hardwareMap.getBackRightMotor().setPower(-.25);
-            this.hardwareMap.getBackLeftMotor().setPower(.25);
+            goForward(.125); //Robot starts sideways and this gets our hook out of the bracket
+        } else if (elapsedTime < LEFTTIME) {
+
+            goLeft(.25); //This moves us away from the lander since the robot is sideways
+
         } else {
-            this.hardwareMap.getFrontLeftMotor().setPower(0);
-            this.hardwareMap.getFrontRightMotor().setPower(0);
-            this.hardwareMap.getBackLeftMotor().setPower(0);
-            this.hardwareMap.getBackRightMotor().setPower(0);
+            if (!motorShutdown) {
 
-            this.hardwareMap.getLiftMotor().setPower(0);
+                stopMotors();
+                motorShutdown = true;
+
+            } else {
+
+                afterLanding();
+
+            }
         }
+    }
+
+    void afterLanding() {
+    }
+
+    void goForward(double power) {
+        this.hardwareMap.getFrontLeftMotor().setPower(power);
+        this.hardwareMap.getFrontRightMotor().setPower(power);
+        this.hardwareMap.getBackLeftMotor().setPower(power);
+        this.hardwareMap.getBackRightMotor().setPower(power);
+    }
+    void goLeft(double power) {
+        this.hardwareMap.getFrontLeftMotor().setPower(power);
+        this.hardwareMap.getFrontRightMotor().setPower(-power);
+        this.hardwareMap.getBackLeftMotor().setPower(-power);
+        this.hardwareMap.getBackRightMotor().setPower(power);
+    }
+    void goRight(double power) {
+        this.hardwareMap.getFrontLeftMotor().setPower(-power);
+        this.hardwareMap.getFrontRightMotor().setPower(power);
+        this.hardwareMap.getBackLeftMotor().setPower(power);
+        this.hardwareMap.getBackRightMotor().setPower(-power);
+    }
+    void goBackward(double power) {
+        this.hardwareMap.getFrontLeftMotor().setPower(-power);
+        this.hardwareMap.getFrontRightMotor().setPower(-power);
+        this.hardwareMap.getBackLeftMotor().setPower(-power);
+        this.hardwareMap.getBackRightMotor().setPower(-power);
+    }
+
+    void stopMotors() {
+        this.hardwareMap.getFrontLeftMotor().setPower(0);
+        this.hardwareMap.getFrontRightMotor().setPower(0);
+        this.hardwareMap.getBackLeftMotor().setPower(0);
+        this.hardwareMap.getBackRightMotor().setPower(0);
+
+
+        this.hardwareMap.getLiftMotor().setPower(0);
     }
 }
