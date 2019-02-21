@@ -4,13 +4,13 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 
 @Autonomous(name = "AshevilleDepotAuto")
 public class AshevilleDepotAuto extends AshevilleAuto {
-    static double DEPOTTIME = RIGHTTIME + 2;
-    static double CRATERTIME = DEPOTTIME + 3;
+    static double CRATERTIME = RIGHTTIME + 3;
+    static  double  MARKTIME = CRATERTIME + 1;
     protected void afterLanding() {
-        if(elapsedTime < DEPOTTIME) {
-            goRight(.5);
-        } else if(elapsedTime < RIGHTTIME) {
-            goForward(.5);
+        if(elapsedTime < CRATERTIME) {
+            goRight(.25);
+        } else if ( elapsedTime < MARKTIME){
+            mark();
         } else {
             stopMotors();
         }

@@ -7,7 +7,7 @@ public class AshevilleCraterAuto extends AshevilleAuto {
 static double CRATERTIME = RIGHTTIME + 3;
     protected void afterLanding() {
         if(elapsedTime < CRATERTIME) {
-            goRight(.75);
+            goRight(.25);
         } else {
             stopMotors();
         }

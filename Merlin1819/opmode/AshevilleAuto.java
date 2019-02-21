@@ -19,7 +19,7 @@ public abstract class AshevilleAuto extends OpMode {
     DcMotor backLeftMotor = this.hardwareMap.getBackLeftMotor();
     DcMotor backRightMotor = this.hardwareMap.getBackRightMotor();*/
 
-    static double DOWNTIME = 5;
+    static double DOWNTIME = 4.35;
     static double FWDTIME = DOWNTIME + 1.5;
     static double RIGHTTIME = FWDTIME + 2;
 
@@ -52,7 +52,7 @@ public abstract class AshevilleAuto extends OpMode {
             goForward(.125); //Robot starts sideways and this gets our hook out of the bracket
         } else if (elapsedTime < RIGHTTIME) {
 
-            goRight(.25); //This moves us away from the lander since the robot is sideways
+            goRight(.125); //This moves us away from the lander since the robot is sideways
 
         } else {
             if (!motorShutdown) {
@@ -103,5 +103,8 @@ public abstract class AshevilleAuto extends OpMode {
 
 
         this.hardwareMap.getLiftMotor().setPower(0);
+    }
+    protected final void mark() {
+        this.hardwareMap.getMarkerServo().setPosition(180);
     }
 }
