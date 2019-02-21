@@ -67,6 +67,7 @@ public class GunnerAndControllerTeleOp extends OpMode
          */
         //this.imu.updateAngle();
 
+        //weak battery, (hopefully) not async issues.
         synchronized (this.imu) {
             this.imu.updateAngle();
         }

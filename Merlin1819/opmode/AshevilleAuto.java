@@ -1,14 +1,8 @@
 package org.firstinspires.ftc.teamcode.team.Merlin1819.opmode;
 
-import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
-import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 
 import org.firstinspires.ftc.teamcode.team.Merlin1819.opmode.robot.MecanumHardwareMap;
-import org.firstinspires.ftc.teamcode.team.Merlin1819.api.iterative.IterativeActionOpMode;
-import org.firstinspires.ftc.teamcode.team.Merlin1819.api.iterative.IterativeState;
 import org.firstinspires.ftc.teamcode.team.Merlin1819.opmode.robot.MecanumIMU;
 
 public abstract class AshevilleAuto extends OpMode {
@@ -25,9 +19,9 @@ public abstract class AshevilleAuto extends OpMode {
     DcMotor backLeftMotor = this.hardwareMap.getBackLeftMotor();
     DcMotor backRightMotor = this.hardwareMap.getBackRightMotor();*/
 
-    static double DOWNTIME = 6;
-    static double FWDTIME = DOWNTIME + 2;
-    static double LEFTTIME = FWDTIME + 2;
+    static double DOWNTIME = 5;
+    static double FWDTIME = DOWNTIME + 1.5;
+    static double RIGHTTIME = FWDTIME + 2;
 
     public void init() {
         motorShutdown = false;
@@ -43,7 +37,7 @@ public abstract class AshevilleAuto extends OpMode {
     @Override
     public void loop() {
         curTime = System.currentTimeMillis();
-        elapsedTime = (curTime - startTime) / 1000;
+        elapsedTime = (curTime - startTime) / 1000.0;
 
         telemetry.addData("Start Time", startTime);
         telemetry.addData("Current Time", curTime);
@@ -56,9 +50,9 @@ public abstract class AshevilleAuto extends OpMode {
             this.hardwareMap.getLiftMotor().setPower(0);
 
             goForward(.125); //Robot starts sideways and this gets our hook out of the bracket
-        } else if (elapsedTime < LEFTTIME) {
+        } else if (elapsedTime < RIGHTTIME) {
 
-            goLeft(.25); //This moves us away from the lander since the robot is sideways
+            goRight(.25); //This moves us away from the lander since the robot is sideways
 
         } else {
             if (!motorShutdown) {

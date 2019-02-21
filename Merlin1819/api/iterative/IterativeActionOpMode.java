@@ -296,6 +296,7 @@ public abstract class IterativeActionOpMode extends OpMode implements IterativeA
      * Returns whether methods automatically complete on
      * their own. If subclasses want custom behavior, they
      * should override this class.
+     * The default value is <b>true</b>.
      *
      * @return whether methods automatically complete on their own.
      *
@@ -314,6 +315,7 @@ public abstract class IterativeActionOpMode extends OpMode implements IterativeA
      * Returns whether the {@link OpMode} automatically
      * stops when every operation is finished. If subclasses
      * want custom behavior, they should override this method.
+     * The default value is <b>false</b>.
      *
      * @return whether the {@link OpMode} automatically
      * stops when every operation is finished.
