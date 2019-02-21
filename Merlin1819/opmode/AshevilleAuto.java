@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.team.Merlin1819.opmode;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
+import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.teamcode.team.Merlin1819.opmode.robot.MecanumHardwareMap;
 import org.firstinspires.ftc.teamcode.team.Merlin1819.opmode.robot.MecanumIMU;
@@ -19,13 +20,15 @@ public abstract class AshevilleAuto extends OpMode {
     DcMotor backLeftMotor = this.hardwareMap.getBackLeftMotor();
     DcMotor backRightMotor = this.hardwareMap.getBackRightMotor();*/
 
-    static double DOWNTIME = 4.35;
-    static double FWDTIME = DOWNTIME + 1.5;
+    static double DOWNTIME = 4.6;
+    static double FWDTIME = DOWNTIME + 1;
     static double RIGHTTIME = FWDTIME + 2;
+    static double CENTERTIME = RIGHTTIME + .75;
 
     public void init() {
         motorShutdown = false;
         this.hardwareMap = new MecanumHardwareMap(super.hardwareMap);
+        this.hardwareMap.getMarkerServo().setDirection(Servo.Direction.REVERSE);
     }
 
     @Override
@@ -53,7 +56,8 @@ public abstract class AshevilleAuto extends OpMode {
         } else if (elapsedTime < RIGHTTIME) {
 
             goRight(.125); //This moves us away from the lander since the robot is sideways
-
+        } else if(elapsedTime < CENTERTIME) {
+             goBackward(.125);
         } else {
             if (!motorShutdown) {
 
@@ -105,6 +109,6 @@ public abstract class AshevilleAuto extends OpMode {
         this.hardwareMap.getLiftMotor().setPower(0);
     }
     protected final void mark() {
-        this.hardwareMap.getMarkerServo().setPosition(180);
+        this.hardwareMap.getMarkerServo().setPosition(1.0);
     }
 }

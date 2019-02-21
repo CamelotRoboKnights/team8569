@@ -4,10 +4,10 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 
 @Autonomous(name = "AshevilleCraterAuto")
 public class AshevilleCraterAuto extends AshevilleAuto {
-static double CRATERTIME = RIGHTTIME + 3;
+static double CRATERTIME = RIGHTTIME + 2.0;
     protected void afterLanding() {
         if(elapsedTime < CRATERTIME) {
-            goRight(.25);
+            goRight(.5);
         } else {
             stopMotors();
         }
