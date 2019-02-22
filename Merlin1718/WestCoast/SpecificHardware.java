@@ -2,7 +2,7 @@
  * This class contains the objects that are specific to this years game
  * It contains a Jewel Sorter and a Glyph Collector
  *
- * The Jewel Sorter contains a color sensor and a servo. It can raise and lower the servo as well as
+ * The Jewel Sorter contains a color sensor and a servo. It can raise and startLowering the servo as well as
  *      determine the jewel color by determining if there is more red or blue being sensed
  *
  * The Glyph Collector contains two glyph layers and a motor.

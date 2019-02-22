@@ -12,11 +12,11 @@ import com.qualcomm.robotcore.util.ElapsedTime;
  * In this case that robot is a K9 robot.
  *
  * This hardware class assumes the following device names have been configured on the robot:
- * Note:  All names are lower case and some have single spaces between words.
+ * Note:  All names are startLowering case and some have single spaces between words.
  *
  * Motor channel:  Left  drive motor:        "left_drive"
  * Motor channel:  Right drive motor:        "right_drive"
- * Servo channel:  Servo to raise/lower arm: "arm"
+ * Servo channel:  Servo to raise/startLowering arm: "arm"
  * Servo channel:  Servo to open/close claw: "claw"
  *
  * Note: the configuration of the servos is such that:

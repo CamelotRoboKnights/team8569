@@ -55,7 +55,7 @@ public class WestCoastBlueF extends OpMode {
         telemetry.addData("revIMU", robot.revIMU.getCurrentOrientation());
         double currentAngle = robot.revIMU.getCurrentOrientation();
         switch (currentCase){
-            case "DropSorter": //lower sorter to sort jewel
+            case "DropSorter": //startLowering sorter to sort jewel
                 boolean doneYet;
                 doneYet = robot.jewelSorter.lower();
                 if(doneYet){

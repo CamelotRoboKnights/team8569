@@ -57,7 +57,7 @@ public class KickDemoCode2017 extends LinearOpMode {
             robot.leftMotor.setPower(left);
             robot.rightMotor.setPower(right);
 
-            // Use gamepad Y & A raise and lower the arm
+            // Use gamepad Y & A raise and startLowering the arm
             if (gamepad1.a)
                 servoPosition += SERVO_SPEED;
             else if (gamepad1.y)
