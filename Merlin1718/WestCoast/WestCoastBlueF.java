@@ -2,8 +2,10 @@ package org.firstinspires.ftc.teamcode.team.Merlin1718.WestCoast;
 
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 
+@Disabled
 @Autonomous(name = "WestCoastBlueF", group = "Cardinal")
 //@Disabled //Uncomment this if it is not wanted on the phone
 public class WestCoastBlueF extends OpMode {

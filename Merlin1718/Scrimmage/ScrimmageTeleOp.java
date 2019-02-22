@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode.team.Merlin1718.Scrimmage;
 
 import android.hardware.TriggerEventListener;
 
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
@@ -11,6 +12,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
 
 import java.sql.Driver;
 
+@Disabled
 @TeleOp(name = "Scrimmage", group = "Scrimmage")
 //@Disabled //Uncomment this if it is not wanted on the phone
 public class ScrimmageTeleOp extends ScrimmageMeathods {

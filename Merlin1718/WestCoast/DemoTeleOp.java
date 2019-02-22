@@ -6,6 +6,7 @@
 
 package org.firstinspires.ftc.teamcode.team.Merlin1718.WestCoast;
 
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 
@@ -13,6 +14,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
 
+@Disabled
 @TeleOp(name = "Demo Tele", group = "Cardinal")
 //@Disabled //Uncomment this if it is not wanted on the phone
 public class DemoTeleOp extends OpMode {

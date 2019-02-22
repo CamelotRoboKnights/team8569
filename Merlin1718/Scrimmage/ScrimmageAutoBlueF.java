@@ -4,10 +4,12 @@ import android.hardware.TriggerEventListener;
 
 import com.qualcomm.robotcore.eventloop.SyncdDevice;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import java.sql.Driver;
 
+@Disabled
 @Autonomous(name = "BlueF", group = "Scrimmage")
 //@Disabled //Uncomment this if it is not wanted on the phone
 public class ScrimmageAutoBlueF extends ScrimmageMeathods {

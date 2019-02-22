@@ -4,6 +4,7 @@ import android.hardware.TriggerEventListener;
 
 import com.qualcomm.robotcore.eventloop.SyncdDevice;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import java.sql.Driver;
@@ -12,6 +13,7 @@ import java.sql.Driver;
  * Created by Zachary Ireland on 12/10/2017.
  */
 
+@Disabled
 @Autonomous(name = "BlueC", group = "Scrimmage")
 //@Disabled //Uncomment this if it is not wanted on the phone
 public class ScrimmageAutoBlueC extends ScrimmageMeathods {
