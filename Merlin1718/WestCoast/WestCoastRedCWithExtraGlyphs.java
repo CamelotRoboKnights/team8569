@@ -57,7 +57,7 @@ public class WestCoastRedCWithExtraGlyphs extends OpMode {
         telemetry.addData("power", robot.westCoast.leftMotor.getPower());
         double currentAngle = robot.revIMU.getCurrentOrientation();
         switch (currentCase){
-            case "DropSorter": //lower sorter to sort jewl
+            case "DropSorter": //startLowering sorter to sort jewl
                 boolean doneYet;
                 doneYet = robot.jewelSorter.lower();
                 if(doneYet){

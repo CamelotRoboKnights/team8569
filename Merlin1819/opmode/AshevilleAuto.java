@@ -6,6 +6,20 @@ import com.qualcomm.robotcore.hardware.Servo;
 import org.firstinspires.ftc.teamcode.team.Merlin1819.opmode.robot.MecanumHardwareMap;
 import org.firstinspires.ftc.teamcode.team.Merlin1819.opmode.robot.MecanumIMU;
 
+/**
+ *
+ * The base class for second qualifier operations.
+ *
+ * @author Zachary
+ * @author Eli
+ * @author Zigy
+ *
+ * @version 1.0
+ * @since 1.0
+ *
+ * @see AshevilleDepotAutoThrow
+ * @see AshevilleCraterAuto
+ */
 public abstract class AshevilleAuto extends OpMode {
 
     private MecanumHardwareMap hardwareMap;
@@ -20,8 +34,25 @@ public abstract class AshevilleAuto extends OpMode {
     DcMotor backLeftMotor = this.hardwareMap.getBackLeftMotor();
     DcMotor backRightMotor = this.hardwareMap.getBackRightMotor();*/
 
+    /**
+     *
+     * The time it takes for us to get down.
+     *
+     * @since 1.0
+     */
     static double DOWNTIME = 4.6;
+
+    /**
+     *
+     * The time it takes for us to go right, to startUnlatching.
+     *
+     * @since 1.0
+     */
     static double FWDTIME = DOWNTIME + 1;
+
+    /**
+     *
+     */
     static double RIGHTTIME = FWDTIME + 2;
     static double CENTERTIME = RIGHTTIME + .75;
 

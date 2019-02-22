@@ -210,7 +210,7 @@ class ScrimmageMeathods extends OpMode {
     public void glyphZach(){
         //This is the code for our glyph collecting mechanism during TeleOp
         double glyphPower = 0;
-        if (gamepad1.a) {//lower mecanism
+        if (gamepad1.a) {//startLowering mecanism
             glyphPower = 1;
         }
         else if (gamepad1.y) {//raise mecanism

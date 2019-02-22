@@ -59,7 +59,7 @@ public class IndivigualCaseTest extends OpMode {
         telemetry.addData("startTime", startTime);
         telemetry.addData("duration", (System.currentTimeMillis()-startTime)/1000);
         switch (currentCase){
-            case "DropSorter": //lower sorter to sort jewel
+            case "DropSorter": //startLowering sorter to sort jewel
                 boolean doneYet;
                 doneYet = robot.jewelSorter.lower();
                 if(doneYet){
