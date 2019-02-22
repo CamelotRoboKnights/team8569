@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.team.Merlin1819.opmode;
 
+import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
@@ -9,17 +10,17 @@ import org.firstinspires.ftc.teamcode.team.Merlin1819.api.robot.Robot;
 import org.firstinspires.ftc.teamcode.team.Merlin1819.opmode.robot.ExtendedMecanumController;
 import org.firstinspires.ftc.teamcode.team.Merlin1819.opmode.robot.MecanumRobot;
 
-import java.util.Calendar;
-
+@Autonomous(name = "RuckusLanding")
 public class RuckusLanding extends IterativeActionOpMode
 {
     protected Robot robot;
     private ElapsedTime elapsedTime;
     private ElapsedTime lastTime;
 
-    private static final long DOWN_TIME  = 4600, //4.6 seconds in millis
-                            UNLATCH_TIME = 1000,
-                            FORWARD_TIME = 2000;
+    //These all in milliseconds.
+    private static final long DOWN_TIME    = 4600,
+                              UNLATCH_TIME = 1000,
+                              FORWARD_TIME = 2000;
 
     private static final float LOWERING_POWER = 0.5F,
                                UNLATCH_POWER  = 0.125F,
@@ -59,6 +60,8 @@ public class RuckusLanding extends IterativeActionOpMode
     {
         if (this.timePassed(DOWN_TIME)) {
             this.getExtendedController().stopMovingRetractionArm();
+
+            //setCompleted(boolean) makes it loop around this method if it is false.
             state.setCompleted(true);
         } else state.setCompleted(false);
     }
@@ -67,7 +70,7 @@ public class RuckusLanding extends IterativeActionOpMode
     public void startUnlatching(IterativeState state, HardwareMap map)
     {
         this.resetTime();
-        //The robot is at an orientation where this will move us sideways.
+        //This will move us right, unlatching us in respect to our orientation.
         this.robot.startMoving(Robot.MovementDirection.FORWARD, UNLATCH_POWER);
     }
 
@@ -84,7 +87,7 @@ public class RuckusLanding extends IterativeActionOpMode
     public void startMovingOut(IterativeState state, HardwareMap map)
     {
         this.resetTime();
-        //The robot is at an orientation where this will move us forward.
+        //This will move us away from the lander in respect to our orientation.
         this.robot.startMoving(Robot.MovementDirection.RIGHT, FORWARD_POWER);
     }
 
