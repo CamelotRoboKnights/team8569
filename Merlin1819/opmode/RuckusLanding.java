@@ -88,7 +88,7 @@ public class RuckusLanding extends IterativeActionOpMode
     public void startMovingOut(IterativeState state, HardwareMap map)
     {
         this.resetTime();
-        
+
         //This will move us away from the lander in respect to our orientation.
         this.robot.startMoving(Robot.MovementDirection.RIGHT, FORWARD_POWER);
     }
