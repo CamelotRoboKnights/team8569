@@ -35,8 +35,9 @@ public class GunnerAndControllerTeleOp extends OpMode
 
         //this controls the curl arm motor setting it based on the y axis of the left joy stick.
         if (Math.abs(this.gamepad2.left_stick_y) >= GAMEPAD_DEAD_ZONE) {
-            this.hardwareMap.getCurlArmMotor().setPower(-this.gamepad2.left_stick_y *SPEED_MULTIPLIER *
-                    Math.abs(this.gamepad2.left_stick_y));
+            final double leftStickY = this.gamepad2.left_stick_y;
+            final double power = leftStickY * 0.8;
+            this.hardwareMap.getCurlArmMotor().setPower(power);
         } else {
             this.hardwareMap.getCurlArmMotor().setPower(0);
         }
@@ -59,18 +60,7 @@ public class GunnerAndControllerTeleOp extends OpMode
             servo.setPosition(.5);
         }
 
-
-
-
-        /*
-        Field oriented drive section.
-         */
-        //this.imu.updateAngle();
-
-        //weak battery, (hopefully) not async issues.
-        synchronized (this.imu) {
-            this.imu.updateAngle();
-        }
+        this.imu.updateAngle();
 
         final double leftStickY = this.gamepad1.left_stick_y,
                 leftStickX = this.gamepad1.left_stick_x,
