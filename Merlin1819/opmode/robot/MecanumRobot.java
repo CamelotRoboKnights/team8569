@@ -26,6 +26,7 @@ public class MecanumRobot extends AbstractRobot
     public MecanumRobot(HardwareMap hardwareMap)
     {
         super(hardwareMap);
+        this.hardwareMap = new MecanumHardwareMap(super.hardwareMap);
         this.finishedMoving = false;
         this.startEncoderPosition = 0;
         this.controller = new ExtendedMecanumController(hardwareMap);
