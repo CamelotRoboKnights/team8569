@@ -15,7 +15,8 @@ public class AutonomousCraterFull extends AshevilleAuto
     private static final double NUDGE_WALL_TIME = SPIN_LEFT_TIME + 1;
     private static final double NUDGE_AWAY_FROM_WALL_TIME = NUDGE_WALL_TIME + 0.4;
     private static final double DUMP_MARKER_TIME = NUDGE_AWAY_FROM_WALL_TIME + 1.7;
-    private static final double TO_CRATER_TIME = DUMP_MARKER_TIME + 2.35;
+    private static final double BACK_TO_WALL_TIME = DUMP_MARKER_TIME + .5;
+    private static final double TO_CRATER_TIME = BACK_TO_WALL_TIME + 2.35;
     private static final double TO_SAMPLE_TIME = TO_CRATER_TIME + .8;
     private static final double BREAK_CRATER_TIME = TO_SAMPLE_TIME + 1;
 
@@ -42,6 +43,8 @@ public class AutonomousCraterFull extends AshevilleAuto
             goBackward(0.25);
         } else if (elapsedTime < DUMP_MARKER_TIME) {
             goRight(1);
+        } else if (elapsedTime < BACK_TO_WALL_TIME) {
+            goForward(.5);
         } else if (elapsedTime < TO_CRATER_TIME) {
             goLeft(0.85);
         } else if (elapsedTime < TO_SAMPLE_TIME) {
