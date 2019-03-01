@@ -40,7 +40,7 @@ public abstract class AshevilleAuto extends OpMode {
      *
      * @since 1.0
      */
-    static double DOWNTIME = 4.6;
+    static double DOWNTIME = 4.55;
 
     /**
      *

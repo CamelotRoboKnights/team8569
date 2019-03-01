@@ -1,9 +1,11 @@
 package org.firstinspires.ftc.teamcode.team.Merlin1819.opmode;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 
 //Notes: currently the servo does not move, and does not knock the marker into the depot
 
+@Disabled
 @Autonomous(name = "AshevilleDepotAuto")
 public class AshevilleDepotAuto extends AshevilleAuto {
     static double CRATERTIME = RIGHTTIME + 3;

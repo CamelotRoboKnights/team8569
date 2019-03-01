@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.team.Merlin1819.opmode;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
@@ -10,6 +11,7 @@ import org.firstinspires.ftc.teamcode.team.Merlin1819.api.robot.Robot;
 import org.firstinspires.ftc.teamcode.team.Merlin1819.opmode.robot.ExtendedMecanumController;
 import org.firstinspires.ftc.teamcode.team.Merlin1819.opmode.robot.MecanumRobot;
 
+@Disabled
 @Autonomous(name = "RuckusLanding")
 public class RuckusLanding extends IterativeActionOpMode
 {

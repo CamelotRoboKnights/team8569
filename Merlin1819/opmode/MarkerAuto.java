@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.team.Merlin1819.opmode;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
@@ -8,6 +9,7 @@ import org.firstinspires.ftc.teamcode.team.Merlin1819.opmode.robot.MecanumHardwa
 import org.firstinspires.ftc.teamcode.team.Merlin1819.api.iterative.IterativeActionOpMode;
 import org.firstinspires.ftc.teamcode.team.Merlin1819.api.iterative.IterativeState;
 
+@Disabled
 @Autonomous(name = "MarkerAutonomous", group = "Beta")
 public class MarkerAuto extends IterativeActionOpMode
 {

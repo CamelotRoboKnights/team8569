@@ -1,13 +1,14 @@
 package org.firstinspires.ftc.teamcode.team.VexEDR393Encoder;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.I2cDevice;
 import com.qualcomm.robotcore.hardware.I2cDeviceSynch;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.hardware.CRServo;
 
-
+@Disabled
 @Autonomous(name = "VEX", group = "VEX")
 // @Disabled
 public class VexEDR393Test extends OpMode {
