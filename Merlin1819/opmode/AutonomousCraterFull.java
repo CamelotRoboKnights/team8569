@@ -12,7 +12,7 @@ public class AutonomousCraterFull extends AshevilleAuto
     private static final double AWAY_FROM_LANDER_TIME = RIGHTTIME + 1.6;
     private static final double ADVANCE_WALL_TIME = AWAY_FROM_LANDER_TIME + 1.6;
     private static final double SPIN_LEFT_TIME = ADVANCE_WALL_TIME + 3.05;
-    private static final double NUDGE_WALL_TIME = SPIN_LEFT_TIME + 1;
+    private static final double NUDGE_WALL_TIME = SPIN_LEFT_TIME + 1.5;
     private static final double NUDGE_AWAY_FROM_WALL_TIME = NUDGE_WALL_TIME + 0.4;
     private static final double DUMP_MARKER_TIME = NUDGE_AWAY_FROM_WALL_TIME + 1.7;
     private static final double BACK_TO_WALL_TIME = DUMP_MARKER_TIME + .5;
