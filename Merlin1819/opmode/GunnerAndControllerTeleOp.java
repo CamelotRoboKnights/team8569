@@ -126,7 +126,7 @@ public class GunnerAndControllerTeleOp extends OpMode
         this.telemetry.addData("Angle", this.imu.getAngle());
 
         //color sensor telemetry
-        final ColorSensor sensor = this.hardwareMap.getColorSensor();
+       // final ColorSensor sensor = this.hardwareMap.getColorSensor();
 //        telemetry.addData("Red", sensor.red());
 //        telemetry.addData("Green", sensor.green());
 //        telemetry.addData("Blue", sensor.blue());

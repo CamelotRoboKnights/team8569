@@ -111,8 +111,6 @@ public final class MecanumHardwareMap
 
     private Servo markerServo;
 
-    private ColorSensor colorSensor;
-
     /**
      *
      * The {@link MecanumIMU} for orientation
@@ -151,8 +149,6 @@ public final class MecanumHardwareMap
 
         this.markerServo     = map.servo.get(MARKER_SERVO_NAME);
 
-        this.colorSensor     = map.colorSensor.get(COLOR_SENSOR_NAME);
-
         this.collectorServo  = map.servo.get(COLLECTOR_SERVO_NAME);
 
         //this.mechanumIMU = new MecanumIMU(map);
@@ -166,7 +162,6 @@ public final class MecanumHardwareMap
         this.retractArmMotor.setPower(DEFAULT_POWER);
         this.liftMotor.setPower(DEFAULT_POWER);
 
-        this.colorSensor = map.colorSensor.get(COLOR_SENSOR_NAME);
         this.markerServo = map.servo.get(MARKER_SERVO_NAME);
 
         this.frontLeftMotor.setDirection(DcMotorSimple.Direction.REVERSE);
@@ -262,11 +257,6 @@ public final class MecanumHardwareMap
     public DcMotor getLiftMotor()
     {
         return this.liftMotor;
-    }
-
-    public ColorSensor getColorSensor()
-    {
-        return this.colorSensor;
     }
 
     public Servo getMarkerServo() {
