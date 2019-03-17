@@ -32,7 +32,7 @@ public interface Robot
      * @see RotationDirection
      */
     enum MovementDirection {
-        FORWARD, BACKWARD, LEFT, RIGHT;
+        FORWARD, BACKWARD, LEFT, RIGHT
     }
 
     /**
@@ -49,7 +49,7 @@ public interface Robot
      * @see RotationDirection
      */
     enum RotationDirection {
-        LEFT, RIGHT;
+        LEFT, RIGHT
     }
 
     /**
@@ -301,6 +301,4 @@ public interface Robot
      * @see #getOrientation()
      */
     boolean gyroSupported();
-
-
 }

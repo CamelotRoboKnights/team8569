@@ -30,7 +30,8 @@ public class AutonomousWorlds extends IterativeActionOpMode
     @Action(order = 0)
     public void land(IterativeState state, HardwareMap map)
     {
-        this.telemetry.addData("Cube Position", "Cube Position " + this.yellowPosition);
+        this.telemetry.addData("Cube Position", "Cube Position " +
+                ((this.yellowPosition != null) ? this.yellowPosition.toString().toLowerCase() : "cube position not detected"));
 
         switch (this.yellowPosition) {
             case LEFT:
