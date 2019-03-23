@@ -2,14 +2,18 @@ package org.firstinspires.ftc.teamcode.team.Merlin1819.opmode;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.hardware.ColorSensor;
+import com.qualcomm.hardware.rev.Rev2mDistanceSensor;
+import com.qualcomm.robotcore.hardware.DistanceSensor;
 
 import org.firstinspires.ftc.teamcode.team.Merlin1819.opmode.robot.MecanumHardwareMap;
 import org.firstinspires.ftc.teamcode.team.Merlin1819.opmode.robot.MecanumIMU;
+import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 
-@TeleOp(name = "MasterTeleOp1")
-public class GunnerAndControllerTeleOp extends OpMode
+@TeleOp(name = "MasterTeleOp")
+public class MasterTeleOp extends OpMode
 {
     private static final float GAMEPAD_DEAD_ZONE = 0.2F;
 
@@ -20,9 +24,10 @@ public class GunnerAndControllerTeleOp extends OpMode
     private MecanumHardwareMap hardwareMap;
     private MecanumIMU imu;
 
+
+
     @Override
-    public void init()
-    {
+    public void init() {
         this.hardwareMap = new MecanumHardwareMap(super.hardwareMap);
         this.imu = new MecanumIMU(super.hardwareMap);
     }
@@ -123,7 +128,12 @@ public class GunnerAndControllerTeleOp extends OpMode
             this.telemetry.addData("Notification", "You reset the IMU angle.");
         }
 
-        this.telemetry.addData("Angle", this.imu.getAngle());
+        double inches = this.hardwareMap.getDistanceSensor().getDistance(DistanceUnit.INCH);
+        String easyInches = String.format("%.01f in", inches);
+
+        telemetry.addData("distance: ", easyInches);
+
+//      this.telemetry.addData("Angle", this.imu.getAngle());
 
         //color sensor telemetry
        // final ColorSensor sensor = this.hardwareMap.getColorSensor();
