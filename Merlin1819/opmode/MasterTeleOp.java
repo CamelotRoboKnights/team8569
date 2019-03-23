@@ -8,9 +8,14 @@ import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.hardware.rev.Rev2mDistanceSensor;
 import com.qualcomm.robotcore.hardware.DistanceSensor;
 
+import org.firstinspires.ftc.teamcode.team.Merlin1819.api.robot.Robot;
+import org.firstinspires.ftc.teamcode.team.Merlin1819.opmode.robot.ExtendedMecanumController;
 import org.firstinspires.ftc.teamcode.team.Merlin1819.opmode.robot.MecanumHardwareMap;
 import org.firstinspires.ftc.teamcode.team.Merlin1819.opmode.robot.MecanumIMU;
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
+import org.firstinspires.ftc.teamcode.team.Merlin1819.opmode.robot.MecanumRobot;
+
+import java.util.Locale;
 
 @TeleOp(name = "MasterTeleOp")
 public class MasterTeleOp extends OpMode
@@ -23,7 +28,8 @@ public class MasterTeleOp extends OpMode
 
     private MecanumHardwareMap hardwareMap;
     private MecanumIMU imu;
-
+    private Robot robot;
+    private ExtendedMecanumController controller;
 
 
     @Override
@@ -129,7 +135,7 @@ public class MasterTeleOp extends OpMode
         }
 
         double inches = this.hardwareMap.getDistanceSensor().getDistance(DistanceUnit.INCH);
-        String easyInches = String.format("%.01f in", inches);
+        String easyInches = String.format(Locale.US, "%.01f in", inches);
 
         telemetry.addData("distance: ", easyInches);
 

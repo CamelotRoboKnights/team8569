@@ -8,6 +8,7 @@ import org.firstinspires.ftc.teamcode.team.Merlin1819.api.iterative.IterativeAct
 import org.firstinspires.ftc.teamcode.team.Merlin1819.api.iterative.IterativeState;
 import org.firstinspires.ftc.teamcode.team.Merlin1819.api.robot.Robot;
 import org.firstinspires.ftc.teamcode.team.Merlin1819.opmode.robot.CubeSampler;
+import org.firstinspires.ftc.teamcode.team.Merlin1819.opmode.robot.ExtendedMecanumController;
 import org.firstinspires.ftc.teamcode.team.Merlin1819.opmode.robot.MecanumHardwareMap;
 import org.firstinspires.ftc.teamcode.team.Merlin1819.opmode.robot.MecanumRobot;
 
@@ -17,6 +18,7 @@ public class AutonomousWorlds extends IterativeActionOpMode {
     private CubeSampler.CubePosition yellowPosition;
     private Robot robot;
     private MecanumHardwareMap hardwareMap;
+    private ExtendedMecanumController controller;
 
     @Override
     protected void initState() {
@@ -30,6 +32,7 @@ public class AutonomousWorlds extends IterativeActionOpMode {
         this.yellowPosition = this.sampler.detectCubePosition();
         this.robot = new MecanumRobot(super.hardwareMap);
         this.hardwareMap = new MecanumHardwareMap(super.hardwareMap);
+        this.controller = this.robot.getRobotComponentController(ExtendedMecanumController.class);
     }
 
     private boolean completed = false;
@@ -37,9 +40,12 @@ public class AutonomousWorlds extends IterativeActionOpMode {
     @Action(order = 0)
     public void land(IterativeState state, HardwareMap map) {
         long[] counter = new long[3];
+        this.telemetry.setAutoClear(false);
         this.telemetry.addData("Cube Position", "Cube Position " +
                 ((this.yellowPosition != null) ?
-                        this.yellowPosition.toString().toLowerCase() : "cube position not detected"));
+                        this.yellowPosition.toString().toLowerCase() : "cube position not detected")).
+                addData("Distance to wall", this.controller.getInchesToWall());
+        this.telemetry.setAutoClear(true);
         switch (this.yellowPosition) {
             case LEFT:
                 if (sideways(1, counter, 0) &&
