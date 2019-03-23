@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode.team.Merlin1819.opmode.robot;
 import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
+import com.qualcomm.robotcore.hardware.DistanceSensor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 
@@ -54,7 +55,8 @@ public final class MecanumHardwareMap
                                    CURL_ARM_NAME = "curlArmMotor",
                                  LIFT_MOTOR_NAME = "liftMotor";
 
-    private static final String COLOR_SENSOR_NAME = "colorSensor";
+    private static final String COLOR_SENSOR_NAME = "colorSensor",
+                                DISTANCE_SENSOR_NAME = "distanceSensor";
     private static final String MARKER_SERVO_NAME = "markerServo";
 
     /**
@@ -111,6 +113,8 @@ public final class MecanumHardwareMap
 
     private Servo markerServo;
 
+    private DistanceSensor distanceSensor;
+
     /**
      *
      * The {@link MecanumIMU} for orientation
@@ -150,6 +154,8 @@ public final class MecanumHardwareMap
         this.markerServo     = map.servo.get(MARKER_SERVO_NAME);
 
         this.collectorServo  = map.servo.get(COLLECTOR_SERVO_NAME);
+
+        this.distanceSensor  = map.get(DistanceSensor.class, "distanceSensor");
 
         //this.mechanumIMU = new MecanumIMU(map);
 
@@ -268,6 +274,9 @@ public final class MecanumHardwareMap
         return this.collectorServo;
     }
 
+    public DistanceSensor getDistanceSensor() {
+        return distanceSensor;
+    }
 
     /*public MecanumIMU getMecanumIMU()
     {
