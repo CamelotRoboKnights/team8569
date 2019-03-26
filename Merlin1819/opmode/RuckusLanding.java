@@ -54,14 +54,14 @@ public class RuckusLanding extends IterativeActionOpMode
         this.lastTime = new ElapsedTime();
 
         this.resetTime();
-        this.getExtendedController().startMovingRetractionArm(LOWERING_POWER);
+        this.getExtendedController().startMovingLiftMotor(LOWERING_POWER);
     }
 
     @Action(order = 1)
     public void checkLowered(IterativeState state, HardwareMap map)
     {
         if (this.timePassed(DOWN_TIME)) {
-            this.getExtendedController().stopMovingRetractionArm();
+            this.getExtendedController().stopMovingLiftMotor();
 
             //setCompleted(boolean) makes it loop around this method if it is false.
             state.setCompleted(true);
