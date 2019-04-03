@@ -41,17 +41,25 @@ public class MasterTeleOp extends OpMode
     @Override
     public void loop()
     {
+//      this.telemetry.addData("Enter ",new java.util.Date());
 
         //Gunner Section
 
         //this controls the curl arm motor setting it based on the y axis of the left joy stick.
-        if (Math.abs(this.gamepad2.left_stick_y) >= GAMEPAD_DEAD_ZONE) {
-            final double leftStickY = this.gamepad2.left_stick_y;
-            final double power = leftStickY * 0.8;
-            this.hardwareMap.getCurlArmMotor().setPower(power);
-        } else {
-            this.hardwareMap.getCurlArmMotor().setPower(0);
-        }
+
+            double power = 0;
+            if (Math.abs(this.gamepad2.left_stick_y) >= GAMEPAD_DEAD_ZONE) {
+                final double leftStickY = this.gamepad2.left_stick_y;
+                power = leftStickY * 0.8;
+                this.hardwareMap.getCurlArmMotor().setPower(power);
+            } else {
+                this.hardwareMap.getCurlArmMotor().setPower(0);
+            }
+
+
+//        this.telemetry.addData("Left Stick", this.gamepad2.left_stick_y);
+//        this.telemetry.addData("Curl Arm Power", power);
+
         // this is where the driver controls the extension of the arm on the gunner right joystick.
         if (Math.abs(this.gamepad2.right_stick_y) >= GAMEPAD_DEAD_ZONE) {
             this.hardwareMap.getRetractArmMotor().setPower(this.gamepad2.right_stick_y);
@@ -104,6 +112,7 @@ public class MasterTeleOp extends OpMode
         if (frontRight > max) max = Math.abs(frontRight);
         if (backLeft   > max) max = Math.abs(backLeft);
         if (backRight  > max) max = Math.abs(backRight);
+        //if (frontLeft  > max) max = Math.abs(frontLeft);
 
         if (max > 1) {
             frontLeft  /= max;
@@ -117,6 +126,12 @@ public class MasterTeleOp extends OpMode
         this.hardwareMap.getBackLeftMotor().setPower(backLeft);
         this.hardwareMap.getBackRightMotor().setPower(backRight);
 
+//        this.telemetry.setAutoClear(false);
+//        this.telemetry.addData("Front Left",  this.hardwareMap.getFrontLeftMotor().getPower()).
+//                       addData("Front Right", this.hardwareMap.getFrontRightMotor().getPower()).
+//                       addData("Back Left",   this.hardwareMap.getBackLeftMotor().getPower()).
+//                       addData("Back Right",  this.hardwareMap.getBackRightMotor().getPower());
+//        this.telemetry.setAutoClear(true);
         //this.telemetry.addData("Encoder", this.hardwareMap.getRetractArmMotor().getCurrentPosition());
 
         //Driver controls for the lift. The driver controls the lift because that makes lifting easier because the driv can do it with less coordination.
@@ -134,10 +149,10 @@ public class MasterTeleOp extends OpMode
             this.telemetry.addData("Notification", "You reset the IMU angle.");
         }
 
-        double inches = this.hardwareMap.getDistanceSensor().getDistance(DistanceUnit.INCH);
-        String easyInches = String.format(Locale.US, "%.01f in", inches);
-
-        telemetry.addData("distance: ", easyInches);
+//        double inches = this.hardwareMap.getDistanceSensor().getDistance(DistanceUnit.INCH);
+//        String easyInches = String.format(Locale.US, "%.01f in", inches);
+//
+//        telemetry.addData("distance: ", easyInches);
 
 //      this.telemetry.addData("Angle", this.imu.getAngle());
 
@@ -149,6 +164,14 @@ public class MasterTeleOp extends OpMode
 //        telemetry.addData("Alpha", sensor.alpha());
 //        telemetry.addData("Combined", sensor.argb());
 //        telemetry.addData("Combined Hex", "0x" + Integer.toHexString(sensor.argb()).toUpperCase());
-          telemetry.update();
+//        this.telemetry.addData("Exit ",new java.util.Date());
+
+//        this.telemetry.addData("Front Left Encoder", this.hardwareMap.getFrontLeftMotor().getCurrentPosition());
+//        this.telemetry.addData("Front Right Encoder", this.hardwareMap.getFrontRightMotor().getCurrentPosition());
+//        this.telemetry.addData("Back Left Encoder", this.hardwareMap.getBackLeftMotor().getCurrentPosition());
+//        this.telemetry.addData("Back Right Encoder", this.hardwareMap.getBackRightMotor().getCurrentPosition());
+//
+//        this.telemetry.addData("Linear Actuator Encoder", this.hardwareMap.getLiftMotor().getCurrentPosition());
+//        telemetry.update();
     }
 }

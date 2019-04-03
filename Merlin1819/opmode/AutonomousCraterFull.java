@@ -18,7 +18,7 @@ public class AutonomousCraterFull extends AshevilleAuto
     private static final double BACK_TO_WALL_TIME = DUMP_MARKER_TIME + .5;
     private static final double TO_CRATER_TIME = BACK_TO_WALL_TIME + 2.35;
     private static final double TO_SAMPLE_TIME = TO_CRATER_TIME + .8;
-    private static final double BREAK_CRATER_TIME = TO_SAMPLE_TIME + 1;
+    private static final double BREAK_CRATER_TIME = TO_SAMPLE_TIME + .8;
 
     private Robot robot;
 

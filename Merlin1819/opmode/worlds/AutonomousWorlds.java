@@ -5,6 +5,7 @@ import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
+import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import org.firstinspires.ftc.teamcode.team.Merlin1819.api.iterative.IterativeActionOpMode;
 import org.firstinspires.ftc.teamcode.team.Merlin1819.api.iterative.IterativeState;
 import org.firstinspires.ftc.teamcode.team.Merlin1819.api.robot.Robot;
@@ -13,10 +14,12 @@ import org.firstinspires.ftc.teamcode.team.Merlin1819.opmode.robot.ExtendedMecan
 import org.firstinspires.ftc.teamcode.team.Merlin1819.opmode.robot.MecanumHardwareMap;
 import org.firstinspires.ftc.teamcode.team.Merlin1819.opmode.robot.MecanumRobot;
 
+import java.util.Locale;
+
 @Autonomous(name = "AutonomousWorlds", group = "Worlds")
 public class AutonomousWorlds extends IterativeActionOpMode {
     private CubeSampler sampler;
-    private CubeSampler.CubePosition yellowPosition;
+    private CubeSampler.CubePosition yellowPosition = null;
     private Robot robot;
     private MecanumHardwareMap hardwareMap;
     private ExtendedMecanumController controller;
@@ -26,25 +29,32 @@ public class AutonomousWorlds extends IterativeActionOpMode {
     //These all in milliseconds.
     private static final long DOWN_TIME    = 4600,
             UNLATCH_TIME = 1000,
-            FORWARD_TIME = 2000;
+            FORWARD_TIME = 2000,
+            BACK_TIME    = 800,
+            AWAY_FROM_CRATER_TIME = 1000;
 
     private static final float LOWERING_POWER = 0.5F,
             UNLATCH_POWER  = 0.125F,
-            FORWARD_POWER  = 0.125F;
+            FORWARD_POWER  = 0.125F,
+            BACK_POWER     = 0.125F,
+            AWAY_FROM_CRATER_POWER = 0.25F;
 
     @Override
     protected void initState() {
         super.initState();
         assert (this.hardwareMap != null);
-        this.sampler = new CubeSampler(super.hardwareMap, 0.40);
-        this.sampler.activateTfod();
+
 
         //Getting the position before the robot lands
         //TODO verify that this camera angle is optimal
         this.robot = new MecanumRobot(super.hardwareMap);
         this.hardwareMap = new MecanumHardwareMap(super.hardwareMap);
         this.controller = this.robot.getRobotComponentController(ExtendedMecanumController.class);
+
+
+//        this.telemetry.setAutoClear();
     }
+
 
     private boolean completed = false;
 
@@ -60,15 +70,17 @@ public class AutonomousWorlds extends IterativeActionOpMode {
 
     private IterativeState state;
 
-    private void status() {
-        this.telemetry.addData("", this.state.getCounter() + this.lastTime.milliseconds());
-    }
+//    private void status() {
+//        this.telemetry.addData("", this.state.getCounter() + this.lastTime.milliseconds());
+//    }
 
     @Action(order = 0)
     public void init(IterativeState state, HardwareMap map)
     {
-        this.telemetry.setAutoClear(false);
         this.state = state;
+        this.sampler = new CubeSampler(super.hardwareMap, 0.40);
+        this.sampler.activateTfod();
+
     }
 
     @Action(order = 1)
@@ -76,17 +88,23 @@ public class AutonomousWorlds extends IterativeActionOpMode {
     {
         //this.elapsedTime = new ElapsedTime();
         this.lastTime = new ElapsedTime();
-        this.status();
+//        this.status();
 
-        this.resetTime();
-        this.controller.startMovingLiftMotor(LOWERING_POWER);
+        if(yellowPosition != null || timePassed(5000)) {
+            this.controller.startMovingLiftMotor(LOWERING_POWER);
+            state.setCompleted(true);
+            yellowPosition = this.sampler.detectCubePosition();
+            if(yellowPosition == null) yellowPosition = CubeSampler.CubePosition.CENTER;
+        } else state.setCompleted(false);
+
     }
 
     @Action(order = 2)
     public void checkLowered(IterativeState state, HardwareMap map)
     {
-        this.status();
-        if (this.timePassed(DOWN_TIME)) {
+
+//        this.status();
+        if (this.timePassed(DOWN_TIME +  5000)) {
             this.controller.stopMovingLiftMotor();
 
             //setCompleted(boolean) makes it loop around this method if it is false.
@@ -97,7 +115,7 @@ public class AutonomousWorlds extends IterativeActionOpMode {
     @Action(order = 3)
     public void startUnlatching(IterativeState state, HardwareMap map)
     {
-        this.status();
+//        this.status();
         this.resetTime();
 
         //This will move us right, unlatching us in respect to our orientation.
@@ -131,16 +149,47 @@ public class AutonomousWorlds extends IterativeActionOpMode {
         } else state.setCompleted(false);
     }
 
+    @Action(order = 7)
+            public void recenter(IterativeState state, HardwareMap map)
+    {
+        this.resetTime();
+
+        this.robot.startMoving(Robot.MovementDirection.BACKWARD, BACK_POWER);
+    }
+
+    @Action(order = 8)
+            public void checkIfRecentered(IterativeState state, HardwareMap map)
+    {
+        if(timePassed(BACK_TIME)) {
+            this.robot.stopMoving();
+            state.setCompleted(true);
+        } else state.setCompleted(false);
+    }
+
+    @Action(order = 9)
+            public void goAwayFromLander(IterativeState state, HardwareMap map) {
+        this.resetTime();
+
+        this.robot.startMoving(Robot.MovementDirection.RIGHT, AWAY_FROM_CRATER_POWER);
+    }
+
+    @Action(order = 10)
+            public void checkIfAwayFromCrater(IterativeState state, HardwareMap map)
+    {
+        if(timePassed(AWAY_FROM_CRATER_TIME)) {
+            this.robot.stopMoving();
+            state.setCompleted(true);
+        } else state.setCompleted(false);
+    }
 
     long[] counter = new long[3];
 
- //   @Action(order = 7)
+    @Action(order = 11)
     public void nudge(IterativeState state, HardwareMap map) {
 
-        this.telemetry.setAutoClear(false);
-        this.telemetry.addData("Cube Position", "Cube Position " + this.sampler.detectCubePosition()).
-                addData("Distance to wall", this.controller.getInchesToWall());
-        this.telemetry.setAutoClear(true);
+        this.telemetry.addData("Cube Position", "Cube Position " + this.sampler.detectCubePosition());
+//        this.telemetry.addData("Distance to wall", String.format(Locale.US, "%.01f in", this.hardwareMap.getDistanceSensor().getDistance(DistanceUnit.INCH)));
+
         switch (this.yellowPosition) {
             case LEFT:
                 if (sideways(1, counter, 0) &&
@@ -162,7 +211,7 @@ public class AutonomousWorlds extends IterativeActionOpMode {
                 break;
         }
 
-        state.setCompleted(false);
+//        state.setCompleted(false);
     }
 
 

@@ -34,8 +34,8 @@ public class ExtendedMecanumController implements RobotComponentController
         this.hardwareMap.getLiftMotor().setPower(0);
     }
 
-    public double getInchesToWall()
-    {
-        return this.hardwareMap.getDistanceSensor().getDistance(DistanceUnit.INCH);
-    }
+//    public double getInchesToWall()
+//    {
+//        return this.hardwareMap.getDistanceSensor().getDistance(DistanceUnit.INCH);
+//    }
 }

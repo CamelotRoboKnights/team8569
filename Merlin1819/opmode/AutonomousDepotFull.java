@@ -13,8 +13,9 @@ public class AutonomousDepotFull extends AshevilleAuto {
     static double BACKTIME = CRATERTIME + 1;
     static double PUSHBACKTIME = BACKTIME + 1;
     //static double GETOUTOFDEPOTTIME = PUSHBACKTIME + 1.8;
-    static double ROTATE_TIME = PUSHBACKTIME + .8;
-    static double ADVANCE_TO_CRATER_TIME = ROTATE_TIME + 3;
+    static double ROTATE_TIME = PUSHBACKTIME + .7;
+    static double ADVANCE_TO_CRATER_TIME = ROTATE_TIME + 2.5;
+//    was 3
 
     private Robot robot;
 
