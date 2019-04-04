@@ -29,10 +29,10 @@ public class AutonomousCraterFull extends AshevilleAuto
     private static final double ADVANCE_WALL_TIME = AWAY_FROM_LANDER_TIME + 1.6;
     private static final double SPIN_LEFT_TIME = ADVANCE_WALL_TIME + 1;
     private static final double NUDGE_WALL_TIME = SPIN_LEFT_TIME + 1.5;
-    private static final double NUDGE_AWAY_FROM_WALL_TIME = NUDGE_WALL_TIME + 0.4;
-    private static final double DUMP_MARKER_TIME = NUDGE_AWAY_FROM_WALL_TIME + 1.7 * 2;
+    private static final double NUDGE_AWAY_FROM_WALL_TIME = NUDGE_WALL_TIME + 0.2;
+    private static final double DUMP_MARKER_TIME = NUDGE_AWAY_FROM_WALL_TIME + 1.0;
     private static final double SPIN_MARKER_TIME = DUMP_MARKER_TIME + 2.5;
-    private static final double BACK_TO_WALL_TIME = SPIN_MARKER_TIME + 1.7;
+    private static final double BACK_TO_WALL_TIME = SPIN_MARKER_TIME + 3.0;
    // private static final double TO_CRATER_TIME = BACK_TO_WALL_TIME + 2.35;
    // private static final double TO_SAMPLE_TIME = TO_CRATER_TIME + .8;
   //  private static final double BREAK_CRATER_TIME = TO_SAMPLE_TIME + .8;
@@ -86,13 +86,14 @@ public class AutonomousCraterFull extends AshevilleAuto
         } else if (elapsedTime < SPIN_LEFT_TIME) {
             this.robot.startRotating(Robot.RotationDirection.LEFT, 0.2F);
         } else if (elapsedTime < NUDGE_WALL_TIME) {
-            goLeft(0.25);
-        } else if (elapsedTime < NUDGE_AWAY_FROM_WALL_TIME) {
             goRight(0.25);
+        } else if (elapsedTime < NUDGE_AWAY_FROM_WALL_TIME) {
+            goLeft(0.25);
         } else if (elapsedTime < DUMP_MARKER_TIME) {
             goBackward(0.5);
         } else if (elapsedTime < SPIN_MARKER_TIME) {
-            spinIntakeServo(Servo.Direction.FORWARD);
+            stopMotors();
+            spinIntakeServo(Servo.Direction.REVERSE);
         } else if (elapsedTime < BACK_TO_WALL_TIME) {
             goForward(0.5);
         } else {
