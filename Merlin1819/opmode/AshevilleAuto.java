@@ -105,6 +105,12 @@ public abstract class AshevilleAuto extends OpMode {
 
     protected abstract void afterLanding();
 
+    protected final void spinIntakeServo(Servo.Direction direction)
+    {
+        this.hardwareMap.getMarkerServo().setDirection(direction);
+        this.hardwareMap.getMarkerServo().setPosition(1);
+    }
+
     protected final void goForward(double power) {
         this.hardwareMap.getFrontLeftMotor().setPower(power);
         this.hardwareMap.getFrontRightMotor().setPower(power);
