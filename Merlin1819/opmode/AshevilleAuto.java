@@ -22,7 +22,7 @@ import org.firstinspires.ftc.teamcode.team.Merlin1819.opmode.robot.MecanumIMU;
  */
 public abstract class AshevilleAuto extends OpMode {
 
-    private MecanumHardwareMap hardwareMap;
+    protected MecanumHardwareMap hardwareMap;
     private MecanumIMU imu;
     private long startTime;
     private long curTime;
@@ -107,8 +107,13 @@ public abstract class AshevilleAuto extends OpMode {
 
     protected final void spinIntakeServo(Servo.Direction direction)
     {
-        this.hardwareMap.getMarkerServo().setDirection(direction);
-        this.hardwareMap.getMarkerServo().setPosition(1);
+        this.hardwareMap.getCollectorServo().setDirection(direction);
+        this.hardwareMap.getCollectorServo().setPosition(1);
+    }
+
+    protected final void stopIntakeServo()
+    {
+        this.hardwareMap.getCollectorServo().setPosition(0.5);
     }
 
     protected final void goForward(double power) {
@@ -136,7 +141,7 @@ public abstract class AshevilleAuto extends OpMode {
         this.hardwareMap.getBackRightMotor().setPower(-power);
     }
 
-    protected final void stopMotors() {
+    protected void stopMotors() {
         this.hardwareMap.getFrontLeftMotor().setPower(0);
         this.hardwareMap.getFrontRightMotor().setPower(0);
         this.hardwareMap.getBackLeftMotor().setPower(0);
