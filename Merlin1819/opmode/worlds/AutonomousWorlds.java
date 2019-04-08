@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.team.Merlin1819.opmode.worlds;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.util.ElapsedTime;
@@ -17,6 +18,7 @@ import org.firstinspires.ftc.teamcode.team.Merlin1819.opmode.robot.MecanumRobot;
 import java.util.Locale;
 
 @Autonomous(name = "AutonomousWorlds", group = "Worlds")
+@Disabled
 public class AutonomousWorlds extends IterativeActionOpMode {
     private CubeSampler sampler;
     private CubeSampler.CubePosition yellowPosition = null;
