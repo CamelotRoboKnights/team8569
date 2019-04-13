@@ -22,7 +22,7 @@ import org.firstinspires.ftc.teamcode.team.Merlin1819.opmode.robot.MecanumHardwa
  * @see CardinalDirectionTeleOp
  */
 @TeleOp(name = "AllDirectionTeleOp")
-
+@Disabled
 public class AllDirectionTeleOp extends OpMode
 {
     private static final float MOVE_DEAD_ZONE = 0.2F,

@@ -135,10 +135,10 @@ public class AutonomousCraterFull extends AshevilleAuto
             this.hardwareMap.getRetractArmMotor().setPower(-.5);
             this.hardwareMap.getLiftMotor().setPower(-0.5);
             this.hardwareMap.getCurlArmMotor().setPower(0);
-        } else if (elapsedTime < PUT_DOWN_ACTUATOR_TIME) {
+        } /*else if (elapsedTime < PUT_DOWN_ACTUATOR_TIME) {
             this.hardwareMap.getLiftMotor().setPower(-0.5);
             this.hardwareMap.getRetractArmMotor().setPower(0);
-        } else {
+        } */else {
            stopMotors();
            this.hardwareMap.getCurlArmMotor().setPower(0);
            this.hardwareMap.getRetractArmMotor().setPower(0);
